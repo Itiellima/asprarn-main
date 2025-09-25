@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install -y \
         libonig-dev \
         git \
         unzip \
+        netcat-openbsd \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd zip pdo pdo_mysql bcmath mbstring \
     && rm -rf /var/lib/apt/lists/*
@@ -52,8 +53,11 @@ COPY --from=frontend /app/public /var/www/public
 # Ajustar permissões para Laravel
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-
 # Expor porta PHP-FPM
 EXPOSE 9000
 
-CMD ["php-fpm"]
+# Copiar entrypoint
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
