@@ -1,0 +1,16 @@
+.body-offset {
+    padding-top: 20px;
+    /* ajuste conforme a altura da sua navbar */
+}
+
+
+.meu-container {
+    display: flex;
+    justify-content: center;
+    /* centraliza horizontalmente */
+    align-items: center;
+    /* centraliza verticalmente */
+    /* height: 100vh; */
+    /* altura total da viewport */
+}
+
