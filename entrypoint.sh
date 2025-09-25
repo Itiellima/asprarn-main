@@ -20,6 +20,7 @@ fi
 # Roda migrations
 echo "🗄️ Rodando migrations..."
 php artisan migrate --force
+php artisan db:seed --force
 
 # Sobe o PHP-FPM
 exec php-fpm
