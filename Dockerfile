@@ -52,7 +52,6 @@ COPY --from=frontend /app/public /var/www/public
 # Ajustar permissões para Laravel
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-RUN php artisan key:generate
 
 # Expor porta PHP-FPM
 EXPOSE 9000
