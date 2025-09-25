@@ -18,7 +18,7 @@ services:
       APP_NAME: Laravel
       APP_ENV: local
       APP_DEBUG: true
-      APP_URL: http://0.0.0.0:8080
+      APP_URL: http://0.0.0.0:80
       DB_CONNECTION: mysql
       DB_HOST: db
       DB_PORT: 3306
