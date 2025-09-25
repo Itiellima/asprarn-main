@@ -53,7 +53,6 @@ COPY --from=frontend /app/public /var/www/public
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 RUN php artisan key:generate
-RUN php artisan migrate
 
 # Expor porta PHP-FPM
 EXPOSE 9000
