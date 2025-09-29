@@ -12,8 +12,6 @@ services:
       - ./bootstrap/cache:/var/www/bootstrap/cache
     networks:
       - app-network
-    depends_on:
-      - db
     environment:
       APP_NAME: Laravel
       APP_ENV: local
