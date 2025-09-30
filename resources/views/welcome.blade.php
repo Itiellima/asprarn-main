@@ -84,7 +84,7 @@
                         <h2 class="display-5 link-body-emphasis mb-1">ASPRA RN</h2>
                         <p class="blog-post-meta">January 1, 2021 by <a href="#">Mark</a></p>
                         <p> ASPRA RN (Associação dos Praças do Rio Grande do Norte) é uma entidade que representa militares de praças
-                             em diversos estados brasileiros, oferecendo suporte jurídico e outras assistências. 
+                             no estado do Rio Grande do Norte, oferecendo suporte jurídico e outras assistências. 
                         </p>
                         <hr>
                         
