@@ -13,17 +13,18 @@ services:
     networks:
       - app-network
     environment:
-      APP_NAME: Laravel
-      APP_ENV: local
-      APP_DEBUG: true
-      APP_URL: http://localhost:8080
-      DB_CONNECTION: mysql
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_DATABASE: laravel
-      DB_USERNAME: laravel
-      DB_PASSWORD: secret
-
+    #   APP_NAME: Laravel
+    #   APP_ENV: local
+    #   APP_DEBUG: true
+    APP_URL: http://localhost:8080
+    #   DB_CONNECTION: mysql
+    #   DB_HOST: db
+    #   DB_PORT: 3306
+    #   DB_DATABASE: laravel
+    #   DB_USERNAME: laravel
+    #   DB_PASSWORD: secret
+    env_file:
+      - .env
   nginx:
     image: nginx:latest
     container_name: laravel_nginx
