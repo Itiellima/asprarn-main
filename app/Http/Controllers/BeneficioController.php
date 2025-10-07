@@ -39,7 +39,7 @@ class BeneficioController extends Controller
         $request->validate([
             'nome' => 'required',
             'descricao' => 'required',
-            'arquivos' => 'required',
+            'arquivos.*' => 'required|file|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $arquivos = $request->file('arquivos');

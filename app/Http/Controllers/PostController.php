@@ -66,7 +66,7 @@ class PostController extends Controller
             'assunto' => 'required',
             'texto' => 'required',
             'data' => 'required',
-
+            'arquivos.*' => 'file|mimes:jpg,jpeg,png|max:2048', // Validação para cada arquivo
         ]);
 
         DB::beginTransaction();
