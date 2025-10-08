@@ -83,11 +83,12 @@
                     <article class="blog-post">
                         <h2 class="display-5 link-body-emphasis mb-1">ASPRA RN</h2>
                         <p class="blog-post-meta">January 1, 2021 by <a href="#">Mark</a></p>
-                        <p> ASPRA RN (Associação dos Praças do Rio Grande do Norte) é uma entidade que representa militares de praças
-                             no estado do Rio Grande do Norte, oferecendo suporte jurídico e outras assistências. 
+                        <p> ASPRA RN (Associação dos Praças do Rio Grande do Norte) é uma entidade que representa militares
+                            de praças
+                            no estado do Rio Grande do Norte, oferecendo suporte jurídico e outras assistências.
                         </p>
                         <hr>
-                        
+
                 @endif
 
                 {{-- <nav class="blog-pagination" aria-label="Pagination">
@@ -107,6 +108,8 @@
                     </div>
 
                     <div>
+                        @if ($recentPosts->isNotEmpty())
+                            
                         <h4 class="fst-italic">Ultimos posts</h4>
                         <ul class="list-unstyled">
                             @foreach ($recentPosts as $post)
@@ -127,32 +130,20 @@
                                 </li>
                             @endforeach
                         </ul>
+                        @endif
                     </div>
 
                     <div class="p-4">
-                        <h4 class="fst-italic">Archives</h4>
-                        <ol class="list-unstyled mb-0">
-                            <li><a href="#">March 2021</a></li>
-                            <li><a href="#">February 2021</a></li>
-                            <li><a href="#">January 2021</a></li>
-                            <li><a href="#">December 2020</a></li>
-                            <li><a href="#">November 2020</a></li>
-                            <li><a href="#">October 2020</a></li>
-                            <li><a href="#">September 2020</a></li>
-                            <li><a href="#">August 2020</a></li>
-                            <li><a href="#">July 2020</a></li>
-                            <li><a href="#">June 2020</a></li>
-                            <li><a href="#">May 2020</a></li>
-                            <li><a href="#">April 2020</a></li>
-                        </ol>
-                    </div>
-                    <div class="p-4">
                         <h4 class="fst-italic">Redes Sociais</h4>
                         <ol class="list-unstyled">
-                            <li><a href="#">GitHub</a></li>
+                            {{-- <li><a href="#">GitHub</a></li>
                             <li><a href="#">Social</a></li>
-                            <li><a href="#">Facebook</a></li>
-                            <li><a href="https://www.instagram.com/associacaosdospracas/" target="_blank">Instagram</a>
+                            <li><a href="#">Facebook</a></li> --}}
+                            <li>
+                                <a href="https://www.instagram.com/associacaosdospracas/" target="_blank">
+                                    <img src="/img/Instagram_logo.svg" class="img-thumbnail" alt="instagram" width="100"
+                                        height="100">
+                                </a>
                             </li>
                         </ol>
                     </div>
@@ -198,9 +189,6 @@
         </h2>
         </p>
     </div>
-
-
-
 
 
 @endsection
