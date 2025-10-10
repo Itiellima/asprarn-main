@@ -12,6 +12,7 @@
 
 
                     @hasanyrole('admin|moderador')
+                        <a href="{{ route('associado.index') }}" class="btn btn-secondary">👥 Gestão de Associados</a>
                         <a href="/profile" class="btn btn-secondary mx-1">👮 Alterar Perfil</a>
 
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -22,9 +23,6 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="#" class="dropdown-item">📊 Visão Geral (Dashboard)*</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('associado.index') }}" class="dropdown-item">👥 Gestão de Associados</a>
                             </li>
                             <li>
                                 <a href="#" class="dropdown-item">💰 Financeiro*</a>

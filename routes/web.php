@@ -87,6 +87,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/usuarios', [UsuariosController::class, 'index'])->name('usuarios.index');
     // Rota para atualizar as permissoes de um usuario
     Route::post('/usuarios/{user}/role', [UsuariosController::class, 'updateRole'])->name('usuarios.updateRole');
+    Route::delete('/usuarios/{user}', [UsuariosController::class, 'destroy'])->name('usuarios.destroy');
 });
 
 Route::get('/profile', function () {

@@ -39,6 +39,7 @@
                     <th>Email</th>
                     <th>Role Principal</th>
                     <th>Alterar Role</th>
+                    <th>Ação</th>
                 </tr>
             </thead>
             <tbody>
@@ -71,6 +72,14 @@
                                     <option value="user" {{ $principal === 'user' ? 'selected' : '' }}>User</option>
                                 </select>
                                 <button type="submit" class="btn btn-primary mt-1">Salvar</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{{ route('usuarios.destroy', $user->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger mt-1"
+                                    onclick="return confirm('Tem certeza que deseja deletar este usuário?')">Deletar</button>
                             </form>
                         </td>
                     </tr>

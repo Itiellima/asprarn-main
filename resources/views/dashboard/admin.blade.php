@@ -17,7 +17,7 @@
                     <h5 class="card-title">Associados cadastrados:</h5>
                     <p class="card-text">Total: {{ count($associados) }}</p>
                     <p>
-                        <a href="#">Listar</a>
+                        <a href="{{ route('associado.index') }}">Listar</a>
                     </p>
                 </div>
             </div>

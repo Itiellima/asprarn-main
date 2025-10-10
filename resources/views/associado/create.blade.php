@@ -67,7 +67,7 @@
                         </div>
                         <div class="mb-3 col-3">
                             <label for="formGroup" class="form-label">Estado civil:</label>
-                            <select class="form-select " name="estado_civil" id="estado_civil" required>
+                            <select class="form-select " name="estado_civil" id="estado_civil">
                                 <option value="">Selecione</option>
                                 <option value="solteiro"
                                     {{ old('estado_civil', $associado->estado_civil) == 'solteiro' ? 'selected' : '' }}>
@@ -93,7 +93,7 @@
                         </div>
                         <div class="mb-3 col-3">
                             <label for="formGroup" class="form-label">Grau de Instrução:</label>
-                            <select class="form-select " name="grau_instrucao" id="grau_instrucao" required>
+                            <select class="form-select " name="grau_instrucao" id="grau_instrucao">
                                 <option selected value="">Selecione</option>
                                 <option value="fundamental_completo"
                                     {{ old('grau_instrucao', $associado->grau_instrucao) == 'fundamental_completo' ? 'selected' : '' }}>

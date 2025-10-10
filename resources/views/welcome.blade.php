@@ -139,9 +139,15 @@
                             {{-- <li><a href="#">GitHub</a></li>
                             <li><a href="#">Social</a></li>
                             <li><a href="#">Facebook</a></li> --}}
-                            <li>
+                            <li class="mb-3">
                                 <a href="https://www.instagram.com/associacaosdospracas/" target="_blank">
                                     <img src="/img/Instagram_logo.svg" class="img-thumbnail" alt="instagram" width="100"
+                                        height="100">
+                                </a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="https://wa.me/message/ABFVUULB5HXIK1" target="_blank" rel="noopener noreferrer">
+                                    <img src="/img/whatsapp.png" class="img-thumbnail" alt="whatsapp" width="100"
                                         height="100">
                                 </a>
                             </li>

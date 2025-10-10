@@ -38,10 +38,13 @@
                 <div class="row">
                     @foreach ($beneficios as $beneficio)
                         <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
-
+                            {{-- CARD BENEFICIO --}}
                             <div class="card h-100">
+
+                                {{-- CARROSSEL --}}
                                 <div id="carouselExample{{ $beneficio->id }}" class="carousel slide">
 
+                                    {{-- IMGAGENS DO BENEFICIO --}}
                                     <div class="carousel-inner" style="min-height: 200px;">
                                         @foreach ($beneficio->files as $index => $files)
                                             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
@@ -52,6 +55,7 @@
                                         @endforeach
                                     </div>
 
+                                    {{-- BOTOES PARA PASSAR AS IMGAGENS --}}
                                     <button class="carousel-control-prev" type="button"
                                         data-bs-target="#carouselExample{{ $beneficio->id }}" data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -65,7 +69,7 @@
 
                                 </div>
 
-
+                                {{-- TITULO E DESCRIÇÃO --}}
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <div>
                                         <h5 class="card-title">{{ $beneficio->nome }}</h5>

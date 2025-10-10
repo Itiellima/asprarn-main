@@ -64,4 +64,18 @@ class UsuariosController extends Controller
 
         return redirect()->route('usuarios.index')->with('success', 'Roles atualizadas com sucesso!');
     }
+
+    public function destroy($id)
+    {
+        // Verifica se o usuário autenticado é admin
+        $user = Auth::user();
+        if (!$user || !$user->hasRole('admin')) {
+            return redirect()->route('dashboard')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('usuarios.index')->with('success', 'Usuário deletado com sucesso!');
+    }
 }
