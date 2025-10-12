@@ -38,7 +38,6 @@
             font-family: Arial;
             /* Lista de fontes */
         }
-
     </style>
 
 </head>
@@ -63,15 +62,22 @@
                 <!-- Itens do menu -->
                 <div class="collapse navbar-collapse justify-content-center" id="navbarAspra">
                     <ul class="navbar-nav mb-2 mb-md-0 text-center">
-                        <li class="nav-item"><a href="/" class="nav-link px-2 link-secondary">Início</a></li>
-                        <li class="nav-item"><a href="{{ route('beneficio.index') }}"
-                                class="nav-link px-2">Benefícios</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link px-2">ASPRA</a></li>
-                        <li class="nav-item"><a href="/associado/create" class="nav-link px-2 border-bottom">Quero me
-                                associar</a></li>
-
+                        <li class="nav-item">
+                            <a href="/" class="nav-link px-2 link-secondary">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('beneficio.index') }}" class="nav-link px-2">Benefícios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link px-2">ASPRA</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('associado.create') }}" class="nav-link px-2 border-bottom">Quero me associar</a>
+                        </li>
                         @auth
-                            <li class="nav-item"><a href="/dashboard" class="nav-link px-2">Minha Página</a></li>
+                            <li class="nav-item">
+                                <a href="/dashboard" class="nav-link px-2">Minha Página</a>
+                            </li>
                         @endauth
                     </ul>
 
@@ -92,7 +98,7 @@
             </div>
         </nav>
 
-        
+
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const navbar = document.querySelector('nav.fixed-top');

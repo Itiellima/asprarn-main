@@ -29,6 +29,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 Route::get('/requerimento/{id}', [RequerimentoController::class, 'show'])->name('associado.pdf.requerimento');
 
 
+
+// ////////// ********* PASTA DOCUMENTOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/associado/pasta_documento/{id}', [PastaDocumentoController::class, 'index'])->name('associado.pasta_documento.index');
 Route::post('/associado/pasta_documento/store/{id}', [PastaDocumentoController::class, 'store'])->name('associado.pasta_documento.store');
 Route::get('/associado/pasta_documento/show/{associado_id}/{pasta_id}', [PastaDocumentoController::class, 'show'])->name('associado.pasta_documento.show');

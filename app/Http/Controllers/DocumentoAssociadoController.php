@@ -59,12 +59,10 @@ class DocumentoAssociadoController extends Controller
         try {
             DB::beginTransaction();
 
-            // Verifica se a pasta existe e pertense ao associado
-            $pasta = PastaDocumento::where('id', $id)
-                ->with('associado')
-                ->firstOrFail();
+            // Confirma se a pasta existe
+            $pasta = PastaDocumento::findOrFail($id);
 
-            // Pega o ID do associado
+            // Obtém o ID do associado da pasta
             $associadoId = $pasta->associado_id;
 
             // Salva o arquivo e o caminho para armazenar o arquivo
@@ -146,9 +144,12 @@ class DocumentoAssociadoController extends Controller
             return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
-        $file = File::where('fileable_type', PastaDocumento::class)
+        // Verifica se o arquivo pertence à pasta
+        $file = File::where('id', $fileId)
+            ->where('fileable_type', PastaDocumento::class)
             ->where('fileable_id', $id)
-            ->findOrFail($fileId);
+            ->firstOrFail();
+
 
         if ($file->path && Storage::disk('public')->exists($file->path)) {
             return response()->file(Storage::disk('public')->path($file->path));
@@ -156,5 +157,4 @@ class DocumentoAssociadoController extends Controller
 
         abort(404, 'Arquivo não encontrado.');
     }
-
 }
