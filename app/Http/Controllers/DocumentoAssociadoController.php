@@ -14,42 +14,43 @@ use Illuminate\Support\Facades\Log;
 class DocumentoAssociadoController extends Controller
 {
 
-    public function indexDocumento($id)
+    // public function indexDocumento($id)
+    // {
+
+    //     $user = Auth::user();
+
+    //     if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
+    //         return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+    //     }
+
+    //     $pasta = PastaDocumento::with([
+    //         'files',
+    //         'associado'
+    //     ])->findOrFail($id);
+
+    //     $search = request('search');
+
+    //     $documentos = $pasta->files()
+    //         ->when($search, function ($query, $search) {
+    //             $query->where('tipo_documento', 'like', "%{$search}%")
+    //                 ->orWhere('status', 'like', "%{$search}%")
+    //                 ->orWhere('observacao', 'like', "%{$search}%");
+    //         })
+    //         ->paginate(10);
+
+    //     return view('associado.documentos.index', compact('pasta', 'documentos', 'search'));
+    // }
+
+    // Criar documento na pasta
+    public function store(Request $request, $pastaId)
     {
-
+        // verifica se o usuário está autenticado e tem a função necessária
         $user = Auth::user();
-
         if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
             return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
-        $pasta = PastaDocumento::with([
-            'files',
-            'associado'
-        ])->findOrFail($id);
-
-        $search = request('search');
-
-        $documentos = $pasta->files()
-            ->when($search, function ($query, $search) {
-                $query->where('tipo_documento', 'like', "%{$search}%")
-                    ->orWhere('status', 'like', "%{$search}%")
-                    ->orWhere('observacao', 'like', "%{$search}%");
-            })
-            ->paginate(10);
-
-        return view('associado.documentos.index', compact('pasta', 'documentos', 'search'));
-    }
-
-    // Criar documento para uma pasta
-    public function storeDocumento(Request $request, $id)
-    {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
+        // Validação dos dados do formulário
         $request->validate([
             'tipo_documento' => 'required|string|max:50',
             'arquivo' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
@@ -60,13 +61,13 @@ class DocumentoAssociadoController extends Controller
             DB::beginTransaction();
 
             // Confirma se a pasta existe
-            $pasta = PastaDocumento::findOrFail($id);
+            $pasta = PastaDocumento::findOrFail($pastaId);
 
             // Obtém o ID do associado da pasta
             $associadoId = $pasta->associado_id;
 
             // Salva o arquivo e o caminho para armazenar o arquivo
-            $path = $request->file('arquivo')->store("documentos/{$associadoId}/{$pasta->id}", 'public');
+            $path = $request->file('arquivo')->store("documentos/{$associadoId}/{$pastaId}", 'public');
 
             // Cria o registro do arquivo na tabela files
             $pasta->files()->create([
@@ -80,39 +81,36 @@ class DocumentoAssociadoController extends Controller
 
             return redirect()->back()->with('success', 'Documento enviado com sucesso!');
         } catch (\Exception $e) {
-
             DB::rollBack();
             Log::error('Erro ao enviar documentos' . $e->getMessage());
-
             return redirect()->back()->with('error', 'Ocorreu um erro ao enviar os arquivos, tente novamente');
         }
     }
 
-    // Atualizar status/observação
-    public function updateDocumento(Request $request, $id, $fileId)
+    // Exibir documento
+    public function show($pastaId, $fileId)
     {
         $user = Auth::user();
-
         if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
             return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
-        $request->validate([
-            'status' => 'required|in:pendente,recebido,rejeitado',
-            'observacao' => 'nullable|string',
-        ]);
+        // Verifica se o arquivo pertence à pasta
+        $file = File::where('id', $fileId)
+            ->where('fileable_type', PastaDocumento::class)
+            ->where('fileable_id', $pastaId)
+            ->firstOrFail();
 
-        $file = File::where('fileable_type', PastaDocumento::class)
-            ->where('fileable_id', $id)
-            ->findOrFail($fileId);
 
-        $file->update($request->only('status', 'observacao'));
+        if ($file->path && Storage::disk('public')->exists($file->path)) {
+            return response()->file(Storage::disk('public')->path($file->path));
+        }
 
-        return redirect()->back()->with('success', 'Documento atualizado com sucesso!');
+        abort(404, 'Arquivo não encontrado.');
     }
 
     // Excluir documento
-    public function destroyDocumento($associadoId, $fileId)
+    public function destroy($pastaId, $fileId)
     {
         $user = Auth::user();
         if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
@@ -120,8 +118,9 @@ class DocumentoAssociadoController extends Controller
         }
 
         // Verifica se o arquivo pertence ao associado através da pasta
-        $file = File::where('fileable_type', PastaDocumento::class)
-            ->where('fileable_id', $associadoId)
+        $file = File::where('id', $fileId)
+            ->where('fileable_type', PastaDocumento::class)
+            ->where('fileable_id', $pastaId)
             ->findOrFail($fileId);
 
         // Deleta o arquivo do storage se existir
@@ -135,8 +134,16 @@ class DocumentoAssociadoController extends Controller
         return redirect()->back()->with('success', 'Documento excluído com sucesso!');
     }
 
-    // Exibir documento
-    public function showDocumento($id, $fileId)
+
+
+
+
+
+
+
+
+    // Atualizar status/observação
+    public function update(Request $request, $pastaId, $fileId)
     {
         $user = Auth::user();
 
@@ -144,17 +151,17 @@ class DocumentoAssociadoController extends Controller
             return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
-        // Verifica se o arquivo pertence à pasta
-        $file = File::where('id', $fileId)
-            ->where('fileable_type', PastaDocumento::class)
-            ->where('fileable_id', $id)
-            ->firstOrFail();
+        $request->validate([
+            'status' => 'required|in:pendente,recebido,rejeitado',
+            'observacao' => 'nullable|string',
+        ]);
 
+        $file = File::where('fileable_type', PastaDocumento::class)
+            ->where('fileable_id', $pastaId)
+            ->findOrFail($fileId);
 
-        if ($file->path && Storage::disk('public')->exists($file->path)) {
-            return response()->file(Storage::disk('public')->path($file->path));
-        }
+        $file->update($request->only('status', 'observacao'));
 
-        abort(404, 'Arquivo não encontrado.');
+        return redirect()->back()->with('success', 'Documento atualizado com sucesso!');
     }
 }

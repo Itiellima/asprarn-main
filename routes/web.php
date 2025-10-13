@@ -30,16 +30,23 @@ Route::get('/requerimento/{id}', [RequerimentoController::class, 'show'])->name(
 
 
 
-// ////////// ********* PASTA DOCUMENTOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-Route::get('/associado/pasta_documento/{id}', [PastaDocumentoController::class, 'index'])->name('associado.pasta_documento.index');
-Route::post('/associado/pasta_documento/store/{id}', [PastaDocumentoController::class, 'store'])->name('associado.pasta_documento.store');
-Route::get('/associado/pasta_documento/show/{associado_id}/{pasta_id}', [PastaDocumentoController::class, 'show'])->name('associado.pasta_documento.show');
 
+//////////////////////////////// ********* CRUD PASTA ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Route::get('/associado/pasta/index/{associadoId}', [PastaDocumentoController::class, 'index'])->name('associado.pasta.index');
+Route::post('/associado/pasta/store/{associadoId}', [PastaDocumentoController::class, 'store'])->name('associado.pasta.store');
+Route::get('/associado/pasta/show/{associadoId}/{pastaId}', [PastaDocumentoController::class, 'show'])->name('associado.pasta.show');
+Route::delete('/associado/pasta/destroy/{associadoId}/{pastaId}', [PastaDocumentoController::class, 'destroy'])->name('associado.pasta.destroy');
 
+//////////////////////////////// ********* DOCUMENTOS ASSOCIADOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//STORE
+Route::post('/associado/pasta/documentos/store/{pastaId}', [DocumentoAssociadoController::class, 'store'])->name('associado.pasta.documentos.store');
+//SHOW BY ID
+Route::get('/associado/pasta/documentos/show/{pastaId}/{fileId}', [DocumentoAssociadoController::class, 'show'])->name('associado.pasta.documentos.show');
+//DESTROY
+Route::delete('/associado/pasta/documentos/destroy/{pastaId}/{fileId}', [DocumentoAssociadoController::class, 'destroy'])->name('associado.pasta.documentos.destroy');
 
-
-
-
+//UPDATE
+Route::patch('/associado/{id}/documentos/{documento}', [DocumentoAssociadoController::class, 'updateDocumento'])->name('associado.documentos.update');
 
 
 
@@ -60,18 +67,6 @@ Route::put('/associado/update/{id}', [AssociadoController::class, 'update'])->na
 //ROTA DESTROY
 Route::delete('/associado/delete/{id}', [AssociadoController::class, 'destroy'])->name('associado.destroy');
 
-
-//////////////////////////////// ********* DOCUMENTOS ASSOCIADOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-//VIEW DOCUMENTOS ASSOCIADOS
-Route::get('/associado/documentos/{id}', [DocumentoAssociadoController::class, 'indexDocumento'])->name('associado.documentos.index');
-//VIEW DOCUMENTO BY ID
-Route::get('/associado/documentos/{id}/{documento}', [DocumentoAssociadoController::class, 'showDocumento'])->name('associado.documentos.show');
-//ROTA STORE
-Route::post('/associado/{id}/documentos', [DocumentoAssociadoController::class, 'storeDocumento'])->name('associado.documentos.store');
-//ROTA UPDATE
-Route::patch('/associado/{id}/documentos/{documento}', [DocumentoAssociadoController::class, 'updateDocumento'])->name('associado.documentos.update');
-//ROTA DESTROY
-Route::delete('/associado/{id}/documentos/{documento}', [DocumentoAssociadoController::class, 'destroyDocumento'])->name('associado.documentos.destroy');
 
 
 //////////////////////////////// ********* SITUACAO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

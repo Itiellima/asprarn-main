@@ -28,8 +28,8 @@ class File extends Model
     protected static function booted()
     {
         static::deleting(function ($file) {
-            if ($file->arquivo && Storage::disk('public')->exists($file->arquivo)) {
-                Storage::disk('public')->delete($file->arquivo);
+            if ($file->path && Storage::disk('public')->exists($file->path)) {
+                Storage::disk('public')->delete($file->path);
             }
         });
     }

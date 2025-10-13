@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\DB;
 
 class PastaDocumentoController extends Controller
 {
-    public function index($id)
+    public function index($associadoId)
     {
         $user = Auth::user();
         if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
             return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
-        $associado = Associado::findOrFail($id);
+        $associado = Associado::findOrFail($associadoId);
 
         $pastas = PastaDocumento::with([
             'associado'
@@ -33,14 +33,14 @@ class PastaDocumentoController extends Controller
         //
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request, $associadoId)
     {
         $user = Auth::user();
         if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
             return redirect()->route('index')->with('error', 'Acesso negado.');
         }
 
-        $associado = Associado::findOrFail($id);
+        $associado = Associado::findOrFail($associadoId);
 
         $request->validate([
             'nome' => 'required|string|max:255',
@@ -50,6 +50,7 @@ class PastaDocumentoController extends Controller
 
         DB::beginTransaction();
         try{
+            // Criar a pasta de documentos associada ao associado
             $associado->pastaDocumentos()->create([
                 'nome' => $request->nome,
                 'tipo_documento' => $request->tipo_documento,
@@ -62,18 +63,17 @@ class PastaDocumentoController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', 'Erro ao criar a pasta de documentos: ' . $e->getMessage());
         }
-        //
     }
 
-    public function show($associado_id, $pasta_id)
+    public function show($associadoId, $pastaId)
     {
         $user = Auth::user();
         if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
             return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
-        $associado = Associado::findOrFail($associado_id);
-        $pasta = $associado->pastaDocumentos()->with('files')->findOrFail($pasta_id);
+        $associado = Associado::findOrFail($associadoId);
+        $pasta = $associado->pastaDocumentos()->with('files')->findOrFail($pastaId);
 
         $arquivos = $pasta->files;
 
@@ -89,4 +89,30 @@ class PastaDocumentoController extends Controller
 
         return view('associado.pastas.show', compact('pasta', 'associado', 'documentos', 'search', 'arquivos'));
     }
+
+    public function destroy($associadoId, $pastaId){
+        $user = Auth::user();
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])){
+            return redirect()->route('index')->with('error', 'Acesso negado.');
+        }
+
+        $associado = Associado::findOrFail($associadoId);
+        $pasta = $associado->pastaDocumentos()->findOrFail($pastaId);
+
+        DB::beginTransaction();
+        try{
+            // Deletar todos os arquivos associados a pasta
+            foreach ($pasta->files as $file){
+                $file->delete();
+            }
+            // Deletar a pasta
+            $pasta->delete();
+            DB::commit();
+            return redirect()->back()->with('success', 'Pasta deletada com sucesso.');
+        } catch (\Exception $e){
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Erro ao deletar a pasta');
+        }
+    }
+
 }

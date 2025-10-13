@@ -30,7 +30,7 @@
                         <h3>Documentos de {{ $associado->nome }}</h3>
 
                         {{-- Formulário de envio documento --}}
-                        <form action="{{ route('associado.documentos.store', $pasta->id) }}" method="POST"
+                        <form action="{{ route('associado.pasta.documentos.store', ['pastaId' => $pasta->id]) }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
                             <label>Tipo de Documento</label>
@@ -70,7 +70,7 @@
                         <td>{{ $file->tipo_documento }}</td>
                         <td>{{ $file->status }}</td>
                         <td>
-                            <a href="{{ route('associado.documentos.show', [$associado->id, $file->id]) }}"
+                            <a href="{{ route('associado.pasta.documentos.show', ['pastaId' => $pasta->id, 'fileId' => $file->id]) }}"
                                 class="btn btn-sm btn-primary" target="_blank">
                                 Visualizar
                             </a>
@@ -126,7 +126,7 @@
                             </div>
 
                             {{-- Formulário de exclusão --}}
-                            <form action="{{ route('associado.documentos.destroy', [$associado->id, $file->id]) }}"
+                            <form action="{{ route('associado.pasta.documentos.destroy', ['pastaId' => $pasta->id, 'fileId' => $file->id]) }}"
                                 method="POST" style="display:inline-block">
                                 @csrf
                                 @method('DELETE')

@@ -34,9 +34,18 @@
                                 <td>{{ $pasta->descricao }}</td>
                                 <td>{{ date('d/m/Y', strtotime($pasta->created_at)) }}</td>
                                 <td>
-                                    <a href="{{ route('associado.pasta_documento.show', ['associado_id' => $associado->id, 'pasta_id' => $pasta->id]) }}"
+                                    <a href="{{ route('associado.pasta.show', ['associadoId' => $associado->id, 'pastaId' => $pasta->id]) }}"
                                     class="btn btn-primary btn-sm">Ver Pasta</a>
+                                    
+                                    <form action="{{ route('associado.pasta.destroy', ['associadoId' => $associado->id, 'pastaId' => $pasta->id]) }}" method="POST">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            Deletar
+                                        </button>
+                                    </form>
                                 </td>
+                                
                             </tr>
                         @endforeach
                     </tbody>
@@ -65,7 +74,7 @@
                             <h3>Documentos de {{ $associado->nome }}</h3>
 
                             {{-- Formulário de criacao de pasta --}}
-                            <form action="{{ route('associado.pasta_documento.store', $associado->id) }}" method="POST">
+                            <form action="{{ route('associado.pasta.store', ['associadoId' => $associado->id]) }}" method="POST">
                                 @csrf
 
                                 <label>Nome da pasta</label>

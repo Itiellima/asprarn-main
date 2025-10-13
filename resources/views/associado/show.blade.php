@@ -92,7 +92,7 @@
             {{-- <a href="{{ route('associado.documentos.index', $associado->id) }}"
                 class="btn btn-primary col-2 mx-2">Documentos</a> --}}
                 
-            <a href="{{ route('associado.pasta_documento.index', $associado->id) }}"
+            <a href="{{ route('associado.pasta.index', $associado->id) }}"
                 class="btn btn-primary col-2 mx-2">Arquivos</a>
 
             <a href="#" class="btn btn-primary col-2 mx-2">Historico</a>

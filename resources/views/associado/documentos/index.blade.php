@@ -31,7 +31,7 @@
                                     <h3>Documentos de {{ $associado->nome }}</h3>
 
                                     {{-- Formulário de envio documento --}}
-                                    <form action="{{ route('associado.documentos.store', $associado->id) }}" method="POST"
+                                    <form action="{{ route('associado.pasta.documentos.store', ['pastaId' => $pasta->id]) }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
                                         <label>Tipo de Documento</label>
