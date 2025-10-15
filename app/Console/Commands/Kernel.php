@@ -23,6 +23,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // 🧹 Executa semanalmente a limpeza de pastas vazias
-        $schedule->command('app:clean-empty-folders')->weekly();
+        $schedule->command('app:clean-empty-folders')->daily();
     }
 }
