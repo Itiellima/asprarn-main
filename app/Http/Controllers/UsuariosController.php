@@ -44,23 +44,10 @@ class UsuariosController extends Controller
 
         // Valida a entrada
         $user = User::findOrFail($id);
-        $role = $request->role;
+        $roles = $request->input('roles', []);
 
-        // Define hierarquia
-        $rolesHierarquia = [
-            'admin'     => ['admin', 'moderador', 'associado', 'user'],
-            'moderador' => ['moderador', 'associado', 'user'],
-            'associado' => ['associado', 'user'],
-            'user'      => ['user']
-        ];
-
-        // Verifica se a role existe na hierarquia
-        if (!array_key_exists($role, $rolesHierarquia)) {
-            return redirect()->back()->with('error', 'Role inválida.');
-        }
-
-        // Aplica todas as roles conforme a hierarquia
-        $user->syncRoles($rolesHierarquia[$role]);
+        // Atualiza as roles do usuário
+        $user->syncRoles($roles);
 
         return redirect()->route('usuarios.index')->with('success', 'Roles atualizadas com sucesso!');
     }

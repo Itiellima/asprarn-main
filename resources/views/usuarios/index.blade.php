@@ -32,61 +32,67 @@
         @if ($users->isEmpty())
             <p>Nenhum usuario encontrado.</p>
         @else
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Role Principal</th>
-                    <th>Alterar Role</th>
-                    <th>Ação</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($users as $user)
-                    @php
-                        // Pega a role principal baseado na hierarquia
-                        if ($user->hasRole('admin')) {
-                            $principal = 'admin';
-                        } elseif ($user->hasRole('moderador')) {
-                            $principal = 'moderador';
-                        } elseif ($user->hasRole('associado')) {
-                            $principal = 'associado';
-                        } else {
-                            $principal = 'user';
-                        }
-                    @endphp
+            <table class="table table-bordered">
+                <thead>
                     <tr>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ ucfirst($principal) }}</td>
-                        <td>
-                            <form action="{{ route('usuarios.updateRole', $user->id) }}" method="POST">
-                                @csrf
-                                <select name="role" class="form-select" required>
-                                    <option value="admin" {{ $principal === 'admin' ? 'selected' : '' }}>Admin</option>
-                                    <option value="moderador" {{ $principal === 'moderador' ? 'selected' : '' }}>Moderador
-                                    </option>
-                                    <option value="associado" {{ $principal === 'associado' ? 'selected' : '' }}>Associado
-                                    </option>
-                                    <option value="user" {{ $principal === 'user' ? 'selected' : '' }}>User</option>
-                                </select>
-                                <button type="submit" class="btn btn-primary mt-1">Salvar</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="{{ route('usuarios.destroy', $user->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger mt-1"
-                                    onclick="return confirm('Tem certeza que deseja deletar este usuário?')">Deletar</button>
-                            </form>
-                        </td>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Role Principal</th>
+                        <th>Alterar Role</th>
+                        <th>Ação</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-        {{ $users->appends(request()->query())->links('pagination::bootstrap-5') }}
+                </thead>
+                <tbody>
+                    @foreach ($users as $user)
+                        @php
+                            // Pega a role principal baseado na hierarquia
+                            if ($user->hasRole('admin')) {
+                                $principal = 'admin';
+                            } elseif ($user->hasRole('moderador')) {
+                                $principal = 'moderador';
+                            } elseif ($user->hasRole('associado')) {
+                                $principal = 'associado';
+                            } else {
+                                $principal = 'user';
+                            }
+                        @endphp
+                        <tr>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ ucfirst($principal) }}</td>
+                            <td>
+                                <form action="{{ route('usuarios.updateRole', $user->id) }}" method="POST">
+                                    @csrf
+                                    @foreach ($roles as $role)
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" 
+                                                id="role_{{ $role->id }}"
+                                                name="roles[]" 
+                                                value="{{ $role->name }}"
+                                                {{ $user->hasRole($role->name) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="role_{{ $role->id }}">
+                                                {{ ucfirst($role->name) }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+
+                                    <button type="submit" class="btn btn-sm btn-primary mt-1">Salvar</button>
+                                </form>
+
+                            </td>
+                            <td>
+                                <form action="{{ route('usuarios.destroy', $user->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger mt-1"
+                                        onclick="return confirm('Tem certeza que deseja deletar este usuário?')">Deletar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            {{ $users->appends(request()->query())->links('pagination::bootstrap-5') }}
         @endif
     </div>
 
