@@ -96,7 +96,7 @@
                 class="btn btn-primary col-2 mx-2">Arquivos</a>
 
             <a href="#" class="btn btn-primary col-2 mx-2">Historico</a>
-            <a href="#" class="btn btn-primary col-2 mx-2">Financeiro</a>
+            <a href="{{ route('associado.financeiro.index', $associado->id) }}" class="btn btn-primary col-2 mx-2">Financeiro</a>
             <a href="#" class="btn btn-primary col-2 mx-2 disabled">#</a>
         </div>
     </div>

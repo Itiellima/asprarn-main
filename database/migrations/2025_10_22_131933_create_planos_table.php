@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('beneficios');
             $table->boolean('ativo')->default(false);
             $table->decimal('preco', 10, 2);
+            $table->string('historico');
             $table->timestamps();
         });
     }

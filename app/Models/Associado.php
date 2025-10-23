@@ -52,6 +52,13 @@ class Associado extends Model
         return $this->hasMany(PastaDocumento::class);
     }
 
+    public function planos()
+    {
+        return $this->belongsToMany(Plano::class, 'associado_plano')
+                ->withPivot(['data_inicio', 'data_fim', 'ativo'])
+                ->withTimestamps();
+    }
+
 
     protected $fillable = [
         'nome',

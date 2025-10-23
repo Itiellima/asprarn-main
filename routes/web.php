@@ -12,6 +12,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PastaDocumentoController;
+use App\Http\Controllers\PlanosController;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
@@ -67,6 +68,8 @@ Route::put('/associado/update/{id}', [AssociadoController::class, 'update'])->na
 //ROTA DESTROY
 Route::delete('/associado/delete/{id}', [AssociadoController::class, 'destroy'])->name('associado.destroy');
 
+//////////////////////////////// ********* ASSOCIADO FINANCEIRO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Route::get('/associado/financeiro/{associadoId}', [PlanosController::class, 'index'])->name('associado.financeiro.index');
 
 
 //////////////////////////////// ********* SITUACAO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
