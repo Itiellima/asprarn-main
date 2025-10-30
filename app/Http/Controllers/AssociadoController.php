@@ -82,10 +82,11 @@ class AssociadoController extends Controller
         // 1. Validação
         $request->validate([
             'nome'  => 'required',
-            'cpf'   => 'required|unique:associados,cpf',
+            'cpf'   => 'required|unique:associados,cpf|digits:11',
             'email' => 'required|unique:users,email',
         ], [
             'cpf.unique'   => 'Já existe um associado cadastrado com esse CPF.',
+            'cpf.digits'     => 'O CPF deve conter exatamente 11 dígitos numericos.',
             'email.unique' => 'Já existe um usuário com esse e-mail.',
         ]);
 
@@ -148,7 +149,7 @@ class AssociadoController extends Controller
             $user = User::create([
                 'name'         => $associado->nome,
                 'email'        => $request->email,
-                'password'     => Hash::make('123456'),
+                'password'     => Hash::make($request->cpf),
                 'associado_id' => $associado->id,
             ]);
 
