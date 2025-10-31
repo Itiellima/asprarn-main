@@ -93,3 +93,5 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/profile', function () {
     return view('profile.show');
 })->name('profile.view');
+
+Route::get('/register', [AssociadoController::class, 'create'])->name('register.view');
