@@ -24,7 +24,8 @@ Route::middleware(['auth'])->group(function () {
 Route::resource('beneficio', BeneficioController::class);
 
 //View dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 
 //view requerimento para impressão
 Route::get('/requerimento/{id}', [RequerimentoController::class, 'show'])->name('associado.pdf.requerimento');

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Novo associado')
+@section('title', 'AspraRN - Formulário de Cadastro')
 
 @section('content')
 

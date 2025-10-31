@@ -270,14 +270,16 @@ class AssociadoController extends Controller
             DB::beginTransaction();
 
             // Exclui o usuário vinculado ao associado (se existir)
-            $associado->user->delete();
+            if ($associado->user){
+                $associado->user->delete();
+            }
 
             // Exclui o associado (cascade cuida do resto)
             $associado->delete();
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Erro ao deletar associado');
+            return redirect()->back()->with('error', 'Erro ao deletar associado : ' . $e->getMessage());
         }
 
         return redirect('/associado')->with('msg', 'Associado deletado com sucesso!');

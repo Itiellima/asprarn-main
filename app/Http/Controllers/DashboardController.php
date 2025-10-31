@@ -14,6 +14,10 @@ class DashboardController extends Controller
         // Usuario conectado
         $user = Auth::user();
 
+        if (!$user) {
+            abort(403, 'Usuario não autenticado.');
+        }
+
         // Roles do usuário
         $userRoles = $user->roles->pluck('name')->toArray();
 
@@ -27,21 +31,28 @@ class DashboardController extends Controller
             abort(403, 'Acesso negado.');
         }
 
-        // Admin ou moderador → pega todos os associados
-        if (in_array($role, ['admin', 'moderador'])) {
-            $associados = Associado::all();
-            
-            return view("dashboard.admin", compact('user', 'associados'));
-        }
-
-        // Associado → pega apenas o associado vinculado ao usuário logado
-        if ($role === 'associado') {
-            $associado = $user->associado;
-            if (!$associado) {
-                abort(403, 'Acesso negado.');
-            }
-            return view("dashboard.associado", compact('user', 'associado'));
-        }
+        return match ($role) {
+            'admin', 'moderador' => $this->adminDashboard($user),
+            'associado' => $this->associadoDashboard($user),
+            default => abort(403, 'Acesso negado.'),
+        };
     }
+
+
+    private function adminDashboard($user)
+    {
+        $associados = Associado::all();
+        return view("dashboard.admin", compact('user', 'associados'));
+    }
+
+    private function associadoDashboard($user)
+    {
+        $associado = $user->associado;
+        if (!$associado) {
+            abort(403, 'Acesso negado.');
+        }
+        return view('dashboard.associado', compact('user', 'associado'));
+    }
+
 
 }

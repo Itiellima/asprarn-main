@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', '')
+@section('title', 'AspraRN - Bem vindo')
 
 @section('content')
     <div class="container body-offset">

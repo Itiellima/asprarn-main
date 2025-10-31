@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', '')
+@section('title', 'AspraRN - Clubes de Benefícios')
 
 @section('content')
 

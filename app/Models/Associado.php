@@ -55,8 +55,8 @@ class Associado extends Model
     public function planos()
     {
         return $this->belongsToMany(Plano::class, 'associado_plano')
-                ->withPivot(['data_inicio', 'data_fim', 'ativo'])
-                ->withTimestamps();
+            ->withPivot(['data_inicio', 'data_fim', 'ativo'])
+            ->withTimestamps();
     }
 
 
@@ -82,14 +82,21 @@ class Associado extends Model
     protected static function booted()
     {
         static::deleting(function ($associado) {
-            foreach ($associado->documentos as $documento) {
-                // Exclui o arquivo físico
-                if ($documento->arquivo && Storage::disk('public')->exists($documento->arquivo)) {
-                    Storage::disk('public')->delete($documento->arquivo);
-                }
+            if ($associado->documentos && $associado->documentos->count() > 0) {
+                foreach ($associado->documentos as $documento) {
+                    // Exclui o arquivo físico, se existir
+                    if ($documento->arquivo && Storage::disk('public')->exists($documento->arquivo)) {
+                        Storage::disk('public')->delete($documento->arquivo);
+                    }
 
-                // Exclui o registro no banco
-                $documento->delete();
+                    // Exclui o registro no banco
+                    $documento->delete();
+                }
+            }
+
+            // Exclui o usuário vinculado ao associado (se existir)
+            if ($associado->user) {
+                $associado->user->delete();
             }
         });
     }
