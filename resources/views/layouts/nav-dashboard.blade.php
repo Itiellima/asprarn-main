@@ -1,21 +1,24 @@
 <div class="container">
     <aside class="w-64 min-h-screen bg-gray-800 p-4">
 
-        <h2 class="text-xl font-bold mb-6">Dashboard: {{ auth()->user()->name }}</h2>
+        <h2 class="text-black text-center m-3 alert alert-light">Dashboard: {{ auth()->user()->name }}</h2>
 
-        <nav>
+        <nav class="m-3">
             @auth
                 <div class="dropdown">
 
-                    <a href="/dashboard" class="btn btn-secondary mx-1">🏠 Home</a>
-
+                    <a href="/dashboard" class="btn btn-success mx-1">🏠 Inicio</a>
+                    @hasanyrole('associado')
+                    <a href="#" class="btn btn-primary mx-1">🏠 Meus beneficios</a>
+                    <a href="#" class="btn btn-primary mx-1">🏠 Declarações</a>
+                    @endhasanyrole
 
 
                     @hasanyrole('admin|moderador')
-                        <a href="{{ route('associado.index') }}" class="btn btn-secondary">👥 Gestão de Associados</a>
-                        <a href="/profile" class="btn btn-secondary mx-1">👮 Alterar Perfil</a>
+                        <a href="{{ route('associado.index') }}" class="btn btn-primary">👥 Gestão de Associados</a>
+                        <a href="/profile" class="btn btn-primary mx-1">👮 Alterar Perfil</a>
 
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             Administração Menu
                         </button>

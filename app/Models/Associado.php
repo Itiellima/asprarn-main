@@ -32,10 +32,6 @@ class Associado extends Model
     }
 
     // Um associado pode ter muitos documentos, mensalidades, historicoSituacoes e pastas de documentos.
-    public function mensalidades()
-    {
-        return $this->hasMany(Mensalidade::class);
-    }
 
     public function historicoSituacoes()
     {
@@ -59,6 +55,10 @@ class Associado extends Model
             ->withTimestamps();
     }
 
+    public function mensalidades()
+    {
+        return $this->hasMany(Mensalidade::class);
+    }
 
     protected $fillable = [
         'nome',
