@@ -3,7 +3,7 @@
 @section('title', 'Aspra Associado')
 
 @section('content')
-    @include('layouts.nav-dashboard')
+    @include('dashboard.layouts.nav-dashboard')
 
     <div class="container">
         <h1>Gerenciar permissões dos Usuários</h1>

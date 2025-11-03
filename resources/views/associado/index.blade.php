@@ -4,7 +4,7 @@
 
 @section('content')
 
-@include('layouts.nav-dashboard')
+@include('dashboard.layouts.nav-dashboard')
 
     <div class="container border rounded-3 mb-3">
         <div class="d-flex justify-content-between align-items-center mb-4 mt-3">
