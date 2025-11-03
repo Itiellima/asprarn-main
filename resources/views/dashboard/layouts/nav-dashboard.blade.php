@@ -7,18 +7,21 @@
             @auth
                 <div class="dropdown">
 
-                    <a href="/dashboard" class="btn btn-success mx-1">🏠 Inicio</a>
+                    <a href="/dashboard" class="btn btn-success m-1">🏠 Inicio</a>
                     @hasanyrole('associado')
-                    <a href="#" class="btn btn-primary mx-1">🏠 Meus beneficios</a>
-                    <a href="#" class="btn btn-primary mx-1">🏠 Declarações</a>
+                        <a href="#" class="btn btn-primary m-1">👤 Minha Área</a>
+                        <a href="#" class="btn btn-primary m-1">📝 Meus Requerimentos</a>
+                        <a href="#" class="btn btn-primary m-1">🎁 Meus Benefícios</a>
+                        <a href="#" class="btn btn-primary m-1">📋 Meus Planos</a>
+                        <a href="#" class="btn btn-primary m-1">🏠 Declarações</a>
                     @endhasanyrole
 
 
                     @hasanyrole('admin|moderador')
-                        <a href="{{ route('associado.index') }}" class="btn btn-primary">👥 Gestão de Associados</a>
-                        <a href="/profile" class="btn btn-primary mx-1">👮 Alterar Perfil</a>
+                        <a href="{{ route('associado.index') }}" class="btn btn-primary m-1">👥 Gestão de Associados</a>
+                        <a href="/profile" class="btn btn-primary mx-1 m-1">👮 Alterar Perfil</a>
 
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        <button class="btn btn-primary dropdown-toggle m-1" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             Administração Menu
                         </button>

@@ -30,7 +30,9 @@ Route::middleware(['auth', 'verified'])->get('/dashboard', [DashboardController:
 //view requerimento para impressão
 Route::get('/requerimento/{id}', [RequerimentoController::class, 'show'])->name('associado.pdf.requerimento');
 
-
+Route::get('/dashboard/associado/financeiro', function () {
+    return view ('dashboard.associado-financeiro');
+})->name('dashboard.associado.financeiro');
 
 
 //////////////////////////////// ********* CRUD PASTA ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', '')
+@section('title', 'ASPRARN - Editar Benefício')
 
 @section('content')
 
