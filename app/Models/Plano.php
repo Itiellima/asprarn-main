@@ -12,4 +12,13 @@ class Plano extends Model
                 ->withPivot(['data_inicio', 'data_fim', 'ativo'])
                 ->withTimestamps();
     }
+
+    protected $fillable = [
+        'nome',
+        'descricao',
+        'beneficios',
+        'ativo',
+        'preco',
+        'historico'
+    ];
 }

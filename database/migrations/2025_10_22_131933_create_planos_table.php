@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('planos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->text('descricao');
             $table->string('beneficios');
+            $table->text('descricao');
             $table->boolean('ativo')->default(false);
             $table->decimal('preco', 10, 2);
             $table->string('historico');

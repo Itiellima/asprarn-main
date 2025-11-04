@@ -98,3 +98,8 @@ Route::get('/profile', function () {
 })->name('profile.view');
 
 Route::get('/register', [AssociadoController::class, 'create'])->name('register.view');
+
+
+//////////////////////////////// ********* PLANOS ASSOCIADO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Route::get('/planos/index', [PlanosController::class, 'index'])->name('planos.index');
+Route::get('/planos/create', [PlanosController::class, 'create'])->name('planos.create');
