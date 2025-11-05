@@ -25,7 +25,7 @@
                     
                     <a href="{{ route('associado.index') }}" class="btn btn-primary m-1">👥 Gestão de Associados</a>
                     <a href="/profile" class="btn btn-primary mx-1 m-1">👮 Alterar Perfil</a>
-                    <a href="{{ route('planos.index') }}" class="btn btn-primary mx-1 m-1">Planos</a>
+                    <a href="{{ route('planos.index') }}" class="btn btn-primary mx-1 m-1">📋 Planos</a>
 
                     <button class="btn btn-primary dropdown-toggle m-1" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
