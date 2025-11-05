@@ -3,6 +3,10 @@
         <div class="alert alert-success" role="alert">
             <h4 class="alert-heading">{{ $plano->nome }}</h4>
             <p>
+                @foreach ($plano->beneficios as $beneficio)
+                    -{{ $beneficio }}
+                    <br>
+                @endforeach
                 <strong>
                     Valor: R$ {{ number_format($plano->preco, 2, ',', '.') }}
                 </strong>
@@ -10,18 +14,19 @@
             <hr>
             <p class="">
                 <strong>
-                    *Descrição do plano*
                     {{ $plano->descricao }}
                 </strong>
             </p>
             <hr>
-            <button class="btn btn-secondary m-1">
-                Editar Plano
-            </button>
+
+            <a href="{{ route('planos.edit', $plano->id) }}" class="btn btn-primary m-1">Editar plano
+            </a>
+
             <form action="{{ route('planos.destroy', $plano->id) }}" method="POST" style="display: inline;">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-danger m-1" onclick="return confirm('Tem certeza que deseja excluir este plano?')">
+                <button type="submit" class="btn btn-danger m-1"
+                    onclick="return confirm('Tem certeza que deseja excluir este plano?')">
                     Excluir Plano
                 </button>
             </form>

@@ -105,3 +105,5 @@ Route::get('/planos/index', [PlanosController::class, 'index'])->name('planos.in
 Route::get('/planos/create', [PlanosController::class, 'create'])->name('planos.create');
 Route::post('/planos/store', [PlanosController::class, 'store'])->name('planos.store');
 Route::delete('/planos/destroy/{id}', [PlanosController::class, 'destroy'])->name('planos.destroy');
+Route::get('/planos/edit/{id}', [PlanosController::class, 'edit'])->name('planos.edit');
+Route::put('/planos/update/{id}', [PlanosController::class, 'update'])->name('planos.update');

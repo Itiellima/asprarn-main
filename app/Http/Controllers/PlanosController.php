@@ -111,4 +111,44 @@ class PlanosController extends Controller
 
         return redirect()->route('planos.index')->with('success', 'Plano deletado com sucesso!');
     }
+
+    public function edit($id){
+        $user = Auth::user();
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])){
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $plano = Plano::findOrFail($id);
+
+        return view('planos.create', compact('plano'));
+    }
+
+    public function update(Request $request, $id){
+
+        $user = Auth::user();
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])){
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'beneficios.*' => 'required|string|max:500',
+            'descricao' => 'required|string|max:500',
+            'preco' => 'required|numeric|min:0'
+        ], [
+            'beneficios.*.max' => 'Cada item da descrição não pode exceder 500 caracteres.',
+            'descricao.max' => 'Descrição não pode exceder 500 caracteres.',
+        ]);
+
+
+        $plano = Plano::findOrFail($id);
+        $plano->update( $request->only([
+            'nome',
+            'beneficios',
+            'descricao',
+            'preco'
+        ]));
+
+        return redirect()->route('planos.index')->with('success', 'Plano atualizado com sucesso!');
+    }
 }
