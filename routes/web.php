@@ -103,3 +103,5 @@ Route::get('/register', [AssociadoController::class, 'create'])->name('register.
 //////////////////////////////// ********* PLANOS ASSOCIADO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/planos/index', [PlanosController::class, 'index'])->name('planos.index');
 Route::get('/planos/create', [PlanosController::class, 'create'])->name('planos.create');
+Route::post('/planos/store', [PlanosController::class, 'store'])->name('planos.store');
+Route::delete('/planos/destroy/{id}', [PlanosController::class, 'destroy'])->name('planos.destroy');

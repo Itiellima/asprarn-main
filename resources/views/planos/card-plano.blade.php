@@ -1,26 +1,20 @@
 <div class="container alert alert-success" role="alert">
-    <h4 class="alert-heading">Plano Basico! A-01</h4>
+    <h4 class="alert-heading">Exemplo de criação dos planos: Titulo do plano</h4>
     <p>
-        A-01- Cobertura total para o associado incluindo até 5 (cinco) dependentes:
+        -Beneficio 1
         <br>
-        -Cobertura total dos benefícios, do convenio MULTIFAM ou equivalente, atualmente
-        oferecido pela ASPRA, para o associado e até 5 dependentes;
+        -Beneficio 2
         <br>
-        -A partir do 6º (sexto) dependente será cobrada uma taxa de R$ 15,00 pordependente;
-        <br>
-        -Assistência jurídica;
-        <br>
-        -Serviço funerário;
-        <br>
-        -Demais benefícios que não onerem a ASPRA PM/RN.
+        -Beneficio 3
         <br>
         <strong>
-            Valor: R$ 278,95
+            Valor: R$ 00,00
         </strong>
     </p>
     <hr>
     <p class="">
         <strong>
+            *Descrição do plano*
             Plano ideal para quem busca benefícios básicos com um custo acessível.
         </strong>
     </p>

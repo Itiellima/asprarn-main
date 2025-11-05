@@ -7,6 +7,7 @@ use App\Models\Plano;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
+use Illuminate\Support\Facades\DB;
 
 class PlanosController extends Controller
 {
@@ -35,55 +36,79 @@ class PlanosController extends Controller
     // echo "{$plano->nome} - Início: {$plano->pivot->data_inicio} - Ativo: {$plano->pivot->ativo}";
     // }
 
-    public function __boot()
-    {
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyHole(['admin', 'moderador'])){
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
-        // Mensagem de boas-vindas ao acessar a seção de planos
-        session()->flash('success', 'Bem-vindo à seção de Planos!');
-    }
-
 
     public function index()
     {
+        $user = Auth::user();
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])){
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
 
-        // $planos = Plano::findAll();
+        $planos = Plano::all();
 
-        return view('planos.index');
+        return view('planos.index', compact('planos'));
     }
 
     
     public function create(){
 
-        // $plano = new Plano();
+        $user = Auth::user();
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])){
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
 
-        return view('planos.create');
+        $plano = new Plano();
+
+        return view('planos.create', compact('plano'));
     }
 
-    //A criar
-    // Armazenar a associação do plano ao associado
+
+    // Cria um novo plano
     public function store(Request $request){
 
+        $user = Auth::user();
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])){
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
         $request->validate([
-            'plano_id' => 'required|exists:planos,id',
-            'data_inicio' => 'required|date',
-            'data_fim' => 'nullable|date|after_or_equal:data_inicio',
-            'ativo' => 'required|boolean',
+            'nome' => 'required|string|max:255',
+            'beneficios.*' => 'required|string|max:500',
+            'descricao' => 'required|string|max:500',
+            'preco' => 'required|numeric|min:0'
         ], [
-            'plano_id.required' => 'O campo Plano é obrigatório.',
-            'plano_id.exists' => 'O plano selecionado não existe.',
-            'data_inicio.required' => 'O campo Data de Início é obrigatório.',
-            'data_inicio.date' => 'O campo Data de Início deve ser uma data válida.',
-            'data_fim.date' => 'O campo Data de Fim deve ser uma data válida.',
-            'data_fim.after_or_equal' => 'O campo Data de Fim deve ser uma data igual ou posterior à Data de Início.',
-            'ativo.required' => 'O campo Ativo é obrigatório.',
-            'ativo.boolean' => 'O campo Ativo deve ser verdadeiro ou falso.',
+            'beneficios.*.max' => 'Cada item da descrição não pode exceder 500 caracteres.',
+            'descricao.max' => 'Descrição não pode exceder 500 caracteres.',
         ]);
         
+        DB::beginTransaction();
+        try{
+            $plano = Plano::create( $request->only([
+                'nome',
+                'beneficios',
+                'descricao',
+                'preco'
+            ]));
+
+            DB::commit();
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return redirect()->back()->withInput()->with('error', 'Erro ao criar o plano');
+        }
 
         return redirect()->route('planos.index')->with('success', 'Plano associado com sucesso!');
+    }
+
+    public function destroy($id){
+        $user = Auth::user();
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])){
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $plano = Plano::findOrFail($id);
+        $plano->delete();
+
+        return redirect()->route('planos.index')->with('success', 'Plano deletado com sucesso!');
     }
 }

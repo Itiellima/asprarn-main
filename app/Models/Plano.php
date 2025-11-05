@@ -21,4 +21,10 @@ class Plano extends Model
         'preco',
         'historico'
     ];
+
+    protected $casts = [
+        'beneficios' => 'array',
+    ];
+
+    
 }

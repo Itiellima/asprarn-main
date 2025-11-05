@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('planos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('beneficios');
-            $table->text('descricao');
+            $table->string('beneficios')->nullable();
+            $table->text('descricao')->nullable();
             $table->boolean('ativo')->default(false);
-            $table->decimal('preco', 10, 2);
-            $table->string('historico');
+            $table->decimal('preco', 10, 2)->default(0);
+            $table->string('historico')->nullable();
             $table->timestamps();
         });
     }

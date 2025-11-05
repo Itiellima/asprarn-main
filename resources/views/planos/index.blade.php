@@ -21,8 +21,7 @@
                 <a class="btn btn-primary" href="{{ route('planos.create') }}">Novo plano</a>
         </div>
 
-        @include('planos.card-plano')
-
+        @include('planos.card-all-planos')
 
 
     </div>
