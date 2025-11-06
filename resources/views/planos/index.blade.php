@@ -23,7 +23,6 @@
 
         @include('planos.card-all-planos')
 
-
     </div>
 
 @endsection

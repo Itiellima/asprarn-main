@@ -4,8 +4,11 @@
 
 @section('content')
 
-    <div class="container border">
-        <h2>Informações do associado</h2>
+    {{-- Informações do associado --}}
+    <div class="container alert alert-light text-center">
+        <strong class="text-black">
+            <h2>Informações do associado</h2>
+        </strong>
         @if ($associado->id != null)
             <table class="table table-striped">
                 <thead>
@@ -56,10 +59,12 @@
     </div>
 
     {{-- situacao --}}
-    <div class="container align-items-center border">
+    <div class="container alert alert-light text-black text-center">
         <form action="{{ route('associado.situacao.store', $associado->id) }}" method="POST">
             @csrf
-
+            <strong class="text-black text-center">
+                <h2>Situação do associado</h2>
+            </strong>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" id="ativo" name="ativo" value="1"
                     {{ old('ativo', $associado->situacao->ativo ?? false) ? 'checked' : '' }}>
@@ -86,23 +91,31 @@
         </form>
     </div>
 
+    <div class="container alert alert-light text-black text-center">
+        <strong class="text-black">
+            <h2>Categoria do associado</h2>
+        </strong>
+    </div>
+
     {{-- ACOES --}}
-    <div class="container align-items-center border border my-3">
+    <div class="container align-items-center alert alert-light text-black">
+        <strong class="text-black">
+            <h2>Informações do associado</h2>
+        </strong>
         <div class="row mx-3 my-3">
             {{-- <a href="{{ route('associado.documentos.index', $associado->id) }}"
                 class="btn btn-primary col-2 mx-2">Documentos</a> --}}
-                
-            <a href="{{ route('associado.pasta.index', $associado->id) }}"
-                class="btn btn-primary col-2 mx-2">Arquivos</a>
+
+            <a href="{{ route('associado.pasta.index', $associado->id) }}" class="btn btn-primary col-2 mx-2">Arquivos</a>
 
             <a href="#" class="btn btn-primary col-2 mx-2">Historico</a>
-            <a href="{{ route('associado.financeiro.index', $associado->id) }}" class="btn btn-primary col-2 mx-2">Financeiro</a>
+            <a href="#" class="btn btn-primary col-2 mx-2">Financeiro</a>
             <a href="#" class="btn btn-primary col-2 mx-2 disabled">#</a>
         </div>
     </div>
 
     {{-- Painel Historico de situação --}}
-    <div class="container border mt-3 mb-4">
+    <div class="container alert alert-light text-black">
 
         <div class="container my-3">
             <h3>Histórico de Situações do associado</h3>

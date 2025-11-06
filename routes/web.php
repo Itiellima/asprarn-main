@@ -30,10 +30,6 @@ Route::middleware(['auth', 'verified'])->get('/dashboard', [DashboardController:
 //view requerimento para impressão
 Route::get('/requerimento/{id}', [RequerimentoController::class, 'show'])->name('associado.pdf.requerimento');
 
-Route::get('/dashboard/associado/financeiro', function () {
-    return view ('dashboard.associado-financeiro');
-})->name('dashboard.associado.financeiro');
-
 
 //////////////////////////////// ********* CRUD PASTA ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/associado/pasta/index/{associadoId}', [PastaDocumentoController::class, 'index'])->name('associado.pasta.index');
@@ -107,3 +103,9 @@ Route::post('/planos/store', [PlanosController::class, 'store'])->name('planos.s
 Route::delete('/planos/destroy/{id}', [PlanosController::class, 'destroy'])->name('planos.destroy');
 Route::get('/planos/edit/{id}', [PlanosController::class, 'edit'])->name('planos.edit');
 Route::put('/planos/update/{id}', [PlanosController::class, 'update'])->name('planos.update');
+
+
+
+Route::get('/test', function(){
+    return view('teste.index');
+});
