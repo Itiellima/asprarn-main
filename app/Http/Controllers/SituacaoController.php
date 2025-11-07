@@ -11,6 +11,7 @@ use App\Models\Situacao;
 class SituacaoController extends Controller
 {
 
+    // Para referencia
     public function storeSituacao(Request $request, $id) {
 
         $user = Auth::user();
@@ -43,6 +44,41 @@ class SituacaoController extends Controller
         return redirect()->back()->with('success', 'Situação salva com sucesso!');
     }
 
+    // Criar nova situacao
+    public function store(Request $request)
+    {
+        $user = Auth::user();
+        if(!$user || !$user->hasAnyRole(['admin', 'moderador'])){
+            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $request->validate([
+            'nome' => 'required|string|max:255',
+        ]);
+
+        Situacao::create([
+            'nome' => $request->input('nome'),
+        ]);
+
+        return redirect()->back()->with('success', 'Situação criada com sucesso!');
+    }
+
+    public function update(Request $request, $associadoId)
+    {
+        $user = Auth::user();
+        if(!$user || !$user->hasAnyRole(['admin', 'moderador'])){
+            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        // Verifica se o associado existe
+        $associado = Associado::findOrFail($associadoId);
+
+        $situacoes = $request->input('situacoes', []);
+
+        $associado->situacoes()->sync($situacoes);
+
+        return redirect()->back()->with('success', 'Situação atualizada com sucesso!');
+    }
 
 
 }

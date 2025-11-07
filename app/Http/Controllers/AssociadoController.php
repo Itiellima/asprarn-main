@@ -8,6 +8,7 @@ use App\Models\Associado;
 use App\Models\Contato;
 use App\Models\Endereco;
 use App\Models\DadosBancarios;
+use App\Models\Situacao;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -57,15 +58,15 @@ class AssociadoController extends Controller
             'dadosBancarios',
             'historicoSituacoes',
             'mensalidades',
-            'situacao'
         ])->findOrFail($id);
 
         $contato = $associado->contato ?? new Contato();
         $endereco = $associado->endereco ?? new Endereco();
         $dadosBancarios = $associado->dadosBancarios ?? new DadosBancarios();
 
+        $situacoes = Situacao::all();
 
-        return view('associado.show', compact('associado', 'contato', 'endereco', 'dadosBancarios'));
+        return view('associado.show', compact('associado', 'contato', 'endereco', 'dadosBancarios', 'situacoes'));
     }
 
     // view para criar um associado

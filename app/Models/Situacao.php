@@ -6,19 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Situacao extends Model
 {
-    public function associado()
+
+    public function associados()
     {
-        return $this->belongsTo(Associado::class);
+        return $this->belongsToMany(Associado::class, 'associado_situacao')
+            ->withPivot(['data_inicio', 'data_fim', 'ativo'])
+            ->withTimestamps();
     }
 
-    // protected $table = 'Situacaos'; // Aponta para a tabela 'Situacaos'
+    protected $table = 'situacoes'; // Aponta para a tabela 'Situacaos'
 
     protected $fillable = [
-        'associado_id',
-        'ativo',
-        'inadimplente',
-        'pendente_documento',
-        'pendente_financeiro',
-        'observacao',
+        'nome',
     ];
 }

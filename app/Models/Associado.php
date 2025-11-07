@@ -26,13 +26,8 @@ class Associado extends Model
     {
         return $this->hasOne(DadosBancarios::class);
     }
-    public function situacao()
-    {
-        return $this->hasOne(Situacao::class);
-    }
 
     // Um associado pode ter muitos documentos, mensalidades, historicoSituacoes e pastas de documentos.
-
     public function historicoSituacoes()
     {
         return $this->hasMany(HistoricoSituacoes::class);
@@ -53,6 +48,12 @@ class Associado extends Model
         return $this->belongsToMany(Plano::class, 'associado_plano')
             ->withPivot(['data_inicio', 'data_fim', 'ativo'])
             ->withTimestamps();
+    }
+
+    public function situacoes(){
+        return $this->belongsToMany(Situacao::class, 'associado_situacao')
+        ->withPivot(['data_inicio', 'data_fim', 'ativo'])
+        ->withTimestamps();
     }
 
     public function mensalidades()

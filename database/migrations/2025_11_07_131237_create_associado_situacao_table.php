@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('situacaos', function (Blueprint $table) {
+        Schema::create('associado_situacao', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId('associado_id')->constrained('associados')->onDelete('cascade');
-            $table->boolean('ativo')->default(0);
-            $table->boolean('inadimplente')->default(0);
-            $table->boolean('pendente_documento')->default(0);
-            $table->boolean('pendente_financeiro')->default(0);
-            $table->string('observacao')->nullable();
+            $table->foreignId('situacao_id')->constrained('situacoes')->onDelete('cascade');
+            $table->boolean('ativo')->default(false);
+
+            $table->date('data_inicio')->nullable();
+            $table->date('data_fim')->nullable();
+
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('situacao');
+        Schema::dropIfExists('associado_situacao');
     }
 };

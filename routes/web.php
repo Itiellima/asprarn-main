@@ -105,6 +105,9 @@ Route::get('/planos/edit/{id}', [PlanosController::class, 'edit'])->name('planos
 Route::put('/planos/update/{id}', [PlanosController::class, 'update'])->name('planos.update');
 
 
+Route::post('/situacao/store', [SituacaoController::class, 'store'])->name('situacao.store');
+Route::post('/situacao/update/{associadoId}' , [SituacaoController::class, 'update'])->name('situacao.update');
+
 
 Route::get('/test', function(){
     return view('teste.index');
