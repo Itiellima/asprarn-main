@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-bg" aria-label="Thirteenth navbar example">
 
     <div class="container-fluid">
-        
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11"
             aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -11,7 +11,7 @@
 
             {{-- logo --}}
             <a href="/" class="navbar-brand col-lg-3 me-0">
-                <img src="/img/Aspra.png" alt="Logo" width="150" height="100" class="me-2">
+                <img src="/img/Aspra.png" alt="Logo" width="120" height="80" class="me-2">
             </a>
 
             {{-- links --}}
@@ -60,5 +60,10 @@
             </div>
         </div>
     </div>
+    <!-- Faixa vermelha simples -->
+
 
 </nav>
+<div style="background:#dc2626;color:#fff;padding:10px 16px;text-align:center;font-weight:600;">
+    ASPRA PM RN — ASSOCIAÇÃO DE PRAÇAS DA POLÍCIA MILITAR E BOMBEIROS MILITAR DO RIO GRANDE DO NORTE.
+</div>

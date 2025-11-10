@@ -41,11 +41,11 @@
 }
 
 .navbar-bg {
-    background-image: url('../img/background.png'); /* substitua pelo caminho da sua imagem */
+    /* background-image: url('../img/background.png'); substitua pelo caminho da sua imagem */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-color: rgba(0, 0, 0, 0,4); /* leve transparência */
+    background-color: #0a499c; /* leve transparência */
     background-blend-mode: overlay;       /* mistura imagem com cor */
     backdrop-filter: brightness(0.9); /* ajuste o brilho conforme necessário */
 }
