@@ -10,12 +10,12 @@
         <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
 
             {{-- logo --}}
-            <a href="/" class="navbar-brand col-lg-3 me-0">
+            <a href="/" class="navbar-brand col-lg-2 me-0">
                 <img src="/img/Aspra.png" alt="Logo" width="120" height="80" class="me-2">
             </a>
 
             {{-- links --}}
-            <ul class="navbar-nav col-lg-6 justify-content-lg-center">
+            <ul class="navbar-nav col-lg-8 justify-content-lg-center">
                 <li class="nav-item">
                     <a href="/" class="nav-link">
                         <h4>Início</h4>
@@ -28,7 +28,17 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <h4>ASPRA</h4>
+                        <h4>Quem somos</h4>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <h4>Associados</h4>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <h4>Contato</h4>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -44,12 +54,12 @@
                     </li>
                 @endauth
             </ul>
-            <div class="d-lg-flex col-lg-3 justify-content-lg-end nav-login">
+            <div class="d-lg-flex col-lg-2 justify-content-lg-end nav-login">
                 @auth
                     {{-- <div class="me-3">Olá, {{ auth()->user()->name }}!</div> --}}
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <label for="">Olá, {{ auth()->user()->name }}!</label>
+                        <label>Olá, {{ auth()->user()->name }}!</label><br>
                         <button id="sair" class="btn btn-primary px-4" type="submit">Sair</button>
                     </form>
                 @else
@@ -64,6 +74,6 @@
 
 
 </nav>
-<div style="background:#dc2626;color:#fff;padding:10px 16px;text-align:center;font-weight:600;">
-    ASPRA PM RN — ASSOCIAÇÃO DE PRAÇAS DA POLÍCIA MILITAR E BOMBEIROS MILITAR DO RIO GRANDE DO NORTE.
+<div style="background:#dc2626;color:#ffffff;padding:10px 16px;text-align:center;font-weight:600;">
+    ASPRA PM/RN - Cuidando de quem cuida e protege a nossa sociedade.
 </div>
