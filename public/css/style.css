@@ -1,5 +1,5 @@
 .body-offset {
-    padding-top: 20px;
+    padding-top: 15px;
     /* ajuste conforme a altura da sua navbar */
 }
 
@@ -14,6 +14,14 @@
     /* altura total da viewport */
 }
 
-
-
+.nav-item .nav-link h4 {
+    margin: 0;
+    /* Remove margens padrão */
+    font-size: 1.2rem;
+    /* Ajuste o tamanho da fonte conforme necessário */
+    font-weight: bold;
+    /* Deixa o texto em negrito */
+    color: #000000;
+    /* Cor do texto */
+}
 

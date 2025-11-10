@@ -6,7 +6,7 @@
     <div class="container body-offset">
 
         @if ($latestPost)
-            <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+            <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis alert alert-secondary">
                 <div class="row align-items-center">
                     <div class="col-lg-7 px-0">
                         <h2 class="display-4 fst-italic">{{ $latestPost->titulo }}</h2>

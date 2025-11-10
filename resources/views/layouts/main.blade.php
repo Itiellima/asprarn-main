@@ -36,7 +36,7 @@
 
     <style>
         body {
-            font-family: Arial;
+            font-family: Montserrat;
             /* Lista de fontes */
         }
     </style>
@@ -46,58 +46,7 @@
 <body>
     {{-- Header --}}
     <header>
-        <nav class="navbar navbar-expand-md fixed-top bg-light border-bottom">
-            <div class="container-fluid">
-
-                <!-- Logo -->
-                <a href="/" class="navbar-brand d-flex align-items-center">
-                    <img src="/img/Aspra.png" alt="Logo" width="110" height="70" class="me-2">
-                </a>
-
-                <!-- Botão hamburguer -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAspra"
-                    aria-controls="navbarAspra" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Itens do menu -->
-                <div class="collapse navbar-collapse justify-content-center" id="navbarAspra">
-                    <ul class="navbar-nav mb-2 mb-md-0 text-center">
-                        <li class="nav-item">
-                            <a href="/" class="nav-link px-2 link-secondary">Início</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('beneficio.index') }}" class="nav-link px-2">Benefícios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link px-2">ASPRA</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('associado.create') }}" class="nav-link px-2 border-bottom">Quero me associar</a>
-                        </li>
-                        @auth
-                            <li class="nav-item">
-                                <a href="/dashboard" class="nav-link px-2">Minha Página</a>
-                            </li>
-                        @endauth
-                    </ul>
-
-                    <!-- Botões à direita (login/logout) -->
-                    <div class="d-flex justify-content-center align-items-center mt-3 mt-md-0 ms-md-3">
-                        @auth
-                            <div class="me-3">Olá, {{ auth()->user()->name }}!</div>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button class="btn btn-primary" type="submit">Sair</button>
-                            </form>
-                        @else
-                            <a class="btn btn-primary mx-2" href="/register">Cadastrar</a>
-                            <a class="btn btn-primary mx-2" href="/login">Login</a>
-                        @endauth
-                    </div>
-                </div>
-            </div>
-        </nav>
+        @include('layouts.header')
 
 
         <script>
@@ -114,22 +63,22 @@
     {{-- Alertas --}}
     <div class="container m-3">
         @if (session('msg'))
-            <div class="alert alert-success">
+            <div class="container alert alert-success">
                 {{ session('msg') }}
             </div>
         @endif
         @if (session('error'))
-            <div class="alert alert-danger">
+            <div class="container alert alert-danger">
                 {{ session('error') }}
             </div>
         @endif
         @if (session('success'))
-            <div class="alert alert-success">
+            <div class="container alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
         @if ($errors->any())
-            <div class="alert alert-danger">
+            <div class="container alert alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -139,7 +88,7 @@
         @endif
     </div>
 
-
+    {{-- Conteúdo principal --}}
     <div>
         <main class="">
             @yield('content')
@@ -148,7 +97,7 @@
 
 
 
-
+    {{-- Footer --}}
     <footer class="text-center bg-light border-top py-2 mt-auto">
         <div class="container">
             <div class="row align-items-center">
