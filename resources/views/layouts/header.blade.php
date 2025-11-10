@@ -1,10 +1,12 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary rounded" aria-label="Thirteenth navbar example">
+<nav class="navbar navbar-expand-lg navbar-bg" aria-label="Thirteenth navbar example">
 
     <div class="container-fluid">
+        
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11"
             aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
 
             {{-- logo --}}
@@ -42,12 +44,12 @@
                     </li>
                 @endauth
             </ul>
-            <div class="d-lg-flex col-lg-3 justify-content-lg-end">
+            <div class="d-lg-flex col-lg-3 justify-content-lg-end nav-login">
                 @auth
                     {{-- <div class="me-3">Olá, {{ auth()->user()->name }}!</div> --}}
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <label for="sair">Olá, {{ auth()->user()->name }}!</label>
+                        <label for="">Olá, {{ auth()->user()->name }}!</label>
                         <button id="sair" class="btn btn-primary px-4" type="submit">Sair</button>
                     </form>
                 @else
