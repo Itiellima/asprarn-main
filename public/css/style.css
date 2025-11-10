@@ -3,7 +3,6 @@
     /* ajuste conforme a altura da sua navbar */
 }
 
-
 .meu-container {
     display: flex;
     justify-content: center;
@@ -14,6 +13,7 @@
     /* altura total da viewport */
 }
 
+/* ESTILIZA O TEXTO DENTRO DO LINK DA NAVBAR */
 .nav-item .nav-link h4 {
     margin: 0;
     /* Remove margens padrão */
@@ -21,7 +21,32 @@
     /* Ajuste o tamanho da fonte conforme necessário */
     font-weight: bold;
     /* Deixa o texto em negrito */
-    color: #000000;
+    color: #ffffff;
     /* Cor do texto */
+    transition: all 0.3s ease;
+}
+
+/* CRIA UMA COR DOURADA NO HOVER DO LINK */
+/* INSERIR O H4 CASO QUEIRA QUE AFETE O TEXTO PARA FICAR DORADO */
+.navbar-bg .nav-link:hover {
+    color: #ffd700 !important; /* texto dourado */
+    background-color: rgba(255, 255, 255, 0.15); /* leve fundo translúcido */
+    border-radius: 8px;
+    transform: scale(1.03); /* leve aumento de tamanho */
+}
+
+.nav-login label {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.navbar-bg {
+    background-image: url('../img/background.png'); /* substitua pelo caminho da sua imagem */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0,4); /* leve transparência */
+    background-blend-mode: overlay;       /* mistura imagem com cor */
+    backdrop-filter: brightness(0.9); /* ajuste o brilho conforme necessário */
 }
 
