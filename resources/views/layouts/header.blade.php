@@ -27,7 +27,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('quem.somos') }}" class="nav-link">
                         <h4>Quem somos</h4>
                     </a>
                 </li>

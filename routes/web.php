@@ -114,6 +114,10 @@ Route::get('/contatos', function(){
     return view('contato.index');
 })->name('contato.index');
 
+Route::get('/Quem_Somos', function(){
+    return view('quem-somos.index');
+})->name('quem.somos');
+
 Route::get('/test', function(){
     return view('teste.index');
 });
