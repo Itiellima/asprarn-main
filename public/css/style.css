@@ -27,7 +27,7 @@
 }
 
 /* CRIA UMA COR DOURADA NO HOVER DO LINK */
-/* INSERIR O H4 CASO QUEIRA QUE AFETE O TEXTO PARA FICAR DORADO */
+/* INSERIR O H4 CASO QUEIRA QUE AFETE O TEXTO PARA FICAR DOURADO */
 .navbar-bg .nav-link:hover {
     color: #ffd700 !important; /* texto dourado */
     background-color: rgba(255, 255, 255, 0.15); /* leve fundo translúcido */
@@ -50,3 +50,18 @@
     backdrop-filter: brightness(0.9); /* ajuste o brilho conforme necessário */
 }
 
+.footer-bg {
+    background-color: #0a499c;
+    margin-top: auto;
+    color: #ffffff;
+}
+
+.footer-container {
+    padding: 15px 0;
+    margin-top: 50px;
+}
+
+.footer-msg {
+    font-weight: bold;
+    font-size: large;
+}

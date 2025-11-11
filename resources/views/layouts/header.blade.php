@@ -31,6 +31,11 @@
                         <h4>Quem somos</h4>
                     </a>
                 </li>
+                <li class="nav-item border-bottom">
+                    <a href="https://maps.app.goo.gl/wvJbuprZEHSWMRgy8" class="nav-link" target="_blank">
+                        <h4>ASPRA</h4>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <h4>Associados</h4>
@@ -70,10 +75,10 @@
             </div>
         </div>
     </div>
-    <!-- Faixa vermelha simples -->
-
-
+    
 </nav>
+
+<!-- Faixa vermelha simples -->
 <div style="background:#dc2626;color:#ffffff;padding:10px 16px;text-align:center;font-weight:600;">
     ASPRA PM/RN - Cuidando de quem cuida e protege a nossa sociedade.
 </div>

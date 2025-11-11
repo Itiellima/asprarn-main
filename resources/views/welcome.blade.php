@@ -132,11 +132,11 @@
                     </div>
 
                     <div class="p-4">
-                        <h4 class="fst-italic">Redes Sociais</h4>
+                        {{-- <h4 class="fst-italic">Redes Sociais</h4>
                         <ol class="list-unstyled">
-                            {{-- <li><a href="#">GitHub</a></li>
+                            <li><a href="#">GitHub</a></li>
                             <li><a href="#">Social</a></li>
-                            <li><a href="#">Facebook</a></li> --}}
+                            <li><a href="#">Facebook</a></li>
                             <li class="mb-3">
                                 <a href="https://www.instagram.com/associacaosdospracas/" target="_blank">
                                     <img src="/img/Instagram_logo.svg" class="img-thumbnail" alt="instagram" width="100"
@@ -149,7 +149,7 @@
                                         height="100">
                                 </a>
                             </li>
-                        </ol>
+                        </ol> --}}
                     </div>
                 </div>
             </div>
