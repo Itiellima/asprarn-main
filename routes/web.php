@@ -109,6 +109,11 @@ Route::post('/situacao/store', [SituacaoController::class, 'store'])->name('situ
 Route::post('/situacao/update/{associadoId}' , [SituacaoController::class, 'update'])->name('situacao.update');
 
 
+
+Route::get('/contatos', function(){
+    return view('contato.index');
+})->name('contato.index');
+
 Route::get('/test', function(){
     return view('teste.index');
 });

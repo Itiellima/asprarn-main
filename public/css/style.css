@@ -35,11 +35,6 @@
     transform: scale(1.03); /* leve aumento de tamanho */
 }
 
-.nav-login label {
-    font-weight: bold;
-    color: #ffffff;
-}
-
 .navbar-bg {
     /* background-image: url('../img/background.png'); substitua pelo caminho da sua imagem */
     background-size: cover;

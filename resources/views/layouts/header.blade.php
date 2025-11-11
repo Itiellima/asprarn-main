@@ -31,18 +31,18 @@
                         <h4>Quem somos</h4>
                     </a>
                 </li>
-                <li class="nav-item border-bottom">
+                {{-- <li class="nav-item border-bottom">
                     <a href="https://maps.app.goo.gl/wvJbuprZEHSWMRgy8" class="nav-link" target="_blank">
                         <h4>ASPRA</h4>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <h4>Associados</h4>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('contato.index') }}" class="nav-link">
                         <h4>Contato</h4>
                     </a>
                 </li>
@@ -59,7 +59,7 @@
                     </li>
                 @endauth
             </ul>
-            <div class="d-lg-flex col-lg-2 justify-content-lg-end nav-login">
+            <div class="ms-5">
                 @auth
                     {{-- <div class="me-3">Olá, {{ auth()->user()->name }}!</div> --}}
                     <form method="POST" action="{{ route('logout') }}">
@@ -69,7 +69,7 @@
                     </form>
                 @else
                     {{-- <a class="btn btn-primary mx-2" href="/register">Cadastrar</a> --}}
-                    <a class="btn btn-primary" href="/login">Login</a>
+                    <a class="btn btn-danger" href="/login"><strong>Login</strong></a>
                 @endauth
 
             </div>
