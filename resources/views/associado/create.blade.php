@@ -13,12 +13,11 @@
                     <h1 class="alert-heading">Ficha do Associado</h1>
                     <p><strong>{{ $associado->nome }}</strong></p>
                 </div>
-
+                
             @else
                 <h1 class="alert alert-primary" role="alert">Formulário de cadastro ASPRA RN!</h1>
                 
             @endif
-
         </div>
 
 
@@ -53,7 +52,7 @@
                             <div class="mb-3 col-md-3 col-sm-6">
                                 <label for="formGroup" class="form-label">RG:</label>
                                 <input type="text" class="form-control " id="rg" name="rg"
-                                    placeholder="Insira o numero do RG" required value="{{ old('rg', $associado->rg) }}">
+                                    placeholder="Insira o número do RG" required value="{{ old('rg', $associado->rg) }}">
                             </div>
                             <div class="mb-3 col-md-3 col-sm-6">
                                 <label for="formGroup" class="form-label">Órgão expedidor:</label>
@@ -155,7 +154,7 @@
                             <div class="mb-3 col-md-3 col-sm-6">
                                 <label for="formGroup" class="form-label">CEP:</label>
                                 <input type="number" class="form-control " id="cep" name="cep"
-                                    placeholder="59000-000 apenas numeros" required
+                                    placeholder="59000-000 apenas números" required
                                     value="{{ old('cep', $associado->endereco?->cep) }}">
                             </div>
                             <div class="mb-3 col-md-9 col-sm-6">
@@ -165,7 +164,7 @@
                                     value="{{ old('logradouro', $associado->endereco?->logradouro) }}">
                             </div>
                             <div class="mb-3 col-md-3 col-sm-6">
-                                <label for="formGroup" class="form-label">Numero:</label>
+                                <label for="formGroup" class="form-label">Número:</label>
                                 <input type="text" class="form-control " id="nmr" name="nmr"
                                     placeholder="Número da residência" required
                                     value="{{ old('nmr', $associado->endereco?->nmr) }}">
@@ -199,22 +198,22 @@
                         <div class="container row border-bottom border-primary mt-3 m-1">
                             <h2>Contato</h2>
                             <div class="mb-3 col-md-4 col-sm-6">
-                                <label for="formGroup" class="form-label">Numero de Celular:</label>
+                                <label for="formGroup" class="form-label">Número de Celular:</label>
                                 <input type="text" class="form-control" maxlength="11" pattern="\d{10,11}"
-                                    id="tel_celular" name="tel_celular" placeholder="(xx) x xxxx-xxxx  Apenas numero"
+                                    id="tel_celular" name="tel_celular" placeholder="(xx) x xxxx-xxxx  Apenas número"
                                     required value="{{ old('tel_celular', $associado->contato?->tel_celular) }}">
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
-                                <label for="formGroup" class="form-label">Numero Residencial:</label>
+                                <label for="formGroup" class="form-label">Número Residencial:</label>
                                 <input type="text" class="form-control" maxlength="11" pattern="\d{10,11}"
                                     id="tel_residencial" name="tel_residencial"
-                                    placeholder="(xx) x xxxx-xxxx  Apenas numero"
+                                    placeholder="(xx) x xxxx-xxxx  Apenas número"
                                     value="{{ old('tel_residencial', $associado->contato?->tel_residencial) }}">
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
-                                <label for="formGroup" class="form-label">Numero de Trabalho:</label>
+                                <label for="formGroup" class="form-label">Número de Trabalho:</label>
                                 <input type="text" class="form-control" maxlength="11" pattern="\d{10,11}"
-                                    id="tel_trabalho" name="tel_trabalho" placeholder="(xx) x xxxx-xxxx  Apenas numero"
+                                    id="tel_trabalho" name="tel_trabalho" placeholder="(xx) x xxxx-xxxx  Apenas número"
                                     value="{{ old('tel_trabalho', $associado->contato?->tel_trabalho) }}">
                             </div>
                             <div class="mb-3 col-md-12 col-sm-6">
@@ -304,7 +303,7 @@
                                     value="{{ old('nome_guerra', $associado->nome_guerra) }}">
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
-                                <label for="formGroup" class="form-label">Numero de praça:</label>
+                                <label for="formGroup" class="form-label">Número de praça:</label>
                                 <input type="text" class="form-control" id="nmr_praca" name="nmr_praca"
                                     placeholder="Insira o número de praça" required
                                     value="{{ old('nmr_praca', $associado->nmr_praca) }}">

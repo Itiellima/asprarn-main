@@ -6,7 +6,7 @@
 
 <div class="container my-5">
 
-    <h1 class="text-center mb-4" style="color: #0a499c;">
+    <h1 class="text-center mb-4" style="color: #0a499c;  font-size: 3rem;">
         <strong>QUEM SOMOS</strong>
     </h1>
 
@@ -14,7 +14,8 @@
 
         <!-- Texto -->
         <div class="col-lg-7">
-            <p class="mt-3 text-justify">
+            <p class="mt-3 text-justify" style="text-align: justify">
+                &nbsp;&nbsp;
                 Desde 2003, a <strong>Associação dos Praças da Polícia Militar do Rio Grande do Norte (ASPRA PM/RN)</strong>
                 tem sido a principal voz na defesa, valorização e proteção dos praças da corporação.
                 <strong>Fundada por praças que compreendem, na prática, as dificuldades, os desafios e as conquistas
@@ -22,7 +23,8 @@
                 dignidade e reconhecimento àqueles que dedicam suas vidas à segurança da sociedade potiguar.
             </p>
 
-            <p class="text-justify">
+            <p class="text-justify" style="text-align: justify">
+                &nbsp;&nbsp;
                 Ao longo de sua trajetória, a associação consolidou-se como referência em assistência jurídica,
                 ações coletivas, apoio social e institucional, sempre pautada na transparência, na união e na
                 representatividade.
@@ -30,7 +32,8 @@
                     em um futuro mais justo e valorizado para a categoria.</strong>
             </p>
 
-            <p class="text-justify">
+            <p class="text-justify" style="text-align: justify">
+                &nbsp;&nbsp;
                 Mais do que uma entidade de classe, a ASPRA PM/RN é uma
                 <strong>família formada por homens e mulheres que conhecem a realidade da tropa</strong>,
                 que acolhe, orienta e luta lado a lado com cada associado, sempre em defesa de seus direitos

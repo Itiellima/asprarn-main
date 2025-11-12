@@ -11,7 +11,7 @@
         <h2>Visao Geral</h2>
     </div>
     <div class="meu-container">
-        <div class="row m-3">
+        <div class="row flex m-3">
             <div class="card m-2" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Associados cadastrados:</h5>
@@ -21,53 +21,27 @@
                     </p>
                 </div>
             </div>
-
-            <div class="card m-2" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Associados ativos:
-                    </h5>
-                    <p class="card-text">Total: {{ $associados->where('situacao.ativo', true)->count() }}</p>
-                    <p>
-                        <a href="#">Listar</a>
-                    </p>
-                </div>
-            </div>
-
-            <div class="card m-2" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Associados inadimplentes:</h5>
-                    <p class="card-text">Total: {{ $associados->where('situacao.inadimplente', true)->count() }}</p>
-                    <p>
-                        <a href="#">Listar</a>
-                    </p>
-                </div>
-            </div>
         </div>
     </div>
 
-    <div class="meu-container">
-        <div class="row m-3">
-            <div class="card m-2" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Pendente financeiro:</h5>
-                    <p class="card-text">Total: {{ $associados->where('situacao.pendente_financeiro', true)->count() }}</p>
-                    <p>
-                        <a href="#">Listar</a>
-                    </p>
+    {{-- Situações --}}
+    <div class="meu-container row">
+        @if ($situacoes)
+            @foreach ($situacoes as $situacao)
+                <div class="card m-2" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $situacao->nome }}:</h5>
+                        <p class="card-text">Total: {{ $situacao->total }}</p>
+                        <p>
+                            <a href="#">Listar</a>
+                        </p>
+                    </div>
                 </div>
-            </div>
-
-            <div class="card m-2" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Pendente documentação:</h5>
-                    <p class="card-text">Total: {{ $associados->where('situacao.pendente_documento', true)->count() }}</p>
-                    <p>
-                        <a href="#">Listar</a>
-                    </p>
-                </div>
-            </div>
-
-        </div>
+            @endforeach
+        @endif
     </div>
+
+
+
 
 @endsection

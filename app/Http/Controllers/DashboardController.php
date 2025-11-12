@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Associado;
+use Illuminate\Support\Facades\DB;
+use App\Models\Situacao;
 
 class DashboardController extends Controller
 {
@@ -42,7 +44,17 @@ class DashboardController extends Controller
     private function adminDashboard($user)
     {
         $associados = Associado::all();
-        return view("dashboard.admin", compact('user', 'associados'));
+
+        $situacoes = Situacao::all();
+
+        $situacoes = DB::table('situacoes')
+            ->select('situacoes.id', 'situacoes.nome', DB::raw('COUNT(associado_situacao.associado_id) as total'))
+            ->leftJoin('associado_situacao', 'situacoes.id', '=', 'associado_situacao.situacao_id')
+            ->groupBy('situacoes.id', 'situacoes.nome')
+            ->get();
+
+
+        return view("dashboard.admin", compact('user', 'associados', 'situacoes'));
     }
 
     private function associadoDashboard($user)
@@ -53,6 +65,4 @@ class DashboardController extends Controller
         }
         return view('dashboard.associado', compact('user', 'associado'));
     }
-
-
 }

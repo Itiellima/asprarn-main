@@ -4,7 +4,7 @@
         <!-- Coluna 1: Logo e horário -->
         <div class="col-md-3 mb-4 mb-md-0 text-center text-md-start">
             <a href="/" class="d-inline-flex align-items-center text-decoration-none">
-                <img src="{{ asset('img/Aspra.png') }}" alt="Logo ASPRA RN" width="100" height="65" class="me-2">
+                <img src="{{ asset('img/ASPRA-branco.png') }}" alt="Logo ASPRA RN" width="100" height="65" class="me-2">
             </a>
             <div class="mt-2 small">
                 <p class="mb-1 fw-bold">Horário de funcionamento:</p>

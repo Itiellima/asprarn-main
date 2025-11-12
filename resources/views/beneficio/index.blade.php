@@ -7,11 +7,11 @@
     <div class="container body-offset">
 
         <div class="meu-container mb-3">
-            <h1>Clubes de Beneficios</h1>
+            <h1 style="color: #0a499c; font-size: 3rem; text-;">Clubes de Beneficios</h1>
         </div>
         @auth
             @hasanyrole(['admin', 'moderador'])
-                <div>
+                <div class="m-3">
                     <a href="{{ route('beneficio.create') }}" class="btn btn-success">Adicionar beneficio</a>
                 </div>
             @endhasanyrole
@@ -39,6 +39,7 @@
                     @foreach ($beneficios as $beneficio)
                         <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
                             {{-- CARD BENEFICIO --}}
+                            
                             <div class="card h-100">
 
                                 {{-- CARROSSEL --}}
@@ -50,7 +51,7 @@
                                             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                                                 <img src="{{ asset('storage/' . $files->path) }}" class="card-img-top mt-2"
                                                     alt="{{ $files->path }}"
-                                                    style="height: auto; width: 100%; object-fit: contain;">
+                                                    style="height: 200px; width: 100%; object-fit: contain;">
                                             </div>
                                         @endforeach
                                     </div>
@@ -72,11 +73,15 @@
                                 {{-- TITULO E DESCRIÇÃO --}}
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <div>
-                                        <h5 class="card-title">{{ $beneficio->nome }}</h5>
-                                        <p class="card-text">{{ $beneficio->descricao }}.</p>
+                                        <h5 class="card-title" style="text-align: center">
+                                            {{ $beneficio->nome }}
+                                        </h5>
+                                        <p class="card-text" style="text-align: justify">
+                                            {{ $beneficio->descricao }}
+                                        </p>
                                     </div>
                                     <div>
-                                        <a href="#" class="btn btn-primary">Ver mais</a>
+                                        {{-- <a href="#" class="btn btn-primary">Ver mais</a> --}}
                                         @auth
                                             @hasanyrole(['admin', 'moderador'])
                                                 <form action="{{ route('beneficio.destroy', $beneficio->id) }}" method="POST">
