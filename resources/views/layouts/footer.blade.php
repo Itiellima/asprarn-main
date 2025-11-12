@@ -4,7 +4,7 @@
         <!-- Coluna 1: Logo e horário -->
         <div class="col-md-3 mb-4 mb-md-0 text-center text-md-start">
             <a href="/" class="d-inline-flex align-items-center text-decoration-none">
-                <img src="{{ asset('img/ASPRA-branco.png') }}" alt="Logo ASPRA RN" width="100" height="65" class="me-2">
+                <img src="{{ asset('img/ASPRA-branco.png') }}" alt="Logo ASPRA RN" width="" height="120" class="me-2">
             </a>
             <div class="mt-2 small">
                 <p class="mb-1 fw-bold">Horário de funcionamento:</p>
@@ -41,7 +41,7 @@
                 </a>
             </p>
             <p class="mb-0">
-                <a href="#" target="_blank" rel="noopener noreferrer"
+                <a href="https://wa.me/message/CSTBYW7FREMVF1" target="_blank" rel="noopener noreferrer"
                     class="text-white d-inline-flex align-items-center gap-2 text-decoration-none">
                     <img src="{{ asset('img/whatsapp.png') }}" alt="WhatsApp" width="26" height="26"
                         class="rounded">

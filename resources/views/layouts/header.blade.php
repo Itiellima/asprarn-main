@@ -1,17 +1,17 @@
-<nav class="navbar navbar-expand-lg navbar-bg" aria-label="Thirteenth navbar example">
+<nav class="navbar navbar-expand-lg navbar-bg navbar-dark" aria-label="Thirteenth navbar example">
 
     <div class="container-fluid">
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11"
-            aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation" style="color: #ffffff">
+            <span class="navbar-toggler-icon" style="color: #ffffff"></span>
         </button>
 
         <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
 
             {{-- logo --}}
             <a href="/" class="navbar-brand col-lg-2 me-0">
-                <img src="/img/ASPRA-branco.png" alt="Logo" width="120" height="80" class="me-2">
+                <img src="/img/ASPRA-branco.png" alt="Logo" width="" height="150" class="ms-3">
             </a>
 
             {{-- links --}}
@@ -37,11 +37,6 @@
                     </a>
                 </li> --}}
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <h4>Associados</h4>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('contato.index') }}" class="nav-link">
                         <h4>Contato</h4>
                     </a>
@@ -64,7 +59,7 @@
                     {{-- <div class="me-3">Olá, {{ auth()->user()->name }}!</div> --}}
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <label>Olá, {{ auth()->user()->name }}!</label><br>
+                        <label style="color: #ffffff">Olá, {{ auth()->user()->name }}!</label><br>
                         <button id="sair" class="btn btn-primary px-4" type="submit">Sair</button>
                     </form>
                 @else

@@ -25,7 +25,7 @@
     </div>
 
     {{-- Situações --}}
-    <div class="meu-container row">
+    <div class="meu-container">
         @if ($situacoes)
             @foreach ($situacoes as $situacao)
                 <div class="card m-2" style="width: 18rem;">
