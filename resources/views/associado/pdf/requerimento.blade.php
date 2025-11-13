@@ -63,7 +63,7 @@
             display: block;
             margin-top: 50px;
             border-top: 1px solid #000;
-            width: 250px;
+            width: 400px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -86,53 +86,42 @@
         <div class="conteudo">
 
             <p>
-                Eu, <strong>{{ str_pad($associado->nome ?? '', 40, '_') }}</strong>,
-                inscrito sob CPF nº: <strong >{{ str_pad($associado->cpf ?? '', 20, '_') }}</strong>,
-                <br>
-
-                RG:<strong>{{ str_pad($associado->rg ?? '', 10, '_') }}</strong>
-                Estado Civil: <strong>{{ str_pad($associado->estado_civil ?? '', 15, '_') }}</strong>
-                Graduação: <strong>{{ str_pad($associado->graduacao ?? '', 15, '_') }}</strong>
-                Nº Praça: <strong>{{ str_pad($associado->nmr_praca ?? '', 15, '_') }}</strong>
-                Matrícula: <strong>{{ str_pad($associado->matricula ?? '', 15, '_') }}</strong>
-                OPM: <strong>{{ str_pad($associado->opm ?? '', 20, '_') }}</strong>
-                Horário de trabalho: <strong>{{ str_pad($associado->horario_trabalho ?? '', 20, '_') }}</strong>
-                <br>
-
-                Nascido em: <strong>{{ str_pad(date('d/m/Y', strtotime($associado->dt_nasc)) ?? '', 30, '_') }}</strong>
-                Filho(a) de: <strong>{{ str_pad($associado->nome_mae ?? '', 35, '_') }}</strong>,
-                e <strong>{{ str_pad($associado->nome_pai ?? '', 35, '_') }}</strong>
-                Endereço: <strong>{{ str_pad($associado->endereco->logradouro ?? '', 30, '_') }}</strong>
-                <br>
-                Número: <strong>{{ str_pad($associado->endereco->nmr ?? '', 20, '_') }}</strong>
+                Eu, <strong>{{$associado->nome ?: '__________________'}}</strong>,
+                inscrito sob CPF nº: <strong>{{$associado->cpf ?: '__________________'}}</strong>,
+                RG:<strong>{{ $associado->rg ?: '__________________'}}</strong>
+                Estado Civil: <strong>{{$associado->estado_civil ?: '__________________'}}</strong>
+                Graduação: <strong>{{ $associado->graduacao ?: '__________________'}}</strong>
+                Nº Praça: <strong>{{ $associado->nmr_praca ?: '__________________' }}</strong>
+                Matrícula: <strong>{{ $associado->matricula ?: '__________________' }}</strong>
+                OPM: <strong>{{ $associado->opm ?: '__________________' }}</strong>
+                Horário de trabalho: <strong>{{ $associado->horario_trabalho ?: '__________________' }}</strong>
 
 
-                Bairro: <strong>{{ str_pad($associado->endereco->bairro ?? '', 20, '_') }}</strong>
-                Cidade: <strong>{{ str_pad($associado->endereco->cidade ?? '', 20, '_') }}</strong>
-                Complemento: <strong>{{ str_pad($associado->endereco->complemento ?? '', 60, '_') }}</strong>
-                <br>
+                Nascido em: <strong>{{ date('d/m/Y', strtotime($associado->dt_nasc)) ?: '__________________' }}</strong>
+                Filho(a) de: <strong>{{ $associado->nome_mae ?: '__________________' }}</strong>,
+                e <strong>{{ $associado->nome_pai ?: '__________________' }}</strong>
+                Endereço: <strong>{{ $associado->endereco->logradouro ?: '__________________' }}</strong>
+                Número: <strong>{{$associado->endereco->nmr ?: '__________________' }}</strong>
 
-                Cursos Civis: <strong>{{ str_pad($associado->cursos_civis ?? '', 30, '_') }}</strong>
-                Grau de Instrução: <strong>{{ str_pad($associado->grau_instrucao ?? '', 30, '_') }}</strong>
-                <br>
 
-                Telefone Celular: <strong>{{ str_pad($associado->contato->tel_celular ?? '', 25, '_') }}</strong>
+                Bairro: <strong>{{ $associado->endereco->bairro ?: '__________________' }}</strong>
+                Cidade: <strong>{{ $associado->endereco->cidade ?: '__________________' }}</strong>
+                Complemento: <strong>{{ $associado->endereco->complemento ?: '__________________' }}</strong>
+
+
+                Cursos Civis: <strong>{{$associado->cursos_civis ?: '__________________' }}</strong>
+                Grau de Instrução: <strong>{{$associado->grau_instrucao ?: '__________________' }}</strong>
+
+
+                Telefone Celular: <strong>{{ $associado->contato->tel_celular ?: '__________________' }}</strong>
                 Telefone Residencial:
-                <strong>{{ str_pad($associado->contato->tel_residencial ?? '', 25, '_') }}</strong>
+                <strong>{{ $associado->contato->tel_residencial ?? '__________________' }}</strong>
+                Telefone Trabalho: <strong>{{ $associado->contato->tel_trabalho ?: '__________________' }}</strong>
+                E-mail: <strong>{{ $associado->contato->email ?: '____________________________________' }}</strong>
+
                 <br>
-
-                Telefone Trabalho: <strong>{{ str_pad($associado->contato->tel_trabalho ?? '', 25, '_') }}</strong>
-                E-mail: <strong>{{ str_pad($associado->contato->email ?? '', 43, '_') }}</strong>
-                <br>
-
-
-
-
-
                 Em caso de acidente avisar à: ___________________________
                 Endereço: ________________________________
-                <br>
-
                 Nº:___________ Bairro: _________________________ Cidade: ___________________________________
                 <br>
 
@@ -166,7 +155,7 @@
         <div class="assinatura">
             Natal/RN, ____ de __________________ de 20__ <br>
 
-            <span>Assinatura</span>
+            <span>Requerente</span>
         </div>
     </div>
     <script>

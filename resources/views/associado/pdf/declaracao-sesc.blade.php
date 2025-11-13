@@ -9,14 +9,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Requerimento ASPRA</title>
+    <title>Declaracao SESC - ASPRA</title>
     <style>
         /* Simula folha A4 */
         .pagina {
             width: 22cm;
             min-height: 29.7cm;
             padding: 0.5cm 2cm 2cm 2cm;
-            ;
             /* margem interna */
             margin: 1cm auto;
             /* centralizar na tela */
@@ -83,6 +82,9 @@
             </div>
         </div>
 
+        <div class="titulo">
+            
+        </div>
         <div class="conteudo">
             <p style="margin-top: 3rem">
                 &nbsp;&nbsp; A Associação dos Praças da Polícia Militar do Estado do Rio Grande do Norte – ASPRA PMRN,
