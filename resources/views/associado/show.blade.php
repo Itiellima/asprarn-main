@@ -44,6 +44,10 @@
                                             target="_blank">
                                             Gerar requerimento
                                         </a>
+                                        <a class="dropdown-item" href="{{ route('associado.pdf.sesc', $associado->id) }}"
+                                            target="_blank">
+                                            Gerar declaração SESC
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -158,8 +162,7 @@
                                 <input type="date" class="form-control" name="data_fim">
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Voltar</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
                                     <button type="submit" class="btn btn-primary">Inserir</button>
                                 </div>
                             </form>

@@ -25,12 +25,24 @@ class RequerimentoController extends Controller
 
         $user = Auth::user();
 
-        if(!$user || !$user->hasAnyRole(['admin', 'moderador'])){
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
             return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
         $associado = Associado::findOrFail($id);
 
         return view('associado.pdf.requerimento', compact('associado'));
+    }
+
+    public function sesc($id)
+    {
+        $user = Auth::user();
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
+            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $associado = Associado::findOrFail($id);
+
+        return view('associado.pdf.declaracao-sesc', compact('associado'));
     }
 }

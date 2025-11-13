@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+</script>
+
 <head>
     <meta charset="UTF-8">
     <title>Requerimento ASPRA</title>
@@ -9,7 +15,8 @@
         .pagina {
             width: 22cm;
             min-height: 29.7cm;
-            padding: 0.5cm 2cm 2cm 2cm;;
+            padding: 0.5cm 2cm 2cm 2cm;
+            ;
             /* margem interna */
             margin: 1cm auto;
             /* centralizar na tela */
@@ -45,11 +52,10 @@
             font-size: 11pt;
             margin-top: 40px;
             text-align: justify;
-
         }
 
         .assinatura {
-            margin-top: 100px;
+            margin-top: 40px;
             text-align: center;
         }
 
@@ -81,7 +87,7 @@
 
             <p>
                 Eu, <strong>{{ str_pad($associado->nome ?? '', 40, '_') }}</strong>,
-                inscrito sob CPF nº: <strong>{{ str_pad($associado->cpf ?? '', 20, '_') }}</strong>,
+                inscrito sob CPF nº: <strong >{{ str_pad($associado->cpf ?? '', 20, '_') }}</strong>,
                 <br>
 
                 RG:<strong>{{ str_pad($associado->rg ?? '', 10, '_') }}</strong>
@@ -153,7 +159,7 @@
                 da categoria.
             </p>
 
-
+            <img src="/img/dependentes.png" alt="dependentes">
 
         </div>
 

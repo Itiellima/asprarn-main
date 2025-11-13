@@ -27,8 +27,9 @@ Route::resource('beneficio', BeneficioController::class);
 Route::middleware(['auth', 'verified'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
-//view requerimento para impressão
+//PDFS para impressão
 Route::get('/requerimento/{id}', [RequerimentoController::class, 'show'])->name('associado.pdf.requerimento');
+Route::get('/associado.pdf.sesc/{id}', [RequerimentoController::class, 'sesc'])->name('associado.pdf.sesc');
 
 
 //////////////////////////////// ********* CRUD PASTA ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
