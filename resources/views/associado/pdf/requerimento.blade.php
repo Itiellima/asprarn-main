@@ -39,7 +39,7 @@
             left: -15px;
             top: 0;
             width: 110px;
-            height: 70px;
+            height: 100px;
         }
 
         .titulo {
@@ -74,7 +74,7 @@
 
     <div class="pagina">
         <div class="cabecalho">
-            <img src="/img/Aspra.png" alt="Logo" width="110" height="70" class="me-2">
+            <img src="/img/aspra-logo-noname.png" alt="Logo" class="me-2">
             <div class="titulo">
                 <strong>
                     ASSOCIAÇÃO DOS PRAÇAS DA POLÍCIA MILITAR <br>
@@ -85,7 +85,7 @@
             </div>
         </div>
 
-        <div class="conteudo">
+        <div class="conteudo mt-5">
 
             <p>
                 <h4 class="text-center" style="text-decoration: underline; font-weight: bold;">

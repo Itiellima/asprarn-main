@@ -29,10 +29,13 @@
 /* CRIA UMA COR DOURADA NO HOVER DO LINK */
 /* INSERIR O H4 CASO QUEIRA QUE AFETE O TEXTO PARA FICAR DOURADO */
 .navbar-bg .nav-link:hover {
-    color: #ffd700 !important; /* texto dourado */
-    background-color: rgba(255, 255, 255, 0.15); /* leve fundo translúcido */
+    color: #ffd700 !important;
+    /* texto dourado */
+    background-color: rgba(255, 255, 255, 0.15);
+    /* leve fundo translúcido */
     border-radius: 8px;
-    transform: scale(1.03); /* leve aumento de tamanho */
+    transform: scale(1.03);
+    /* leve aumento de tamanho */
 }
 
 .navbar-bg {
@@ -40,9 +43,31 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-color: #0a499c; /* leve transparência */
-    background-blend-mode: overlay;       /* mistura imagem com cor */
-    backdrop-filter: brightness(0.9); /* ajuste o brilho conforme necessário */
+    background-color: #0a499c;
+    /* leve transparência */
+    background-blend-mode: overlay;
+    /* mistura imagem com cor */
+    backdrop-filter: brightness(0.9);
+    /* ajuste o brilho conforme necessário */
+}
+
+/* Reduz a altura da navbar apenas em telas grandes */
+@media (min-width: 992px) {
+    .navbar {
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
+        height: 100px;
+    }
+}
+
+/* Logo grande, mas sem afetar a altura da navbar */
+.logo-grande {
+    position: absolute;
+    height: 120px;
+    /* TAMANHO GRANDE */
+    top: 50%;
+    /* centraliza */
+    transform: translateY(-50%);
 }
 
 .footer-bg {

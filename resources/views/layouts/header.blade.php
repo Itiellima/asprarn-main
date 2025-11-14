@@ -10,8 +10,8 @@
         <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
 
             {{-- logo --}}
-            <a href="/" class="navbar-brand col-lg-2 me-0">
-                <img src="/img/ASPRA-branco.png" alt="Logo" width="" height="150" class="ms-3">
+            <a href="/" class="navbar-brand col-lg-2 me-0 position-relative">
+                <img src="/img/ASPRA-branco.png" alt="Logo-grande" width="" height="150" class="ms-3">
             </a>
 
             {{-- links --}}
@@ -31,11 +31,6 @@
                         <h4>Quem somos</h4>
                     </a>
                 </li>
-                {{-- <li class="nav-item border-bottom">
-                    <a href="https://maps.app.goo.gl/wvJbuprZEHSWMRgy8" class="nav-link" target="_blank">
-                        <h4>ASPRA</h4>
-                    </a>
-                </li> --}}
                 <li class="nav-item">
                     <a href="{{ route('contato.index') }}" class="nav-link">
                         <h4>Contato</h4>

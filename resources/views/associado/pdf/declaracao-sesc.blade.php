@@ -38,7 +38,7 @@
             left: -15px;
             top: 0;
             width: 110px;
-            height: 70px;
+            height: 100px;
         }
 
         .titulo {
@@ -72,8 +72,8 @@
 <body>
 
     <div class="pagina">
-        <div class="cabecalho">
-            <img src="/img/Aspra.png" alt="Logo" width="110" height="70" class="me-2">
+        <div class="cabecalho" >
+            <img src="/img/aspra-logo-noname.png" alt="Logo" class="me-2">
             <div class="titulo">
                 ASSOCIAÇÃO DOS PRAÇAS DA POLÍCIA MILITAR <br>
                 DO ESTADO DO RIO GRANDE DO NORTE <br>
@@ -82,10 +82,10 @@
             </div>
         </div>
 
-        <div class="titulo">
+        <div class="titulo" style="margin-top: 2cm">
             <p>
                 <h4 class="text-center" style="text-decoration: underline; font-weight: bold;">
-                    REQUERIMENTO
+                    DECLARAÇÃO
                 </h4>
             </p>
         </div>
@@ -116,7 +116,7 @@
 
 
 
-        <div class="container justify-content align-items-center text-center" style="margin-top: 5cm">
+        <div class="container justify-content align-items-center text-center" style="margin-top: 4cm">
             <div class="assinatura" style="text-decoration: underline">
                 <strong>
                     Natal/RN, {{ now()->format('d/m/Y') }}<br>
@@ -126,7 +126,7 @@
                 alt="">
         </div>
 
-        <div class="text-center mt-5 border-top border-black">
+        <div class="text-center border-top border-black" style="margin-top: 2cm">
             <strong>
 
                 SEDE PRÓPRIA: Rua João Pessoa, 267, SL 111, Cidade Alta, Natal/RN, CEP.: 59.025-500
