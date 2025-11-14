@@ -76,48 +76,232 @@
         <div class="cabecalho">
             <img src="/img/Aspra.png" alt="Logo" width="110" height="70" class="me-2">
             <div class="titulo">
-                ASSOCIAÇÃO DOS PRAÇAS DA POLÍCIA MILITAR <br>
-                DO ESTADO DO RIO GRANDE DO NORTE <br>
-                FUNDADA EM 21 DE ABRIL DE 2003 <br>
-                (ASPRA PM/RN)
+                <strong>
+                    ASSOCIAÇÃO DOS PRAÇAS DA POLÍCIA MILITAR <br>
+                    DO ESTADO DO RIO GRANDE DO NORTE <br>
+                    FUNDADA EM 21 DE ABRIL DE 2003 <br>
+                    (ASPRA PM/RN)
+                </strong>
             </div>
         </div>
 
         <div class="conteudo">
 
             <p>
-                Eu, <strong>{{$associado->nome ?: '__________________'}}</strong>,
-                inscrito sob CPF nº: <strong>{{$associado->cpf ?: '__________________'}}</strong>,
-                RG:<strong>{{ $associado->rg ?: '__________________'}}</strong>
-                Estado Civil: <strong>{{$associado->estado_civil ?: '__________________'}}</strong>
-                Graduação: <strong>{{ $associado->graduacao ?: '__________________'}}</strong>
-                Nº Praça: <strong>{{ $associado->nmr_praca ?: '__________________' }}</strong>
-                Matrícula: <strong>{{ $associado->matricula ?: '__________________' }}</strong>
-                OPM: <strong>{{ $associado->opm ?: '__________________' }}</strong>
-                Horário de trabalho: <strong>{{ $associado->horario_trabalho ?: '__________________' }}</strong>
+                <h4 class="text-center" style="text-decoration: underline; font-weight: bold;">
+                    REQUERIMENTO
+                </h4>
+            </p>
+            <p>
+                Sr Presidente,<br>
+                Eu, <strong>
+                    @if ($associado->nome)
+                        <span style="text-decoration: underline;">{{ $associado->nome }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
 
+                inscrito sob CPF nº: <strong>
+                    @if ($associado->cpf)
+                        <span style="text-decoration: underline;">{{ $associado->cpf }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
 
-                Nascido em: <strong>{{ date('d/m/Y', strtotime($associado->dt_nasc)) ?: '__________________' }}</strong>
-                Filho(a) de: <strong>{{ $associado->nome_mae ?: '__________________' }}</strong>,
-                e <strong>{{ $associado->nome_pai ?: '__________________' }}</strong>
-                Endereço: <strong>{{ $associado->endereco->logradouro ?: '__________________' }}</strong>
-                Número: <strong>{{$associado->endereco->nmr ?: '__________________' }}</strong>
+                RG:<strong>
+                    @if ($associado->rg)
+                        <span style="text-decoration: underline;">{{ $associado->rg }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
 
+                Estado Civil: <strong>
+                    @if ($associado->estado_civil)
+                        <span style="text-decoration: underline;">{{ $associado->estado_civil }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
 
-                Bairro: <strong>{{ $associado->endereco->bairro ?: '__________________' }}</strong>
-                Cidade: <strong>{{ $associado->endereco->cidade ?: '__________________' }}</strong>
-                Complemento: <strong>{{ $associado->endereco->complemento ?: '__________________' }}</strong>
+                Graduação: <strong>
+                    @if ($associado->graduacao)
+                        <span style="text-decoration: underline;">{{ $associado->graduacao }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
 
+                Nº Praça: <strong>
+                    @if ($associado->nmr_praca)
+                        <span style="text-decoration: underline;">{{ $associado->nmr_praca }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
 
-                Cursos Civis: <strong>{{$associado->cursos_civis ?: '__________________' }}</strong>
-                Grau de Instrução: <strong>{{$associado->grau_instrucao ?: '__________________' }}</strong>
+                Matrícula: <strong>
+                    @if ($associado->matricula)
+                        <span style="text-decoration: underline;">{{ $associado->matricula }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
 
+                OPM: <strong>
+                    @if ($associado->opm)
+                        <span style="text-decoration: underline:">{{ $associado->opm }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
 
-                Telefone Celular: <strong>{{ $associado->contato->tel_celular ?: '__________________' }}</strong>
-                Telefone Residencial:
-                <strong>{{ $associado->contato->tel_residencial ?? '__________________' }}</strong>
-                Telefone Trabalho: <strong>{{ $associado->contato->tel_trabalho ?: '__________________' }}</strong>
-                E-mail: <strong>{{ $associado->contato->email ?: '____________________________________' }}</strong>
+                Horário de trabalho: <strong>
+                    @if ($associado->horario_trabalho)
+                        <span style="text-decoration: underline;">{{ $associado->horario_trabalho }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
+
+                Nascido em: <strong>
+                    @if ($associado->dt_nasc)
+                        <span
+                            style="text-decoration: underline;">{{ date('d/m/Y', strtotime($associado->dt_nasc)) }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
+
+                Filho(a) de: <strong>
+                    @if ($associado->nome_mae)
+                        <span
+                            style="text-decoration: underline;">{{ $associado->nome_mae ?: '__________________' }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
+
+                e <strong>
+                    @if ($associado->nome_pai)
+                        <span
+                            style="text-decoration: underline;">{{ $associado->nome_pai ?: '__________________' }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
+
+                Endereço: <strong>
+                    @if ($associado->endereco)
+                        <span style="text-decoration: underline;">{{ $associado->endereco->logradouro }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
+
+                Número: <strong>
+                    @if ($associado->endereco->nmr)
+                        <span style="text-decoration: underline;">{{ $associado->endereco->nmr }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
+
+                Bairro: <strong>
+                    @if ($associado->endereco->bairro)
+                        <span style="text-decoration: underline;">{{ $associado->endereco->bairro }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
+
+                Cidade: <strong>
+                    @if ($associado->endereco->cidade)
+                        <span style="text-decoration: underline;">{{ $associado->endereco->cidade }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
+
+                Complemento: <strong>
+                    @if ($associado->endereco->complemento)
+                        <span style="text-decoration: underline;">{{ $associado->endereco->complemento }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
+
+                Cursos Civis: <strong>
+                    @if ($associado->cursos_civis)
+                        <span style="text-decoration: underline;">{{ $associado->cursos_civis }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
+
+                Grau de Instrução: <strong>
+                    @if ($associado->grau_instrucao)
+                        <span style="text-decoration: underline;">{{ $associado->grau_instrucao }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
+
+                Telefone Celular: <strong>
+                    @if ($associado->contato->tel_celular)
+                        <span style="text-decoration: underline;">{{ $associado->contato->tel_celular }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
+
+                Telefone Residencial:<strong>
+                    @if ($associado->contato->tel_residencial)
+                        <span style="text-decoration: underline;">{{ $associado->contato->tel_residencial }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
+
+                Telefone Trabalho: <strong>
+                    @if ($associado->contato->tel_trabalho)
+                        <span style="text-decoration: underline;">{{ $associado->contato->tel_trabalho }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>
+                ,
+
+                E-mail: <strong>
+                    @if ($associado->contato->email)
+                        <span style="text-decoration: underline;">{{ $associado->contato->email }}</span>
+                    @else
+                        __________________
+                    @endif
+                </strong>,
 
                 <br>
                 Em caso de acidente avisar à: ___________________________
@@ -134,19 +318,10 @@
                 letra ________, do art. ________ e Inciso _________ §§ ____ e ____, do art. ________, do Estatuto Social
                 desta entidade, autorizando desde já o desconto da
                 mensalidade ou despesas em folha de pagamento ou na
-                Conta Nº: Agência: Banco:
-                Código para Débito Nº: Contrato de Convênio Nº:
+                Conta Nº:_________ Agência:_________ Banco:_________
+                Código para Débito Nº:_________ Contrato de Convênio Nº:_________
             </p>
-            <p>
-                Estou ciente que as informações aqui prestadas são de minha inteira responsabilidade, e que, caso queira
-                pedir desligamento do quadro social, e tiver em débito para com
-                esta entidade terei que ressarcir a mesma de acordo com as diretrizes traçadas pela Diretoria Financeira
-                da mesma, sem direito a qualquer ressarcimento dos valores já
-                pagos, autorizando, desde já a ASPRA PM/RN, a me representar ativa ou passivamente, em juízo ou fora
-                dele, de acordo com o inciso XXI, do Art. 5º da CF, e legislação
-                pertinente, em todas as ações, coletivas ou individual, em que tomar parte, que seja de meu interesse ou
-                da categoria.
-            </p>
+
 
             <img src="/img/dependentes.png" alt="dependentes">
 
@@ -157,7 +332,24 @@
 
             <span>Requerente</span>
         </div>
+
+
+        <div class="text-center mt-5 border-top border-black">
+            <strong>
+                <a href="https://www.asprarn.com">www.asprarn.com</a>, e-mail: asprarn@gmail.com, contatoasprarn@gmail.com
+            </strong>
+            <br>
+            <strong>
+                FONES: (84) 3201-0100 / 9.8823-0100
+            </strong>
+        </div>
     </div>
+
+
+
+
+
+
     <script>
         window.onload = function() {
             window.print(); // Abre a janela de impressão automaticamente

@@ -83,37 +83,60 @@
         </div>
 
         <div class="titulo">
-            
+            <p>
+                <h4 class="text-center" style="text-decoration: underline; font-weight: bold;">
+                    REQUERIMENTO
+                </h4>
+            </p>
         </div>
         <div class="conteudo">
             <p style="margin-top: 3rem">
-                &nbsp;&nbsp; A Associação dos Praças da Polícia Militar do Estado do Rio Grande do Norte – ASPRA PMRN,
+                &nbsp;&nbsp; <strong>A Associação dos Praças da Polícia Militar do Estado do Rio Grande do Norte – ASPRA
+                    PMRN,</strong>
                 inscrita no
                 CNPJ sob o nº 05.786.841/0001-63, com sede na Rua João Pessoa, n° 267 – Edifício Cidade do Natal, 1°
                 andar, sala 111 – Cidade Alta, Natal/RN, por meio de sua dire-toria, declara para os devidos fins que:
             </p>
             <p style="margin-top: 3rem">
-                &nbsp;&nbsp; {{ $associado->nome }}, inscrito no CPF sob o nº {{ $associado->cpf }} e RG nº
-                {{ $associado->rg }},
-                {{ $associado->org_expedidor }}, tem
+                &nbsp;&nbsp; <strong><span style="text-decoration: underline;">{{ $associado->nome }}</span></strong>,
+                inscrito no CPF sob o nº <strong><span
+                        style="text-decoration: underline;">{{ $associado->cpf }}</span></strong> e RG nº
+                <strong><span style="text-decoration: underline;">{{ $associado->rg }}</span></strong>,
+                <strong><span style="text-decoration: underline;">{{ $associado->org_expedidor }}</span></strong>, tem
                 vínculo ativo com esta instituição.
             </p>
             <p style="margin-top: 3rem">
-                &nbsp;&nbsp; A presente declaração é emitida a pedido do interessado, para fins de obtenção da
-                Credenci-al SESC,
-                conforme convênio firmado entre esta Associação e o SESC RN (Nº RN-2025-CON-RCC0033), que assegura ao
+                &nbsp;&nbsp; A presente declaração é emitida a pedido do interessado, para fins de <Strong>obtenção da
+                    Credencial SESC,</Strong>
+                conforme convênio firmado entre esta Associação e o <strong>SESC RN (Nº RN-2025-CON-RCC0033),</strong>
+                que assegura ao
                 associado o acesso aos benefícios oferecidos pela instituição.
             </p>
         </div>
 
 
 
-        <div class="container justify-content align-items-center text-center" style="margin-top: 7cm">
-            <div class="assinatura">
-                Natal/RN, {{ now()->format('d/m/Y') }}<br>
+        <div class="container justify-content align-items-center text-center" style="margin-top: 5cm">
+            <div class="assinatura" style="text-decoration: underline">
+                <strong>
+                    Natal/RN, {{ now()->format('d/m/Y') }}<br>
+                </strong>
             </div>
             <img style="height: 100px; text-align: center; justify-content: center;" src="/img/assinatura-pr.png"
                 alt="">
+        </div>
+
+        <div class="text-center mt-5 border-top border-black">
+            <strong>
+
+                SEDE PRÓPRIA: Rua João Pessoa, 267, SL 111, Cidade Alta, Natal/RN, CEP.: 59.025-500
+                <br>
+                Site: <a href="https://www.asprarn.com">www.asprarn.com</a>, e-mail:asprarn@gmail.com,
+                presidencia@asprarn.com
+                <br>
+                Fone: (84) 3201-0100 / 0800-286-0190 / 9.8823-0100
+
+            </strong>
         </div>
     </div>
 
