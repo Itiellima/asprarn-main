@@ -21,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('posts', PostController::class);
 });
 
+//Beneficio
 Route::resource('beneficio', BeneficioController::class);
 
 //View dashboard
@@ -75,6 +76,13 @@ Route::get('/associado/financeiro/{associadoId}', [PlanosController::class, 'ind
 //////////////////////////////// ********* SITUACAO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::post('/associado/situacao/{id}', [SituacaoController::class, 'storeSituacao'])->name('associado.situacao.store');
 
+Route::post('/situacao/store', [SituacaoController::class, 'store'])->name('situacao.store');
+Route::post('/situacao/update/{associadoId}' , [SituacaoController::class, 'update'])->name('situacao.update');
+Route::delete('/situacao/destroy/{id}', [SituacaoController::class, 'destroy'])->name('situacao.destroy');
+
+
+
+
 
 //////////////////////////////// ********* HISTORICO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::post('/associado/{id}/historico', [HistoricoSituacoesController::class, 'storeHistorico'])->name('associado.historico.store');
@@ -106,8 +114,6 @@ Route::get('/planos/edit/{id}', [PlanosController::class, 'edit'])->name('planos
 Route::put('/planos/update/{id}', [PlanosController::class, 'update'])->name('planos.update');
 
 
-Route::post('/situacao/store', [SituacaoController::class, 'store'])->name('situacao.store');
-Route::post('/situacao/update/{associadoId}' , [SituacaoController::class, 'update'])->name('situacao.update');
 
 
 
