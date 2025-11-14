@@ -33,6 +33,9 @@
         });
     </script>
 
+    {{-- AOS link --}}
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
 
     <style>
         body {
@@ -52,17 +55,6 @@
     {{-- Header --}}
     <header>
         @include('layouts.header')
-
-
-        {{-- <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const navbar = document.querySelector('nav.fixed-top');
-                if (navbar) {
-                    const navbarHeight = navbar.offsetHeight;
-                    document.body.style.paddingTop = navbarHeight + 'px';
-                }
-            });
-        </script> --}}
     </header>
 
     {{-- Alertas --}}
@@ -107,8 +99,14 @@
         @include('layouts.footer')
     </footer>
 
+    {{-- Impede varios clicks --}}
     <script src="{{ asset('js/form-double-click.js') }}"></script>
-    <script src="{{ asset('js/form-texto.js') }}"></script>
+
+    {{-- AOS script --}}
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 
 </body>
 

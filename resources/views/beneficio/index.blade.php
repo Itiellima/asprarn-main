@@ -37,7 +37,7 @@
             @else
                 <div class="row">
                     @foreach ($beneficios as $beneficio)
-                        <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                        <div class="col-sm-12 col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-duration="1000">
                             {{-- CARD BENEFICIO --}}
                             
                             <div class="card h-100">
