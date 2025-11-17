@@ -3,6 +3,12 @@
 @section('title', 'AspraRN - Bem vindo')
 
 @section('content')
+
+    {{-- BANNERS --}}
+    {{-- @include('welcome-components.banner') --}}
+
+
+
     <div class="container body-offset">
 
         {{-- POST MAIS RECENTE --}}
@@ -47,7 +53,7 @@
                 </div>
             </div>
         @else
-            <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+            <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary alert alert-secondary">
                 <div class="row align-items-center">
                     <div class="col-lg-7 px-0">
                         <h2 class="display-4 fst-italic">Associação de Praças da Policia Militar do RN.</h2>
@@ -62,7 +68,7 @@
             </div>
         @endif
 
-        <div class="row g-5">
+        <div class="row g-5 mt-3">
 
             {{-- POSTS RECENTES --}}
             <div class="col-md-8">
@@ -92,6 +98,28 @@
                         <hr>
 
                 @endif
+
+                {{-- <h2>NOTICIAS</h2>
+                <hr>
+                <div class="row">
+                    @foreach ($recentPosts as $post)
+                        <div class="card m-1 rounded-5 overflow-hidden p-0" style="width: 20rem;">
+
+                            <img src="{{ asset('storage/' . $post->files->first()->path) }}" class="card-img-top"
+                                style="height: 200px; width: 100%; object-fit: cover;" alt="{{ $post->titulo }}">
+
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $post->titulo }}</h5>
+                                <p class="card-text">{{ $post->assunto }}.</p>
+                            </div>
+                            <div class="mb-3">
+                                <a href="#">leia mais</a>
+                            </div>
+                        </div>
+                    @endforeach
+                </div> --}}
+
+
 
             </div>
 
@@ -153,32 +181,6 @@
                     </div>
                 </div>
             </div>
-
-
-            {{-- <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
-                <div class="col-lg-6 px-0">
-                    <h1 class="display-4 fst-italic">Title of a longer featured blog post</h1>
-                    <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and
-                        efficiently about what’s most interesting in this post’s contents.</p>
-                    <p class="lead mb-0"><a href="#" class="text-body-emphasis fw-bold">Continue reading...</a></p>
-                </div>
-            </div>
-            <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
-                <div class="col-lg-6 px-0">
-                    <h1 class="display-4 fst-italic">Title of a longer featured blog post</h1>
-                    <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and
-                        efficiently about what’s most interesting in this post’s contents.</p>
-                    <p class="lead mb-0"><a href="#" class="text-body-emphasis fw-bold">Continue reading...</a></p>
-                </div>
-            </div>
-            <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
-                <div class="col-lg-6 px-0">
-                    <h1 class="display-4 fst-italic">Title of a longer featured blog post</h1>
-                    <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and
-                        efficiently about what’s most interesting in this post’s contents.</p>
-                    <p class="lead mb-0"><a href="#" class="text-body-emphasis fw-bold">Continue reading...</a></p>
-                </div>
-            </div> --}}
 
         </div>
 
