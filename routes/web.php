@@ -13,6 +13,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PastaDocumentoController;
 use App\Http\Controllers\PlanosController;
+use App\Http\Controllers\BannerController;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
@@ -81,9 +82,6 @@ Route::post('/situacao/update/{associadoId}' , [SituacaoController::class, 'upda
 Route::delete('/situacao/destroy/{id}', [SituacaoController::class, 'destroy'])->name('situacao.destroy');
 
 
-
-
-
 //////////////////////////////// ********* HISTORICO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::post('/associado/{id}/historico', [HistoricoSituacoesController::class, 'storeHistorico'])->name('associado.historico.store');
 Route::delete('/associado/{id}/historico/{historico}', [HistoricoSituacoesController::class, 'destroyHistorico'])->name('associado.historico.destroy');
@@ -114,6 +112,9 @@ Route::get('/planos/edit/{id}', [PlanosController::class, 'edit'])->name('planos
 Route::put('/planos/update/{id}', [PlanosController::class, 'update'])->name('planos.update');
 
 
+Route::get('/banner/create', [BannerController::class, 'create'])->name('banner.create');
+Route::post('/banner/store', [BannerController::class, 'store'])->name('banner.store');
+Route::delete('/banner/destroy/{id}', [BannerController::class, 'destroy'])->name('banner.destroy');
 
 
 

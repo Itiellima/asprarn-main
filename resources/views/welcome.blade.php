@@ -5,7 +5,7 @@
 @section('content')
 
     {{-- BANNERS --}}
-    {{-- @include('welcome-components.banner') --}}
+    @include('welcome-components.banner')
 
 
 
@@ -99,7 +99,7 @@
 
                 @endif
 
-                {{-- <h2>NOTICIAS</h2>
+                <h2>NOTICIAS</h2>
                 <hr>
                 <div class="row">
                     @foreach ($recentPosts as $post)
@@ -117,7 +117,7 @@
                             </div>
                         </div>
                     @endforeach
-                </div> --}}
+                </div>
 
 
 

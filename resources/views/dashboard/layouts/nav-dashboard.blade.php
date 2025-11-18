@@ -46,6 +46,9 @@
                             <a href="{{ route('posts.index') }}" class="dropdown-item">​📣 Comunicação</a>
                         </li>
                         <li>
+                            <a href="{{ route('banner.create') }}" class="dropdown-item">​📣 Banner</a>
+                        </li>
+                        <li>
                             <a href="#" class="dropdown-item">⚙️ Configurações*</a>
                         </li>
                     </ul>
