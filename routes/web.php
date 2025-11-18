@@ -17,22 +17,19 @@ use App\Http\Controllers\BannerController;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
-
 Route::middleware(['auth'])->group(function () {
     Route::resource('posts', PostController::class);
 });
 
-//Beneficio
+//////////////////////////////// ********* BENEFICIO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::resource('beneficio', BeneficioController::class);
 
-//View dashboard
+//////////////////////////////// ********* DASHBOARD ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::middleware(['auth', 'verified'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-
-//PDFS para impressão
+//////////////////////////////// ********* PDFS IMPRESSAO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/requerimento/{id}', [RequerimentoController::class, 'show'])->name('associado.pdf.requerimento');
 Route::get('/associado.pdf.sesc/{id}', [RequerimentoController::class, 'sesc'])->name('associado.pdf.sesc');
-
 
 //////////////////////////////// ********* CRUD PASTA ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/associado/pasta/index/{associadoId}', [PastaDocumentoController::class, 'index'])->name('associado.pasta.index');
@@ -50,9 +47,6 @@ Route::delete('/associado/pasta/documentos/destroy/{pastaId}/{fileId}', [Documen
 
 //UPDATE
 Route::patch('/associado/{id}/documentos/{documento}', [DocumentoAssociadoController::class, 'updateDocumento'])->name('associado.documentos.update');
-
-
-
 
 //////////////////////////////// ********* ASSOCIADO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 //VIEW TODOS OS ASSOCIADOS
@@ -73,19 +67,15 @@ Route::delete('/associado/delete/{id}', [AssociadoController::class, 'destroy'])
 //////////////////////////////// ********* ASSOCIADO FINANCEIRO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/associado/financeiro/{associadoId}', [PlanosController::class, 'index'])->name('associado.financeiro.index');
 
-
 //////////////////////////////// ********* SITUACAO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::post('/associado/situacao/{id}', [SituacaoController::class, 'storeSituacao'])->name('associado.situacao.store');
-
 Route::post('/situacao/store', [SituacaoController::class, 'store'])->name('situacao.store');
 Route::post('/situacao/update/{associadoId}' , [SituacaoController::class, 'update'])->name('situacao.update');
 Route::delete('/situacao/destroy/{id}', [SituacaoController::class, 'destroy'])->name('situacao.destroy');
 
-
 //////////////////////////////// ********* HISTORICO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::post('/associado/{id}/historico', [HistoricoSituacoesController::class, 'storeHistorico'])->name('associado.historico.store');
 Route::delete('/associado/{id}/historico/{historico}', [HistoricoSituacoesController::class, 'destroyHistorico'])->name('associado.historico.destroy');
-
 
 //////////////////////////////// ********* ADMIN ROTAS E VIEWS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::middleware(['auth'])->group(function () {
@@ -96,12 +86,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/usuarios/{user}', [UsuariosController::class, 'destroy'])->name('usuarios.destroy');
 });
 
-Route::get('/profile', function () {
-    return view('profile.show');
-})->name('profile.view');
-
+//////////////////////////////// ********* LOGIN/REGISTER ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/register', [AssociadoController::class, 'create'])->name('register.view');
-
 
 //////////////////////////////// ********* PLANOS ASSOCIADO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/planos/index', [PlanosController::class, 'index'])->name('planos.index');
@@ -111,13 +97,12 @@ Route::delete('/planos/destroy/{id}', [PlanosController::class, 'destroy'])->nam
 Route::get('/planos/edit/{id}', [PlanosController::class, 'edit'])->name('planos.edit');
 Route::put('/planos/update/{id}', [PlanosController::class, 'update'])->name('planos.update');
 
-
+///////////////////////////////// ********* BANNER ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/banner/create', [BannerController::class, 'create'])->name('banner.create');
 Route::post('/banner/store', [BannerController::class, 'store'])->name('banner.store');
 Route::delete('/banner/destroy/{id}', [BannerController::class, 'destroy'])->name('banner.destroy');
 
-
-
+///////////////////////////////// ********* ROTAS ESTATICAS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/contatos', function(){
     return view('contato.index');
 })->name('contato.index');
@@ -126,6 +111,10 @@ Route::get('/Quem_Somos', function(){
     return view('quem-somos.index');
 })->name('quem.somos');
 
-Route::get('/test', function(){
-    return view('teste.index');
-});
+Route::get('/associado/financeiro', function(){
+    return view('dashboard.associado-financeiro');
+})->name('associado.financeiro');
+
+Route::get('/profile', function () {
+    return view('profile.show');
+})->name('profile.view');

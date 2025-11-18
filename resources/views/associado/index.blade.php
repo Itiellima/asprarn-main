@@ -28,7 +28,7 @@
         @if ($associados->isEmpty())
             <p>Nenhum associado encontrado.</p>
         @else
-            <p>Existem {{ $associados->count() }} associados cadastrados.</p>
+            <p>Existem {{ $totalAssociados }} associados cadastrados.</p>
             <table class="table table-striped table-hover ">
                 <tr>
                     <th scope="col">#</th>

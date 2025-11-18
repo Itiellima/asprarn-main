@@ -38,8 +38,10 @@ class AssociadoController extends Controller
             ->orderBy('nome')
             ->paginate(10);
 
+        $totalAssociados = Associado::count();
 
-        return view('associado.index', ['associados' => $associados, 'search' => $search]);
+
+        return view('associado.index', ['associados' => $associados, 'search' => $search, 'totalAssociados' => $totalAssociados]);
     }
 
 
