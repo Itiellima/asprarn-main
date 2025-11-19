@@ -20,7 +20,8 @@ class IndexController extends Controller
         // Post mais recente
         $latestPost = Post::latest()->first();
 
-        $banners = Banner::all();
+        // Banners
+        $banners = Banner::latest()->get();
 
 
         return view('welcome', compact('latestPost', 'allPosts', 'recentPosts', 'banners'));
