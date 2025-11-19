@@ -34,6 +34,7 @@
                                 </div>
                             @endif
 
+                            {{-- Botoes das imagens --}}
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
                                 data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -70,7 +71,7 @@
 
             {{-- POSTS RECENTES --}}
             <div class="col-md-8">
-
+                {{-- 
                 @if ($recentPosts->isNotEmpty())
                     @foreach ($recentPosts as $post)
                         <article class="blog-post">
@@ -95,7 +96,20 @@
                         </p>
                         <hr>
 
-                @endif
+                @endif --}}
+
+                <article class="blog-post">
+                    <h2 class="display-6 link-body-emphasis mb-1">
+                        {{ $latestPost->titulo }}
+                    </h2>
+                    <p class="blog-post-meta">Atualizado em
+                        {{ $latestPost->updated_at->format('d/m/Y') }} incluido por:<a href="#">
+                            {{ $latestPost->owner }}</a></p>
+                    <p>
+                        {!! $latestPost->texto !!}
+                    </p>
+                </article>
+
 
                 <h2>NOTICIAS</h2>
                 <hr>
