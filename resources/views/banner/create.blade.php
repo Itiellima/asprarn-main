@@ -25,7 +25,7 @@
 
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Insira as fotos</label>
-                    <input class="form-control" type="file" id="img" name="arquivos" multiple
+                    <input class="form-control" type="file" id="img" name="arquivos"
                         {{ $banner->exists ? '' : 'required' }}>
                 </div>
 
@@ -57,29 +57,31 @@
     </div>
 
 
-    <div class="meu-container">
+    <div class="container">
+        <div class="meu-container row">
 
-        @foreach ($AllBanners as $banner)
-            <div class="card m-1 rounded-5 overflow-hidden p-0" style="width: 20rem;">
-
-                <img src="{{ asset('storage/' . $banner->files->first()->path) }}" class="card-img-top"
-                    style="height: 200px; width: 100%; object-fit: cover;" alt="{{ $banner->titulo }}">
-
-                <div class="card-body">
-                    <h5 class="card-title">{{ $banner->titulo }}</h5>
+            @foreach ($AllBanners as $banner)
+                <div class="card m-1 rounded-5 overflow-hidden p-0" style="width: 20rem;">
+    
+                    <img src="{{ asset('storage/' . $banner->files->first()->path) }}" class="card-img-top"
+                        style="height: 200px; width: 100%; object-fit: cover;" alt="{{ $banner->titulo }}">
+    
+                    <div class="card-body" style="min-height: 100px">
+                        <h5 class="card-title">{{ $banner->titulo }}</h5>
+                    </div>
+                    <div class="m-1">
+                        <form action="{{ route('banner.destroy', $banner->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            
+                            <button type="submit" class="btn btn-danger">Excluir</button>
+    
+                        </form>
+                    </div>
+    
                 </div>
-                <div class="m-1">
-                    <form action="{{ route('banner.destroy', $banner->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        
-                        <button type="submit" class="btn btn-danger">Excluir</button>
-
-                    </form>
-                </div>
-
-            </div>
-        @endforeach
+            @endforeach
+        </div>
 
 
     </div>

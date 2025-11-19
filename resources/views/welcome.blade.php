@@ -7,8 +7,6 @@
     {{-- BANNERS --}}
     @include('welcome-components.banner')
 
-
-
     <div class="container body-offset">
 
         {{-- POST MAIS RECENTE --}}

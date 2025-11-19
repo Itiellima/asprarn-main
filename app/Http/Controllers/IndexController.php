@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Banner;
 
 class IndexController extends Controller
 {
@@ -19,7 +20,9 @@ class IndexController extends Controller
         // Post mais recente
         $latestPost = Post::latest()->first();
 
+        $banners = Banner::all();
 
-        return view('welcome', compact('latestPost', 'allPosts', 'recentPosts'));
+
+        return view('welcome', compact('latestPost', 'allPosts', 'recentPosts', 'banners'));
     }
 }
