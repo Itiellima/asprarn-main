@@ -11,7 +11,7 @@
 
             {{-- logo --}}
             <a href="/" class="navbar-brand col-lg-2 me-0 position-relative">
-                <img src="/img/ASPRA-branco.png" alt="Logo-grande" width="" height="150" class="ms-3">
+                <img src="/img/ASPRA-branco.png" alt="Logo-grande" width="" height="100" class="ms-3">
             </a>
 
             {{-- links --}}

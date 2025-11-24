@@ -13,6 +13,7 @@
 
         <div id="search-container" class="col-md-12 mb-3">
             <label for="form-label">Busque um associado</label>
+            
             <form method="GET" action="{{ route('associado.index') }}">
                 <input class="form-control" type="text" name="search" value="{{ $search ?? '' }}"
                     placeholder="Pesquisar...">
