@@ -27,7 +27,7 @@
             <div class="col-lg-4">
                 <h2 class="text-center" style="color: #0a499c">Informações Institucionais:</h2>
 
-                <p>CNPJ: 05.786.741/0001-63</p>
+                {{-- <p>CNPJ: 05.786.741/0001-63</p> --}}
                 
                 <p>Associação dos Praças da Polícia Militar do RN - Aspra Pm RN</p>
 

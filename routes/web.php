@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\AssociadoController;
 use App\Http\Controllers\BeneficioController;
 use App\Http\Controllers\UsuariosController;
@@ -118,3 +119,16 @@ Route::get('/associado/financeiro', function(){
 Route::get('/profile', function () {
     return view('profile.show');
 })->name('profile.view');
+
+Route::get('/instagram', function () {
+    return view('instagram.index');
+})->name('instagram.index');
+
+Route::get('/instagram-data', function () {
+    $user = "associacaosdospracas";
+    $url = "https://youthsforum.com/instagram/" . $user;
+
+    $response = Http::get($url);
+
+    return $response->json();
+});
