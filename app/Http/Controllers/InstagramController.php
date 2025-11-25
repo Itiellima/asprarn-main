@@ -21,4 +21,5 @@ class InstagramController extends Controller
 
         return $response->json();
     }
+
 }

@@ -28,10 +28,12 @@
             try {
                 const response = await fetch("/api/instagram/media");
                 const data = await response.json();
+                
+                const postsLimitados = data.data.slice(0, 10);
 
                 const container = document.getElementById("instaContainer");
 
-                data.data.forEach(post => {
+                postsLimitados.forEach(post => {
                     const div = document.createElement("div");
                     div.classList.add("insta-post");
 
