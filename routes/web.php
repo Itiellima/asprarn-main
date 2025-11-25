@@ -15,6 +15,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PastaDocumentoController;
 use App\Http\Controllers\PlanosController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\InstagramController;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
@@ -71,7 +72,7 @@ Route::get('/associado/financeiro/{associadoId}', [PlanosController::class, 'ind
 //////////////////////////////// ********* SITUACAO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::post('/associado/situacao/{id}', [SituacaoController::class, 'storeSituacao'])->name('associado.situacao.store');
 Route::post('/situacao/store', [SituacaoController::class, 'store'])->name('situacao.store');
-Route::post('/situacao/update/{associadoId}' , [SituacaoController::class, 'update'])->name('situacao.update');
+Route::post('/situacao/update/{associadoId}', [SituacaoController::class, 'update'])->name('situacao.update');
 Route::delete('/situacao/destroy/{id}', [SituacaoController::class, 'destroy'])->name('situacao.destroy');
 
 //////////////////////////////// ********* HISTORICO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -104,18 +105,20 @@ Route::post('/banner/store', [BannerController::class, 'store'])->name('banner.s
 Route::delete('/banner/destroy/{id}', [BannerController::class, 'destroy'])->name('banner.destroy');
 
 ///////////////////////////////// ********* ROTAS ESTATICAS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-Route::get('/contatos', function(){
+Route::get('/contatos', function () {
     return view('contato.index');
 })->name('contato.index');
 
-Route::get('/Quem_Somos', function(){
+Route::get('/Quem_Somos', function () {
     return view('quem-somos.index');
 })->name('quem.somos');
 
-Route::get('/associado/financeiro', function(){
+Route::get('/associado/financeiro', function () {
     return view('dashboard.associado-financeiro');
 })->name('associado.financeiro');
 
 Route::get('/profile', function () {
     return view('profile.show');
 })->name('profile.view');
+
+Route::get('/api/instagram/media', [InstagramController::class, 'getMedia']);

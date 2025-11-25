@@ -198,5 +198,9 @@
 
     </div>
 
+    @include('welcome-components.instagram')
+
 
 @endsection
+
+
