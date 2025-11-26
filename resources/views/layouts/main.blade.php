@@ -34,10 +34,6 @@
         });
     </script>
 
-    {{-- AOS link --}}
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
-
     <style>
         body {
             font-family: Montserrat;
@@ -49,6 +45,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
+
+    {{-- owl css --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+    {{-- AOS link --}}
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 </head>
 
@@ -93,8 +97,6 @@
         </main>
     </div>
 
-
-
     {{-- Footer --}}
     <footer class="text-center footer-bg">
         @include('layouts.footer')
@@ -109,6 +111,12 @@
         AOS.init();
     </script>
 
+
+    {{-- owl js --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    @stack('scripts')
 
 </body>
 

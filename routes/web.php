@@ -122,3 +122,4 @@ Route::get('/profile', function () {
 })->name('profile.view');
 
 Route::get('/api/instagram/media', [InstagramController::class, 'getMedia']);
+

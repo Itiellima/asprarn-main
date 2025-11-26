@@ -128,6 +128,7 @@
                                 <a href="#">leia mais</a>
                             </div>
                         </div>
+
                     @endforeach
                 </div>
 
@@ -198,7 +199,6 @@
 
     </div>
 
-    @include('welcome-components.instagram')
-
+    @livewire('instagram-post')
 
 @endsection

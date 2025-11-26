@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class InstagramController extends Controller
 {
+
+    //LEGADO RECEBIMENTO JSON DO PERFIL DO INSTAGRAM
     public function getMedia()
     {
         $token = env('INSTAGRAM_ACCESS_TOKEN');
@@ -18,8 +20,14 @@ class InstagramController extends Controller
             'fields' => 'id,caption,media_type,media_url,thumbnail_url,permalink',
             'access_token' => $token,
         ]);
+    
+        $instagramData = $response->json();
 
-        return $response->json();
+        $instagram = $instagramData['data'] ?? [];
+
+        return view('instagram.instagram', compact('instagram'));
+
+        // return $response->json();
     }
 
 }
