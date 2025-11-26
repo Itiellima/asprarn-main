@@ -10,18 +10,16 @@
     <div class="container body-offset">
 
         {{-- POST MAIS RECENTE --}}
-        @if ($latestPost)
+        {{-- @if ($latestPost)
             <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis alert alert-secondary">
                 <div class="row align-items-center">
 
                     <div class="col-lg-7 px-0">
                         <h2 class="display-6" style="font-weight: bold">{{ $latestPost->titulo }}</h2>
                         <p class="lead my-3">{{ $latestPost->assunto }}</p>
-                        {{-- <p class="lead mb-0"><a href="#" class="text-body-emphasis fw-bold">Continue lendo...</a></p> --}}
                     </div>
 
                     <div class="col-lg-5 px-0">
-                        {{-- IMAGENS DO POST --}}
                         <div id="carouselExample" class="carousel slide">
                             @if ($latestPost->files->isNotEmpty())
                                 <div class="carousel-inner">
@@ -33,8 +31,6 @@
                                     @endforeach
                                 </div>
                             @endif
-
-                            {{-- Botoes das imagens --}}
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
                                 data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -58,14 +54,13 @@
                         <h2 class="display-4 fst-italic">Associação de Praças da Policia Militar do RN.</h2>
                         <p class="lead my-3"> Fique por dentro de todas as novidades.
                         </p>
-                        {{-- <p class="lead mb-0"><a href="#" class="text-body-emphasis fw-bold">Continue lendo...</a></p> --}}
                     </div>
                     <div class="col-lg-5 px-0">
                         <img src="/img/Aspra.png" class="card-img-top" alt="aspra">
                     </div>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
         <div class="row g-5 mt-3">
 
