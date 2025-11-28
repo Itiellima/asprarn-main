@@ -5,6 +5,7 @@
         object-fit: cover;
         border-radius: 6px;
         margin-block-end: auto;
+        box-shadow: 5px 5px 5px #1e1d1d;
     }
 
     /* Remove barras pretas dos vídeos */
@@ -16,10 +17,17 @@
         width: 100%;
         height: 300px;
         /* Ajuste aqui a altura desejada */
-        overflow: hidden;
+        /* overflow: hidden; */
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .instagram-post {
+        background: #0a499c;
+        padding-top: 50px;
+        padding-left: 50px;
+        padding-right: 50px;
     }
 </style>
 

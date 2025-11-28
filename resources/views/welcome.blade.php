@@ -93,7 +93,7 @@
 
                 @endif --}}
 
-                <article class="blog-post">
+                {{-- <article class="blog-post">
                     <h2 class="display-6 link-body-emphasis mb-1">
                         {{ $latestPost->titulo }}
                     </h2>
@@ -103,11 +103,13 @@
                     <p>
                         {!! $latestPost->texto !!}
                     </p>
-                </article>
+                </article> --}}
 
 
                 <h2>NOTICIAS</h2>
                 <hr>
+
+                
                 <div class="row">
                     @foreach ($recentPosts as $post)
                         <div class="card m-1 rounded-5 overflow-hidden p-0" style="width: 20rem;">
