@@ -104,6 +104,12 @@ Route::get('/banner/create', [BannerController::class, 'create'])->name('banner.
 Route::post('/banner/store', [BannerController::class, 'store'])->name('banner.store');
 Route::delete('/banner/destroy/{id}', [BannerController::class, 'destroy'])->name('banner.destroy');
 
+///////////////////////////////// ********* INSTAGRAM API ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Route::get('/api/instagram/media', [InstagramController::class, 'getMedia']);
+
+///////////////////////////////// ********* CONFIGURAÇÕES ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Route::get('/configuracoes', [App\Http\Controllers\ConfiguracoesController::class, 'index'])->name('configuracoes.index');
+ 
 ///////////////////////////////// ********* ROTAS ESTATICAS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/contatos', function () {
     return view('contato.index');
@@ -120,6 +126,4 @@ Route::get('/associado/financeiro', function () {
 Route::get('/profile', function () {
     return view('profile.show');
 })->name('profile.view');
-
-Route::get('/api/instagram/media', [InstagramController::class, 'getMedia']);
 

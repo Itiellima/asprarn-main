@@ -4,6 +4,8 @@
 
 @section('content')
 
+    @include('dashboard.layouts.nav-dashboard')
+
     {{-- Informações do associado --}}
     <div class="container alert alert-light text-center">
         <strong class="text-black">
@@ -64,9 +66,6 @@
 
     {{-- situacao do associado --}}
     @include('associado.components.situacao-associado')
-
-    {{-- situacao Controller --}}
-    @include('associado.components.situacao-controller')
 
     {{-- categoria do associado --}}
     <div class="container alert alert-light text-black text-center">

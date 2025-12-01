@@ -2,12 +2,13 @@
     <strong class="text-black">
         <h2>Situação Controller</h2>
     </strong>
+
     @foreach ($situacoes as $situacao)
         <form action="{{ route('situacao.destroy', $situacao->id) }}" method="POST"
             onsubmit="return confirm('Deseja excluir essa situação?')">
             @csrf
             @method('DELETE')
-
+            
             {{ $situacao->nome }} - <button type="submit" class="btn btn-danger">🗑️ Excluir</button>
         </form>
     @endforeach

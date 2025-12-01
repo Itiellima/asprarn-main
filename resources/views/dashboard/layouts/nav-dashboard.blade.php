@@ -48,7 +48,7 @@
                             <a href="{{ route('banner.create') }}" class="dropdown-item">​📣 Banner</a>
                         </li>
                         <li>
-                            <a href="#" class="dropdown-item">⚙️ Configurações*</a>
+                            <a href="{{ route('configuracoes.index') }}" class="dropdown-item">⚙️ Configurações</a>
                         </li>
                     </ul>
                 @endhasanyrole
