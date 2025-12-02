@@ -54,6 +54,9 @@
     {{-- AOS link --}}
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
+    {{-- manifest pwa --}}
+    <link rel="manifest" href="/manifest.json">
+
 </head>
 
 <body>
@@ -117,6 +120,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
     @stack('scripts')
+
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("/service-worker.js");
+        }
+    </script>
+
 
 </body>
 
