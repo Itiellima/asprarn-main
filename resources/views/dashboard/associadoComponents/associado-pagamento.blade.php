@@ -3,8 +3,12 @@
 <div class="alert alert-light">
     <h4 class="text-black">Meus Pagamentos</h4>
 
-    <a href="{{ route('associado.financeiro') }}">
-        <button class="btn btn-primary mb-3">💵 Pagar Mensalidade</button>
+    <a href="{{ route('associado.financeiro') }}" class="m-1">
+        <button class="btn btn-primary">💵 Pagar Mensalidade</button>
+    </a>
+
+    <a href="#" class="m-1">
+        <button class="btn btn-primary">📄 Historico de Pagamentos</button>
     </a>
 
     {{-- remover futuramente --}}

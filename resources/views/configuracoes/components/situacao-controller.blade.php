@@ -3,16 +3,21 @@
         <h2>Situação Controller</h2>
     </strong>
 
-    @foreach ($situacoes as $situacao)
-        <form action="{{ route('situacao.destroy', $situacao->id) }}" method="POST"
-            onsubmit="return confirm('Deseja excluir essa situação?')">
-            @csrf
-            @method('DELETE')
-            
-            {{ $situacao->nome }} - <button type="submit" class="btn btn-danger">🗑️ Excluir</button>
-        </form>
-    @endforeach
-    
+    <div class="row content-center justify-content-center">
+        @foreach ($situacoes as $situacao)
+            <form class="col-sm-6 col-md-4 col-lg-3" action="{{ route('situacao.destroy', $situacao->id) }}" method="POST"
+                onsubmit="return confirm('Deseja excluir essa situação?')">
+                @csrf
+                @method('DELETE')
+                <div class="alert alert-light text-black m-2 p-2">
+                    <label class="">{{ $situacao->nome }}</label> 
+                    <br>
+                    <button type="submit" class="btn btn-sm btn-danger">🗑️ Excluir</button>
+                </div>
+            </form>
+        @endforeach
+    </div>
+
     <br>
 
     <!-- Button trigger modal -->

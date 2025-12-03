@@ -32,7 +32,7 @@
             </a>
         </div>
 
-        @include('dashboard.layouts.associado-pagamento')
+        @include('dashboard.associadoComponents.associado-pagamento')
 
 
 
