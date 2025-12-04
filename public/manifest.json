@@ -3,7 +3,7 @@
     "short_name": "ASPRA PM RN",
     "id": "/",
     "start_url": "/",
-    "display": "standalone",
+    "display": "fullscreen",
     "theme_color": "#0d6efd",
     "background_color": "#ffffff",
     "icons": [
