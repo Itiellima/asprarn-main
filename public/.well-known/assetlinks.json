@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.asprarn.twa",
+      "sha256_cert_fingerprints": [
+        "0D:B0:C0:4E:05:6C:D9:4C:C2:81:DD:BA:DB:54:A8:C5:74:00:6B:31:3A:AA:42:E5:BE:E8:CD:10:00:5F:3D:21"
+      ]
+    }
+  }
+]
