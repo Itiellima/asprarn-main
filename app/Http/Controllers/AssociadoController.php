@@ -12,6 +12,7 @@ use App\Models\Situacao;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 
 
 class AssociadoController extends Controller
@@ -29,19 +30,49 @@ class AssociadoController extends Controller
 
         $search = request('search');
 
+        $cidades = Associado::with('endereco')
+            ->get()
+            ->pluck('endereco.cidade')
+            ->unique()
+            ->sort()
+            ->values();
+
+        $opms = Associado::select('opm')
+            ->pluck('opm')
+            ->unique()
+            ->sort()
+            ->values();
+
         $associados = Associado::query()
-            ->when($search, function ($query, $search) {
-                $query->where('nome', 'like', "%{$search}%")
-                    ->orWhere('cpf', 'like', "%{$search}%")
-                    ->orWhere('matricula', 'like', "%{$search}%");
+            ->with('endereco')
+
+            // Filtro por texto
+            ->when(request('search'), function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('nome', 'like', "%{$search}%")
+                        ->orWhere('cpf', 'like', "%{$search}%")
+                        ->orWhere('matricula', 'like', "%{$search}%");
+                });
             })
-            ->orderBy('nome')
-            ->paginate(10);
+
+            // Filtro por cidade
+            ->when(request('cidade'), function ($query, $cidade) {
+                $query->whereHas('endereco', function ($q) use ($cidade) {
+                    $q->where('cidade', $cidade);
+                });
+            })
+
+            // Filtro por OPM
+            ->when(request('opm'), function ($query, $opm) {
+                $query->where('opm', $opm);
+            })
+
+            ->paginate(12)
+            ->appends(request()->query()); // mantém filtros na paginação
 
         $totalAssociados = Associado::count();
 
-
-        return view('associado.index', ['associados' => $associados, 'search' => $search, 'totalAssociados' => $totalAssociados]);
+        return view('associado.index', ['associados' => $associados, 'search' => $search, 'totalAssociados' => $totalAssociados, 'cidades' => $cidades, 'opms' => $opms]);
     }
 
 
@@ -76,8 +107,19 @@ class AssociadoController extends Controller
     {
         $associado = new Associado();
 
-        return view('associado.create', ['associado' => $associado]);
+        // Buscar UFs do IBGE
+        $ufs = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+            ->json();
+
+        return view('associado.create', compact('associado', 'ufs'));
     }
+    public function cidades($uf)
+    {
+        $cidades = Http::get("https://servicodados.ibge.gov.br/api/v1/localidades/estados/{$uf}/municipios");
+
+        return $cidades; // sempre retorna ARRAY de cidades
+    }
+
 
     // Rota salvar o associado no banco de dados
     public function store(Request $request)
@@ -218,36 +260,39 @@ class AssociadoController extends Controller
             $associado->endereco()->updateOrCreate(
                 ['associado_id' => $associado->id],
                 $request->only([
-                'cep',
-                'logradouro',
-                'nmr',
-                'bairro',
-                'cidade',
-                'uf',
-                'complemento'
-            ]));
+                    'cep',
+                    'logradouro',
+                    'nmr',
+                    'bairro',
+                    'cidade',
+                    'uf',
+                    'complemento'
+                ])
+            );
 
             // Atualiza o contato
             $associado->contato()->updateOrCreate(
                 ['associado_id' => $associado->id],
                 $request->only([
-                'tel_celular',
-                'tel_residencial',
-                'tel_trabalho',
-                'email'
-            ]));
+                    'tel_celular',
+                    'tel_residencial',
+                    'tel_trabalho',
+                    'email'
+                ])
+            );
 
             // Atualiza os dados bancários
             $associado->dadosBancarios()->updateOrCreate(
                 ['associado_id' => $associado->id],
                 $request->only([
-                'codigo',
-                'agencia',
-                'banco',
-                'conta',
-                'operacao',
-                'tipo'
-            ]));
+                    'codigo',
+                    'agencia',
+                    'banco',
+                    'conta',
+                    'operacao',
+                    'tipo'
+                ])
+            );
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -273,7 +318,7 @@ class AssociadoController extends Controller
             DB::beginTransaction();
 
             // Exclui o usuário vinculado ao associado (se existir)
-            if ($associado->user){
+            if ($associado->user) {
                 $associado->user->delete();
             }
 

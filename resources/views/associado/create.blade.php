@@ -13,10 +13,8 @@
                     <h1 class="alert-heading">Ficha do Associado</h1>
                     <p><strong>{{ $associado->nome }}</strong></p>
                 </div>
-                
             @else
                 <h1 class="alert alert-primary" role="alert">Formulário de cadastro ASPRA RN!</h1>
-                
             @endif
         </div>
 
@@ -60,7 +58,7 @@
                                     placeholder="Órgão expedidor" required
                                     value="{{ old('org_expedidor', $associado->org_expedidor) }}">
                             </div>
-                            
+
                             <div class="mb-3 col-md-3 col-sm-6">
                                 <label for="formGroup" class="form-label">Data de nascimento</label>
                                 <input type="date" class="form-control " id="dt_nasc" name="dt_nasc" required
@@ -144,7 +142,8 @@
                             <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="formGroup" class="form-label">Nome da Mãe:</label>
                                 <input type="text" class="form-control " id="nome_mae" name="nome_mae"
-                                    placeholder="Insira o nome da mãe" value="{{ old('nome_mae', $associado->nome_mae) }}">
+                                    placeholder="Insira o nome da mãe"
+                                    value="{{ old('nome_mae', $associado->nome_mae) }}">
                             </div>
                         </div>
 
@@ -175,6 +174,8 @@
                                     placeholder="Insira o nome do bairro" required
                                     value="{{ old('bairro', $associado->endereco?->bairro) }}">
                             </div>
+
+                            {{-- remover campos cidade e uf e substituir pelo novo com busca do ibge --}}
                             <div class="mb-3 col-md-3 col-sm-6">
                                 <label for="formGroup" class="form-label">Cidade:</label>
                                 <input type="text" class="form-control " id="cidade" name="cidade"
@@ -186,6 +187,8 @@
                                 <input type="text" class="form-control " id="uf" name="uf"
                                     placeholder="ex: RN" required value="{{ old('uf', $associado->endereco?->uf) }}">
                             </div>
+
+
                             <div class="mb-3 col-md-12 col-sm-6">
                                 <label for="formGroup" class="form-label">Complemento:</label>
                                 <input type="text" class="form-control " id="complemento" name="complemento"
@@ -193,6 +196,7 @@
                                     value="{{ old('complemento', $associado->endereco?->complemento) }}">
                             </div>
                         </div>
+
 
                         {{-- Contato --}}
                         <div class="container row border-bottom border-primary mt-3 m-1">
@@ -318,7 +322,7 @@
                                 <label for="formGroup" class="form-label">OPM:</label>
                                 <select class="form-select " name="opm" id="opm">
                                     <option selected value="">Selecione</option>
-                                    <option value="1bpm" {{ old('1bpm', $associado->opm) == '1bpm' ? 'selected' : '' }}>
+                                    <option value="1bpm" {{ old('opm', $associado->opm) == '1bpm' ? 'selected' : '' }}>
                                         1°BPM
                                     </option>
                                 </select>
@@ -366,6 +370,72 @@
         </div>
 
     </div>
+
+
     <script src="{{ asset('js/form-edit.js') }}"></script>
+
+
+
+
+
+
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <label class="form-label">UF</label>
+            <select id="uf" name="uf" class="form-select">
+                <option value="">Selecione a UF</option>
+                @foreach ($ufs as $uf)
+                    <option value="{{ $uf['sigla'] }}">{{ $uf['sigla'] }} - {{ $uf['nome'] }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-md-8">
+            <label class="form-label">Cidade</label>
+            <select id="cidade" name="cidade" class="form-select" disabled>
+                <option value="">Selecione a UF primeiro</option>
+            </select>
+        </div>
+    </div>
+
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+
+                const ufSelect = document.getElementById('uf');
+                const cidadeSelect = document.getElementById('cidade');
+
+                ufSelect.addEventListener('change', function() {
+
+                    const uf = this.value;
+                    cidadeSelect.innerHTML = '<option>Carregando...</option>';
+                    cidadeSelect.disabled = true;
+
+                    if (!uf) {
+                        cidadeSelect.innerHTML = '<option>Selecione a UF primeiro</option>';
+                        return;
+                    }
+
+                    fetch(`/api/cidades/${uf}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            cidadeSelect.innerHTML = '<option value="">Selecione a cidade</option>';
+
+                            data.forEach(cidade => {
+                                cidadeSelect.innerHTML +=
+                                    `<option value="${cidade.nome}">${cidade.nome}</option>`;
+                            });
+
+                            cidadeSelect.disabled = false;
+                        })
+                        .catch(() => {
+                            cidadeSelect.innerHTML = '<option>Erro ao carregar</option>';
+                        });
+                });
+            });
+        </script>
+    @endpush
 
 @endsection

@@ -126,8 +126,6 @@
             navigator.serviceWorker.register("/service-worker.js");
         }
     </script>
-
-
 </body>
 
 </html>

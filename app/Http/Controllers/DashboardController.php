@@ -53,6 +53,7 @@ class DashboardController extends Controller
             ->groupBy('situacoes.id', 'situacoes.nome')
             ->get();
 
+        
 
         return view("dashboard.admin", compact('user', 'associados', 'situacoes'));
     }

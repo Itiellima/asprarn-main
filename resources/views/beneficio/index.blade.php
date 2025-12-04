@@ -40,7 +40,7 @@
                         <div class="col-sm-12 col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-duration="1000">
                             {{-- CARD BENEFICIO --}}
                             
-                            <div class="card h-100">
+                            <div class="card h-100 shadow">
 
                                 {{-- CARROSSEL --}}
                                 <div id="carouselExample{{ $beneficio->id }}" class="carousel slide">

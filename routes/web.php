@@ -127,3 +127,9 @@ Route::get('/profile', function () {
     return view('profile.show');
 })->name('profile.view');
 
+Route::get('/api/cidades/{uf}', function ($uf) {
+    return Http::get("https://servicodados.ibge.gov.br/api/v1/localidades/estados/{$uf}/municipios")
+        ->json();
+});
+
+Route::get('/api/cidades/{uf}', [AssociadoController::class, 'cidades']);

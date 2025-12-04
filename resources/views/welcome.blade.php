@@ -112,7 +112,7 @@
                 
                 <div class="row">
                     @foreach ($recentPosts as $post)
-                        <div class="card m-1 rounded-5 overflow-hidden p-0" style="width: 20rem;">
+                        <div class="card m-1 rounded-5 overflow-hidden p-0 shadow-lg" style="width: 20rem;">
 
                             <img src="{{ asset('storage/' . $post->files->first()->path) }}" class="card-img-top"
                                 style="height: 200px; width: 100%; object-fit: cover;" alt="{{ $post->titulo }}">
