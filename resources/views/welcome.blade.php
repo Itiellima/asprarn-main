@@ -8,111 +8,13 @@
     @include('welcome-components.banner')
 
     <div class="container body-offset">
-
-        {{-- POST MAIS RECENTE --}}
-        {{-- @if ($latestPost)
-            <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis alert alert-secondary">
-                <div class="row align-items-center">
-
-                    <div class="col-lg-7 px-0">
-                        <h2 class="display-6" style="font-weight: bold">{{ $latestPost->titulo }}</h2>
-                        <p class="lead my-3">{{ $latestPost->assunto }}</p>
-                    </div>
-
-                    <div class="col-lg-5 px-0">
-                        <div id="carouselExample" class="carousel slide">
-                            @if ($latestPost->files->isNotEmpty())
-                                <div class="carousel-inner">
-                                    @foreach ($latestPost->files as $index => $file)
-                                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                            <img src="{{ asset('storage/' . $file->path) }}" class="img-fluid"
-                                                alt="{{ $latestPost->titulo }}">
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endif
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
-                                data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
-                                data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-        @else
-            <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary alert alert-secondary">
-                <div class="row align-items-center">
-                    <div class="col-lg-7 px-0">
-                        <h2 class="display-4 fst-italic">Associação de Praças da Policia Militar do RN.</h2>
-                        <p class="lead my-3"> Fique por dentro de todas as novidades.
-                        </p>
-                    </div>
-                    <div class="col-lg-5 px-0">
-                        <img src="/img/Aspra.png" class="card-img-top" alt="aspra">
-                    </div>
-                </div>
-            </div>
-        @endif --}}
-
-        <div class="row g-5 mt-3">
-
-            {{-- POSTS RECENTES --}}
+        <div class="row mt-3">
             <div class="col-md-8">
-                {{-- 
-                @if ($recentPosts->isNotEmpty())
-                    @foreach ($recentPosts as $post)
-                        <article class="blog-post">
-                            <h2 class="display-6 link-body-emphasis mb-1">
-                                {{ $post->titulo }}
-                            </h2>
-                            <p class="blog-post-meta">Atualizado em
-                                {{ $post->updated_at->format('d/m/Y') }} incluido por:<a href="#">
-                                    {{ $post->owner }}</a></p>
-                            <p>
-                                {!! $post->texto !!}
-                            </p>
-                        </article>
-                    @endforeach
-                @else
-                    <article class="blog-post">
-                        <h2 class="display-6 link-body-emphasis mb-1">ASPRA RN</h2>
-                        <p class="blog-post-meta">January 1, 2021 by <a href="#">Mark</a></p>
-                        <p> ASPRA RN (Associação dos Praças do Rio Grande do Norte) é uma entidade que representa militares
-                            de praças
-                            no estado do Rio Grande do Norte, oferecendo suporte jurídico e outras assistências.
-                        </p>
-                        <hr>
-
-                @endif --}}
-
-                {{-- <article class="blog-post">
-                    <h2 class="display-6 link-body-emphasis mb-1">
-                        {{ $latestPost->titulo }}
-                    </h2>
-                    <p class="blog-post-meta">Atualizado em
-                        {{ $latestPost->updated_at->format('d/m/Y') }} incluido por:<a href="#">
-                            {{ $latestPost->owner }}</a></p>
-                    <p>
-                        {!! $latestPost->texto !!}
-                    </p>
-                </article> --}}
-
-
                 <h2>NOTICIAS</h2>
                 <hr>
-
-                
                 <div class="row">
                     @foreach ($recentPosts as $post)
-                        <div class="card m-1 rounded-5 overflow-hidden p-0 shadow-lg" style="width: 20rem;">
+                        <div class="card m-1 rounded-5 overflow-hidden p-0 shadow-lg col-sm-6" style="width: 20rem;">
 
                             <img src="{{ asset('storage/' . $post->files->first()->path) }}" class="card-img-top"
                                 style="height: 200px; width: 100%; object-fit: cover;" alt="{{ $post->titulo }}">
@@ -128,9 +30,6 @@
 
                     @endforeach
                 </div>
-
-
-
             </div>
 
             {{-- SIDEBAR --}}
@@ -167,27 +66,6 @@
                                 @endforeach
                             </ul>
                         @endif
-                    </div>
-
-                    <div class="p-4">
-                        {{-- <h4 class="fst-italic">Redes Sociais</h4>
-                        <ol class="list-unstyled">
-                            <li><a href="#">GitHub</a></li>
-                            <li><a href="#">Social</a></li>
-                            <li><a href="#">Facebook</a></li>
-                            <li class="mb-3">
-                                <a href="https://www.instagram.com/associacaosdospracas/" target="_blank">
-                                    <img src="/img/Instagram_logo.svg" class="img-thumbnail" alt="instagram" width="100"
-                                        height="100">
-                                </a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="https://wa.me/message/ABFVUULB5HXIK1" target="_blank" rel="noopener noreferrer">
-                                    <img src="/img/whatsapp.png" class="img-thumbnail" alt="whatsapp" width="100"
-                                        height="100">
-                                </a>
-                            </li>
-                        </ol> --}}
                     </div>
                 </div>
             </div>

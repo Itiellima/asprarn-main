@@ -66,7 +66,7 @@
     </header>
 
     {{-- Alertas --}}
-    <div class="container m-3">
+    <div class="container px-3 py-3">
         @if (session('msg'))
             <div class="container alert alert-success">
                 {{ session('msg') }}

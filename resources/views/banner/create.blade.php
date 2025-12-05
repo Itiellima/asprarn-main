@@ -4,6 +4,8 @@
 
 @section('content')
 
+    @include('dashboard.layouts.nav-dashboard')
+
     <div class="container">
 
         <form action="{{ route('banner.store') }}" enctype="multipart/form-data" method="POST">
@@ -27,6 +29,10 @@
                     <label for="formFile" class="form-label">Insira as fotos</label>
                     <input class="form-control" type="file" id="img" name="arquivos"
                         {{ $banner->exists ? '' : 'required' }}>
+                </div>
+
+                <div id="preview-container">
+                    {{-- Previews das imagens serão exibidos aqui --}}
                 </div>
 
                 <button type="submit" class="btn btn-success">

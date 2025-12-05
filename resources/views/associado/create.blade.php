@@ -6,7 +6,7 @@
 
     <div class="container">
 
-        <div class="container m-3 text-center">
+        <div class="container mb-3 text-center">
 
             @if ($associado->id)
                 <div class="alert alert-success" role="alert">
@@ -209,10 +209,6 @@
                                     <option value="">Selecione a UF primeiro</option>
                                 </select>
                             </div>
-
-
-
-
 
                             <div class="mb-3 col-md-12 col-sm-6">
                                 <label for="formGroup" class="form-label">Complemento:</label>

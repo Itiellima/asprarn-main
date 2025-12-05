@@ -1,10 +1,10 @@
-<div class="container footer-container py-4 text-white">
+<div class="container py-4 text-white mt-3">
     <div class="row align-items-center mb-3">
 
         <!-- Coluna 1: Logo e horário -->
         <div class="col-md-3 mb-4 mb-md-0 text-center text-md-start">
             <a href="/" class="d-inline-flex align-items-center text-decoration-none">
-                <img src="{{ asset('img/ASPRA-branco.png') }}" alt="Logo ASPRA RN" width="" height="120" class="me-2">
+                <img src="{{ asset('img/ASPRA-branco.png') }}" alt="Logo ASPRA RN" width="img-fluid" height="120" class="me-2">
             </a>
             <div class="mt-2 small">
                 <p class="mb-1 fw-bold">Horário de funcionamento:</p>
