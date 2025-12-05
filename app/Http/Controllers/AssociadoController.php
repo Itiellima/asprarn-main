@@ -113,6 +113,8 @@ class AssociadoController extends Controller
 
         return view('associado.create', compact('associado', 'ufs'));
     }
+
+    // Rota para buscar cidades por UF via IBGE
     public function cidades($uf)
     {
         $cidades = Http::get("https://servicodados.ibge.gov.br/api/v1/localidades/estados/{$uf}/municipios");
@@ -220,7 +222,11 @@ class AssociadoController extends Controller
 
         $associado = Associado::findOrFail($id);
 
-        return view('associado.create', ['associado' => $associado]);
+        // Buscar UFs do IBGE
+        $ufs = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+            ->json();
+
+        return view('associado.create', compact('associado', 'ufs'));
     }
 
     // Rota para atualizar o associado no banco de dados

@@ -176,7 +176,7 @@
                             </div>
 
                             {{-- remover campos cidade e uf e substituir pelo novo com busca do ibge --}}
-                            <div class="mb-3 col-md-3 col-sm-6">
+                            {{-- <div class="mb-3 col-md-3 col-sm-6">
                                 <label for="formGroup" class="form-label">Cidade:</label>
                                 <input type="text" class="form-control " id="cidade" name="cidade"
                                     placeholder="Insira o nome da cidade" required
@@ -186,7 +186,32 @@
                                 <label for="formGroup" class="form-label">UF:</label>
                                 <input type="text" class="form-control " id="uf" name="uf"
                                     placeholder="ex: RN" required value="{{ old('uf', $associado->endereco?->uf) }}">
+                            </div> --}}
+
+
+                            <div class="mb-3 col-md-3 col-sm-6">
+                                <label class="form-label">UF</label>
+                                <select id="uf" name="uf" class="form-select">
+                                    <option value="">Selecione a UF</option>
+
+                                    @foreach ($ufs as $uf)
+                                        <option value="{{ $uf['sigla'] }}"
+                                            {{ old('uf', $associado->endereco->uf ?? '') == $uf['sigla'] ? 'selected' : '' }}>
+                                            {{ $uf['sigla'] }} - {{ $uf['nome'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
+
+                            <div class="mb-3 col-md-3 col-sm-6">
+                                <label class="form-label">Cidade</label>
+                                <select id="cidade" name="cidade" class="form-select" disabled>
+                                    <option value="">Selecione a UF primeiro</option>
+                                </select>
+                            </div>
+
+
+
 
 
                             <div class="mb-3 col-md-12 col-sm-6">
@@ -375,48 +400,18 @@
     <script src="{{ asset('js/form-edit.js') }}"></script>
 
 
-
-
-
-
-
-
-    <div class="row">
-        <div class="col-md-4">
-            <label class="form-label">UF</label>
-            <select id="uf" name="uf" class="form-select">
-                <option value="">Selecione a UF</option>
-                @foreach ($ufs as $uf)
-                    <option value="{{ $uf['sigla'] }}">{{ $uf['sigla'] }} - {{ $uf['nome'] }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="col-md-8">
-            <label class="form-label">Cidade</label>
-            <select id="cidade" name="cidade" class="form-select" disabled>
-                <option value="">Selecione a UF primeiro</option>
-            </select>
-        </div>
-    </div>
-
     @push('scripts')
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener("DOMContentLoaded", function() {
 
                 const ufSelect = document.getElementById('uf');
                 const cidadeSelect = document.getElementById('cidade');
 
-                ufSelect.addEventListener('change', function() {
+                const cidadeAtual = "{{ old('cidade', $associado->endereco->cidade ?? '') }}";
 
-                    const uf = this.value;
+                function carregarCidades(uf, selecionarCidade = null) {
                     cidadeSelect.innerHTML = '<option>Carregando...</option>';
                     cidadeSelect.disabled = true;
-
-                    if (!uf) {
-                        cidadeSelect.innerHTML = '<option>Selecione a UF primeiro</option>';
-                        return;
-                    }
 
                     fetch(`/api/cidades/${uf}`)
                         .then(response => response.json())
@@ -424,16 +419,36 @@
                             cidadeSelect.innerHTML = '<option value="">Selecione a cidade</option>';
 
                             data.forEach(cidade => {
-                                cidadeSelect.innerHTML +=
-                                    `<option value="${cidade.nome}">${cidade.nome}</option>`;
+                                const opt = document.createElement('option');
+                                opt.value = cidade.nome;
+                                opt.textContent = cidade.nome;
+
+                                if (selecionarCidade && cidade.nome === selecionarCidade) {
+                                    opt.selected = true;
+                                }
+
+                                cidadeSelect.appendChild(opt);
                             });
 
                             cidadeSelect.disabled = false;
-                        })
-                        .catch(() => {
-                            cidadeSelect.innerHTML = '<option>Erro ao carregar</option>';
                         });
+                }
+
+                // Quando o usuário troca a UF
+                ufSelect.addEventListener('change', function() {
+                    if (this.value) {
+                        carregarCidades(this.value);
+                    } else {
+                        cidadeSelect.innerHTML = '<option>Selecione a UF primeiro</option>';
+                        cidadeSelect.disabled = true;
+                    }
                 });
+
+                // Carregar automaticamente no EDIT
+                if (ufSelect.value) {
+                    carregarCidades(ufSelect.value, cidadeAtual);
+                }
+
             });
         </script>
     @endpush
