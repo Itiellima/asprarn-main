@@ -94,4 +94,25 @@ class SituacaoController extends Controller
         return redirect()->back()->with('success', 'Situação excluída com sucesso!');
     }
 
+    public function edit(Request $request, $id)
+    {
+        $user = Auth::user();
+        if(!$user || !$user->hasAnyRole(['admin', 'moderador'])){
+            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $situacao = Situacao::findOrFail($id);
+
+        $request->validate([
+            'nome' => 'required|string|max:255',
+        ]);
+
+        $situacao->update([
+            'nome' => $request->input('nome'),
+        ]);
+
+
+        return redirect()->back()->with('success', 'Situação atualizada com sucesso!');
+    }
+
 }

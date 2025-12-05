@@ -74,6 +74,7 @@ Route::post('/associado/situacao/{id}', [SituacaoController::class, 'storeSituac
 Route::post('/situacao/store', [SituacaoController::class, 'store'])->name('situacao.store');
 Route::post('/situacao/update/{associadoId}', [SituacaoController::class, 'update'])->name('situacao.update');
 Route::delete('/situacao/destroy/{id}', [SituacaoController::class, 'destroy'])->name('situacao.destroy');
+Route::put('/situacao/edit/{id}', [SituacaoController::class, 'edit'])->name('situacao.edit');
 
 //////////////////////////////// ********* HISTORICO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::post('/associado/{id}/historico', [HistoricoSituacoesController::class, 'storeHistorico'])->name('associado.historico.store');

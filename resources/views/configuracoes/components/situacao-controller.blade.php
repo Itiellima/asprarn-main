@@ -10,9 +10,13 @@
                 @csrf
                 @method('DELETE')
                 <div class="alert alert-light text-black m-2 p-2">
-                    <label class="">{{ $situacao->nome }}</label> 
-                    <br>
-                    <button type="submit" class="btn btn-sm btn-danger">🗑️ Excluir</button>
+                    <label class="">{{ $situacao->nome }}</label>
+                    <hr>
+                    <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#modalEdit{{ $situacao->id }}">
+                        Editar
+                    </button>
                 </div>
             </form>
         @endforeach
@@ -48,4 +52,38 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Edit -->
+    @foreach ($situacoes as $situacao)
+        <div class="modal fade" id="modalEdit{{ $situacao->id }}" tabindex="-1" aria-labelledby="modalEditLabel{{ $situacao->id }}"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalEditLabel{{ $situacao->id }}">Editar Situação</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('situacao.edit', $situacao->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+
+                            <label for="nome_{{ $situacao->id }}"> Nome da situação</label>
+                            <input type="text" name="nome" id="nome_{{ $situacao->id }}" class="form-control"
+                                value="{{ $situacao->nome }}">
+                                
+                            <hr>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                            <button type="submit" class="btn btn-primary mt-3 mb-3">Salvar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+
+
+
+
 </div>
