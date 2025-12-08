@@ -14,8 +14,13 @@
             <p>{!! $post->texto !!}</p>
 
             @if ($post->files->isNotEmpty())
-                <img src="{{ asset('storage/' . $post->files->first()->path) }}" class="card-img-top"
-                    style="height: 600px; width: 100%; object-fit: cover;" alt="{{ $post->titulo }}">
+                @foreach ($post->files as $file)
+                    <img src="{{ asset('storage/' . $file->path) }}" 
+                        class="card-img-top"
+                        style="height: ; width: 100%; object-fit: cover;" 
+                        alt="{{ $post->titulo }}">
+                @endforeach
+
             @endif
 
             <a href="/" class="btn btn-secondary mt-3">Voltar</a>
