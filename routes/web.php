@@ -21,9 +21,14 @@ Route::get('/', [IndexController::class, 'index'])->name('index');
 
 //////////////////////////////// ********* CRUD POSTS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::middleware(['auth'])->group(function () {
-    Route::resource('posts', PostController::class);
-    //index, create, store, show, edit, update, destroy
+    Route::get('posts', [PostController::class, 'index'])->name('posts.index');
+    Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::post('posts', [PostController::class, 'store'])->name('posts.store');
+    Route::get('posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+    Route::put('posts/{post}', [PostController::class, 'update'])->name('posts.update');
+    Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 });
+Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 //////////////////////////////// ********* BENEFICIO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::resource('beneficio', BeneficioController::class);
@@ -112,7 +117,7 @@ Route::get('/api/instagram/media', [InstagramController::class, 'getMedia']);
 
 ///////////////////////////////// ********* CONFIGURAÇÕES ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/configuracoes', [App\Http\Controllers\ConfiguracoesController::class, 'index'])->name('configuracoes.index');
- 
+
 ///////////////////////////////// ********* ROTAS ESTATICAS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/contatos', function () {
     return view('contato.index');

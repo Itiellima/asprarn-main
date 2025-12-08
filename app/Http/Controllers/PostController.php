@@ -39,11 +39,6 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
 
         $post = Post::findOrFail($id);
 
