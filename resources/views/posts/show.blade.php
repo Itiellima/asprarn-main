@@ -1,4 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.main')
+
+@section('title', 'AspraRN - ' . $post->titulo)
 
 @section('content')
     <div class="container body-offset">
@@ -9,13 +11,14 @@
             <p><strong>Autor:</strong> {{ $post->user->name ?? 'N/A' }}</p>
             <p><strong>Data:</strong> {{ $post->data->format('d/m/Y') }}</p>
             <hr>
-            <p>{{ $post->texto }}</p>
+            <p>{!! $post->texto !!}</p>
 
-            @if ($post->img)
-                <img src="{{ asset('storage/' . $post->img) }}" alt="Imagem do post" class="img-fluid mt-3">
+            @if ($post->files->isNotEmpty())
+                <img src="{{ asset('storage/' . $post->files->first()->path) }}" class="card-img-top"
+                    style="height: 600px; width: 100%; object-fit: cover;" alt="{{ $post->titulo }}">
             @endif
 
-            <a href="{{ route('posts.index') }}" class="btn btn-secondary mt-3">Voltar</a>
+            <a href="/" class="btn btn-secondary mt-3">Voltar</a>
         </div>
     </div>
 @endsection

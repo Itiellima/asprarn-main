@@ -24,7 +24,7 @@
                                 <p class="card-text">{{ $post->assunto }}.</p>
                             </div>
                             <div class="mb-3">
-                                <a href="#">leia mais</a>
+                                <a href="/posts/{{ $post->id }}">leia mais</a>
                             </div>
                         </div>
 

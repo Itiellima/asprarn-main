@@ -19,8 +19,10 @@ use App\Http\Controllers\InstagramController;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
+//////////////////////////////// ********* CRUD POSTS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::middleware(['auth'])->group(function () {
     Route::resource('posts', PostController::class);
+    //index, create, store, show, edit, update, destroy
 });
 
 //////////////////////////////// ********* BENEFICIO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
