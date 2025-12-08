@@ -10,9 +10,9 @@
     <div class="container body-offset">
         <div class="row mt-3">
             <div class="col-md-8">
-                <h2>NOTICIAS</h2>
+                <h2>NOTÍCIAS</h2>
                 <hr>
-                <div class="row">
+                <div class="row justify-content-center">
                     @foreach ($recentPosts as $post)
                         <div class="card m-1 rounded-5 overflow-hidden p-0 shadow-lg col-sm-6" style="width: 20rem;">
 
@@ -23,8 +23,8 @@
                                 <h5 class="card-title">{{ $post->titulo }}</h5>
                                 <p class="card-text">{{ $post->assunto }}.</p>
                             </div>
-                            <div class="mb-3">
-                                <a href="/posts/{{ $post->id }}">leia mais</a>
+                            <div class="mb-3 text-center">
+                                <a class="btn btn-sm btn-secondary" href="/posts/{{ $post->id }}">Leia mais</a>
                             </div>
                         </div>
 

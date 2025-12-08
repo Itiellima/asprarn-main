@@ -13,16 +13,15 @@
             <hr>
             <p>{!! $post->texto !!}</p>
 
-            @if ($post->files->isNotEmpty())
-                @foreach ($post->files as $file)
-                    <img src="{{ asset('storage/' . $file->path) }}" 
-                        class="card-img-top"
-                        style="height: ; width: 100%; object-fit: cover;" 
-                        alt="{{ $post->titulo }}">
-                @endforeach
-
-            @endif
-
+            <div class="row justify-content-center">
+                @if ($post->files->isNotEmpty())
+                    @foreach ($post->files as $file)
+                        <img src="{{ asset('storage/' . $file->path) }}" class="card-img-top"
+                            style="height: 400px; width: auto; object-fit: cover;" alt="{{ $post->titulo }}">
+                    @endforeach
+                @endif
+            </div>
+            <br>
             <a href="/" class="btn btn-secondary mt-3">Voltar</a>
         </div>
     </div>
