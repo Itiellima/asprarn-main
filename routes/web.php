@@ -141,3 +141,17 @@ Route::get('/api/cidades/{uf}', function ($uf) {
 });
 
 Route::get('/api/cidades/{uf}', [AssociadoController::class, 'cidades']);
+
+
+Route::get('/test-webhook', function () {
+
+    $response = Http::post('https://n8n.asprarn.com.br/webhook-test/776ee56a-3e3c-4e7b-81f1-fdc6dab2683b', [
+        'nome' => 'Itiel',
+        'acao' => 'teste_webhook',
+        'mensagem' => 'Envio funcionando!',
+        'from' => '558486219475',
+        'instance' => 'AspraAdm',
+    ]);
+
+    return $response->body();
+});
