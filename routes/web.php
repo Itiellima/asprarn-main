@@ -16,6 +16,7 @@ use App\Http\Controllers\PastaDocumentoController;
 use App\Http\Controllers\PlanosController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\InstagramController;
+use App\Http\Controllers\WhatsappController;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
@@ -143,6 +144,11 @@ Route::get('/api/cidades/{uf}', function ($uf) {
 Route::get('/api/cidades/{uf}', [AssociadoController::class, 'cidades']);
 
 
+
+
+
+
+
 Route::get('/test-webhook', function () {
 
     $response = Http::post('https://n8n.asprarn.com.br/webhook-test/776ee56a-3e3c-4e7b-81f1-fdc6dab2683b', [
@@ -155,3 +161,9 @@ Route::get('/test-webhook', function () {
 
     return $response->body();
 });
+
+
+
+Route::post('/enviar-mensagens', [WhatsappController::class, 'enviarMensagens'])->name('whatsapp.enviarMensagens');
+
+Route::get('/whatsapp/index', [WhatsappController::class, 'index'])->name('whatsapp.index');
