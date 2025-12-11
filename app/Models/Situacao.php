@@ -14,6 +14,11 @@ class Situacao extends Model
             ->withTimestamps();
     }
 
+    public function automacoes()
+    {
+        return $this->hasMany(Automacao::class);
+    }
+
     protected $table = 'situacoes'; // Aponta para a tabela 'Situacaos'
 
     protected $fillable = [

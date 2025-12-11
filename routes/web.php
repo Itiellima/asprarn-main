@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\AssociadoController;
+use App\Http\Controllers\AutomacaoController;
 use App\Http\Controllers\BeneficioController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\DocumentoAssociadoController;
@@ -166,4 +167,7 @@ Route::get('/test-webhook', function () {
 
 Route::post('/enviar-mensagens', [WhatsappController::class, 'enviarMensagens'])->name('whatsapp.enviarMensagens');
 
-Route::get('/whatsapp/index', [WhatsappController::class, 'index'])->name('whatsapp.index');
+
+
+Route::get('/automacoes/index', [AutomacaoController::class, 'index'])->name('automacoes.index');
+Route::post('/automacoes/create', [AutomacaoController::class, 'create'])->name('automacoes.create');

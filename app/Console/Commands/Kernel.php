@@ -24,5 +24,8 @@ class Kernel extends ConsoleKernel
     {
         // 🧹 Executa semanalmente a limpeza de pastas vazias
         $schedule->command('app:clean-empty-folders')->daily();
+
+        // Executa a automação de envio de mensagens via WhatsApp a cada minuto
+        $schedule->command('app:executar-automacoes')->everyMinute();
     }
 }
