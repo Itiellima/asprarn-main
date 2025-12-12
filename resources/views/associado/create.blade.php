@@ -224,20 +224,20 @@
                             <h2>Contato</h2>
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Número de Celular:</label>
-                                <input type="text" class="form-control" maxlength="11" pattern="\d{10,11}"
+                                <input type="text" class="form-control" maxlength="15" pattern="\d{10,15}"
                                     id="tel_celular" name="tel_celular" placeholder="(xx) x xxxx-xxxx  Apenas número"
                                     required value="{{ old('tel_celular', $associado->contato?->tel_celular) }}">
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Número Residencial:</label>
-                                <input type="text" class="form-control" maxlength="11" pattern="\d{10,11}"
+                                <input type="text" class="form-control" maxlength="15" pattern="\d{10,15}"
                                     id="tel_residencial" name="tel_residencial"
                                     placeholder="(xx) x xxxx-xxxx  Apenas número"
                                     value="{{ old('tel_residencial', $associado->contato?->tel_residencial) }}">
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Número de Trabalho:</label>
-                                <input type="text" class="form-control" maxlength="11" pattern="\d{10,11}"
+                                <input type="text" class="form-control" maxlength="15" pattern="\d{10,15}"
                                     id="tel_trabalho" name="tel_trabalho" placeholder="(xx) x xxxx-xxxx  Apenas número"
                                     value="{{ old('tel_trabalho', $associado->contato?->tel_trabalho) }}">
                             </div>

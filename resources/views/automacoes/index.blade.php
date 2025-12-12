@@ -114,7 +114,7 @@
                         <div class="col-md-5">
                             <label class="form-label fw-bold">Intervalo (em dias)</label>
                             <input type="number" name="intervalo_dias" id="intervalo_dias" class="form-control"
-                                min="1" placeholder="Ex: 7">
+                                min="0" placeholder="Ex: 7">
                         </div>
 
                     </div>
