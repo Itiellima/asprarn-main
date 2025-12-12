@@ -170,7 +170,7 @@ class AutomacaoController extends Controller
         $user = Auth::user();
 
         if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('associado.index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
 
@@ -186,7 +186,7 @@ class AutomacaoController extends Controller
         $user = Auth::user();
 
         if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('associado.index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
 
