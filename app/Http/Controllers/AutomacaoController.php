@@ -12,6 +12,65 @@ use Exception;
 
 class AutomacaoController extends Controller
 {
+
+    public function test()
+    {
+        $agora = now()->toDateString();
+
+        $automacoes = Automacao::where('ativo', true)->get();
+        $resultados = [];
+
+        foreach ($automacoes as $auto) {
+
+            // garante valor padrão
+            $deveExecutar = false;
+
+            // Se a data atual ainda não chegou na data de início, não executa
+            if ($agora < Carbon::parse($auto->data_inicio)->toDateString()) {
+                continue;
+            }
+
+            // Se nunca executou, executa na data_inicio
+            if (!$auto->ultima_execucao) {
+                $deveExecutar = $agora >= Carbon::parse($auto->data_inicio)->toDateString();
+            } else {
+                // verifica intervalo usando Carbon
+                $proximaExec = Carbon::parse($auto->ultima_execucao)->addDays($auto->intervalo_dias)->toDateString();
+                $deveExecutar = $agora >= $proximaExec;
+            }
+
+            if (!$deveExecutar) {
+                continue;
+            }
+
+
+            $associados = Associado::whereHas('situacoes', function ($query) use ($auto) {
+                $query->where('situacoes.id', $auto->situacao_id);
+            })->get();
+
+            $resultados[] = [
+                'automacao' => $auto->nome,
+                'associados' => $associados->pluck('nome'),
+                'telefones' => $associados->map(function ($assoc) {
+                    return optional($assoc->contato)->tel_celular ?? $assoc->telefone ?? 'sem telefone';
+                }),
+            ];
+
+            $auto->ultima_execucao = $agora;
+            $auto->save();
+        }
+
+
+        return response()->json([
+            'status' => 'ok',
+            'automacoes' => $automacoes->pluck('nome'),
+            'resultados' => $resultados
+        ]);
+    }
+
+
+
+
     public function executar()
     {
         $agora = now()->toDateString();
@@ -72,7 +131,7 @@ class AutomacaoController extends Controller
                         'associado' => $assoc->nome,
                         'status'    => $resultado->status(),
                         // tenta decodificar JSON, senão retorna body bruto
-                        'body'      => $this->safeJson($resultado),
+                        // 'body'      => $this->safeJson($resultado),
                     ];
                 } catch (Exception $e) {
                     $retornos[] = [

@@ -10,3 +10,6 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/automacoes/executar', [App\Http\Controllers\AutomacaoController::class, 'executar']);
 Route::post('/automacoes/executar', [App\Http\Controllers\AutomacaoController::class, 'executar']);
+
+Route::get('/automacoes/test', [App\Http\Controllers\AutomacaoController::class, 'test']);
+Route::post('/automacoes/test', [App\Http\Controllers\AutomacaoController::class, 'test']);
