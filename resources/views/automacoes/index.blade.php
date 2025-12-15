@@ -129,4 +129,49 @@
     </div>
 
 
+    <div class="container">
+        <h2 class="text-black text-center m-3 alert alert-light">Mensagens Agendadas</h2>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Mensagem</th>
+                    <th>Situação</th>
+                    <th>Data Início</th>
+                    <th>Intervalo (dias)</th>
+                    <th>Ativo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($automacoes as $automacao)
+                    <tr>
+                        <td>{{ $automacao->nome }}</td>
+                        <td>{{ $automacao->mensagem }}</td>
+                        <td>{{ $automacao->situacao->nome ?? 'N/A' }}</td>
+                        <td>{{ $automacao->data_inicio ? $automacao->data_inicio : 'N/A' }}</td>
+                        <td>{{ $automacao->intervalo_dias ?? 'N/A' }}</td>
+                        <td>{{ $automacao->ativo ? 'Sim' : 'Não' }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @endsection

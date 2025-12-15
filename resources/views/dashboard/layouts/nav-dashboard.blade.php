@@ -33,7 +33,7 @@
 
                     <ul class="dropdown-menu col-lg-3">
                         <li>
-                            <a href="#" class="dropdown-item">📊 Visão Geral (Dashboard)*</a>
+                            <a href="{{ route('automacoes.index') }}" class="dropdown-item">⚙️ Automacoes</a>
                         </li>
                         <li>
                             <a href="#" class="dropdown-item">💰 Financeiro*</a>

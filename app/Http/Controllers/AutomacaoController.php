@@ -51,6 +51,7 @@ class AutomacaoController extends Controller
 
             $resultados[] = [
                 'automacao' => $auto->nome,
+                'mensagem' => $auto->mensagem,
                 'associados' => $associados->pluck('nome'),
                 'telefones' => $associados->map(function ($assoc) {
                     return optional($assoc->contato)->tel_celular ?? $assoc->telefone ?? 'sem telefone';
@@ -64,7 +65,7 @@ class AutomacaoController extends Controller
 
         return response()->json([
             'status' => 'ok',
-            'automacoes' => $automacoes->pluck('nome'),
+            // 'automacoes' => $automacoes->pluck('nome'),
             'resultados' => $resultados
         ]);
     }
