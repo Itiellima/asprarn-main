@@ -171,3 +171,4 @@ Route::post('/enviar-mensagens', [WhatsappController::class, 'enviarMensagens'])
 
 Route::get('/automacoes/index', [AutomacaoController::class, 'index'])->name('automacoes.index');
 Route::post('/automacoes/create', [AutomacaoController::class, 'create'])->name('automacoes.create');
+Route::delete('/automacoes/destroy/{id}', [AutomacaoController::class, 'destroy'])->name('automacoes.destroy');

@@ -204,4 +204,17 @@ class AutomacaoController extends Controller
 
         return redirect()->route('automacoes.index')->with('success', 'Automação criada com sucesso.');
     }
+
+    public function destroy($id)
+    {
+        $user = Auth::user();
+
+        if (!$user || !$user->hasRole('admin|moderador')) {
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $automacao = Automacao::findOrFail($id);
+        $automacao->delete();
+        return redirect()->route('automacoes.index')->with('success', 'Automação deletada com sucesso.');
+    }
 }

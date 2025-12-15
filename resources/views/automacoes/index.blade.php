@@ -141,6 +141,7 @@
                     <th>Data Início</th>
                     <th>Intervalo (dias)</th>
                     <th>Ativo</th>
+                    <th>Acão</th>
                 </tr>
             </thead>
             <tbody>
@@ -152,6 +153,13 @@
                         <td>{{ $automacao->data_inicio ? $automacao->data_inicio : 'N/A' }}</td>
                         <td>{{ $automacao->intervalo_dias ?? 'N/A' }}</td>
                         <td>{{ $automacao->ativo ? 'Sim' : 'Não' }}</td>
+                        <td>
+                            <form action="{{ route('automacoes.destroy', $automacao->id) }}" method="POST"
+                                onsubmit="return confirm('Tem certeza que deseja excluir esta automação?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                            </form>
                     </tr>
                 @endforeach
             </tbody>
