@@ -17,7 +17,8 @@ return new class extends Migration
             $table->text('mensagem');
             $table->date('data_inicio');
             $table->date('ultima_execucao')->nullable();
-            $table->integer('intervalo_dias')->default(0);
+            $table->integer('intervalo_dias')->nullable();
+            $table->integer('repetir_dias')->nullable();
             $table->boolean('ativo')->default(true);
             $table->foreignId('situacao_id')->constrained('situacoes')->onDelete('cascade');
             $table->timestamps();

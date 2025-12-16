@@ -99,7 +99,7 @@
                         <div class="col-md-3 d-flex align-items-center">
                             <div class="form-check form-switch">
                                 <input type="checkbox" name="ativo" id="ativo"
-                                    class="form-check-input">
+                                    class="form-check-input" value="1">
                                 <label class="form-check-label fw-bold">
                                     Ativo?
                                 </label>
@@ -117,6 +117,12 @@
                                 min="0" placeholder="Ex: 7">
                         </div>
 
+                    </div>
+                    <div class="">
+                        <label for="form-label">Repetir todo mês no dia:</label>
+                        <input type="number" name="repetir_dias" id="repetir_dias" class="form-control"
+                            min="0" max="31" placeholder="Ex: 30">
+                            <label class="form-label">Deixe em branco para não repetir mensalmente</label>
                     </div>
 
                 </div>

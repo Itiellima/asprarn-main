@@ -73,96 +73,85 @@ class AutomacaoController extends Controller
     public function executar()
     {
         $agora = now()->toDateString();
-        $automacoes = Automacao::where('ativo', true)->get();
 
-        $retornos = []; // <-- inicializa aqui
+        $automacoes = Automacao::where('ativo', true)->get();
+        $resultados = [];
 
         foreach ($automacoes as $auto) {
 
             // garante valor padrão
             $deveExecutar = false;
 
-            // Se a data atual ainda não chegou na data de início, não executa
-            if ($agora < Carbon::parse($auto->data_inicio)->toDateString()) {
+            // data inicio
+            $dataInicio = Carbon::parse($auto->data_inicio)->toDateString();
+
+            // não executa antes da data de início
+            if ($agora < $dataInicio) {
                 continue;
             }
 
-            // Se nunca executou, executa na data_inicio
-            if (!$auto->ultima_execucao) {
-                $deveExecutar = $agora === Carbon::parse($auto->data_inicio)->toDateString();
-            } else {
-                // verifica intervalo usando Carbon
-                $proximaExec = Carbon::parse($auto->ultima_execucao)->addDays($auto->intervalo_dias)->toDateString();
-                $deveExecutar = $agora >= $proximaExec;
+            /**
+             * CASO 1: repetir_dias (todo mês)
+             */
+            if (!empty($auto->repetir_dias)) {
+
+                $diaHoje = Carbon::now()->day;
+                $diaRepetir = (int) $auto->repetir_dias;
+
+                // só executa no dia configurado
+                if ($diaHoje === $diaRepetir) {
+
+                    // evita executar duas vezes no mesmo dia
+                    if (!$auto->ultima_execucao || $auto->ultima_execucao !== $agora) {
+                        $deveExecutar = true;
+                    }
+                }
+            }
+            /**
+             * CASO 2: intervalo normal
+             */
+            else {
+
+                if (!$auto->ultima_execucao) {
+                    $deveExecutar = $agora >= $dataInicio;
+                } else {
+                    $proximaExec = Carbon::parse($auto->ultima_execucao)
+                        ->addDays($auto->intervalo_dias)
+                        ->toDateString();
+
+                    $deveExecutar = $agora >= $proximaExec;
+                }
             }
 
             if (!$deveExecutar) {
                 continue;
             }
 
-            // Filtrar associados
-            $associados = Associado::where('situacao_id', $auto->situacao_id)->get();
 
-            foreach ($associados as $assoc) {
-                // pega telefone (checa relacionamento contato ou campo direto)
-                $telefone = optional($assoc->contato)->tel_celular ?? $assoc->telefone ?? null;
 
-                if (!$telefone) {
-                    $retornos[] = [
-                        'automacao'   => $auto->nome,
-                        'associado'   => $assoc->nome,
-                        'status'      => 'skipped',
-                        'reason'      => 'sem telefone',
-                    ];
-                    continue;
-                }
+            $associados = Associado::whereHas('situacoes', function ($query) use ($auto) {
+                $query->where('situacoes.id', $auto->situacao_id);
+            })->get();
 
-                try {
-                    $resultado = Http::post('https://n8n.asprarn.com.br/webhook-test/776ee56a-3e3c-4e7b-81f1-fdc6dab2683b', [
-                        'nome'      => $assoc->nome,
-                        'mensagem'  => $auto->mensagem,
-                        'from'      => $telefone,
-                        'instance'  => 'AspraAdm',
-                    ]);
+            $resultados[] = [
+                'automacao' => $auto->nome,
+                'mensagem' => $auto->mensagem,
+                'associados' => $associados->pluck('nome'),
+                'telefones' => $associados->map(function ($assoc) {
+                    return optional($assoc->contato)->tel_celular ?? $assoc->telefone ?? 'sem telefone';
+                }),
+            ];
 
-                    $retornos[] = [
-                        'automacao' => $auto->nome,
-                        'associado' => $assoc->nome,
-                        'status'    => $resultado->status(),
-                        // tenta decodificar JSON, senão retorna body bruto
-                        // 'body'      => $this->safeJson($resultado),
-                    ];
-                } catch (Exception $e) {
-                    $retornos[] = [
-                        'automacao' => $auto->nome,
-                        'associado' => $assoc->nome,
-                        'status'    => 'error',
-                        'error'     => $e->getMessage(),
-                    ];
-                }
-            }
-
-            // Atualiza última execução apenas se executou (para evitar loop infinito)
             $auto->ultima_execucao = $agora;
             $auto->save();
         }
 
+
         return response()->json([
             'status' => 'ok',
-            'resultados' => $retornos
+            // 'automacoes' => $automacoes->pluck('nome'),
+            'resultados' => $resultados
         ]);
-    }
-
-    /**
-     * Helper simples para obter JSON de uma resposta Http sem lançar exceção
-     */
-    private function safeJson($response)
-    {
-        try {
-            return $response->json();
-        } catch (Exception $e) {
-            return $response->body();
-        }
     }
 
     public function index()
@@ -190,15 +179,17 @@ class AutomacaoController extends Controller
             return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
-
-
         $data = $request->validate([
             'nome' => 'required|string|max:255',
             'mensagem' => 'required|string',
             'data_inicio' => 'required|date',
-            'intervalo_dias' => 'required|integer|min:0',
+            'repetir_dias' => 'nullable|integer|min:1|max:31',
+            'intervalo_dias' => 'nullable|integer|min:0',
             'situacao_id' => 'required|exists:situacoes,id',
+            'ativo' => 'required|boolean',
         ]);
+
+        $data['ativo'] = $request->has('ativo');
 
         Automacao::create($data);
 

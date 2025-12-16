@@ -357,7 +357,7 @@
                             <textarea name="dependentes" id="dependentes" cols="30" rows="5" maxlength="200">{{ old('dependentes', $associado->dependentes) }}</textarea>
                             </textarea>
                         </div>
-
+ 
                         {{-- Observações --}}
                         <div class="container row border-bottom border-primary mt-3 m-1">
                             <h2>Observações</h2>

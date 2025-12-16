@@ -14,6 +14,7 @@ class Automacao extends Model
         'mensagem',
         'data_inicio',
         'intervalo_dias',
+        'repetir_dias',
         'ativo',
         'situacao_id',
         'ultima_execucao',
