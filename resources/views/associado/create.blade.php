@@ -225,20 +225,22 @@
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Número de Celular:</label>
                                 <input type="text" class="form-control" maxlength="15" pattern="\d{10,15}"
-                                    id="tel_celular" name="tel_celular" placeholder="(xx) x xxxx-xxxx  Apenas número"
-                                    required value="{{ old('tel_celular', $associado->contato?->tel_celular) }}">
+                                    id="tel_celular" name="tel_celular"
+                                    placeholder=" 55 (xx) x xxxx-xxxx  Apenas números" required
+                                    value="{{ old('tel_celular', $associado->contato?->tel_celular) }}">
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Número Residencial:</label>
                                 <input type="text" class="form-control" maxlength="15" pattern="\d{10,15}"
                                     id="tel_residencial" name="tel_residencial"
-                                    placeholder="(xx) x xxxx-xxxx  Apenas número"
+                                    placeholder="55 (xx) x xxxx-xxxx  Apenas números"
                                     value="{{ old('tel_residencial', $associado->contato?->tel_residencial) }}">
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Número de Trabalho:</label>
                                 <input type="text" class="form-control" maxlength="15" pattern="\d{10,15}"
-                                    id="tel_trabalho" name="tel_trabalho" placeholder="(xx) x xxxx-xxxx  Apenas número"
+                                    id="tel_trabalho" name="tel_trabalho"
+                                    placeholder="55 (xx) x xxxx-xxxx  Apenas números"
                                     value="{{ old('tel_trabalho', $associado->contato?->tel_trabalho) }}">
                             </div>
                             <div class="mb-3 col-md-12 col-sm-6">
@@ -357,7 +359,7 @@
                             <textarea name="dependentes" id="dependentes" cols="30" rows="5" maxlength="200">{{ old('dependentes', $associado->dependentes) }}</textarea>
                             </textarea>
                         </div>
- 
+
                         {{-- Observações --}}
                         <div class="container row border-bottom border-primary mt-3 m-1">
                             <h2>Observações</h2>
