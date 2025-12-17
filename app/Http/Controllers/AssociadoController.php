@@ -67,12 +67,21 @@ class AssociadoController extends Controller
                 $query->where('opm', $opm);
             })
 
+            // Filtro por situação
+            ->when(request('situacao'), function ($query, $situacao_id) {
+                $query->whereHas('situacoes', function ($q) use ($situacao_id) {
+                    $q->where('situacoes.id', $situacao_id);
+                });
+            })
+
+
             ->paginate(12)
             ->appends(request()->query()); // mantém filtros na paginação
 
         $totalAssociados = Associado::count();
+        $situacoes = Situacao::all();
 
-        return view('associado.index', ['associados' => $associados, 'search' => $search, 'totalAssociados' => $totalAssociados, 'cidades' => $cidades, 'opms' => $opms]);
+        return view('associado.index', ['associados' => $associados, 'search' => $search, 'totalAssociados' => $totalAssociados, 'cidades' => $cidades, 'opms' => $opms, 'situacoes' => $situacoes]);
     }
 
 

@@ -87,6 +87,18 @@
                 </select>
             </div>
 
+            <div class="col-md-2">
+                <label class="form-label">Situação</label>
+                <select name="situacao" class="form-select">
+                    <option value="">Todos</option>
+                    @foreach ($situacoes as $situacao)
+                        <option value="{{ $situacao->id }}" {{ request('situacao') == $situacao->id ? 'selected' : '' }}>
+                            {{ $situacao->nome }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
             <div class="col-md-2 d-flex align-items-end">
                 <button class="btn btn-primary w-100">Pesquisar</button>
             </div>
