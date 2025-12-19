@@ -4,6 +4,10 @@
 
 @section('content')
 
+
+<livewire:barra-de-pesquisa />
+
+
     {{-- BANNERS --}}
     @include('welcome-components.banner')
 

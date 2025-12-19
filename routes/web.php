@@ -18,6 +18,7 @@ use App\Http\Controllers\PlanosController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\InstagramController;
 use App\Http\Controllers\WhatsappController;
+use App\Http\Controllers\searchPostController;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
@@ -144,7 +145,7 @@ Route::get('/api/cidades/{uf}', function ($uf) {
 
 Route::get('/api/cidades/{uf}', [AssociadoController::class, 'cidades']);
 
-
+Route::get('/search', [searchPostController::class, 'index'])->name('search');
 
 
 
