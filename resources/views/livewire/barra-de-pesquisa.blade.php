@@ -4,7 +4,7 @@
                 <input
                     type="text"
                     class="form-control"
-                    placeholder="Pesquisar posts..."
+                    placeholder="Pesquisar..."
                     wire:model.defer="search"
                 >
                 <button class="btn btn-primary" type="submit">
