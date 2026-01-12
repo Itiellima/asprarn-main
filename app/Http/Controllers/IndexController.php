@@ -14,6 +14,9 @@ class IndexController extends Controller
         // 3 posts mais recentes
         $recentPosts = Post::latest()->take(3)->get();
 
+        // 6 posts mais recentes
+        $feedPosts = Post::latest()->take(6)->get();
+
         // Todos os posts ordenados
         $allPosts = Post::latest()->get();
 
@@ -24,6 +27,6 @@ class IndexController extends Controller
         $banners = Banner::latest()->get();
 
 
-        return view('welcome', compact('latestPost', 'allPosts', 'recentPosts', 'banners'));
+        return view('welcome', compact('latestPost', 'allPosts', 'recentPosts', 'banners', 'feedPosts'));
     }
 }

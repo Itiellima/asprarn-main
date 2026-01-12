@@ -13,5 +13,3 @@ Route::post('/automacoes/executar', [App\Http\Controllers\AutomacaoController::c
 
 Route::get('/automacoes/test', [App\Http\Controllers\AutomacaoController::class, 'test']);
 Route::post('/automacoes/test', [App\Http\Controllers\AutomacaoController::class, 'test']);
-
-Route::get('/notificacao/novo-associado/enviar', [App\Http\Controllers\NotificacaoController::class, 'enviarNotificacaoNovoAssociado']);

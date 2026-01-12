@@ -33,6 +33,8 @@
 
 
 <div class="instagram-post mt-3">
+    <h3 class="text-white mb-4"><a href="https://www.instagram.com/associacaosdospracas/" target="_blank" style="color: white">Siga-nos no Instagram</a></h3>
+
     <div wire:ignore>
         <div class="owl-carousel owl-theme">
             @if (empty($instagram))

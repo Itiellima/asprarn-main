@@ -213,21 +213,7 @@ class AssociadoController extends Controller
             $user->syncRoles(['associado', 'user']);
 
             DB::commit();
-
             
-            try {
-                Http::post('https://n8n.asprarn.com.br/webhook/d79be14c-319f-476d-bd5e-c24b06eb3a00', [
-                    'nome' => $request->nome,
-                    'email' => $request->email,
-                    'cpf' => $request->cpf,
-                    'acao' => 'novo_associado',
-                    'mensagem' => 'Um novo associado foi registrado no sistema.',
-                    'from' => $request->tel_celular,
-                    'instance' => 'AspraAdm',
-                ]);    
-            } catch (\Exception $e) {
-                Log::error('Erro webhook n8n', ['erro' => $e->getMessage()]);
-            }
             return redirect('/dashboard')->with('msg', 'Associado criado com sucesso!');
             
         } catch (\Exception $e) {

@@ -17,7 +17,7 @@
                 <h2>NOTÍCIAS</h2>
                 <hr>
                 <div class="row justify-content-center">
-                    @foreach ($recentPosts as $post)
+                    @foreach ($feedPosts as $post)
                         <div class="card m-1 rounded-5 overflow-hidden p-0 shadow-lg col-sm-6" style="width: 20rem;">
 
                             <img src="{{ asset('storage/' . $post->files->first()->path) }}" class="card-img-top"
