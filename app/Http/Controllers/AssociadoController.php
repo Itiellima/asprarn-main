@@ -216,7 +216,7 @@ class AssociadoController extends Controller
 
             
             try {
-                Http::post('https://n8n.asprarn.com.br/webhook/aecf6a29-0e3a-4973-a8f6-b46c178836cc', [
+                Http::post('https://n8n.asprarn.com.br/webhook/d79be14c-319f-476d-bd5e-c24b06eb3a00', [
                     'nome' => $request->nome,
                     'email' => $request->email,
                     'cpf' => $request->cpf,
