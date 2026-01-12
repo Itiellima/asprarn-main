@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 
 class AssociadoController extends Controller
@@ -212,7 +213,23 @@ class AssociadoController extends Controller
             $user->syncRoles(['associado', 'user']);
 
             DB::commit();
+
+            
+            try {
+                Http::post('https://n8n.asprarn.com.br/webhook/aecf6a29-0e3a-4973-a8f6-b46c178836cc', [
+                    'nome' => $request->nome,
+                    'email' => $request->email,
+                    'cpf' => $request->cpf,
+                    'acao' => 'novo_associado',
+                    'mensagem' => 'Um novo associado foi registrado no sistema.',
+                    'from' => $request->tel_celular,
+                    'instance' => 'AspraAdm',
+                ]);    
+            } catch (\Exception $e) {
+                Log::error('Erro webhook n8n', ['erro' => $e->getMessage()]);
+            }
             return redirect('/dashboard')->with('msg', 'Associado criado com sucesso!');
+            
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Erro ao criar associado: ' . $e->getMessage())->withInput();
