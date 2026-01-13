@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notificacao;
+use App\Events\NotificacaoCriada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Associado;
@@ -213,9 +215,16 @@ class AssociadoController extends Controller
             $user->syncRoles(['associado', 'user']);
 
             DB::commit();
+
+            $data = [
+                'titulo' => 'Novo asssociado cadastrado',
+                'mensagem' => 'Novo asssociado cadastrado com sucesso, ' . $associado->nome . ' - ' . $associado->cpf,
+                'associado_id' => $associado->id,
+            ];
             
+            event(new NotificacaoCriada($data));
+
             return redirect('/dashboard')->with('msg', 'Associado criado com sucesso!');
-            
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Erro ao criar associado: ' . $e->getMessage())->withInput();
