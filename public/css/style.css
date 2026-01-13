@@ -80,3 +80,25 @@
     font-weight: bold;
     font-size: large;
 }
+
+
+/* pulsar botao */
+.elementor-button {
+    box-shadow: 0 0 0 0 #000; /* sombra inicial */
+    animation: pulse-white 2s infinite; /* aplica a animação */
+}
+
+@keyframes pulse-white {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 #B28C57; /* sombra inicial dourada */
+    }
+    70% {
+        transform: scale(1.01); /* pequeno aumento */
+        box-shadow: 0 0 0 10px transparent; /* expande e some */
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 transparent; /* volta ao normal */
+    }
+}

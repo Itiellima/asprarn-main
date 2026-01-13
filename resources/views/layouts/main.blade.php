@@ -93,6 +93,12 @@
         @endif
     </div>
 
+    {{-- Notificacoes --}}
+    <div>
+        <livewire:notificacoes-alerta />
+    </div>
+
+
     {{-- Conteúdo principal --}}
     <div>
         <main class="">

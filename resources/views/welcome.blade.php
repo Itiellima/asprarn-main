@@ -5,7 +5,7 @@
 @section('content')
 
 
-<livewire:barra-de-pesquisa />
+    <livewire:barra-de-pesquisa />
 
 
     {{-- BANNERS --}}
@@ -31,7 +31,6 @@
                                 <a class="btn btn-sm btn-secondary" href="/posts/{{ $post->id }}">Leia mais</a>
                             </div>
                         </div>
-
                     @endforeach
                 </div>
             </div>
