@@ -19,6 +19,9 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\InstagramController;
 use App\Http\Controllers\WhatsappController;
 use App\Http\Controllers\searchPostController;
+use App\Http\Controllers\NotificacaoController;
+
+//////////////////////////////// ********* INDEX ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
@@ -147,29 +150,14 @@ Route::get('/api/cidades/{uf}', [AssociadoController::class, 'cidades']);
 
 Route::get('/search', [searchPostController::class, 'index'])->name('search');
 
-
-
-
-
-Route::get('/test-webhook', function () {
-
-    $response = Http::post('https://n8n.asprarn.com.br/webhook-test/d79be14c-319f-476d-bd5e-c24b06eb3a00', [
-        'nome' => 'Itiel',
-        'acao' => 'envio teste',
-        'mensagem' => 'Envio funcionando!',
-        'from' => '5584986219475',
-        'instance' => 'AspraAdm',
-    ]);
-
-    return $response->body();
-});
-
-
-
+///////////////////////////////// ********* WHATSAPP ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+// NAO UTILIZADO, VERIFICAR E DELETAR
 Route::post('/enviar-mensagens', [WhatsappController::class, 'enviarMensagens'])->name('whatsapp.enviarMensagens');
-
-
 
 Route::get('/automacoes/index', [AutomacaoController::class, 'index'])->name('automacoes.index');
 Route::post('/automacoes/create', [AutomacaoController::class, 'create'])->name('automacoes.create');
 Route::delete('/automacoes/destroy/{id}', [AutomacaoController::class, 'destroy'])->name('automacoes.destroy');
+
+
+Route::get('/notificacoes/index', [NotificacaoController::class, 'index'])->name('notificacoes.index');
+Route::post('/notificacoes/marcar-como-lida/{id}', [NotificacaoController::class, 'marcarComoLida'])->name('notificacoes.marcarComoLida');

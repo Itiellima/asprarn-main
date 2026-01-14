@@ -36,9 +36,6 @@
                             <a href="{{ route('automacoes.index') }}" class="dropdown-item">⚙️ Automacoes</a>
                         </li>
                         <li>
-                            <a href="#" class="dropdown-item">💰 Financeiro*</a>
-                        </li>
-                        <li>
                             <a href="/usuarios" class="dropdown-item">🔐 Controle de Acesso</a>
                         </li>
                         <li>
@@ -49,6 +46,12 @@
                         </li>
                         <li>
                             <a href="{{ route('configuracoes.index') }}" class="dropdown-item">⚙️ Configurações</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('notificacoes.index') }}" class="dropdown-item">🔔 Notificações</a>
+                        </li>
+                        <li>
+                            <a href="#" class="dropdown-item">💰 Financeiro*</a>
                         </li>
                     </ul>
                 @endhasanyrole
