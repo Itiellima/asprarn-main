@@ -47,6 +47,9 @@
                             <h4>Minha Página</h4>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <livewire:notificacoes-alerta />
+                    </li>
                 @endauth
             </ul>
             <div class="ms-5">
@@ -61,6 +64,7 @@
                     {{-- <a class="btn btn-primary mx-2" href="/register">Cadastrar</a> --}}
                     <a class="btn btn-danger" href="/login"><strong>Login</strong></a>
                 @endauth
+                
 
             </div>
         </div>
