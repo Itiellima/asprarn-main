@@ -16,7 +16,10 @@ class NotificacaoController extends Controller
             return redirect()->route('dashboard')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
-        $notificacoes = Notificacao::all()->sortByDesc('created_at');
+        $notificacoes = Notificacao::with('associado')
+            ->orderByDesc('created_at')
+            ->get();
+        
 
         return view('notificacoes.index', compact('notificacoes'));
     }

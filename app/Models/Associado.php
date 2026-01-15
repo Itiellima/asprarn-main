@@ -101,4 +101,10 @@ class Associado extends Model
             }
         });
     }
+
+    public function notificacoes()
+    {
+        return $this->hasMany(Notificacao::class, 'associado_id');
+    }
+
 }

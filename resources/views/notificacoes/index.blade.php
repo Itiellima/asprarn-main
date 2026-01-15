@@ -14,9 +14,12 @@
             @endif
             
             <br>
+            
             <strong>{{ $notificacao->id }} - {{ $notificacao->titulo }} - Data: {{ $notificacao->created_at }}</strong> <br>
             {{ $notificacao->mensagem }} - Associado ID: {{ $notificacao->associado_id }}<br>
-            Marcar como lida: 
+            
+            <strong> {{ $notificacao->associado->nome }} </strong> <a class="btn btn-sm btn-primary" href="{{ route('associado.show', $notificacao->associado_id) }}">Ver detalhes</a>
+            
             <form action="{{ route('notificacoes.marcarComoLida', $notificacao->id) }}" method="POST">
                 @csrf
                 @method('POST')
