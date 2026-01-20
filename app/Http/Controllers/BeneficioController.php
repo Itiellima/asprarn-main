@@ -14,7 +14,7 @@ class BeneficioController extends Controller
     public function index()
     {
 
-        $beneficios = Beneficio::all();
+        $beneficios = Beneficio::orderBy('ordem', 'asc')->get();
 
         return view('beneficio.index', compact('beneficios'));
     }
@@ -154,7 +154,7 @@ class BeneficioController extends Controller
         }
 
         $beneficio = Beneficio::findOrFail($id);
-
+        
         DB::beginTransaction();
         try {
 
@@ -164,7 +164,7 @@ class BeneficioController extends Controller
 
             $beneficio->files()->delete();
 
-            $beneficio->delete();
+            $beneficio->delete($id);
 
             DB::commit();
             return redirect('beneficio')->with('success', 'Beneficio excluido com sucesso!');
@@ -176,8 +176,36 @@ class BeneficioController extends Controller
 
     public function order()
     {
-        $beneficios = Beneficio::sortByDesc('order');
+        $user = Auth::user();
+
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
+            return redirect('beneficio')->with('error', 'Acesso negado. Voçê não tema acesso a essa funcionalidade.');
+        }
+        
+        $beneficios = Beneficio::orderBy('ordem', 'asc')->get();
 
         return view('beneficio.order', compact('beneficios'));
+    }
+
+    public function ordenar(Request $request)
+    {
+        $user = Auth::user();
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
+            return redirect('beneficio')->with('error', 'Acesso negado. Você não tem acesso a essa funcionalidade.');
+        }
+
+
+        $request->validate([
+            'ordem'   => ['required', 'array'],
+            'ordem.*' => ['integer', 'exists:beneficios,id'],
+        ]);
+
+        foreach ($request->ordem as $index => $id) {
+            Beneficio::where('id', $id)->update([
+                'ordem' => $index + 1
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Ordem atualizada com sucesso.');
     }
 }

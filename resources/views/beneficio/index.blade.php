@@ -12,7 +12,8 @@
         @auth
             @hasanyrole(['admin', 'moderador'])
                 <div class="m-3">
-                    <a href="{{ route('beneficio.create') }}" class="btn btn-success">Adicionar beneficio</a>
+                    <a href="{{ route('beneficio.create') }}" class="btn btn-success">Adicionar benefício</a>
+                    <a href="{{ route('beneficio.order') }}" class="btn btn-secondary">Altere a ordem dos benefícios</a>
                 </div>
             @endhasanyrole
         @endauth

@@ -24,8 +24,9 @@
             </div>
         @else
             {{-- Form para salvar a ordem --}}
-            <form method="POST" action="">
+            <form id="form-ordenacao" method="POST" action="{{ route('beneficio.ordenar') }}">
                 @csrf
+                @method('POST')
 
                 {{-- Container único para o SortableJS --}}
                 <div id="grid" class="row meu-container">
@@ -69,13 +70,6 @@
                                     <div>
                                         @auth
                                             @hasanyrole(['admin', 'moderador'])
-                                                <form action="{{ route('beneficio.destroy', $beneficio->id) }}" method="POST"
-                                                    style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger ms-2"
-                                                        onclick="return confirm('Tem certeza que deseja excluir esse benefício?')">Excluir</button>
-                                                </form>
                                                 <a href="{{ route('beneficio.edit', $beneficio->id) }}"
                                                     class="btn btn-danger m-2">Editar</a>
                                             @endhasanyrole
@@ -106,27 +100,31 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
     <script>
-        const grid = document.getElementById('grid');
-        const form = document.querySelector('form');
-        const inputsOrdem = document.getElementById('inputs-ordem');
+        document.addEventListener('DOMContentLoaded', function() {
 
-        // Inicializa o SortableJS
-        new Sortable(grid, {
-            animation: 150
-        });
+            const grid = document.getElementById('grid');
+            const form = document.getElementById('form-ordenacao');
+            const inputsOrdem = document.getElementById('inputs-ordem');
 
-        // Ao enviar o form, preenche os inputs hidden com a ordem atual
-        form.addEventListener('submit', function() {
-            inputsOrdem.innerHTML = '';
+            if (!grid || !form) return;
 
-            [...grid.children].forEach(el => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'ordem[]';
-                input.value = el.dataset.id;
-                inputsOrdem.appendChild(input);
+            new Sortable(grid, {
+                animation: 150
+            });
+
+            form.addEventListener('submit', function() {
+                inputsOrdem.innerHTML = '';
+
+                [...grid.children].forEach(el => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'ordem[]';
+                    input.value = el.dataset.id;
+                    inputsOrdem.appendChild(input);
+                });
             });
         });
     </script>
+
 
 @endsection

@@ -10,7 +10,7 @@ class Beneficio extends Model
     protected $fillable = [
         'nome',
         'descricao',
-        'order',
+        'ordem',
     ];
 
     public function files()

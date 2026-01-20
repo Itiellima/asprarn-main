@@ -37,7 +37,17 @@ Route::middleware(['auth'])->group(function () {
 Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 //////////////////////////////// ********* BENEFICIO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-Route::resource('beneficio', BeneficioController::class);
+// Route::resource('beneficio', BeneficioController::class);
+
+Route::get('beneficio/create', [BeneficioController::class, 'create'])->name('beneficio.create');
+Route::post('beneficio/store', [BeneficioController::class, 'store'])->name('beneficio.store');
+Route::get('beneficio/edit/{beneficio}', [BeneficioController::class, 'edit'])->name('beneficio.edit');
+Route::put('beneficio/update/{beneficio}', [BeneficioController::class, 'update'])->name('beneficio.update');
+Route::delete('beneficio/destroy/{beneficio}', [BeneficioController::class, 'destroy'])->name('beneficio.destroy');
+Route::get('beneficio', [BeneficioController::class, 'index'])->name('beneficio.index');
+
+Route::post('beneficio/ordenar', [BeneficioController::class, 'ordenar'])->name('beneficio.ordenar');
+Route::get('beneficio/order', [BeneficioController::class, 'order'])->name('beneficio.order');
 
 //////////////////////////////// ********* DASHBOARD ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::middleware(['auth', 'verified'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
