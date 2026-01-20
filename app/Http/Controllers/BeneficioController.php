@@ -24,7 +24,7 @@ class BeneficioController extends Controller
 
         $user = Auth::user();
 
-        if(!$user || !$user->hasAnyRole(['admin', 'moderador'])){
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
             return redirect('beneficio')->with('error', 'Acesso negado. Você não tem acesso a essa funcionalidade.');
         }
 
@@ -35,6 +35,11 @@ class BeneficioController extends Controller
 
     public function store(Request $request)
     {
+        $user = Auth::user();
+
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
+            return redirect('beneficio')->with('error', 'Acesso negado. Você não tem acesso a essa funcionalidade.');
+        }
 
         $request->validate([
             'nome' => 'required',
@@ -75,6 +80,12 @@ class BeneficioController extends Controller
 
     public function edit(Beneficio $beneficio)
     {
+        $user = Auth::user();
+
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
+            return redirect('beneficio')->with('error', 'Acesso negado. Você não tem acesso a essa funcionalidade.');
+        }
+
         return view('beneficio.edit', compact('beneficio'));
     }
 
@@ -83,7 +94,7 @@ class BeneficioController extends Controller
 
         $user = Auth::user();
 
-        if(!$user || !$user->hasAnyRole(['admin', 'moderador'])){
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
             return redirect('beneficio')->with('error', 'Acesso negado. Você nãso tem acesso a essa funcionalidade.');
         }
 
@@ -138,7 +149,7 @@ class BeneficioController extends Controller
     {
         $user = Auth::user();
 
-        if(!$user || !$user->hasAnyRole(['admin', 'moderador'])){
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
             return redirect('beneficio')->with('error', 'Acesso negado. Voçê não tema acesso a essa funcionalidade.');
         }
 
@@ -150,16 +161,23 @@ class BeneficioController extends Controller
             foreach ($beneficio->files as $file) {
                 Storage::disk('public')->delete($file->path);
             }
-    
+
             $beneficio->files()->delete();
-    
+
             $beneficio->delete();
-    
+
             DB::commit();
             return redirect('beneficio')->with('success', 'Beneficio excluido com sucesso!');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect('beneficio')->with('error', 'Erro ao excluir beneficio!');
         }
+    }
+
+    public function order()
+    {
+        $beneficios = Beneficio::sortByDesc('order');
+
+        return view('beneficio.order', compact('beneficios'));
     }
 }
