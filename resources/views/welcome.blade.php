@@ -11,6 +11,8 @@
     {{-- BANNERS --}}
     @include('welcome-components.banner')
 
+    @livewire('instagram-post')
+
     <div class="container body-offset">
         <div class="row mt-3">
             <div class="col-md-8">
@@ -76,7 +78,5 @@
         </div>
 
     </div>
-
-    @livewire('instagram-post')
 
 @endsection
