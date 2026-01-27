@@ -12,31 +12,28 @@
             <h2>Informações do associado</h2>
         </strong>
         @if ($associado->id != null)
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Data de Nascimento</th>
-                        <th>Telefone</th>
-                        <th>Email</th>
-                        <th>Ação</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ $associado->nome }}</td>
-                        <td>{{ date('d/m/Y', strtotime($associado->dt_nasc)) }}</td>
-                        <td>{{ $associado->contato->tel_celular }}</td>
-                        <td>{{ $associado->contato->email }}</td>
-                        <td>
+
+            {{-- card informacoes do associado --}}
+            <div>
+
+                <div class="container card my-3 b-3">
+                    <div class="row g-0">
+
+                        <div class="content card-body text-center align-items-center">
+                            <p class="card-text"><strong>Nome:</strong> {{ $associado->nome }}</p>
+                            <p><strong>Data de Nascimento:</strong> {{ date('d/m/Y', strtotime($associado->dt_nasc)) }}</p>
+                            <p><strong>Telefone: </strong>{{ $associado->contato->tel_celular }}</p>
+                            <p><strong>Email: </strong>{{ $associado->contato->email }}</p>
+
+                            <p>
                             <div class="dropdown-center">
                                 <li class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    Associado
+                                    <strong>
+                                        Associado
+                                    </strong>
                                 </li>
                                 <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="#">#</a>
-                                    </li>
                                     <li>
                                         <a class="dropdown-item" href="/associado/edit/{{ $associado->id }}">Ver tudo</a>
                                     </li>
@@ -53,14 +50,12 @@
                                     </li>
                                 </ul>
                             </div>
-
-
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        @else
-            <p>Associado não encontrado.</p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            @else
+                <p>Associado não encontrado.</p>
         @endif
     </div>
 
@@ -164,7 +159,8 @@
                                 <input type="date" class="form-control" name="data_fim">
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Voltar</button>
                                     <button type="submit" class="btn btn-primary">Inserir</button>
                                 </div>
                             </form>
