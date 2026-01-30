@@ -40,11 +40,7 @@
                             <td>{{ $post->data->format('d/m/Y') }}</td>
                             <td>{{ $post->user->name }}</td>
                             <td>
-                                @if ($post->img)
-                                    <img src="{{ asset('storage/' . $post->img) }}" alt="imagem" width="80">
-                                @else
-                                    -
-                                @endif
+                                <img src="{{ asset('storage/' . $post->files->first()->path) }}" alt="imagem" width="80">
                             </td>
                             <td class="row">
                                 <form action="{{ route('posts.destroy', $post->id) }}" method="POST"
