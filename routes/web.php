@@ -20,6 +20,7 @@ use App\Http\Controllers\InstagramController;
 use App\Http\Controllers\WhatsappController;
 use App\Http\Controllers\searchPostController;
 use App\Http\Controllers\NotificacaoController;
+use App\Http\Controllers\RelatorioController;
 
 //////////////////////////////// ********* INDEX ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -171,3 +172,8 @@ Route::delete('/automacoes/destroy/{id}', [AutomacaoController::class, 'destroy'
 
 Route::get('/notificacoes/index', [NotificacaoController::class, 'index'])->name('notificacoes.index');
 Route::post('/notificacoes/marcar-como-lida/{id}', [NotificacaoController::class, 'marcarComoLida'])->name('notificacoes.marcarComoLida');
+
+
+///////////////////////////////// ********* RELATORIOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Route::get('/relatorios', [RelatorioController::class, 'index'])->name('relatorios.index');
+Route::get('/relatorios/gerar', [RelatorioController::class, 'gerarRelatorio'])->name('relatorios.gerar');
