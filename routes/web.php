@@ -54,8 +54,9 @@ Route::get('beneficio/order', [BeneficioController::class, 'order'])->name('bene
 Route::middleware(['auth', 'verified'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 //////////////////////////////// ********* PDFS IMPRESSAO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-Route::get('/requerimento/{id}', [RequerimentoController::class, 'show'])->name('associado.pdf.requerimento');
-Route::get('/associado.pdf.sesc/{id}', [RequerimentoController::class, 'sesc'])->name('associado.pdf.sesc');
+Route::get('/pdf.requerimento/{id}', [RequerimentoController::class, 'show'])->name('associado.pdf.requerimento');
+Route::get('/pdf.sesc/{id}', [RequerimentoController::class, 'sesc'])->name('associado.pdf.sesc');
+Route::get('/pdf.unp/{id}', [RequerimentoController::class, 'unp'])->name('associado.pdf.unp');
 
 //////////////////////////////// ********* CRUD PASTA ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/associado/pasta/index/{associadoId}', [PastaDocumentoController::class, 'index'])->name('associado.pasta.index');

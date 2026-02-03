@@ -47,6 +47,9 @@
                                             target="_blank">
                                             Gerar declaração SESC
                                         </a>
+                                        <a class="dropdown-item" href="{{ route('associado.pdf.unp', $associado->id) }}" target="_blank">
+                                            Gerar declaração UNP
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
