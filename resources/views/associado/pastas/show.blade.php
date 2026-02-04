@@ -6,7 +6,7 @@
 
 
     <div class="container">
-        <h2>Show pasta/arquivos</h2>
+        <h2>Mostrando pasta:</h2>
         <h2>{{ $pasta->nome }}</h2>
     </div>
 
