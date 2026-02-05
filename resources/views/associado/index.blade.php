@@ -118,8 +118,19 @@
             <div class="card mt-3 mb-3 shadow-sm" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">{{ $associado->nome }}</h5>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ $associado->cpf }}</h6>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">CPF: {{ $associado->cpf }}</h6>
                     <a href="/associado/show/{{ $associado->id }}">Mostar informações</a>
+                </div>
+                <div class="card-body">
+                    <input type="checkbox" class="form-check-input checkbox-no-opacity" disabled id="situacao_{{ $associado->id }}"
+                        {{ $associado->situacoes->contains(function ($situacao) {
+                            return strtolower($situacao->nome) === 'ativo';
+                        })
+                            ? 'checked'
+                            : '' }}>
+                    <label for="situacao_{{ $associado->id }}" class="form-check-label">
+                        Ativo
+                    </label>
                 </div>
             </div>
         @endforeach

@@ -14,8 +14,16 @@
     <div class="container">
         {{-- Botão para abrir modal de inderir documento --}}
         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            Inserir Documento
+            + Novo arquivo
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark"
+                viewBox="0 0 16 16">
+                <path
+                    d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z" />
+            </svg>
         </button>
+        <a href="{{ route('associado.pasta.index', $associado->id) }}" class="btn btn-secondary mb-3">
+            Voltar
+        </a>
 
         {{-- Modal de inserir documento --}}
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -30,11 +38,11 @@
                         <h3>Documentos de {{ $associado->nome }}</h3>
 
                         {{-- Formulário de envio documento --}}
-                        <form action="{{ route('associado.pasta.documentos.store', ['pastaId' => $pasta->id]) }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('associado.pasta.documentos.store', ['pastaId' => $pasta->id]) }}"
+                            method="POST" enctype="multipart/form-data">
                             @csrf
-                            <label>Tipo de Documento</label>
-                            <input type="text" class="form-control" name="tipo_documento" required>
+                            {{-- <label>Tipo de Documento</label>
+                            <input type="text" class="form-control" name="tipo_documento" required> --}}
 
                             <label>Arquivo: pdf, jpg, jpeg, png.</label>
                             <input class="form-control" type="file" name="arquivo" required>
@@ -126,7 +134,8 @@
                             </div>
 
                             {{-- Formulário de exclusão --}}
-                            <form action="{{ route('associado.pasta.documentos.destroy', ['pastaId' => $pasta->id, 'fileId' => $file->id]) }}"
+                            <form
+                                action="{{ route('associado.pasta.documentos.destroy', ['pastaId' => $pasta->id, 'fileId' => $file->id]) }}"
                                 method="POST" style="display:inline-block">
                                 @csrf
                                 @method('DELETE')

@@ -47,7 +47,7 @@ class AssociadoController extends Controller
             ->values();
 
         $associados = Associado::query()
-            ->with('endereco')
+            ->with(['endereco', 'situacoes'])
 
             // Filtro por texto
             ->when(request('search'), function ($query, $search) {

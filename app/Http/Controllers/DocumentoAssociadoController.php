@@ -52,7 +52,7 @@ class DocumentoAssociadoController extends Controller
 
         // Validação dos dados do formulário
         $request->validate([
-            'tipo_documento' => 'required|string|max:50',
+            'tipo_documento' => 'string|max:50',
             'arquivo' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'observacao' => 'nullable|string',
         ]);
@@ -66,12 +66,18 @@ class DocumentoAssociadoController extends Controller
             // Obtém o ID do associado da pasta
             $associadoId = $pasta->associado_id;
 
+            // Obtém o arquivo enviado
+            $arquivo = $request->file('arquivo');
+
+            // Obtém o nome original do arquivo
+            $nomeOriginal = $arquivo->getClientOriginalName();
+
             // Salva o arquivo e o caminho para armazenar o arquivo
             $path = $request->file('arquivo')->store("documentos/{$associadoId}/{$pastaId}", 'public');
 
             // Cria o registro do arquivo na tabela files
             $pasta->files()->create([
-                'tipo_documento' => $request->tipo_documento,
+                'tipo_documento' => $nomeOriginal,
                 'path' => $path,
                 'status' => 'pendente',
                 'observacao' => $request->observacao,
