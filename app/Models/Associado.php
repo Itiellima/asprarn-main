@@ -61,6 +61,11 @@ class Associado extends Model
         return $this->hasMany(Mensalidade::class);
     }
 
+    public function pictureProfile()
+    {
+        return $this->hasOne(PictureProfile::class);
+    }
+
     protected $fillable = [
         'nome',
         'cpf',
