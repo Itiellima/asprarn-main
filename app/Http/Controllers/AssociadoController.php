@@ -11,11 +11,13 @@ use App\Models\Contato;
 use App\Models\Endereco;
 use App\Models\DadosBancarios;
 use App\Models\Situacao;
+use App\Models\PictureProfile;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 
 class AssociadoController extends Controller
@@ -358,5 +360,48 @@ class AssociadoController extends Controller
         }
 
         return redirect('/associado')->with('msg', 'Associado deletado com sucesso!');
+    }
+
+    public function pictureProfile(Request $request, $associadoId)
+    {
+        $user = Auth::user();
+
+        if (!$user || !$user->hasRole('admin|moderador')) {
+            return redirect()->route('associado.index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $associado = Associado::findOrFail($associadoId);
+
+        $request->validate([
+            'picture_profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            
+            // Salva a nova foto de perfil
+            $path = $request->file('picture_profile')->store('picture_profiles', 'public');
+            
+            // Verifica se já existe uma foto de perfil para o associado
+            $oldPicture = PictureProfile::where('associado_id', $associado->id)->first();
+
+            // Atualiza ou cria o registro da foto de perfil
+            PictureProfile::updateOrCreate(
+                ['associado_id' => $associado->id],
+                ['path' => $path]
+            );
+
+            // Se houver uma foto antiga, exclui o arquivo físico
+            if ($oldPicture && Storage::disk('public')->exists($oldPicture->path)) {
+                Storage::disk('public')->delete($oldPicture->path);
+            }
+
+            DB::commit();
+            return redirect()->back()->with('msg', 'Foto de perfil atualizada com sucesso!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Erro ao atualizar foto de perfil');
+            
+        }
     }
 }
