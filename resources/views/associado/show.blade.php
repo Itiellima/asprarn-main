@@ -7,60 +7,132 @@
     @include('dashboard.layouts.nav-dashboard')
 
     {{-- Informações do associado --}}
-    <div class="container alert alert-light text-center">
+    {{-- <div class="container alert alert-light text-center">
         <strong class="text-black">
             <h2>Informações do associado</h2>
         </strong>
         @if ($associado->id != null)
+            <div class="container card my-3 b-3">
+                <div class="row g-0">
 
-            {{-- card informacoes do associado --}}
-            <div>
+                    <div class="content card-body text-center align-items-center">
+                        <p class="card-text"><strong>Nome:</strong> {{ $associado->nome }}</p>
+                        <p><strong>Data de Nascimento:</strong> {{ date('d/m/Y', strtotime($associado->dt_nasc)) }}</p>
+                        <p><strong>Telefone: </strong>{{ $associado->contato->tel_celular }}</p>
+                        <p><strong>Email: </strong>{{ $associado->contato->email }}</p>
 
-                <div class="container card my-3 b-3">
-                    <div class="row g-0">
-
-                        <div class="content card-body text-center align-items-center">
-                            <p class="card-text"><strong>Nome:</strong> {{ $associado->nome }}</p>
-                            <p><strong>Data de Nascimento:</strong> {{ date('d/m/Y', strtotime($associado->dt_nasc)) }}</p>
-                            <p><strong>Telefone: </strong>{{ $associado->contato->tel_celular }}</p>
-                            <p><strong>Email: </strong>{{ $associado->contato->email }}</p>
-
-                            <p>
-                            <div class="dropdown-center">
-                                <li class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <strong>
-                                        Associado
-                                    </strong>
+                        <p>
+                        <div class="dropdown-center">
+                            <li class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <strong>
+                                    Associado
+                                </strong>
+                            </li>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="/associado/edit/{{ $associado->id }}">Ver tudo</a>
                                 </li>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="/associado/edit/{{ $associado->id }}">Ver tudo</a>
-                                    </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ route('associado.pdf.requerimento', $associado->id) }}" target="_blank">
+                                        Gerar requerimento
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('associado.pdf.sesc', $associado->id) }}"
+                                        target="_blank">
+                                        Gerar declaração SESC
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('associado.pdf.unp', $associado->id) }}"
+                                        target="_blank">
+                                        Gerar declaração UNP
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        @else
+            <p>Associado não encontrado.</p>
+        @endif
+    </div> --}}
+
+    {{-- Dados Cadastrais --}}
+    <div class="container alert alert-light text-black">
+        <h2 class="text-center mb-4">Dados cadastrais</h2>
+
+        <div class="card shadow-sm">
+            <div class="row m-3">
+
+                {{-- COLUNA ESQUERDA --}}
+                <div class="col-md-6">
+                    <div class="form-control mb-3 bg-white">
+                        <strong>Nome:</strong> {{ $associado->nome }}
+                    </div>
+
+                    <div class="form-control mb-3 bg-white">
+                        <strong>CPF:</strong> {{ $associado->cpf }}
+                    </div>
+
+                    <div class="form-control mb-3 bg-white">
+                        <strong>RG:</strong> {{ $associado->rg }}
+                    </div>
+
+                    <div class="form-control mb-3 bg-white">
+                        <strong>Órgão Expedidor:</strong> {{ $associado->org_expedidor }}
+                    </div>
+                </div>
+
+                {{-- COLUNA DIREITA --}}
+                <div class="col-md-6">
+                    <div class="form-control mb-3 bg-white">
+                        <strong>Telefone:</strong> {{ $associado->contato->tel_celular ?? 'Não informado' }}
+                    </div>
+
+                    <div class="form-control mb-3 bg-white">
+                        <strong>Data de Nascimento:</strong> {{ date('d/m/Y', strtotime($associado->dt_nasc)) }}
+                    </div>
+
+                    <div class="form-control mb-3 bg-white">
+                        <strong>Email:</strong> {{ $associado->contato->email ?? 'Não informado' }}
+                    </div>
+
+                    {{-- BOTÕES --}}
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <a href="{{ route('associado.edit', $associado->id) }}" class="btn btn-primary w-100">Ver mais</a>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="dropdown w-100">
+                                <button class="btn btn-primary dropdown-toggle w-100" data-bs-toggle="dropdown">
+                                    Gerar PDF
+                                </button>
+                                <ul class="dropdown-menu w-100">
                                     <li>
                                         <a class="dropdown-item"
                                             href="{{ route('associado.pdf.requerimento', $associado->id) }}"
-                                            target="_blank">
-                                            Gerar requerimento
-                                        </a>
+                                            target="_blank">Requerimento</a>
+                                    </li>
+                                    <li>
                                         <a class="dropdown-item" href="{{ route('associado.pdf.sesc', $associado->id) }}"
-                                            target="_blank">
-                                            Gerar declaração SESC
-                                        </a>
-                                        <a class="dropdown-item" href="{{ route('associado.pdf.unp', $associado->id) }}" target="_blank">
-                                            Gerar declaração UNP
-                                        </a>
+                                            target="_blank">Declaração SESC</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('associado.pdf.unp', $associado->id) }}"
+                                            target="_blank">Declaração UNP</a>
                                     </li>
                                 </ul>
                             </div>
-                            </p>
                         </div>
                     </div>
+
                 </div>
-            @else
-                <p>Associado não encontrado.</p>
-        @endif
+            </div>
+        </div>
     </div>
+
 
     {{-- situacao do associado --}}
     @include('associado.components.situacao-associado')
