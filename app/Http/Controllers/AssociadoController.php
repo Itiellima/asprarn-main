@@ -223,7 +223,7 @@ class AssociadoController extends Controller
                 'mensagem' => 'Novo asssociado cadastrado com sucesso, ' . $associado->nome . ' - ' . $associado->cpf,
                 'associado_id' => $associado->id,
             ];
-            
+
             event(new NotificacaoCriada($data));
 
             return redirect('/dashboard')->with('msg', 'Associado criado com sucesso!');
@@ -362,12 +362,13 @@ class AssociadoController extends Controller
         return redirect('/associado')->with('msg', 'Associado deletado com sucesso!');
     }
 
-    public function pictureProfile(Request $request, $associadoId)
+    public function storePictureProfile(Request $request, $associadoId)
     {
         $user = Auth::user();
 
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('associado.index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        if (!$user || !$user->hasRole('associado')) {
+            return redirect()->route('associado.index')
+                ->with('error', 'Acesso negado.');
         }
 
         $associado = Associado::findOrFail($associadoId);
@@ -377,31 +378,43 @@ class AssociadoController extends Controller
         ]);
 
         DB::beginTransaction();
+
+        $newPath = null;
+
         try {
-            
-            // Salva a nova foto de perfil
-            $path = $request->file('picture_profile')->store('picture_profiles', 'public');
-            
-            // Verifica se já existe uma foto de perfil para o associado
+            // 1️⃣ salva o arquivo
+            $newPath = $request->file('picture_profile')
+                ->store('picture_profiles', 'public');
+
+            // 2️⃣ pega a antiga
             $oldPicture = PictureProfile::where('associado_id', $associado->id)->first();
 
-            // Atualiza ou cria o registro da foto de perfil
+            // 3️⃣ cria ou atualiza
             PictureProfile::updateOrCreate(
                 ['associado_id' => $associado->id],
-                ['path' => $path]
+                ['path' => $newPath]
             );
 
-            // Se houver uma foto antiga, exclui o arquivo físico
-            if ($oldPicture && Storage::disk('public')->exists($oldPicture->path)) {
-                Storage::disk('public')->delete($oldPicture->path);
+            // 4️⃣ apaga a antiga só se for diferente
+            if ($oldPicture && $oldPicture->path !== $newPath) {
+                if (Storage::disk('public')->exists($oldPicture->path)) {
+                    Storage::disk('public')->delete($oldPicture->path);
+                }
             }
 
             DB::commit();
-            return redirect()->back()->with('msg', 'Foto de perfil atualizada com sucesso!');
+
+            return back()->with('msg', 'Foto de perfil atualizada com sucesso!');
         } catch (\Exception $e) {
+
             DB::rollBack();
-            return redirect()->back()->with('error', 'Erro ao atualizar foto de perfil');
-            
+
+            // 🔥 evita arquivo órfão
+            if ($newPath && Storage::disk('public')->exists($newPath)) {
+                Storage::disk('public')->delete($newPath);
+            }
+
+            return back()->with('error', 'Erro ao atualizar foto.');
         }
     }
 }

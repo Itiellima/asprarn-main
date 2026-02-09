@@ -91,6 +91,9 @@ Route::put('/associado/update/{id}', [AssociadoController::class, 'update'])->na
 //ROTA DESTROY
 Route::delete('/associado/delete/{id}', [AssociadoController::class, 'destroy'])->name('associado.destroy');
 
+//////////////////////////////// ********* PICTURE PROFILES ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Route::post('/associado/{associadoId}/picture-profile/store', [AssociadoController::class, 'storePictureProfile'])->name('associado.picture-profile.store');
+
 //////////////////////////////// ********* ASSOCIADO FINANCEIRO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/associado/financeiro/{associadoId}', [PlanosController::class, 'index'])->name('associado.financeiro.index');
 
