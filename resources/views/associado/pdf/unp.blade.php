@@ -9,7 +9,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Declaracao SESC - ASPRA</title>
+    <title>Declaracao UNP - ASPRA</title>
     <style>
         /* Simula folha A4 */
         .pagina {
@@ -72,7 +72,7 @@
 <body>
 
     <div class="pagina">
-        <div class="cabecalho" >
+        <div class="cabecalho">
             <img src="/img/aspra-logo-noname.png" alt="Logo" class="me-2">
             <div class="titulo">
                 ASSOCIAÇÃO DOS PRAÇAS DA POLÍCIA MILITAR <br>
@@ -84,9 +84,9 @@
 
         <div class="titulo" style="margin-top: 2cm">
             <p>
-                <h4 class="text-center" style="text-decoration: underline; font-weight: bold;">
-                    DECLARAÇÃO
-                </h4>
+            <h4 class="text-center" style="text-decoration: underline; font-weight: bold;">
+                DECLARAÇÃO
+            </h4>
             </p>
         </div>
         <div class="conteudo">
@@ -95,7 +95,7 @@
                     PMRN,</strong>
                 inscrita no
                 CNPJ sob o nº 05.786.841/0001-63, com sede na Rua João Pessoa, n° 267 – Edifício Cidade do Natal, 1°
-                andar, sala 111 – Cidade Alta, Natal/RN, por meio de sua dire-toria, declara para os devidos fins que:
+                andar, sala 111 – Cidade Alta, Natal/RN, por meio de sua diretoria, declara para os devidos fins que:
             </p>
             <p style="margin-top: 3rem">
                 &nbsp;&nbsp; <strong><span style="text-decoration: underline;">{{ $associado->nome }}</span></strong>,
@@ -106,13 +106,14 @@
                 vínculo ativo com esta instituição.
             </p>
             <p style="margin-top: 3rem">
-                &nbsp;&nbsp; A presente declaração é emitida a pedido do interessado, para fins de 
+                &nbsp;&nbsp; A presente declaração é emitida a pedido do interessado, para fins de
                 <strong>matricula na Universidade Potiguar do Rio Grande do Norte (UNP),</strong>
-                </p>
+            </p>
         </div>
 
 
-
+        <br><br>
+        <br>
         <div class="container justify-content align-items-center text-center" style="margin-top: 4cm">
             <div class="assinatura" style="text-decoration: underline">
                 <strong>

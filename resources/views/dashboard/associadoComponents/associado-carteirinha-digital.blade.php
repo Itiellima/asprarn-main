@@ -6,7 +6,7 @@
                 <div class="col-md-6 mb-3 mt-3 d-flex align-items-center justify-content-center">
                     <div class="row d-flex align-items-center justify-content-center">
                         <div class="justify-content-center d-flex align-items-center">
-                            @if ($associado->pictureProfile->path)
+                            @if ($associado->pictureProfile?->path)
                                 <img src="{{ asset('storage/' . $associado->pictureProfile->path) }}" alt="Foto de perfil"
                                     class="rounded shadow" width="auto" height="200px" style="object-fit: contain;">
                             @else

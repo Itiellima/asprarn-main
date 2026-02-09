@@ -95,7 +95,7 @@
                     PMRN,</strong>
                 inscrita no
                 CNPJ sob o nº 05.786.841/0001-63, com sede na Rua João Pessoa, n° 267 – Edifício Cidade do Natal, 1°
-                andar, sala 111 – Cidade Alta, Natal/RN, por meio de sua dire-toria, declara para os devidos fins que:
+                andar, sala 111 – Cidade Alta, Natal/RN, por meio de sua diretoria, declara para os devidos fins que:
             </p>
             <p style="margin-top: 3rem">
                 &nbsp;&nbsp; <strong><span style="text-decoration: underline;">{{ $associado->nome }}</span></strong>,
@@ -115,7 +115,7 @@
         </div>
 
 
-
+        <br><br>
         <div class="container justify-content align-items-center text-center" style="margin-top: 4cm">
             <div class="assinatura" style="text-decoration: underline">
                 <strong>
