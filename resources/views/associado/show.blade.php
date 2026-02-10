@@ -123,6 +123,14 @@
                                         <a class="dropdown-item" href="{{ route('associado.pdf.unp', $associado->id) }}"
                                             target="_blank">Declaração UNP</a>
                                     </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('associado.pdf.declaracao', $associado->id) }}"
+                                            target="_blank">Declaração Genérica</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('associado.pdf.desfiliacao', $associado->id) }}"
+                                            target="_blank">Req. de Desfiliação</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
