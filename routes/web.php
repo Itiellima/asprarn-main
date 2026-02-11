@@ -96,6 +96,7 @@ Route::delete('/associado/delete/{id}', [AssociadoController::class, 'destroy'])
 
 //////////////////////////////// ********* PICTURE PROFILES ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::post('/associado/{associadoId}/picture-profile/store', [AssociadoController::class, 'storePictureProfile'])->name('associado.picture-profile.store');
+Route::delete('/associado/{associadoId}/picture-profile/destroy', [AssociadoController::class, 'destroyPictureProfile'])->name('associado.picture-profile.destroy');
 
 //////////////////////////////// ********* ASSOCIADO FINANCEIRO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/associado/financeiro/{associadoId}', [PlanosController::class, 'index'])->name('associado.financeiro.index');

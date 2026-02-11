@@ -35,15 +35,28 @@
             </div>
 
 
-            <button class="btn btn-sm btn-primary m-2">
-                📝 Emitir carteirinha de Associado
-            </button>
+            <div class="d-flex flex-wrap gap-2 mt-2">
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-sm btn-primary m-2" data-bs-toggle="modal"
-                data-bs-target="#pictureModal">
-                Editar foto de perfil
-            </button>
+                <button class="btn btn-sm btn-primary">
+                    📝 Emitir carteirinha
+                </button>
+
+                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#pictureModal">
+                    Editar foto
+                </button>
+
+                <form action="{{ route('associado.picture-profile.destroy', $associado->id) }}" method="POST"
+                    class="m-0">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Deseja remover essa foto?')">
+                        Excluir foto
+                    </button>
+                </form>
+
+            </div>
+
             <!-- Modal -->
             <div class="modal fade" id="pictureModal" tabindex="-1" aria-labelledby="pictureModalLabel"
                 aria-hidden="true">

@@ -417,4 +417,38 @@ class AssociadoController extends Controller
             return back()->with('error', 'Erro ao atualizar foto.');
         }
     }
+
+    public function destroyPictureProfile($associadoId)
+    {
+        $user = Auth::user();
+
+        if (!$user || !$user->hasRole('associado')) {
+            return redirect()->route('associado.index')
+                ->with('error', 'Acesso negado.');
+        }
+
+        $picture = PictureProfile::where('associado_id', $associadoId)->first();
+
+        DB::beginTransaction();
+        try {
+
+            if ($picture) {
+
+                // apaga o arquivo físico
+                if (Storage::disk('public')->exists($picture->path)) {
+                    Storage::disk('public')->delete($picture->path);
+                }
+
+                // apaga o registro no banco
+                $picture->delete();
+                DB::commit();
+            }
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Erro ao deletar foto.');
+        }
+
+        return back()->with('msg', 'Foto de perfil deletada com sucesso!');
+    }
 }
