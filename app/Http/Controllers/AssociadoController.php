@@ -125,6 +125,8 @@ class AssociadoController extends Controller
         $ufs = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
             ->json();
 
+        $ufs = collect($ufs)->sortBy('nome')->values()->all();
+
         return view('associado.create', compact('associado', 'ufs'));
     }
 
@@ -148,7 +150,7 @@ class AssociadoController extends Controller
         ], [
             'cpf.unique'   => 'Já existe um associado cadastrado com esse CPF.',
             'cpf.digits'     => 'O CPF deve conter exatamente 11 dígitos numericos.',
-            'email.unique' => 'Já existe um usuário com esse e-mail.',
+            'email.unique' => 'Já existe um associado com esse e-mail.',
         ]);
 
         if (!\App\Helpers\CpfHelper::validar($request->cpf)) {
@@ -331,7 +333,6 @@ class AssociadoController extends Controller
         return redirect('/associado')->with('msg', 'Associado alterado com sucesso!');
     }
 
-
     // Deletar associado
     public function destroy($id)
     {
@@ -443,7 +444,7 @@ class AssociadoController extends Controller
                 $picture->delete();
                 DB::commit();
             }
-            
+
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Erro ao deletar foto.');

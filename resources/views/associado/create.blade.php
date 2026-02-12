@@ -36,31 +36,31 @@
                         <div class="container row m-1 border-bottom border-primary">
                             <h2>Dados pessoais</h2>
                             <div class="mb-3 col-md-6 col-sm-6">
-                                <label for="formGroup" class="form-label">Nome:</label>
+                                <label for="formGroup" class="form-label">Nome: *</label>
                                 <input type="text" class="form-control " id="nome" name="nome"
                                     placeholder="Insira seu nome completo" required
                                     value="{{ old('nome', $associado->nome) }}">
                             </div>
                             <div class="mb-3 col-md-3 col-sm-6">
-                                <label for="formGroup" class="form-label">CPF:</label>
+                                <label for="formGroup" class="form-label">CPF: *</label>
                                 <input type="text" class="form-control " id="cpf" name="cpf"
                                     placeholder="Insira o CPF do associado" required
                                     value="{{ old('cpf', $associado->cpf) }}">
                             </div>
                             <div class="mb-3 col-md-3 col-sm-6">
-                                <label for="formGroup" class="form-label">RG:</label>
+                                <label for="formGroup" class="form-label">RG: *</label>
                                 <input type="text" class="form-control " id="rg" name="rg"
                                     placeholder="Insira o número do RG" required value="{{ old('rg', $associado->rg) }}">
                             </div>
                             <div class="mb-3 col-md-3 col-sm-6">
-                                <label for="formGroup" class="form-label">Órgão expedidor:</label>
+                                <label for="formGroup" class="form-label">Órgão expedidor: *</label>
                                 <input type="text" class="form-control " id="org_expedidor" name="org_expedidor"
                                     placeholder="Órgão expedidor" required
                                     value="{{ old('org_expedidor', $associado->org_expedidor) }}">
                             </div>
 
                             <div class="mb-3 col-md-3 col-sm-6">
-                                <label for="formGroup" class="form-label">Data de nascimento</label>
+                                <label for="formGroup" class="form-label">Data de nascimento: *</label>
                                 <input type="date" class="form-control " id="dt_nasc" name="dt_nasc" required
                                     value="{{ old('dt_nasc', $associado->dt_nasc) }}">
                             </div>
@@ -151,25 +151,25 @@
                         <div class="container row border-bottom border-primary mt-3 m-1">
                             <h2>Endereço</h2>
                             <div class="mb-3 col-md-3 col-sm-6">
-                                <label for="formGroup" class="form-label">CEP:</label>
+                                <label for="formGroup" class="form-label">CEP: *</label>
                                 <input type="number" class="form-control " id="cep" name="cep"
                                     placeholder="59000-000 apenas números" required
                                     value="{{ old('cep', $associado->endereco?->cep) }}">
                             </div>
                             <div class="mb-3 col-md-9 col-sm-6">
-                                <label for="formGroup" class="form-label">Logradouro:</label>
+                                <label for="formGroup" class="form-label">Logradouro: *</label>
                                 <input type="text" class="form-control " id="logradouro" name="logradouro"
                                     placeholder="Rua..." required
                                     value="{{ old('logradouro', $associado->endereco?->logradouro) }}">
                             </div>
                             <div class="mb-3 col-md-3 col-sm-6">
-                                <label for="formGroup" class="form-label">Número:</label>
+                                <label for="formGroup" class="form-label">Número: *</label>
                                 <input type="text" class="form-control " id="nmr" name="nmr"
                                     placeholder="Número da residência" required
                                     value="{{ old('nmr', $associado->endereco?->nmr) }}">
                             </div>
                             <div class="mb-3 col-md-3 col-sm-6">
-                                <label for="formGroup" class="form-label">Bairro:</label>
+                                <label for="formGroup" class="form-label">Bairro: *</label>
                                 <input type="text" class="form-control " id="bairro" name="bairro"
                                     placeholder="Insira o nome do bairro" required
                                     value="{{ old('bairro', $associado->endereco?->bairro) }}">
@@ -223,7 +223,7 @@
                         <div class="container row border-bottom border-primary mt-3 m-1">
                             <h2>Contato</h2>
                             <div class="mb-3 col-md-4 col-sm-6">
-                                <label for="formGroup" class="form-label">Número de Celular:</label>
+                                <label for="formGroup" class="form-label">Número de Celular: *</label>
                                 <input type="text" class="form-control" maxlength="15" pattern="\d{10,15}"
                                     id="tel_celular" name="tel_celular"
                                     placeholder=" 55 (xx) x xxxx-xxxx  Apenas números" required
@@ -244,7 +244,7 @@
                                     value="{{ old('tel_trabalho', $associado->contato?->tel_trabalho) }}">
                             </div>
                             <div class="mb-3 col-md-12 col-sm-6">
-                                <label for="formGroup" class="form-label">Email:</label>
+                                <label for="formGroup" class="form-label">Email: *</label>
                                 <input type="email" class="form-control" id="email" name="email"
                                     placeholder="exemplo@email.com" required
                                     value="{{ old('email', $associado->contato?->email) }}">
@@ -326,19 +326,19 @@
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Nome de Guerra:</label>
                                 <input type="text" class="form-control" id="nome_guerra" name="nome_guerra"
-                                    placeholder="Insira o nome de guerra" required
+                                    placeholder="Insira o nome de guerra"
                                     value="{{ old('nome_guerra', $associado->nome_guerra) }}">
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Número de praça:</label>
                                 <input type="text" class="form-control" id="nmr_praca" name="nmr_praca"
-                                    placeholder="Insira o número de praça" required
+                                    placeholder="Insira o número de praça"
                                     value="{{ old('nmr_praca', $associado->nmr_praca) }}">
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Matricula:</label>
                                 <input type="text" class="form-control" id="matricula" name="matricula"
-                                    placeholder="Insira a matrícula" required
+                                    placeholder="Insira a matrícula"
                                     value="{{ old('matricula', $associado->matricula) }}">
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
@@ -356,16 +356,16 @@
                         <div class="container row border-bottom border-primary mt-3 m-1">
                             <h2>Dependentes</h2>
                             <label for="formGroup" class="form-label">Insira os nomes dos dependentes:</label>
-                            <textarea name="dependentes" id="dependentes" cols="30" rows="5" maxlength="200">{{ old('dependentes', $associado->dependentes) }}</textarea>
-                            </textarea>
+                            <textarea name="dependentes" id="dependentes" cols="30" rows="5" maxlength="200" placeholder="Nome, CPF, Grau de parentesco...">{{ old('dependentes', $associado->dependentes)}}</textarea>
+
                         </div>
 
                         {{-- Observações --}}
                         <div class="container row border-bottom border-primary mt-3 m-1">
                             <h2>Observações</h2>
-                            <label for="formGroup" class="form-label">Insira os nomes dos dependentes:</label>
-                            <textarea name="obs" id="obs" cols="30" rows="5" maxlength="200">{{ old('obs', $associado->obs) }}</textarea>
-                            </textarea>
+                            <label for="formGroup" class="form-label">Insira as observações:</label>
+                            <textarea name="obs" id="obs" cols="30" rows="5" maxlength="200" place>{{ old('obs', $associado->obs) }}</textarea>
+
                         </div>
 
                         <div class="container border-bottom border-primary mt-3 text-end">
