@@ -1,6 +1,6 @@
 <div class="container alert alert-light text-black text-center">
     <strong class="text-black">
-        <h2>Situação Controller</h2>
+        <h2>Situações (Ativo/Inativo)</h2>
     </strong>
 
     <div class="row content-center justify-content-center">
@@ -34,14 +34,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nova situação</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('situacao.store') }}" method="POST">
                         @csrf
 
-                        <label for="nome"> Nome da situacao</label>
+                        <label for="nome"> Nome da situação</label>
                         <input type="text" name="nome" id="nome" class="form-control" placeholder="Situação">
 
                         <hr>

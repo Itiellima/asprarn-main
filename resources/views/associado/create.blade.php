@@ -294,7 +294,7 @@
 
                         {{-- Dados dos Militares --}}
                         <div class="container row border-bottom border-primary mt-3 m-1">
-                            <h2>Dados dos Militares</h2>
+                            <h2>Dados do Militar</h2>
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Posto/Graduação:</label>
                                 <select class="form-select " name="graduacao" id="graduacao">
@@ -345,8 +345,9 @@
                                 <label for="formGroup" class="form-label">OPM:</label>
                                 <select class="form-select " name="opm" id="opm">
                                     <option selected value="">Selecione</option>
-                                    <option value="1bpm" {{ old('opm', $associado->opm) == '1bpm' ? 'selected' : '' }}>
-                                        1°BPM
+                                    <option value="1° BATALHÃO DE POLÍCIA MILITAR - NATAL"
+                                        {{ old('opm', $associado->opm) == '1° BATALHÃO DE POLÍCIA MILITAR - NATAL' ? 'selected' : '' }}>
+                                        1° BATALHÃO DE POLÍCIA MILITAR - NATAL
                                     </option>
                                 </select>
                             </div>
@@ -356,7 +357,8 @@
                         <div class="container row border-bottom border-primary mt-3 m-1">
                             <h2>Dependentes</h2>
                             <label for="formGroup" class="form-label">Insira os nomes dos dependentes:</label>
-                            <textarea name="dependentes" id="dependentes" cols="30" rows="5" maxlength="200" placeholder="Nome, CPF, Grau de parentesco...">{{ old('dependentes', $associado->dependentes)}}</textarea>
+                            <textarea name="dependentes" id="dependentes" cols="30" rows="5" maxlength="200"
+                                placeholder="Nome, CPF, Grau de parentesco...">{{ old('dependentes', $associado->dependentes) }}</textarea>
 
                         </div>
 
