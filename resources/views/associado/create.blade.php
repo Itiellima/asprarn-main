@@ -44,7 +44,7 @@
                             <div class="mb-3 col-md-3 col-sm-6">
                                 <label for="formGroup" class="form-label">CPF: *</label>
                                 <input type="text" class="form-control " id="cpf" name="cpf"
-                                    placeholder="Insira o CPF do associado" required
+                                    placeholder="000.000.000-00" required
                                     value="{{ old('cpf', $associado->cpf) }}">
                             </div>
                             <div class="mb-3 col-md-3 col-sm-6">
@@ -137,7 +137,8 @@
                             <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="formGroup" class="form-label">Nome do pai:</label>
                                 <input type="text" class="form-control " id="nome_pai" name="nome_pai"
-                                    placeholder="Insira o nome do pai" value="{{ old('nome_pai', $associado->nome_pai) }}">
+                                    placeholder="Insira o nome do pai"
+                                    value="{{ old('nome_pai', $associado->nome_pai) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="formGroup" class="form-label">Nome da Mãe:</label>
@@ -218,29 +219,28 @@
                             </div>
                         </div>
 
-
                         {{-- Contato --}}
                         <div class="container row border-bottom border-primary mt-3 m-1">
                             <h2>Contato</h2>
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Número de Celular: *</label>
-                                <input type="text" class="form-control" maxlength="15" pattern="\d{10,15}"
+                                <input type="text" class="form-control"
                                     id="tel_celular" name="tel_celular"
-                                    placeholder=" 55 (xx) x xxxx-xxxx  Apenas números" required
+                                    placeholder="(xx) x xxxx-xxxx  Apenas números" required
                                     value="{{ old('tel_celular', $associado->contato?->tel_celular) }}">
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Número Residencial:</label>
-                                <input type="text" class="form-control" maxlength="15" pattern="\d{10,15}"
+                                <input type="text" class="form-control"
                                     id="tel_residencial" name="tel_residencial"
-                                    placeholder="55 (xx) x xxxx-xxxx  Apenas números"
+                                    placeholder="(xx) x xxxx-xxxx  Apenas números"
                                     value="{{ old('tel_residencial', $associado->contato?->tel_residencial) }}">
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Número de Trabalho:</label>
-                                <input type="text" class="form-control" maxlength="15" pattern="\d{10,15}"
+                                <input type="text" class="form-control"
                                     id="tel_trabalho" name="tel_trabalho"
-                                    placeholder="55 (xx) x xxxx-xxxx  Apenas números"
+                                    placeholder="(xx) x xxxx-xxxx  Apenas números"
                                     value="{{ old('tel_trabalho', $associado->contato?->tel_trabalho) }}">
                             </div>
                             <div class="mb-3 col-md-12 col-sm-6">
@@ -449,6 +449,21 @@
                     carregarCidades(ufSelect.value, cidadeAtual);
                 }
 
+            });
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- 2️⃣ Carrega o plugin de máscara -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+        <!-- 3️⃣ Aplica as máscaras -->
+        <script>
+            $(document).ready(function() {
+                $('#cpf').mask('000.000.000-00');
+                $('#tel_celular').mask('(00) 00000-0000');
+                $('#tel_residencial').mask('(00) 00000-0000');
+                $('#tel_trabalho').mask('(00) 00000-0000');
             });
         </script>
     @endpush

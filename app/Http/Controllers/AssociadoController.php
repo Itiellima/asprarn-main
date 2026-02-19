@@ -142,7 +142,17 @@ class AssociadoController extends Controller
     // Rota salvar o associado no banco de dados
     public function store(Request $request)
     {
-        // 1. Validação
+
+        // 1. Remove mascaras antes de validar
+        $request->merge([
+            'cpf' => preg_replace('/[^0-9]/', '', $request->cpf),
+            'tel_celular' => preg_replace('/[^0-9]/', '', $request->tel_celular),
+            'tel_residencial' => preg_replace('/[^0-9]/', '', $request->tel_residencial),
+            'tel_trabalho' => preg_replace('/[^0-9]/', '', $request->tel_trabalho),
+        ]);
+
+
+        // 2. Validação
         $request->validate([
             'nome'  => 'required',
             'cpf'   => 'required|unique:associados,cpf|digits:11',
@@ -159,7 +169,7 @@ class AssociadoController extends Controller
 
         DB::beginTransaction();
         try {
-            // 2. Cria associado
+            // 3. Cria associado
             $associado = Associado::create($request->only([
                 'nome',
                 'cpf',
@@ -179,7 +189,7 @@ class AssociadoController extends Controller
                 'obs'
             ]));
 
-            // 3. Cria endereço
+            // 4. Cria endereço
             Endereco::create($request->only([
                 'cep',
                 'logradouro',
@@ -190,7 +200,7 @@ class AssociadoController extends Controller
                 'complemento'
             ]) + ['associado_id' => $associado->id]);
 
-            // 4. Cria contato
+            // 5. Cria contato
             Contato::create($request->only([
                 'tel_celular',
                 'tel_residencial',
@@ -198,7 +208,7 @@ class AssociadoController extends Controller
                 'email'
             ]) + ['associado_id' => $associado->id]);
 
-            // 5. Cria dados bancários
+            // 6. Cria dados bancários
             DadosBancarios::create($request->only([
                 'codigo',
                 'agencia',
@@ -208,7 +218,7 @@ class AssociadoController extends Controller
                 'tipo'
             ]) + ['associado_id' => $associado->id]);
 
-            // 6. Cria usuário
+            // 7. Cria usuário
             $user = User::create([
                 'name'         => $associado->nome,
                 'email'        => $request->email,
