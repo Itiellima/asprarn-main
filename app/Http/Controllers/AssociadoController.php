@@ -10,6 +10,7 @@ use App\Models\Associado;
 use App\Models\Contato;
 use App\Models\Endereco;
 use App\Models\DadosBancarios;
+use App\Models\Opm;
 use App\Models\Situacao;
 use App\Models\PictureProfile;
 use Illuminate\Support\Facades\Auth;
@@ -127,7 +128,9 @@ class AssociadoController extends Controller
 
         $ufs = collect($ufs)->sortBy('nome')->values()->all();
 
-        return view('associado.create', compact('associado', 'ufs'));
+        $opms = Opm::orderBy('nome')->get();
+
+        return view('associado.create', compact('associado', 'ufs', 'opms'));
     }
 
     // Rota para buscar cidades por UF via IBGE

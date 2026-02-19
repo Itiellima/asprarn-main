@@ -1,22 +1,23 @@
 <div class="container alert alert-light text-black text-center">
 
+    <strong class="text-black">
+        <h2>OPMs</h2>
+    </strong>
+
     <div class="row content-center justify-content-center">
         @foreach ($opms as $opm)
-            {{ $opm->nome }}
-            {{-- <form class="col-sm-6 col-md-4 col-lg-3" action="{{ route('opm.destroy', $opm->id) }}" method="POST"
+            <div class="alert alert-light m-1 p-1" style="background-color: white; color: black;">
+                <strong>
+                    {{ $opm->nome }}
+                </strong>
+            </div>
+            <form action="{{ route('opms.destroy', $opm->id) }}" method="POST" class="d-inline"
                 onsubmit="return confirm('Deseja excluir essa situação?')">
                 @csrf
                 @method('DELETE')
-                <div class="alert alert-light text-black m-2 p-2">
-                    <label class="">{{ $opm->nome }}</label>
-                    <hr>
-                    <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#modalEdit{{ $situacao->id }}">
-                        Editar
-                    </button>
-                </div>
-            </form> --}}
+
+                <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+            </form>
         @endforeach
     </div>
 

@@ -188,3 +188,4 @@ Route::get('/relatorios', [RelatorioController::class, 'index'])->name('relatori
 Route::get('/relatorios/gerar', [RelatorioController::class, 'gerarRelatorio'])->name('relatorios.gerar');
 
 Route::post('/configuracoes/opms/store', [OpmController::class, 'store'])->name('opms.store');
+Route::delete('/configuracoes/opms/destroy/{id}', [OpmController::class, 'destroy'])->name('opms.destroy');

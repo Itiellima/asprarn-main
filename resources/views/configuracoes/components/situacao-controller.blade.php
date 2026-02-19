@@ -9,8 +9,10 @@
                 onsubmit="return confirm('Deseja excluir essa situação?')">
                 @csrf
                 @method('DELETE')
-                <div class="alert alert-light text-black m-2 p-2">
-                    <label class="">{{ $situacao->nome }}</label>
+                <div class="alert alert-light text-black m-2 p-2" style="background-color: white; color: black;">
+                    <strong>
+                        <label>{{ $situacao->nome }}</label>
+                    </strong>
                     <hr>
                     <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"

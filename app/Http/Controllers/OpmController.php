@@ -45,6 +45,6 @@ class OpmController extends Controller
         $opm = Opm::findOrFail($id);
         $opm->delete();
 
-        return redirect()->route('opms.index')->with('success', 'OPM deletada com sucesso!');
+        return redirect()->route('configuracoes.index')->with('success', 'OPM deletada com sucesso!');
     }
 }

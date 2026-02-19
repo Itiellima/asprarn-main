@@ -345,10 +345,12 @@
                                 <label for="formGroup" class="form-label">OPM:</label>
                                 <select class="form-select " name="opm" id="opm">
                                     <option selected value="">Selecione</option>
-                                    <option value="1° BATALHÃO DE POLÍCIA MILITAR - NATAL"
-                                        {{ old('opm', $associado->opm) == '1° BATALHÃO DE POLÍCIA MILITAR - NATAL' ? 'selected' : '' }}>
-                                        1° BATALHÃO DE POLÍCIA MILITAR - NATAL
-                                    </option>
+                                    @foreach ($opms as $opm)
+                                        <option value="{{ $opm->nome }}"
+                                            {{ old('opm', $associado->opm) == $opm->nome ? 'selected' : '' }}>
+                                            {{ $opm->nome }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
