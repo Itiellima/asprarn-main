@@ -264,7 +264,9 @@ class AssociadoController extends Controller
         $ufs = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
             ->json();
 
-        return view('associado.create', compact('associado', 'ufs'));
+        $opms = Opm::orderBy('nome')->get();
+
+        return view('associado.create', compact('associado', 'ufs', 'opms'));
     }
 
     // Rota para atualizar o associado no banco de dados

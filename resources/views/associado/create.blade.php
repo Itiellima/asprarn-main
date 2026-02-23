@@ -251,17 +251,17 @@
                             </div>
                         </div>
 
-                        {{-- Dados Bancarios --}}
+                        {{-- Dados Bancários --}}
                         <div class="container row border-bottom border-primary mt-3 m-1">
-                            <h2>Dados Bancarios</h2>
+                            <h2>Dados Bancários</h2>
                             <div class="mb-3 col-md-4 col-sm-6">
-                                <label for="formGroup" class="form-label">Codigo:</label>
+                                <label for="formGroup" class="form-label">Código:</label>
                                 <input type="number" class="form-control" id="codigo" name="codigo"
                                     placeholder="Insira o código do banco"
                                     value="{{ old('codigo', $associado->dadosBancarios?->codigo) }}">
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
-                                <label for="formGroup" class="form-label">Agencia:</label>
+                                <label for="formGroup" class="form-label">Agência:</label>
                                 <input type="number" class="form-control" id="agencia" name="agencia"
                                     placeholder="Insira o número da agência"
                                     value="{{ old('agencia', $associado->dadosBancarios?->agencia) }}">

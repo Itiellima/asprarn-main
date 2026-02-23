@@ -15,7 +15,7 @@
             
             <br>
             
-            <strong>{{ $notificacao->id }} - {{ $notificacao->titulo }} - Data: {{ $notificacao->created_at }}</strong> <br>
+            <strong>{{ $notificacao->id }} - {{ $notificacao->titulo }} - Data: {{ $notificacao->created_at->format('d/m/Y H:i') }}</strong> <br>
             {{ $notificacao->mensagem }} - Associado ID: {{ $notificacao->associado_id }}<br>
             
             <strong> {{ $notificacao->associado->nome }} </strong> <a class="btn btn-sm btn-primary" href="{{ route('associado.show', $notificacao->associado_id) }}">Ver detalhes</a>
