@@ -11,15 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('prestador_de_servicos_autonomos', function (Blueprint $table) {
+        Schema::create('funcionarios', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->string('cpf')->unique();
             $table->string('rg')->nullable();
+            $table->string('pis')->nullable();
+            $table->string('ctps')->nullable();
+
             $table->string('empresa')->nullable();
             $table->string('funcao')->nullable();
             $table->string('departamento')->nullable();
             $table->string('atividade')->nullable();
+            $table->string('horario_trabalho')->nullable();
+            
             $table->string('email_pessoal')->nullable();
             $table->string('email_profissional')->nullable();
             $table->string('telefone_1')->nullable();
@@ -40,6 +45,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('prestador_de_servicos_autonomos');
+        Schema::dropIfExists('funcionarios');
     }
 };
