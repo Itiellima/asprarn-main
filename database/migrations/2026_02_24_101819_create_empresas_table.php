@@ -27,7 +27,7 @@ return new class extends Migration
 
             $table->date('data_inicio_contrato')->nullable();
             $table->date('data_fim_contrato')->nullable();
-
+            
             $table->text('funcionarios')->nullable();
             $table->string('observacoes')->nullable();
             $table->timestamps();

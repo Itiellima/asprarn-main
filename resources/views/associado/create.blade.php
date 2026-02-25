@@ -176,20 +176,6 @@
                                     value="{{ old('bairro', $associado->endereco?->bairro) }}">
                             </div>
 
-                            {{-- remover campos cidade e uf e substituir pelo novo com busca do ibge --}}
-                            {{-- <div class="mb-3 col-md-3 col-sm-6">
-                                <label for="formGroup" class="form-label">Cidade:</label>
-                                <input type="text" class="form-control " id="cidade" name="cidade"
-                                    placeholder="Insira o nome da cidade" required
-                                    value="{{ old('cidade', $associado->endereco?->cidade) }}">
-                            </div>
-                            <div class="mb-3 col-md-3 col-sm-6">
-                                <label for="formGroup" class="form-label">UF:</label>
-                                <input type="text" class="form-control " id="uf" name="uf"
-                                    placeholder="ex: RN" required value="{{ old('uf', $associado->endereco?->uf) }}">
-                            </div> --}}
-
-
                             <div class="mb-3 col-md-3 col-sm-6">
                                 <label class="form-label">UF</label>
                                 <select id="uf" name="uf" class="form-select">

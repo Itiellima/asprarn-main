@@ -22,6 +22,7 @@ use App\Http\Controllers\searchPostController;
 use App\Http\Controllers\NotificacaoController;
 use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\OpmController;
+use App\Http\Controllers\FuncionarioController;
 
 //////////////////////////////// ********* INDEX ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -189,3 +190,8 @@ Route::get('/relatorios/gerar', [RelatorioController::class, 'gerarRelatorio'])-
 
 Route::post('/configuracoes/opms/store', [OpmController::class, 'store'])->name('opms.store');
 Route::delete('/configuracoes/opms/destroy/{id}', [OpmController::class, 'destroy'])->name('opms.destroy');
+
+
+///////////////////////////////// ********* FUNCIONARIOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Route::get('/funcionarios', [FuncionarioController::class, 'index'])->name('funcionarios.index');
+Route::get('/funcionarios/create', [FuncionarioController::class, 'create'])->name('funcionarios.create');
