@@ -13,11 +13,12 @@
 
                 {{-- Associados --}}
                 @hasanyrole('associado')
-                    <a href="#" class="btn btn-primary m-1 col-lg-3">👤 Minha Área</a>
+                    <a href="#" class="btn btn-primary m-1 col-lg-3">👤 Meus Dados</a>
                     <a href="#" class="btn btn-primary m-1 col-lg-3">📝 Meus Requerimentos</a>
                     <a href="#" class="btn btn-primary m-1 col-lg-3">🎁 Meus Benefícios</a>
                     <a href="#" class="btn btn-primary m-1 col-lg-3">📋 Meus Planos</a>
                     <a href="#" class="btn btn-primary m-1 col-lg-3">🏠 Declarações</a>
+                    <a href="/profile" class="btn btn-primary m-1 col-lg-3">👮 Perfil</a>
                 @endhasanyrole
 
                 {{-- Administração --}}
