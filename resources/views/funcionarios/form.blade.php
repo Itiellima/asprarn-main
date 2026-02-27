@@ -1,6 +1,6 @@
 <div class="container">
 
-    <form action="">
+    <form action="{{ route('funcionarios.store') }}" method="POST">
         @csrf
         @method('POST')
 
