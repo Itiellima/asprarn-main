@@ -38,6 +38,8 @@
                             <tr>
                                 <th scope="col">Id</th>
                                 <th scope="col">Nome</th>
+                                <th scope="col">Função</th>
+                                <th scope="col">Departamento</th>
                                 <th scope="col">CPF</th>
                                 <th scope="col">Contato</th>
                                 <th scope="col">Ações</th>
@@ -48,11 +50,17 @@
                                 <tr>
                                     <td>{{ $funcionario->id }}</td>
                                     <td>{{ $funcionario->nome }}</td>
+                                    <td>{{ $funcionario->funcao }}</td>
+                                    <td>{{ $funcionario->departamento }}</td>
                                     <td>{{ $funcionario->cpf }}</td>
                                     <td>{{ $funcionario->telefone_1 }}</td>
                                     <td>
-                                        <button class="btn btn-primary">Ver mais</button>
-                                        <button class="btn btn-danger">Excluir</button>
+                                        <a href="{{ route('funcionarios.show', $funcionario->id) }}" class="btn btn-primary">Editar</a>
+                                        <form action="{{ route('funcionarios.destroy', $funcionario->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este funcionário?')">Excluir</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

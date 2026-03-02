@@ -1,20 +1,26 @@
 <div class="container">
 
-    <form action="{{ route('funcionarios.store') }}" method="POST">
+    <form action="{{ $funcionario->id ? route('funcionarios.update', $funcionario->id) : route('funcionarios.store') }}"
+        method="POST">
         @csrf
-        @method('POST')
+
+        @if ($funcionario->id)
+            @method('PUT')
+        @else
+            @method('POST')
+        @endif
 
         <label for="nome">Nome:</label>
         <input type="text" class="form-control" id="nome" name="nome" placeholder="Insira o nome do funcionário"
-            required value="{{ old('nome', $funcionario->nome) }}">
+            required value="{{ old('nome', $funcionario->nome) }}" />
 
         <label for="cpf">CPF:</label>
         <input type="text" class="form-control" id="cpf" name="cpf"
             placeholder="Insira o CPF do funcionário" required value="{{ old('cpf', $funcionario->cpf) }}">
 
         <label for="RG">RG:</label>
-        <input type="text" class="form-control" id="RG" name="RG"
-            placeholder="Insira o RG do funcionário" value="{{ old('RG', $funcionario->RG) }}">
+        <input type="text" class="form-control" id="rg" name="rg"
+            placeholder="Insira o RG do funcionário" value="{{ old('rg', $funcionario->rg) }}">
 
         <label for="pis">PIS:</label>
         <input type="text" class="form-control" id="pis" name="pis"
@@ -58,12 +64,12 @@
 
         <label for="telefone_1">Telefone 1:</label>
         <input type="text" class="form-control" id="telefone_1" name="telefone_1"
-            placeholder="Insira o numero do telefone do funcionário" required
+            placeholder="(00) 00000-0000" required
             value="{{ old('telefone_1', $funcionario->telefone_1) }}">
 
         <label for="telefone_2">Telefone 2:</label>
         <input type="text" class="form-control" id="telefone_2" name="telefone_2"
-            placeholder="Insira o numero do telefone 2 do funcionário"
+            placeholder="(00) 00000-0000"
             value="{{ old('telefone_2', $funcionario->telefone_2) }}">
 
         <label for="endereco">Endereço:</label>
@@ -86,3 +92,18 @@
         <button type="submit" class="btn btn-primary">Salvar</button>
     </form>
 </div>
+
+
+@push('scripts')
+    <!-- 2️⃣ Carrega o plugin de máscara -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <!-- 3️⃣ Aplica as máscaras -->
+    <script>
+        $(document).ready(function() {
+            $('#cpf').mask('000.000.000-00');
+            $('#telefone_1').mask('(00) 00000-0000');
+            $('#telefone_2').mask('(00) 00000-0000');
+        });
+    </script>
+@endpush

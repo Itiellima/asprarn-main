@@ -196,3 +196,6 @@ Route::delete('/configuracoes/opms/destroy/{id}', [OpmController::class, 'destro
 Route::get('/funcionarios', [FuncionarioController::class, 'index'])->name('funcionarios.index');
 Route::get('/funcionarios/create', [FuncionarioController::class, 'create'])->name('funcionarios.create');
 Route::post('/funcionarios/store', [FuncionarioController::class, 'store'])->name('funcionarios.store');
+Route::delete('/funcionarios/destroy/{id}', [FuncionarioController::class, 'destroy'])->name('funcionarios.destroy');
+Route::get('/funcionarios/show/{id}', [FuncionarioController::class, 'show'])->name('funcionarios.show');
+Route::put('/funcionarios/update/{id}', [FuncionarioController::class, 'update'])->name('funcionarios.update');
