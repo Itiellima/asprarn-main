@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PrestadorDeServico extends Model
+class PrestadorDeServicoAutonomo extends Model
 {
+
+    protected $table = 'prestador_de_servicos_autonomos';
+
     //
     protected $fillable = [
         'nome',

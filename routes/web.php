@@ -23,6 +23,7 @@ use App\Http\Controllers\NotificacaoController;
 use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\OpmController;
 use App\Http\Controllers\FuncionarioController;
+use App\Http\Controllers\PrestadorDeServicosController;
 
 //////////////////////////////// ********* INDEX ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -199,3 +200,8 @@ Route::post('/funcionarios/store', [FuncionarioController::class, 'store'])->nam
 Route::delete('/funcionarios/destroy/{id}', [FuncionarioController::class, 'destroy'])->name('funcionarios.destroy');
 Route::get('/funcionarios/show/{id}', [FuncionarioController::class, 'show'])->name('funcionarios.show');
 Route::put('/funcionarios/update/{id}', [FuncionarioController::class, 'update'])->name('funcionarios.update');
+
+
+Route::get('/prestador-de-servicos-autonomos', [PrestadorDeServicosController::class, 'index'])->name('prestador-de-servicos-autonomos.index');
+Route::get('/prestador-de-servicos-autonomos/create', [PrestadorDeServicosController::class, 'create'])->name('prestador-de-servicos-autonomos.create');
+Route::post('/prestador-de-servicos-autonomos/store', [PrestadorDeServicosController::class, 'store'])->name('prestador-de-servicos-autonomos.store');
