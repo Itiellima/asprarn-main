@@ -20,7 +20,7 @@
                 <div class="card-body text-black">
                     <h5 class="card-title">Adicionar Prestador de Serviço Autônomo</h5>
                     <p class="card-text">Clique no botão abaixo para adicionar um novo prestador de serviço autônomo à equipe da ASPRA-RN.</p>
-                    <a href="" class="btn btn-primary">Adicionar Prestador de Serviço Autônomo</a>
+                    <a href="{{ route('prestador-de-servicos-autonomos.create') }}" class="btn btn-primary">Adicionar Prestador de Serviço Autônomo</a>
                 </div>
             </div>
         </div>
@@ -46,7 +46,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            @foreach ($prestadores as $prestador)
+                                <tr>
+                                    <th scope="row">{{ $prestador->id }}</th>
+                                    <td>{{ $prestador->nome }}</td>
+                                    <td>{{ $prestador->funcao }}</td>
+                                    <td>{{ $prestador->departamento }}</td>
+                                    <td>{{ $prestador->cpf }}</td>
+                                    <td>{{ $prestador->telefone_1 }}</td>
+                                    <td>
+                                        <a href="{{ route('prestador-de-servicos-autonomos.edit', $prestador->id) }}"
+                                            class="btn btn-sm btn-warning">Editar</a>
+
+                                        <form action="{{ route('prestador-de-servicos-autonomos.destroy', $prestador->id) }}"
+                                            method="POST" style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Tem certeza que deseja excluir este prestador de serviço autônomo?')">Excluir</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

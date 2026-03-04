@@ -205,3 +205,6 @@ Route::put('/funcionarios/update/{id}', [FuncionarioController::class, 'update']
 Route::get('/prestador-de-servicos-autonomos', [PrestadorDeServicosController::class, 'index'])->name('prestador-de-servicos-autonomos.index');
 Route::get('/prestador-de-servicos-autonomos/create', [PrestadorDeServicosController::class, 'create'])->name('prestador-de-servicos-autonomos.create');
 Route::post('/prestador-de-servicos-autonomos/store', [PrestadorDeServicosController::class, 'store'])->name('prestador-de-servicos-autonomos.store');
+Route::get('/prestador-de-servicos-autonomos/edit/{id}', [PrestadorDeServicosController::class, 'edit'])->name('prestador-de-servicos-autonomos.edit');
+Route::put('/prestador-de-servicos-autonomos/update/{id}', [PrestadorDeServicosController::class, 'update'])->name('prestador-de-servicos-autonomos.update');
+Route::delete('/prestador-de-servicos-autonomos/destroy/{id}', [PrestadorDeServicosController::class, 'destroy'])->name('prestador-de-servicos-autonomos.destroy');

@@ -7,7 +7,7 @@
         method="POST">
         @csrf
 
-        @if ($funcionario->id)
+        @if ($prestador->id)
             @method('PUT')
         @else
             @method('POST')
