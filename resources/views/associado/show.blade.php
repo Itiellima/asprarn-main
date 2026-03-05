@@ -101,7 +101,8 @@
                     {{-- BOTÕES --}}
                     <div class="row mt-2">
                         <div class="col-md-6">
-                            <a href="{{ route('associado.edit', $associado->id) }}" class="btn btn-primary w-100">Ver mais</a>
+                            <a href="{{ route('associado.edit', $associado->id) }}" class="btn btn-primary w-100">Ver
+                                mais</a>
                         </div>
 
                         <div class="col-md-6">
@@ -124,11 +125,13 @@
                                             target="_blank">Declaração UNP</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('associado.pdf.declaracao', $associado->id) }}"
+                                        <a class="dropdown-item"
+                                            href="{{ route('associado.pdf.declaracao', $associado->id) }}"
                                             target="_blank">Declaração Genérica</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('associado.pdf.desfiliacao', $associado->id) }}"
+                                        <a class="dropdown-item"
+                                            href="{{ route('associado.pdf.desfiliacao', $associado->id) }}"
                                             target="_blank">Req. de Desfiliação</a>
                                     </li>
                                 </ul>
@@ -198,13 +201,64 @@
                                         method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-danger btn-sm" type="submit"
+                                        <button class="btn btn-danger btn-sm m-1" style="width: 3cm" type="submit"
                                             onclick="return confirm('Tem certeza que deseja excluir este historico?')">
                                             Excluir
                                         </button>
                                     </form>
+                                    <button class="btn btn-warning btn-sm m-1" style="width: 3cm" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop1{{ $historico->id }}">
+                                        Editar
+                                    </button>
+
                                 </td>
                             </tr>
+
+                            {{-- Modal Editar --}}
+                            <div class="modal fade" id="staticBackdrop1{{ $historico->id }}" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1"
+                                aria-labelledby="staticBackdropLabel1{{ $historico->id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabel1{{ $historico->id }}">
+                                                Editar Historico</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>Historico de {{ $associado->nome }}</h3>
+
+                                            <form
+                                                action="{{ route('associado.historico.update', [$associado->id, $historico->id]) }}"
+                                                method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+                                                <label>Situação</label>
+                                                <input type="text" class="form-control" name="situacao" required
+                                                    value="{{ $historico->situacao }}">
+                                                <label>Observação</label>
+                                                <input type="text" class="form-control" name="observacao"
+                                                    value="{{ $historico->observacao }}">
+                                                <label>Data de Inicio</label>
+                                                <input type="date" class="form-control" name="data_inicio" required
+                                                    value="{{ $historico->data_inicio }}">
+                                                <label>Encerramento</label>
+                                                <input type="date" class="form-control" name="data_fim"
+                                                    value="{{ $historico->data_fim }}">
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Voltar</button>
+                                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         @endforeach
                     </tbody>
                 </table>
@@ -218,13 +272,14 @@
             </button>
 
             {{-- Modal Historico --}}
-            <div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="staticBackdropLabel3" aria-hidden="true">
+            <div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel3" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="staticBackdropLabel3">Modal title</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <h3>Historico de {{ $associado->nome }}</h3>
@@ -232,7 +287,7 @@
                             <form action="{{ route('associado.historico.store', $associado->id) }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
-                                <label>Tipo de Documento</label>
+                                <label>Situação</label>
                                 <input type="text" class="form-control" name="situacao" required>
                                 <label>Observação</label>
                                 <input type="text" class="form-control" name="observacao">
@@ -252,6 +307,8 @@
                     </div>
                 </div>
             </div>
+
+
         </div>
 
     </div>

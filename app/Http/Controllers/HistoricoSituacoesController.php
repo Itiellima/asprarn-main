@@ -71,4 +71,48 @@ class HistoricoSituacoesController extends Controller
         return redirect()->back()->with('success', 'Historico excluido com sucesso!');
     }
 
+    public function update(Request $request, $associadoId, $historicoId){
+
+        $user = Auth::user();
+
+        if(!$user || !$user->hasRole('admin|moderador')){
+            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        if($request){
+            $request->validate([
+                'situacao' => 'required|string|max:50',
+                'observacao' => 'nullable|string|max:200',
+                'data_inicio' => 'required|date',
+                'data_fim' => 'nullable|date',
+
+            ]);
+        }else{
+            return redirect()->back()->with('error', 'Erro ao atualizar o historico')->withInput();
+        }
+
+        $historico = HistoricoSituacoes::where('associado_id', $associadoId)
+            ->where('id', $historicoId)
+            ->firstOrFail();
+
+        DB::beginTransaction();
+        try {
+
+            $historico->update([
+                'situacao' => $request->situacao,
+                'observacao' => $request->observacao,
+                'data_inicio' => $request->data_inicio,
+                'data_fim' => $request->data_fim,
+            ]);
+    
+            DB::commit();
+            return redirect()->back()->with('success', 'Historico atualizado com sucesso!');
+
+        } catch (\Exception $e){
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Erro ao atualizar o historico: ' . $e->getMessage());
+
+        }
+    }
+
 }

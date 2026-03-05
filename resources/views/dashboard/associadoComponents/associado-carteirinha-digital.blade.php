@@ -25,10 +25,8 @@
                     <ul>
                         <li>Nome: {{ $associado->nome }}</li>
                         <li>CPF: {{ $associado->cpf }}</li>
-                        <li>RG: {{ $associado->rg }}</li>
-                        <li>Org. Expedidor: {{ $associado->org_expedidor }}</li>
-                        <li>Categoria: </li>
-                        <li>Plano: </li>
+                        <li>Data de Nascimento: {{ \Carbon\Carbon::parse($associado->dt_nasc)->format('d/m/Y') }}</li>
+
                         <li>Associação dos Praças da Polícia Militar do Rio Grande do Norte (ASPRA PM/RN)</li>
                     </ul>
                 </div>
@@ -37,7 +35,7 @@
 
             <div class="d-flex flex-wrap gap-2 mt-2">
 
-                <button class="btn btn-sm btn-primary">
+                <button class="btn btn-sm btn-primary ">
                     📝 Emitir carteirinha
                 </button>
 

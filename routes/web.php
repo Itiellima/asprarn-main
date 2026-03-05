@@ -114,6 +114,7 @@ Route::put('/situacao/edit/{id}', [SituacaoController::class, 'edit'])->name('si
 //////////////////////////////// ********* HISTORICO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::post('/associado/{id}/historico', [HistoricoSituacoesController::class, 'storeHistorico'])->name('associado.historico.store');
 Route::delete('/associado/{id}/historico/{historico}', [HistoricoSituacoesController::class, 'destroyHistorico'])->name('associado.historico.destroy');
+Route::put('/associado/{id}/historico/{historico}', [HistoricoSituacoesController::class, 'update'])->name('associado.historico.update');
 
 //////////////////////////////// ********* ADMIN ROTAS E VIEWS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::middleware(['auth'])->group(function () {
@@ -201,7 +202,7 @@ Route::delete('/funcionarios/destroy/{id}', [FuncionarioController::class, 'dest
 Route::get('/funcionarios/show/{id}', [FuncionarioController::class, 'show'])->name('funcionarios.show');
 Route::put('/funcionarios/update/{id}', [FuncionarioController::class, 'update'])->name('funcionarios.update');
 
-
+////////////////////////////////// ********* PRESTADOR DE SERVICOS AUTONOMOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/prestador-de-servicos-autonomos', [PrestadorDeServicosController::class, 'index'])->name('prestador-de-servicos-autonomos.index');
 Route::get('/prestador-de-servicos-autonomos/create', [PrestadorDeServicosController::class, 'create'])->name('prestador-de-servicos-autonomos.create');
 Route::post('/prestador-de-servicos-autonomos/store', [PrestadorDeServicosController::class, 'store'])->name('prestador-de-servicos-autonomos.store');
