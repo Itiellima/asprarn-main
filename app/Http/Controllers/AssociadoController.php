@@ -467,4 +467,19 @@ class AssociadoController extends Controller
 
         return back()->with('msg', 'Foto de perfil deletada com sucesso!');
     }
+
+    public function showCarteirinha($id)
+    {
+        $user = Auth::user();
+
+        if (!$user || !$user->hasRole('associado')) {
+            return redirect()->route('associado.index')
+                ->with('error', 'Acesso negado.');
+        }
+
+        $associado = Associado::with(['endereco', 'contato', 'dadosBancarios'])->findOrFail($id);
+
+        return view('dashboard.associadoComponents.carteirinha-download', compact('associado'));
+
+    }
 }

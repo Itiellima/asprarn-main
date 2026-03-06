@@ -209,3 +209,6 @@ Route::post('/prestador-de-servicos-autonomos/store', [PrestadorDeServicosContro
 Route::get('/prestador-de-servicos-autonomos/edit/{id}', [PrestadorDeServicosController::class, 'edit'])->name('prestador-de-servicos-autonomos.edit');
 Route::put('/prestador-de-servicos-autonomos/update/{id}', [PrestadorDeServicosController::class, 'update'])->name('prestador-de-servicos-autonomos.update');
 Route::delete('/prestador-de-servicos-autonomos/destroy/{id}', [PrestadorDeServicosController::class, 'destroy'])->name('prestador-de-servicos-autonomos.destroy');
+
+////////////////////////////////// ********* CARTEIRA ASSOCIADOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Route::get('/carteira-associados/{id}', [AssociadoController::class, 'showCarteirinha'])->name('carteira-associados');

@@ -35,9 +35,9 @@
 
             <div class="d-flex flex-wrap gap-2 mt-2">
 
-                <button class="btn btn-sm btn-primary ">
-                    📝 Emitir carteirinha
-                </button>
+                <a class="btn btn-sm btn-primary" href="{{ route('carteira-associados', $associado->id) }}" target="_blank">
+                    📄 Visualizar carteirinha
+                </a>
 
                 <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
                     data-bs-target="#pictureModal">
