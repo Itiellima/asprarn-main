@@ -7,6 +7,7 @@
     integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
 </script>
 
+
 <head>
     <meta charset="UTF-8">
     <title>CARTEIRA ASSOCIADO - ASPRA</title>
@@ -84,11 +85,13 @@
             width: 120px;
         }
     </style>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
 </head>
 
 <body>
 
-    <div class="cartao">
+    <div class="cartao" id="cartao">
 
         <div class="logo">
             <img src="{{ asset('img/ASPRA-branco.png') }}" alt="Logo ASPRA">
@@ -115,9 +118,11 @@
         <div class="dados">
             <strong>CPF:</strong> {{ $associado->cpf }}<br>
             <strong>Data de nascimento:</strong> {{ \Carbon\Carbon::parse($associado->dt_nasc)->format('d/m/Y') }}<br>
-            <strong>Validade:</strong> {{ \Carbon\Carbon::parse($associado->validade)->addDays(30)->format('d/m/Y') }}<br>
+            <strong>Validade:</strong>
+            {{ \Carbon\Carbon::parse($associado->validade)->addDays(30)->format('d/m/Y') }}<br>
             @if ($associado->graduacao)
-                <strong>Graduação:</strong> <label style="text-transform: uppercase"> {{ $associado->graduacao }}</label><br>
+                <strong>Graduação:</strong> <label style="text-transform: uppercase">
+                    {{ $associado->graduacao }}</label><br>
             @endif
         </div>
 
@@ -126,6 +131,28 @@
         </div>
 
     </div>
+
+    <button class="mt-3" onclick="salvarImagem()">Salvar como imagem</button>
+    <script>
+        function salvarImagem() {
+
+            let cartao = document.getElementById("cartao");
+
+            html2canvas(cartao, {
+                scale: 3,
+                useCORS: true
+            }).then(function(canvas) {
+
+                let link = document.createElement("a");
+                link.download = "cartao_associado.png";
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+
+            });
+
+        }
+    </script>
+
 
 </body>
 
