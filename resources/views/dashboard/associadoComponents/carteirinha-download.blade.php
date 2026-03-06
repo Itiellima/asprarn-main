@@ -9,7 +9,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Declaracao SESC - ASPRA</title>
+    <title>CARTEIRA ASSOCIADO - ASPRA</title>
     <style>
         body {
             background: #e5e5e5;
