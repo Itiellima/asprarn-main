@@ -14,11 +14,17 @@
     <title>CARTEIRA ASSOCIADO - ASPRA</title>
     <style>
         .cartao {
-            width: 260px;
-            height: 420px;
+            width: 92vw;
+            /* ocupa quase toda a largura da tela */
+            max-width: 380px;
+            /* limite no desktop */
+            aspect-ratio: 260 / 420;
+            /* mantém proporção do cartão */
+
             border-radius: 12px;
             color: white;
-            padding: 10px;
+            padding: 15px;
+
             background: linear-gradient(135deg, #0a3a4a, #0c6b8c);
             position: relative;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -63,14 +69,47 @@
         }
 
         .qrcode {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            margin-top: 15px;
         }
 
         .qrcode img {
-            width: 50px;
+            width: 100px;
+        }
+
+        body {
+            margin: 0;
+            background: #e5e5e5;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            min-height: 100vh;
+        }
+
+        @media (max-width:480px) {
+
+            .foto {
+                width: 70px;
+                height: 70px;
+            }
+
+            .nome {
+                font-size: 16px;
+            }
+
+            .dados {
+                font-size: 12px;
+            }
+
+            .logo img {
+                width: 100px;
+            }
+
+            .qrcode img {
+                width: 70px;
+            }
+
         }
     </style>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
