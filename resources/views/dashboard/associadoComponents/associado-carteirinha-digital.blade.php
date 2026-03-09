@@ -1,5 +1,5 @@
         {{-- Aba carteirinha digital --}}
-        <div class="alert alert-light text-black">
+        <div class="alert alert-light text-black container">
             <h4 class="text-black">Carteirinha digital</h4>
             <div class="row mt-3 mb-3">
 

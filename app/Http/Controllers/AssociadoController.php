@@ -382,7 +382,7 @@ class AssociadoController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user || !$user->hasRole('associado')) {
+        if (!$user || !$user->hasRole('associado|admin|moderador')) {
             return redirect()->route('associado.index')
                 ->with('error', 'Acesso negado.');
         }
@@ -438,7 +438,7 @@ class AssociadoController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user || !$user->hasRole('associado')) {
+        if (!$user || !$user->hasRole('associado|admin|moderador')) {
             return redirect()->route('associado.index')
                 ->with('error', 'Acesso negado.');
         }
@@ -472,7 +472,7 @@ class AssociadoController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user || !$user->hasRole('associado')) {
+        if (!$user || !$user->hasRole('associado|admin|moderador')) {
             return redirect()->route('associado.index')
                 ->with('error', 'Acesso negado.');
         }
