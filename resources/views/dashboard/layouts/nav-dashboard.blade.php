@@ -13,12 +13,12 @@
 
                 {{-- Associados --}}
                 @hasanyrole('associado')
-                    <a href="#" class="btn btn-primary m-1 col-lg-3">👤 Meus Dados</a>
-                    <a href="#" class="btn btn-primary m-1 col-lg-3">📝 Meus Requerimentos</a>
+                    <a href="{{ route('associado.informacoes', $associado->id) }}" class="btn btn-primary m-1 col-lg-3">👤 Meus Dados</a>
+                    <a href="/profile" class="btn btn-primary m-1 col-lg-3">👮 Perfil</a>
+                    {{-- <a href="#" class="btn btn-primary m-1 col-lg-3">📝 Meus Requerimentos</a>
                     <a href="#" class="btn btn-primary m-1 col-lg-3">🎁 Meus Benefícios</a>
                     <a href="#" class="btn btn-primary m-1 col-lg-3">📋 Meus Planos</a>
-                    <a href="#" class="btn btn-primary m-1 col-lg-3">🏠 Declarações</a>
-                    <a href="/profile" class="btn btn-primary m-1 col-lg-3">👮 Perfil</a>
+                    <a href="#" class="btn btn-primary m-1 col-lg-3">🏠 Declarações</a> --}}
                 @endhasanyrole
 
                 {{-- Administração --}}

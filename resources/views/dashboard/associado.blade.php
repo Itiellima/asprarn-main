@@ -11,7 +11,7 @@
         @include('dashboard.associadoComponents.associado-carteirinha-digital')
 
         {{-- Aba meus beneficios --}}
-        <div class="alert alert-light">
+        {{-- <div class="alert alert-light">
             <h4 class="text-black">Meus Benefícios</h4>
 
             <ul>
@@ -21,11 +21,11 @@
             <a href="#">
                 <button class="btn btn-primary mb-3">📝 Solicitar Novo Benefício</button>
             </a>
-        </div>
+        </div> --}}
 
-        @include('dashboard.associadoComponents.associado-planos')
+        {{-- @include('dashboard.associadoComponents.associado-planos') --}}
 
-        @include('dashboard.associadoComponents.associado-pagamento')
+        {{-- @include('dashboard.associadoComponents.associado-pagamento') --}}
 
 
 

@@ -96,6 +96,9 @@ Route::post('/associado/store', [AssociadoController::class, 'store'])->name('as
 Route::put('/associado/update/{id}', [AssociadoController::class, 'update'])->name('associado.update');
 //ROTA DESTROY
 Route::delete('/associado/delete/{id}', [AssociadoController::class, 'destroy'])->name('associado.destroy');
+//ROTA INFORMACOES ASSSOCIADO
+Route::get('/asssociado/informacoes/{id}', [AssociadoController::class, 'associadoInfo'])->name('associado.informacoes');
+
 
 //////////////////////////////// ********* PICTURE PROFILES ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::post('/associado/{associadoId}/picture-profile/store', [AssociadoController::class, 'storePictureProfile'])->name('associado.picture-profile.store');

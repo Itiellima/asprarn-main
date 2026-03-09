@@ -482,4 +482,25 @@ class AssociadoController extends Controller
         return view('dashboard.associadoComponents.carteirinha-download', compact('associado'));
 
     }
+
+    public function associadoInfo($id){
+
+        $user = Auth::user();
+
+        if (!$user || !$user->hasRole('associado|admin|moderador')){
+            return redirect()->route('associado.index')->with('error', 'Acesso negado.');
+        }
+
+        // Buscar UFs do IBGE
+        $ufs = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+            ->json();
+
+        $opms = Opm::orderBy('nome')->get();
+
+
+        $associado = Associado::findOrFail($id);
+
+        return view('dashboard.associadoComponents.associado-informacoes', compact('associado', 'ufs', 'opms'));
+
+    }
 }
