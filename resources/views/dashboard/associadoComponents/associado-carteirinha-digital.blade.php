@@ -39,6 +39,10 @@
                     📄 Visualizar carteirinha
                 </a>
 
+                <a class="btn btn-sm btn-primary" href="{{ route('carteira-associados-vertical', $associado->id) }}" target="_blank">
+                    📄 Visualizar carteirinha vertical
+                </a>
+
                 <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
                     data-bs-target="#pictureModal">
                     Editar foto

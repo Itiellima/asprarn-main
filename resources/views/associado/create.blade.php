@@ -152,25 +152,25 @@
                         <div class="container row border-bottom border-primary mt-3 m-1">
                             <h2>Endereço</h2>
                             <div class="mb-3 col-md-3 col-sm-6">
-                                <label for="formGroup" class="form-label">CEP: *</label>
+                                <label for="formGroup" class="form-label">CEP:</label>
                                 <input type="number" class="form-control " id="cep" name="cep"
-                                    placeholder="59000-000 apenas números" required
+                                    placeholder="59000-000 apenas números"
                                     value="{{ old('cep', $associado->endereco?->cep) }}">
                             </div>
                             <div class="mb-3 col-md-9 col-sm-6">
-                                <label for="formGroup" class="form-label">Logradouro: *</label>
+                                <label for="formGroup" class="form-label">Logradouro:</label>
                                 <input type="text" class="form-control " id="logradouro" name="logradouro"
-                                    placeholder="Rua..." required
+                                    placeholder="Rua..."
                                     value="{{ old('logradouro', $associado->endereco?->logradouro) }}">
                             </div>
                             <div class="mb-3 col-md-3 col-sm-6">
-                                <label for="formGroup" class="form-label">Número: *</label>
+                                <label for="formGroup" class="form-label">Número:</label>
                                 <input type="text" class="form-control " id="nmr" name="nmr"
                                     placeholder="Número da residência" required
                                     value="{{ old('nmr', $associado->endereco?->nmr) }}">
                             </div>
                             <div class="mb-3 col-md-3 col-sm-6">
-                                <label for="formGroup" class="form-label">Bairro: *</label>
+                                <label for="formGroup" class="form-label">Bairro:</label>
                                 <input type="text" class="form-control " id="bairro" name="bairro"
                                     placeholder="Insira o nome do bairro" required
                                     value="{{ old('bairro', $associado->endereco?->bairro) }}">

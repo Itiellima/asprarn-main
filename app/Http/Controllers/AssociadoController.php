@@ -483,6 +483,21 @@ class AssociadoController extends Controller
 
     }
 
+    public function showVerticalCarteirinha($id)
+    {
+        $user = Auth::user();
+
+        if (!$user || !$user->hasRole('associado|admin|moderador')) {
+            return redirect()->route('associado.index')
+                ->with('error', 'Acesso negado.');
+        }
+
+        $associado = Associado::findOrFail($id);
+
+        return view('dashboard.associadoComponents.carteirinha-vertical', compact('associado'));
+
+    }
+
     public function associadoInfo($id){
 
         $user = Auth::user();

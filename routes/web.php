@@ -215,3 +215,4 @@ Route::delete('/prestador-de-servicos-autonomos/destroy/{id}', [PrestadorDeServi
 
 ////////////////////////////////// ********* CARTEIRA ASSOCIADOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/carteira-associados/{id}', [AssociadoController::class, 'showCarteirinha'])->name('carteira-associados');
+Route::get('/carteira-associados1/{id}', [AssociadoController::class, 'showVerticalCarteirinha'])->name('carteira-associados-vertical');
