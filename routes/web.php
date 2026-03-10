@@ -41,7 +41,6 @@ Route::middleware(['auth'])->group(function () {
 Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 //////////////////////////////// ********* BENEFICIO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-// Route::resource('beneficio', BeneficioController::class);
 
 Route::get('beneficio/create', [BeneficioController::class, 'create'])->name('beneficio.create');
 Route::post('beneficio/store', [BeneficioController::class, 'store'])->name('beneficio.store');
@@ -119,13 +118,14 @@ Route::post('/associado/{id}/historico', [HistoricoSituacoesController::class, '
 Route::delete('/associado/{id}/historico/{historico}', [HistoricoSituacoesController::class, 'destroyHistorico'])->name('associado.historico.destroy');
 Route::put('/associado/{id}/historico/{historico}', [HistoricoSituacoesController::class, 'update'])->name('associado.historico.update');
 
-//////////////////////////////// ********* ADMIN ROTAS E VIEWS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//////////////////////////////// ********* ADMIN ROTAS E VIEWS USER ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::middleware(['auth'])->group(function () {
     // View usuarios
     Route::get('/usuarios', [UsuariosController::class, 'index'])->name('usuarios.index');
     // Rota para atualizar as permissoes de um usuario
     Route::post('/usuarios/{user}/role', [UsuariosController::class, 'updateRole'])->name('usuarios.updateRole');
     Route::delete('/usuarios/{user}', [UsuariosController::class, 'destroy'])->name('usuarios.destroy');
+    Route::post('/usuarios/{id}/reset-password',[UsuariosController::class, 'resetPassword'])->name('usuarios.resetPassword');
 });
 
 //////////////////////////////// ********* LOGIN/REGISTER ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

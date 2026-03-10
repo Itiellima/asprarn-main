@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Fortify\UpdateUserPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
+use App\Models\Associado;
+use Illuminate\Support\Facades\Hash;
 
 class UsuariosController extends Controller
 {
@@ -64,5 +67,26 @@ class UsuariosController extends Controller
         $user->delete();
 
         return redirect()->route('usuarios.index')->with('success', 'Usuário deletado com sucesso!');
+    }
+
+    public function resetPassword($id)
+    {
+        $user = Auth::user();
+        if(!$user || !$user->hasRole('admin|moderador')){
+            return redirect()->route('dashboard')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $usuario = User::with('associado')->findOrFail($id);
+
+        if(!$usuario){
+            return redirect()->back()->with('error', 'Associado não encontrado.');
+        }
+        
+        $usuario->update([
+            'password' => Hash::make($usuario->associado->cpf)
+        ]);
+
+        return redirect()->back()->with('success', 'Senha resetada para o CPF do associado!');
+
     }
 }
