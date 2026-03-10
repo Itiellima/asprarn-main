@@ -32,16 +32,16 @@
         }
 
         .logo {
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .logo img {
-            width: 120px;
+            width: 130px;
         }
 
         .foto {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             border: 3px solid white;
             object-fit: cover;
@@ -49,7 +49,7 @@
         }
 
         .nome {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             line-height: 20px;
             margin-bottom: 5px;
@@ -62,10 +62,11 @@
         }
 
         .dados {
-            font-size: 13px;
+            font-size: 16px;
             line-height: 22px;
             text-align: left;
             margin-top: 10px;
+            margin-bottom: 30px;
         }
 
         .qrcode {
@@ -73,7 +74,7 @@
         }
 
         .qrcode img {
-            width: 100px;
+            width: 140px;
         }
 
         body {
@@ -90,24 +91,24 @@
         @media (max-width:480px) {
 
             .foto {
-                width: 70px;
-                height: 70px;
+                width: 80px;
+                height: 80px;
             }
 
             .nome {
-                font-size: 16px;
+                font-size: 20px;
             }
 
             .dados {
-                font-size: 12px;
+                font-size: 16px;
             }
 
             .logo img {
-                width: 100px;
+                width: 120px;
             }
 
             .qrcode img {
-                width: 70px;
+                width: 120px;
             }
 
         }

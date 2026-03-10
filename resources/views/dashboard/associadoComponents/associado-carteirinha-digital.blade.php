@@ -36,11 +36,11 @@
             <div class="d-flex flex-wrap gap-2 mt-2">
 
                 <a class="btn btn-sm btn-primary" href="{{ route('carteira-associados', $associado->id) }}" target="_blank">
-                    📄 Visualizar carteirinha
+                    📄 Download Cateirinha
                 </a>
 
                 <a class="btn btn-sm btn-primary" href="{{ route('carteira-associados-vertical', $associado->id) }}" target="_blank">
-                    📄 Visualizar carteirinha vertical
+                    📄 Visualizar Carteirinha
                 </a>
 
                 <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
