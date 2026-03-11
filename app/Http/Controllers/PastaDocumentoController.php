@@ -19,9 +19,8 @@ class PastaDocumentoController extends Controller
 
         $associado = Associado::findOrFail($associadoId);
 
-        $pastas = PastaDocumento::with([
-            'associado'
-        ])
+        $pastas = $associado->pastaDocumentos()
+            ->with('files')
             ->paginate(10);
 
 
