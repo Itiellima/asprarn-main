@@ -110,7 +110,7 @@
             @endif
 
             <div class="info">
-                <div class="nome">{{ $associado->nome }} cavalcante da silva</div>
+                <div class="nome">{{ $associado->nome }}</div>
                 <div class="tipo">Associado</div>
             </div>
         </div>
