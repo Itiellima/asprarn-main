@@ -116,14 +116,25 @@
         </div>
 
         <div class="dados">
-            <strong>CPF:</strong> {{ $associado->cpf }}<br>
-            <strong>Data de nascimento:</strong> {{ \Carbon\Carbon::parse($associado->dt_nasc)->format('d/m/Y') }}<br>
-            <strong>Validade:</strong>
-            {{ \Carbon\Carbon::parse($associado->validade)->addDays(30)->format('d/m/Y') }}<br>
+            <div class="border rounded" style="width: 250px">
+                <strong>CPF:</strong> {{ $associado->cpf }}
+            </div>
+            <div class="border rounded" style="width: 250px">
+                <strong> Data de
+                    nascimento:</strong> {{ \Carbon\Carbon::parse($associado->dt_nasc)->format('d/m/Y') }}<br>
+            </div>
+            <div class="border rounded" style="width: 250px">
+                <strong>
+                    Validade:</strong> {{ \Carbon\Carbon::parse($associado->validade)->addDays(30)->format('d/m/Y') }}<br>
+            </div>
+
             @if ($associado->graduacao)
-                <strong>Graduação:</strong> <label style="text-transform: uppercase">
-                    {{ $associado->graduacao }}</label><br>
+                <div class="border rounded" style="width: 250px">
+                    <strong>Graduação:</strong> <label style="text-transform: uppercase">
+                        {{ $associado->graduacao }}</label><br>
+                </div>
             @endif
+
         </div>
 
         <div class="qrcode">
@@ -133,6 +144,7 @@
     </div>
 
     <button class="mt-3" onclick="salvarImagem()">Salvar como imagem</button>
+
     <script>
         function salvarImagem() {
 
@@ -151,6 +163,12 @@
             });
 
         }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#cpf').mask('000.000.000-00');
+        });
     </script>
 
 
