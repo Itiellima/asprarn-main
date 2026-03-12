@@ -16,6 +16,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PastaDocumentoController;
 use App\Http\Controllers\PlanosController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\InstagramController;
 use App\Http\Controllers\WhatsappController;
 use App\Http\Controllers\searchPostController;
@@ -212,6 +213,16 @@ Route::post('/prestador-de-servicos-autonomos/store', [PrestadorDeServicosContro
 Route::get('/prestador-de-servicos-autonomos/edit/{id}', [PrestadorDeServicosController::class, 'edit'])->name('prestador-de-servicos-autonomos.edit');
 Route::put('/prestador-de-servicos-autonomos/update/{id}', [PrestadorDeServicosController::class, 'update'])->name('prestador-de-servicos-autonomos.update');
 Route::delete('/prestador-de-servicos-autonomos/destroy/{id}', [PrestadorDeServicosController::class, 'destroy'])->name('prestador-de-servicos-autonomos.destroy');
+
+////////////////////////////////// ********* EMPRESAS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Route::get('/empresas', [EmpresaController::class, 'index'])->name('empresas.index');
+Route::get('/empresas/create', [EmpresaController::class, 'create'])->name('empresas.create');
+Route::post('/empresas/store', [EmpresaController::class, 'store'])->name('empresas.store');
+Route::get('/empresas/show', [EmpresaController::class, 'show'])->name('empresas.show');
+Route::get('/empresas/edit/{id}', [EmpresaController::class, 'edit'])->name('empresas.edit');
+Route::put('/empresas/update/{id}', [EmpresaController::class, 'update'])->name('empresas.update');
+Route::delete('/empresas/destroy/{id}', [EmpresaController::class, 'destroy'])->name('empresas.destroy');
+
 
 ////////////////////////////////// ********* CARTEIRA ASSOCIADOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/carteira-associados/{id}', [AssociadoController::class, 'showCarteirinha'])->name('carteira-associados');

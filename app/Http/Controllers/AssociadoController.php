@@ -90,7 +90,6 @@ class AssociadoController extends Controller
         return view('associado.index', ['associados' => $associados, 'search' => $search, 'totalAssociados' => $totalAssociados, 'cidades' => $cidades, 'opms' => $opms, 'situacoes' => $situacoes]);
     }
 
-
     // view detalhes informaçoes
     public function show($id)
     {
@@ -140,7 +139,6 @@ class AssociadoController extends Controller
 
         return $cidades; // sempre retorna ARRAY de cidades
     }
-
 
     // Rota salvar o associado no banco de dados
     public function store(Request $request)
@@ -247,7 +245,6 @@ class AssociadoController extends Controller
             return redirect()->back()->with('error', 'Erro ao criar associado: ' . $e->getMessage())->withInput();
         }
     }
-
 
     // view edição do associado
     public function edit($id)
