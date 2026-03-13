@@ -44,8 +44,6 @@
                                 <th scope="col">CNPJ</th>
                                 <th scope="col">Telefone</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Início Contrato</th>
-                                <th scope="col">Fim Contrato</th>
                                 <th scope="col">Ações</th>
                             </tr>
                         </thead>
@@ -58,8 +56,6 @@
                                     <td id="cnpj" name="cnpj">{{ $empresa->cnpj }}</td>
                                     <td id="telefone" name="telefone">{{ $empresa->telefone }}</td>
                                     <td>{{ $empresa->email }}</td>
-                                    <td>{{ date('d/m/Y', strtotime($empresa->data_inicio_contrato )) }}</td>
-                                    <td>{{ date('d/m/Y', strtotime($empresa->data_fim_contrato)) }}</td>
 
                                     <td>
                                         <a href="{{ route('empresas.show', $empresa->id) }}"

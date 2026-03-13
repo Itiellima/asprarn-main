@@ -56,7 +56,7 @@
                                     <td>{{ $prestador->telefone_1 }}</td>
                                     <td>
                                         <a href="{{ route('prestador-de-servicos-autonomos.edit', $prestador->id) }}"
-                                            class="btn btn-sm btn-warning">Editar</a>
+                                            class="btn btn-sm btn-primary">Editar</a>
 
                                         <form action="{{ route('prestador-de-servicos-autonomos.destroy', $prestador->id) }}"
                                             method="POST" style="display: inline-block;">

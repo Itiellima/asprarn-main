@@ -18,7 +18,7 @@ class NotificacaoController extends Controller
 
         $notificacoes = Notificacao::with('associado')
             ->orderByDesc('created_at')
-            ->get();
+            ->paginate(10);
         
 
         return view('notificacoes.index', compact('notificacoes'));
