@@ -6,7 +6,7 @@
 
     @include('dashboard.layouts.nav-dashboard')
 
-    @include('funcionarios.form')
+    @include('empresas.form')
 
 
 

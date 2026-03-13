@@ -218,8 +218,7 @@ Route::delete('/prestador-de-servicos-autonomos/destroy/{id}', [PrestadorDeServi
 Route::get('/empresas', [EmpresaController::class, 'index'])->name('empresas.index');
 Route::get('/empresas/create', [EmpresaController::class, 'create'])->name('empresas.create');
 Route::post('/empresas/store', [EmpresaController::class, 'store'])->name('empresas.store');
-Route::get('/empresas/show', [EmpresaController::class, 'show'])->name('empresas.show');
-Route::get('/empresas/edit/{id}', [EmpresaController::class, 'edit'])->name('empresas.edit');
+Route::get('/empresas/show/{id}', [EmpresaController::class, 'show'])->name('empresas.show');
 Route::put('/empresas/update/{id}', [EmpresaController::class, 'update'])->name('empresas.update');
 Route::delete('/empresas/destroy/{id}', [EmpresaController::class, 'destroy'])->name('empresas.destroy');
 

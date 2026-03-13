@@ -28,6 +28,7 @@
                     <a href="{{ route('planos.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">📋 Planos</a>
                     <a href="{{ route('funcionarios.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">👥 Funcionários</a>
                     <a href="{{ route('prestador-de-servicos-autonomos.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">👥 Prestadores de Serviços</a>
+                    <a href="{{ route('empresas.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">🏢 Empresas</a>
 
 
                     <button class="btn btn-primary dropdown-toggle m-1 col-lg-3" type="button" data-bs-toggle="dropdown"
