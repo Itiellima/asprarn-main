@@ -43,7 +43,7 @@
                     📄 Visualizar Carteirinha
                 </a>
 
-                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                     data-bs-target="#pictureModal">
                     Editar foto
                 </button>
@@ -56,6 +56,10 @@
                         Excluir foto
                     </button>
                 </form>
+
+                <a href="{{ route('validar-carteirinha', $associado->id) }}" class="btn btn-sm btn-warning">
+                    Validar Carteirinha
+                </a>
 
             </div>
 

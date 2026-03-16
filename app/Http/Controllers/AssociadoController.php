@@ -515,4 +515,13 @@ class AssociadoController extends Controller
         return view('dashboard.associadoComponents.associado-informacoes', compact('associado', 'ufs', 'opms'));
 
     }
+
+    public function validarCarteirinha($id){
+
+        $associado = Associado::findOrFail($id);
+
+        $situacoes = Situacao::all();
+
+        return view('dashboard.associadoComponents.verificar', compact('associado', 'situacoes'));
+    }
 }

@@ -135,16 +135,12 @@ The Route::resource will generate routes like:
     DELETE /posts/{post} → PostController@destroy
 
 
-
-
-
-
-
-
-    Associado index
-        -Associado Pastas
-            -Associado Arquivos
-
+package.json
+"scripts": {
+        "build": "vite build",
+        "vite": "vite",
+        "dev": "concurrently \"npm run vite\" \"php artisan serve\""
+    },
         
 
 

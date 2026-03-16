@@ -226,3 +226,4 @@ Route::delete('/empresas/destroy/{id}', [EmpresaController::class, 'destroy'])->
 ////////////////////////////////// ********* CARTEIRA ASSOCIADOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/carteira-associados/{id}', [AssociadoController::class, 'showCarteirinha'])->name('carteira-associados');
 Route::get('/carteira-associados1/{id}', [AssociadoController::class, 'showVerticalCarteirinha'])->name('carteira-associados-vertical');
+Route::get('/carteira-associado-verificacao/{id}', [AssociadoController::class, 'validarCarteirinha'])->name('validar-carteirinha');
