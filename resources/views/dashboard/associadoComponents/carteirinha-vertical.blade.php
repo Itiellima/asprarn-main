@@ -159,7 +159,9 @@
         </div>
 
         <div class="qrcode">
-            <img src="{{ asset('img/qrcode_www.asprarn.com.br.png') }}">
+            {{-- <img src="{{ asset('img/qrcode_www.asprarn.com.br.png') }}"> --}}
+            <img class="border"
+                src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ route('validar-carteirinha', $associado->id) }}">
         </div>
 
     </div>

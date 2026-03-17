@@ -92,7 +92,6 @@
         </div>
     </div>
 
-
     {{-- situacao do associado --}}
     @include('associado.components.situacao-associado')
 
@@ -157,8 +156,8 @@
                                             Excluir
                                         </button>
                                     </form>
-                                    <button class="btn btn-warning btn-sm m-1" style="width: 3cm" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop1{{ $historico->id }}">
+                                    <button class="btn btn-warning btn-sm m-1" style="width: 3cm" type="button"
+                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop1{{ $historico->id }}">
                                         Editar
                                     </button>
 
@@ -209,7 +208,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         @endforeach
                     </tbody>
                 </table>

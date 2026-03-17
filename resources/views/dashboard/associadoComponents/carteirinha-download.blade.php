@@ -125,7 +125,8 @@
             </div>
             <div class="border rounded" style="width: 250px">
                 <strong>
-                    Validade:</strong> {{ \Carbon\Carbon::parse($associado->validade)->addDays(30)->format('d/m/Y') }}<br>
+                    Validade:</strong>
+                {{ \Carbon\Carbon::parse($associado->validade)->addDays(30)->format('d/m/Y') }}<br>
             </div>
 
             @if ($associado->graduacao)
@@ -137,9 +138,11 @@
 
         </div>
 
-        <div class="qrcode">
-            <img src="{{ asset('img/qrcode_www.asprarn.com.br.png') }}">
+        <div class="qrcode border">
+            <img
+                src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ route('validar-carteirinha', $associado->id) }}">
         </div>
+
 
     </div>
 
