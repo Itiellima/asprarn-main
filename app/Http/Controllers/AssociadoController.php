@@ -275,6 +275,13 @@ class AssociadoController extends Controller
             return redirect()->route('associado.index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
+        $request->merge([
+            'cpf' => preg_replace('/[^0-9]/', '', $request->cpf),
+            'tel_celular' => preg_replace('/[^0-9]/', '', $request->tel_celular),
+            'tel_residencial' => preg_replace('/[^0-9]/', '', $request->tel_residencial),
+            'tel_trabalho' => preg_replace('/[^0-9]/', '', $request->tel_trabalho),
+        ]);
+        
         $associado = Associado::with(['endereco', 'contato', 'dadosBancarios'])->findOrFail($id);
 
         DB::beginTransaction();
