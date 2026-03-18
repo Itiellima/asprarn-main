@@ -239,11 +239,16 @@ class AssociadoController extends Controller
 
             event(new NotificacaoCriada($data));
 
-            if ($user->hasAnyRole(['admin', 'moderador'])) {
+            $authUser = Auth::user();
+
+            if ($authUser && $authUser->hasRole('admin|moderador')) {
                 return redirect(route('associado.show', $associado->id))->with('msg', 'Associado criado com sucesso');
             }
+            else{
+                return redirect('/dashboard')->with('msg', 'Associado criado com sucesso!');
+            }
 
-            return redirect('/dashboard')->with('msg', 'Associado criado com sucesso!');
+
 
         } catch (\Exception $e) {
             DB::rollBack();
