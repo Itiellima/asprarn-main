@@ -239,7 +239,12 @@ class AssociadoController extends Controller
 
             event(new NotificacaoCriada($data));
 
+            if ($user->hasAnyRole(['admin', 'moderador'])) {
+                return redirect(route('associado.show', $associado->id))->with('msg', 'Associado criado com sucesso');
+            }
+
             return redirect('/dashboard')->with('msg', 'Associado criado com sucesso!');
+
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Erro ao criar associado: ' . $e->getMessage())->withInput();
@@ -281,7 +286,7 @@ class AssociadoController extends Controller
             'tel_residencial' => preg_replace('/[^0-9]/', '', $request->tel_residencial),
             'tel_trabalho' => preg_replace('/[^0-9]/', '', $request->tel_trabalho),
         ]);
-        
+
         $associado = Associado::with(['endereco', 'contato', 'dadosBancarios'])->findOrFail($id);
 
         DB::beginTransaction();
@@ -463,7 +468,6 @@ class AssociadoController extends Controller
                 $picture->delete();
                 DB::commit();
             }
-
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Erro ao deletar foto.');
@@ -484,7 +488,6 @@ class AssociadoController extends Controller
         $associado = Associado::with(['endereco', 'contato', 'dadosBancarios'])->findOrFail($id);
 
         return view('dashboard.associadoComponents.carteirinha-download', compact('associado'));
-
     }
 
     public function showVerticalCarteirinha($id)
@@ -499,14 +502,14 @@ class AssociadoController extends Controller
         $associado = Associado::findOrFail($id);
 
         return view('dashboard.associadoComponents.carteirinha-vertical', compact('associado'));
-
     }
 
-    public function associadoInfo($id){
+    public function associadoInfo($id)
+    {
 
         $user = Auth::user();
 
-        if (!$user || !$user->hasRole('associado|admin|moderador')){
+        if (!$user || !$user->hasRole('associado|admin|moderador')) {
             return redirect()->route('associado.index')->with('error', 'Acesso negado.');
         }
 
@@ -520,10 +523,10 @@ class AssociadoController extends Controller
         $associado = Associado::findOrFail($id);
 
         return view('dashboard.associadoComponents.associado-informacoes', compact('associado', 'ufs', 'opms'));
-
     }
 
-    public function validarCarteirinha($id){
+    public function validarCarteirinha($id)
+    {
 
         $associado = Associado::findOrFail($id);
 
