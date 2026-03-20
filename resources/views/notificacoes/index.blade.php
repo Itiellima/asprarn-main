@@ -4,17 +4,27 @@
 
 @section('content')
 
-    <div class="container border bg-light mb-3">
+    <form action="{{ route('notificacoes.index') }}" method="GET">
+        
+        <div class="container border bg-light mb-3">
 
-        <h3 class="mt-3">Selecionar filtros</h6>
+            <h3 class="mt-3">Selecionar filtros</h3>
 
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="checkDefault">
-                <label class="form-check-label" for="checkDefault">
-                    Não lidas
-                </label>
-            </div>
-    </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" id="checkDefault" name="nao_lida"
+                        {{ request('nao_lida') ? 'checked' : '' }}>
+
+                    <label class="form-check-label" for="checkDefault">
+                        Não lidas
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2 mb-3">
+                    Filtrar
+                </button>
+        </div>
+
+    </form>
+
 
     @foreach ($notificacoes as $notificacao)
         <div class="container p-3 mb-3 border bg-light">

@@ -17,9 +17,14 @@ class NotificacaoController extends Controller
         }
 
         $notificacoes = Notificacao::with('associado')
+
+            ->when(request()->has('nao_lida'), function($query){
+                $query->where('lida', 0);
+            })
+
             ->orderByDesc('created_at')
             ->paginate(10);
-        
+
 
         return view('notificacoes.index', compact('notificacoes'));
     }
