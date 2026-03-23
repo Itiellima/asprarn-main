@@ -122,10 +122,24 @@ class AssociadoController extends Controller
         $associado = new Associado();
 
         // Buscar UFs do IBGE
-        $ufs = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-            ->json();
+        // $ufs = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+        //     ->json();
 
-        $ufs = collect($ufs)->sortBy('nome')->values()->all();
+        // $ufs = collect($ufs)->sortBy('nome')->values()->all();
+        try {
+            $response = Http::timeout(5)->get('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
+
+            if ($response->successful()) {
+                $ufs = collect($response->json())
+                    ->sortBy('nome')
+                    ->values()
+                    ->all();
+            } else {
+                $ufs = [];
+            }
+        } catch (\Exception $e) {
+            $ufs = [];
+        }
 
         $opms = Opm::orderBy('nome')->get();
 
@@ -243,13 +257,9 @@ class AssociadoController extends Controller
 
             if ($authUser && $authUser->hasRole('admin|moderador')) {
                 return redirect(route('associado.show', $associado->id))->with('msg', 'Associado criado com sucesso');
-            }
-            else{
+            } else {
                 return redirect('/dashboard')->with('msg', 'Associado criado com sucesso!');
             }
-
-
-
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Erro ao criar associado: ' . $e->getMessage())->withInput();
@@ -268,8 +278,23 @@ class AssociadoController extends Controller
         $associado = Associado::findOrFail($id);
 
         // Buscar UFs do IBGE
-        $ufs = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-            ->json();
+        // $ufs = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+        //     ->json();
+
+        try {
+            $response = Http::timeout(5)->get('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
+
+            if ($response->successful()) {
+                $ufs = collect($response->json())
+                    ->sortBy('nome')
+                    ->values()
+                    ->all();
+            } else {
+                $ufs = [];
+            }
+        } catch (\Exception $e) {
+            $ufs = [];
+        }
 
         $opms = Opm::orderBy('nome')->get();
 
@@ -519,8 +544,23 @@ class AssociadoController extends Controller
         }
 
         // Buscar UFs do IBGE
-        $ufs = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-            ->json();
+        // $ufs = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+        //     ->json();
+
+        try {
+            $response = Http::timeout(5)->get('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
+
+            if ($response->successful()) {
+                $ufs = collect($response->json())
+                    ->sortBy('nome')
+                    ->values()
+                    ->all();
+            } else {
+                $ufs = [];
+            }
+        } catch (\Exception $e) {
+            $ufs = [];
+        }
 
         $opms = Opm::orderBy('nome')->get();
 
