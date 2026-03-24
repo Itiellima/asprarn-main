@@ -3,6 +3,12 @@
 @section('title', 'AspraRN - Formulário de Cadastro')
 
 @section('content')
+    <style>
+        .was-validated .form-control:valid,
+        .form-control.is-valid {
+            background-image: none !important;
+        }
+    </style>
 
     <div class="container">
 
@@ -22,8 +28,8 @@
         <div class="container mb-3">
             <div class="container">
 
-                <fieldset id="formFields" @if ($associado->id) disabled @endif>
-                    <form
+                <fieldset id="formFields" @if ($associado->exists) disabled @endif>
+                    <form class="needs-validation" novalidate
                         action="{{ $associado->id ? route('associado.update', $associado->id) : route('associado.store') }}"
                         method="POST">
                         @csrf
@@ -40,12 +46,18 @@
                                 <input type="text" class="form-control " id="nome" name="nome"
                                     placeholder="Insira seu nome completo" required
                                     value="{{ old('nome', $associado->nome) }}">
+                                <div class="invalid-feedback">
+                                    Insira seu nome completo.
+                                </div>
                             </div>
                             <div class="mb-3 col-md-3 col-sm-6">
                                 <label for="formGroup" class="form-label">CPF: *</label>
                                 <input type="text" class="form-control " id="cpf" name="cpf"
-                                    placeholder="000.000.000-00" required
-                                    value="{{ old('cpf', $associado->cpf) }}">
+                                    placeholder="000.000.000-00" required value="{{ old('cpf', $associado->cpf) }}"
+                                    minlength="11">
+                                <div class="invalid-feedback">
+                                    CPF invalido.
+                                </div>
                             </div>
                             <div class="mb-3 col-md-3 col-sm-6">
                                 <label for="formGroup" class="form-label">RG: *</label>
@@ -137,8 +149,7 @@
                             <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="formGroup" class="form-label">Nome do pai:</label>
                                 <input type="text" class="form-control " id="nome_pai" name="nome_pai"
-                                    placeholder="Insira o nome do pai"
-                                    value="{{ old('nome_pai', $associado->nome_pai) }}">
+                                    placeholder="Insira o nome do pai" value="{{ old('nome_pai', $associado->nome_pai) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="formGroup" class="form-label">Nome da Mãe:</label>
@@ -149,7 +160,8 @@
                         </div>
 
                         {{-- Endereço --}}
-                        <div class="container row border-bottom border-primary mt-3 m-1">
+                        @include('associado.formComponents.endereco')
+                        {{-- <div class="container row border-bottom border-primary mt-3 m-1">
                             <h2>Endereço</h2>
                             <div class="mb-3 col-md-3 col-sm-6">
                                 <label for="formGroup" class="form-label">CEP:</label>
@@ -203,29 +215,26 @@
                                     placeholder="Ponto de referência"
                                     value="{{ old('complemento', $associado->endereco?->complemento) }}">
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- Contato --}}
                         <div class="container row border-bottom border-primary mt-3 m-1">
                             <h2>Contato</h2>
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Número de Celular: *</label>
-                                <input type="text" class="form-control"
-                                    id="tel_celular" name="tel_celular"
+                                <input type="text" class="form-control" id="tel_celular" name="tel_celular"
                                     placeholder="(xx) x xxxx-xxxx  Apenas números" required
                                     value="{{ old('tel_celular', $associado->contato?->tel_celular) }}">
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Número Residencial:</label>
-                                <input type="text" class="form-control"
-                                    id="tel_residencial" name="tel_residencial"
+                                <input type="text" class="form-control" id="tel_residencial" name="tel_residencial"
                                     placeholder="(xx) x xxxx-xxxx  Apenas números"
                                     value="{{ old('tel_residencial', $associado->contato?->tel_residencial) }}">
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Número de Trabalho:</label>
-                                <input type="text" class="form-control"
-                                    id="tel_trabalho" name="tel_trabalho"
+                                <input type="text" class="form-control" id="tel_trabalho" name="tel_trabalho"
                                     placeholder="(xx) x xxxx-xxxx  Apenas números"
                                     value="{{ old('tel_trabalho', $associado->contato?->tel_trabalho) }}">
                             </div>
@@ -288,6 +297,9 @@
                                     <option value="civil"
                                         {{ old('civil', $associado->graduacao) == 'civil' ? 'selected' : '' }}>
                                         Civil</option>
+                                    <option value="pensionista"
+                                        {{ old('pensionista', $associado->graduacao) == 'pensionista' ? 'selected' : '' }}>
+                                        Pensionista</option>
                                     <option value="soldado"
                                         {{ old('soldado', $associado->graduacao) == 'Soldado' ? 'selected' : '' }}>Soldado
                                     </option>
@@ -295,13 +307,16 @@
                                         {{ old('cabo', $associado->graduacao) == 'Cabo' ? 'selected' : '' }}>
                                         Cabo</option>
                                     <option value="3_sargento"
-                                        {{ old('3_sargento', $associado->graduacao) == '3º sargento' ? 'selected' : '' }}>3°
+                                        {{ old('3_sargento', $associado->graduacao) == '3º sargento' ? 'selected' : '' }}>
+                                        3°
                                         Sargento</option>
                                     <option value="2_sargento"
-                                        {{ old('2_sargento', $associado->graduacao) == '2º sargento' ? 'selected' : '' }}>2°
+                                        {{ old('2_sargento', $associado->graduacao) == '2º sargento' ? 'selected' : '' }}>
+                                        2°
                                         Sargento</option>
                                     <option value="1_sargento"
-                                        {{ old('1_sargento', $associado->graduacao) == '1º sargento' ? 'selected' : '' }}>1°
+                                        {{ old('1_sargento', $associado->graduacao) == '1º sargento' ? 'selected' : '' }}>
+                                        1°
                                         Sargento</option>
                                     <option value="subtenente"
                                         {{ old('subtenente', $associado->graduacao) == 'Subtenente' ? 'selected' : '' }}>
@@ -453,6 +468,26 @@
                 $('#tel_residencial').mask('(00) 00000-0000');
                 $('#tel_trabalho').mask('(00) 00000-0000');
             });
+        </script>
+
+        {{-- validation --}}
+        <script>
+            (() => {
+                'use strict'
+
+                const forms = document.querySelectorAll('.needs-validation')
+
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })();
         </script>
     @endpush
 
