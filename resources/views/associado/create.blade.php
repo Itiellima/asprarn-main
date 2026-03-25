@@ -5,7 +5,9 @@
 @section('content')
     <style>
         .was-validated .form-control:valid,
-        .form-control.is-valid {
+        .was-validated .form-select:valid,
+        .form-control.is-valid,
+        .form-select.is-valid {
             background-image: none !important;
         }
     </style>
@@ -63,18 +65,27 @@
                                 <label for="formGroup" class="form-label">RG: *</label>
                                 <input type="text" class="form-control " id="rg" name="rg"
                                     placeholder="Insira o número do RG" required value="{{ old('rg', $associado->rg) }}">
+                                <div class="invalid-feedback">
+                                    Insira o seu RG.
+                                </div>
                             </div>
                             <div class="mb-3 col-md-3 col-sm-6">
                                 <label for="formGroup" class="form-label">Órgão expedidor: *</label>
                                 <input type="text" class="form-control " id="org_expedidor" name="org_expedidor"
                                     placeholder="Órgão expedidor" required
                                     value="{{ old('org_expedidor', $associado->org_expedidor) }}">
+                                <div class="invalid-feedback">
+                                    Insira o orgão expedidor do seu RG.
+                                </div>
                             </div>
 
                             <div class="mb-3 col-md-3 col-sm-6">
                                 <label for="formGroup" class="form-label">Data de nascimento: *</label>
                                 <input type="date" class="form-control " id="dt_nasc" name="dt_nasc" required
                                     value="{{ old('dt_nasc', $associado->dt_nasc) }}">
+                                <div class="invalid-feedback">
+                                    Data invalida.
+                                </div>
                             </div>
                             <div class="mb-3 col-md-3 col-sm-6">
                                 <label for="formGroup" class="form-label">Estado civil:</label>
@@ -149,7 +160,8 @@
                             <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="formGroup" class="form-label">Nome do pai:</label>
                                 <input type="text" class="form-control " id="nome_pai" name="nome_pai"
-                                    placeholder="Insira o nome do pai" value="{{ old('nome_pai', $associado->nome_pai) }}">
+                                    placeholder="Insira o nome do pai"
+                                    value="{{ old('nome_pai', $associado->nome_pai) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="formGroup" class="form-label">Nome da Mãe:</label>
@@ -239,10 +251,13 @@
                                     value="{{ old('tel_trabalho', $associado->contato?->tel_trabalho) }}">
                             </div>
                             <div class="mb-3 col-md-12 col-sm-6">
-                                <label for="formGroup" class="form-label">Email: *</label>
+                                <label for="formGroup" class="form-label">E-mail: *</label>
                                 <input type="email" class="form-control" id="email" name="email"
                                     placeholder="exemplo@email.com" required
                                     value="{{ old('email', $associado->contato?->email) }}">
+                                <div class="invalid-feedback">
+                                    Insira seu e-mail.
+                                </div>
                             </div>
                         </div>
 
@@ -400,11 +415,12 @@
     </div>
 
 
-    <script src="{{ asset('js/form-edit.js') }}"></script>
 
 
     @push('scripts')
-        <script>
+        <script src="{{ asset('js/form-edit.js') }}"></script>
+
+        {{-- <script>
             document.addEventListener("DOMContentLoaded", function() {
 
                 const ufSelect = document.getElementById('uf');
@@ -453,14 +469,14 @@
                 }
 
             });
-        </script>
+        </script> --}}
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        <!-- 2️⃣ Carrega o plugin de máscara -->
+        <!-- Carrega o plugin de máscara -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
-        <!-- 3️⃣ Aplica as máscaras -->
+        <!-- Aplica as máscaras -->
         <script>
             $(document).ready(function() {
                 $('#cpf').mask('000.000.000-00');

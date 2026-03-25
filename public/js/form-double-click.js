@@ -5,25 +5,42 @@ document.addEventListener('DOMContentLoaded', function () {
         const submitBtn = form.querySelector('[type="submit"]');
 
         form.addEventListener('submit', function (e) {
+
+            // 🔥 valida antes de qualquer coisa
+            if (!form.checkValidity()) {
+                enviando = false;
+
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Salvar';
+                }
+
+                return; // deixa o Bootstrap tratar
+            }
+
+            // evita duplo envio
             if (enviando) {
                 e.preventDefault();
                 return;
             }
 
             enviando = true;
+
             if (submitBtn) {
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = 'Enviando...';
             }
         });
 
-        // Reset se o formulário estiver dentro de modal Bootstrap
+        // reset (caso use modal)
         form.closest('.modal')?.addEventListener('hidden.bs.modal', function () {
             enviando = false;
+
             if (submitBtn) {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = 'Salvar';
             }
+
             form.reset();
         });
     });
