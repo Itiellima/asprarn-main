@@ -1,6 +1,6 @@
 <div class="container row border-bottom border-primary mt-3 m-1">
     <div class="mb-3 col-md-3 col-sm-6">
-        <label for="formGroup" class="form-label">CEP:
+        <label for="formGroup" class="form-label">CEP*:
         </label>
         <input class="form-control" name="cep" type="text" id="cep" placeholder="Apenas números" required
             value="{{ old('cep', $associado->endereco?->cep) }}" minlength="8" onblur="pesquisacep(this.value);" />

@@ -47,6 +47,7 @@
                                 <label for="formGroup" class="form-label">Nome: *</label>
                                 <input type="text" class="form-control " id="nome" name="nome"
                                     placeholder="Insira seu nome completo" required
+                                    oninput="this.value = this.value.toUpperCase()"
                                     value="{{ old('nome', $associado->nome) }}">
                                 <div class="invalid-feedback">
                                     Insira seu nome completo.
