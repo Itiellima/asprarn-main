@@ -31,7 +31,7 @@
             <div class="container">
 
                 <fieldset id="formFields" @if ($associado->exists) disabled @endif>
-                    <form class="needs-validation" novalidate
+                    <form class="needs-validation" novalidate enctype="multipart/form-data"
                         action="{{ $associado->id ? route('associado.update', $associado->id) : route('associado.store') }}"
                         method="POST">
                         @csrf
@@ -389,6 +389,16 @@
 
                         </div>
 
+                        {{-- Foto associado --}}
+                        @if (!$associado->exists)
+                            <div class="container row border-bottom border-primary mt-3 m-1">
+                                <h2>Foto perfil 3x4</h2>
+                                <label for="formGroup" class="form-label">Foto de perfil:</label>
+                                <input type="file" class="form-control mt-3" id="img" name="picture_profile">
+                                <div id="preview-container" class="mt-3"></div>
+                            </div>
+                        @endif
+
                         <div class="container border-bottom border-primary mt-3 text-end">
                             <input type="submit" class="btn btn-primary mb-3" id="submitBtn"
                                 value="{{ $associado->id ? 'Salvar alterações' : 'Cadastrar' }}">
@@ -415,12 +425,51 @@
 
     </div>
 
-
-
-
     @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const input = document.getElementById('img');
+                const container = document.getElementById('preview-container');
+
+                if (!input || !container) return;
+
+                input.addEventListener('change', function(event) {
+                    container.innerHTML = '';
+
+                    const file = event.target.files[0];
+
+                    if (!file) return;
+
+                    // ✅ Valida se é imagem
+                    if (!file.type.startsWith('image/')) {
+                        alert('Selecione apenas imagens');
+                        input.value = '';
+                        return;
+                    }
+
+                    const url = URL.createObjectURL(file);
+
+                    const img = document.createElement('img');
+                    img.src = url;
+
+                    // 🔥 estilo 3x4 (proporção)
+                    img.style.width = '120px';
+                    img.style.height = '160px';
+                    img.style.objectFit = 'cover';
+                    img.classList.add('border', 'rounded');
+
+                    img.onload = () => URL.revokeObjectURL(url);
+
+                    container.appendChild(img);
+                });
+            });
+        </script>
+
+
+
         <script src="{{ asset('js/form-edit.js') }}"></script>
 
+        {{-- legado,  --}}
         {{-- <script>
             document.addEventListener("DOMContentLoaded", function() {
 
