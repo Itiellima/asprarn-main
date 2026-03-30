@@ -172,10 +172,14 @@ class AssociadoController extends Controller
             'nome'  => 'required',
             'cpf'   => 'required|unique:associados,cpf|digits:11',
             'email' => 'required|unique:users,email',
+            'picture_profile' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ], [
             'cpf.unique'   => 'Já existe um associado cadastrado com esse CPF.',
             'cpf.digits'     => 'O CPF deve conter exatamente 11 dígitos numericos.',
             'email.unique' => 'Já existe um associado com esse e-mail.',
+            'picture_profile.image' => 'O arquivo deve ser uma imagem.',
+            'picture_profile.mimes' => 'O arquivo deve ser do tipo: jpeg, png, jpg.',
+            'picture_profile.max' => 'O arquivo não pode exceder 2MB.',
         ]);
 
         if (!\App\Helpers\CpfHelper::validar($request->cpf)) {
@@ -242,6 +246,13 @@ class AssociadoController extends Controller
             ]);
 
             $user->syncRoles(['associado', 'user']);
+
+            $path = $request->file('picture_profile')->store('picture_profiles', 'public');
+
+            PictureProfile::create([
+                'associado_id' => $associado->id,
+                'path' => $path,
+            ]);
 
             DB::commit();
 
