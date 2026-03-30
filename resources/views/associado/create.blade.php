@@ -238,6 +238,9 @@
                                 <input type="text" class="form-control" id="tel_celular" name="tel_celular"
                                     placeholder="(xx) x xxxx-xxxx  Apenas números" required
                                     value="{{ old('tel_celular', $associado->contato?->tel_celular) }}">
+                                <div class="invalid-feedback">
+                                    Insira um número de celular válido.
+                                </div>
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
                                 <label for="formGroup" class="form-label">Número Residencial:</label>
