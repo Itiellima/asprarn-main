@@ -4,7 +4,7 @@
             <h4 class="alert-heading">{{ $plano->nome }}</h4>
             <p>
                 @foreach ($plano->beneficios as $beneficio)
-                    -{{ $beneficio }}
+                    {{ $beneficio }}
                     <br>
                 @endforeach
                 <strong>
