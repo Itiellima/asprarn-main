@@ -50,20 +50,22 @@ class PlanosController extends Controller
             'nome' => 'required|string|max:255',
             'beneficios.*' => 'required|string|max:500',
             'descricao' => 'required|string|max:500',
-            'preco' => 'required|numeric|min:0'
+            'preco' => 'required|string|min:0'
         ], [
             'beneficios.*.max' => 'Cada item da descrição não pode exceder 500 caracteres.',
             'descricao.max' => 'Descrição não pode exceder 500 caracteres.',
         ]);
         
+        $preco = str_replace(['.', ','], ['', '.'], $request->input('preco'));
+
         DB::beginTransaction();
         try{
-            $plano = Plano::create( $request->only([
-                'nome',
-                'beneficios',
-                'descricao',
-                'preco'
-            ]));
+            $plano = Plano::create([
+                'nome' => $request->input('nome'),
+                'beneficios' => $request->input('beneficios'),
+                'descricao' => $request->input('descricao'),
+                'preco' => $preco,
+            ]);
 
             DB::commit();
         }

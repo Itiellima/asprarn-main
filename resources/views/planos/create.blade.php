@@ -52,15 +52,15 @@
                     <button type="button" class="btn btn-secondary mb-3" id="add">+ Adicionar Beneficio</button>
                 @endif
 
-
                 <div class="mb-3">
                     <label for="descricao" class="form-label">Descrição</label>
                     <input type="text" class="form-control" id="descricao" name="descricao" required
                         value="{{ old('descricao', $plano->descricao ?? '') }}">
                 </div>
+
                 <div class="mb-3">
-                    <label for="preco" class="form-label">Preço</label>
-                    <input type="number" step="0.01" class="form-control" id="preco" name="preco" required
+                    <label for="preco" class="form-label">Valor</label>
+                    <input type="text" class="form-control" id="preco" name="preco" required
                         value="{{ old('preco', $plano->preco ?? '') }}">
                 </div>
 
@@ -90,6 +90,17 @@
             <button type="button" class="btn btn-sm btn-danger mt-1 remove-beneficios">Remover</button>
         `;
             container.appendChild(newField);
+        });
+    </script>
+    <script>
+        document.getElementById('preco').addEventListener('input', function(e) {
+            let valor = e.target.value.replace(/\D/g, '');
+
+            valor = (valor / 100).toFixed(2) + '';
+            valor = valor.replace('.', ',');
+            valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+            e.target.value = valor;
         });
     </script>
 

@@ -99,26 +99,26 @@
     @include('dashboard.associadoComponents.associado-carteirinha-digital')
 
     {{-- categoria do associado --}}
-    <div class="container alert alert-light text-black text-center">
+    {{-- <div class="container alert alert-light text-black text-center">
         <strong class="text-black">
             <h2>Categoria do associado</h2>
         </strong>
-    </div>
+    </div> --}}
 
     {{-- ACOES --}}
     <div class="container align-items-center alert alert-light text-black">
         <strong class="text-black text-center">
-            <h2>Informações do associado</h2>
+            <h2>Mais opções</h2>
         </strong>
-        <div class="row mx-3 my-3">
+        <div class="row mx-3 my-3 justify-content-center">
             {{-- <a href="{{ route('associado.documentos.index', $associado->id) }}"
                 class="btn btn-primary col-2 mx-2">Documentos</a> --}}
 
             <a href="{{ route('associado.pasta.index', $associado->id) }}" class="btn btn-primary col-2 mx-2">Arquivos</a>
 
-            <a href="#" class="btn btn-primary col-2 mx-2">Historico</a>
+            {{-- <a href="#" class="btn btn-primary col-2 mx-2">Historico</a>
             <a href="#" class="btn btn-primary col-2 mx-2">Financeiro</a>
-            <a href="#" class="btn btn-primary col-2 mx-2 disabled">#</a>
+            <a href="#" class="btn btn-primary col-2 mx-2 disabled">#</a> --}}
         </div>
     </div>
 
