@@ -5,22 +5,22 @@
 @section('content')
 
     <form action="{{ route('notificacoes.index') }}" method="GET">
-        
+
         <div class="container border bg-light mb-3">
 
             <h3 class="mt-3">Selecionar filtros</h3>
 
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" id="checkDefault" name="nao_lida"
-                        {{ request('nao_lida') ? 'checked' : '' }}>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="1" id="checkDefault" name="nao_lida"
+                    {{ request('nao_lida') ? 'checked' : '' }}>
 
-                    <label class="form-check-label" for="checkDefault">
-                        Não lidas
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary mt-2 mb-3">
-                    Filtrar
-                </button>
+                <label class="form-check-label" for="checkDefault">
+                    Não lidas
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2 mb-3">
+                Filtrar
+            </button>
         </div>
 
     </form>
@@ -40,8 +40,9 @@
                 {{ $notificacao->created_at->format('d/m/Y H:i') }}</strong> <br>
             {{ $notificacao->mensagem }} - Associado ID: {{ $notificacao->associado_id }}<br>
 
-            <strong> {{ $notificacao->associado->nome }} </strong> <a class="btn btn-sm btn-primary"
-                href="{{ route('associado.show', $notificacao->associado_id) }}">Ver detalhes</a>
+            <strong> {{ $notificacao->associado->nome }} </strong>
+            {{-- <a class="btn btn-sm btn-primary" href="{{ route('associado.show', $notificacao->associado_id) }}">Ver
+                detalhes</a> --}}
 
             <form action="{{ route('notificacoes.marcarComoLida', $notificacao->id) }}" method="POST">
                 @csrf
@@ -49,6 +50,9 @@
 
                 <button type="submit"
                     class="btn btn-primary btn-sm mt-2">{{ $notificacao->lida ? 'Marcar como não lida' : 'Marcar como lida' }}</button>
+
+                <a class="btn btn-sm btn-primary mt-2" href="{{ route('associado.show', $notificacao->associado_id) }}">Ver
+                    detalhes</a>
 
             </form>
         </div>

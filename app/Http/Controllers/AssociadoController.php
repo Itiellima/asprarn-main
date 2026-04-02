@@ -247,12 +247,14 @@ class AssociadoController extends Controller
 
             $user->syncRoles(['associado', 'user']);
 
-            $path = $request->file('picture_profile')->store('picture_profiles', 'public');
+            if ($request->hasFile('picture_profile')) {
+                $path = $request->file('picture_profile')->store('picture_profiles', 'public');
+                PictureProfile::create([
+                    'associado_id' => $associado->id,
+                    'path' => $path,
+                ]);
+            }
 
-            PictureProfile::create([
-                'associado_id' => $associado->id,
-                'path' => $path,
-            ]);
 
             DB::commit();
 
