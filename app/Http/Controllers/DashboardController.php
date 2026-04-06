@@ -43,9 +43,7 @@ class DashboardController extends Controller
 
     private function adminDashboard($user)
     {
-        $associados = Associado::all();
-
-        $situacoes = Situacao::all();
+        $totalAssociados = Associado::count();
 
         $situacoes = DB::table('situacoes')
             ->select('situacoes.id', 'situacoes.nome', DB::raw('COUNT(associado_situacao.associado_id) as total'))
@@ -53,9 +51,27 @@ class DashboardController extends Controller
             ->groupBy('situacoes.id', 'situacoes.nome')
             ->get();
 
-        
 
-        return view("dashboard.admin", compact('user', 'associados', 'situacoes'));
+        $ano = now()->year;
+
+        $associadosPorMes = DB::table('associados')
+            ->selectRaw('MONTH(created_at) as mes, COUNT(*) as total')
+            ->whereYear('created_at', $ano)
+            ->groupBy('mes')
+            ->orderBy('mes')
+            ->pluck('total', 'mes');
+
+        $labelsMes = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 
+                      'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+
+        $dadosMes = [];
+
+        for ($i = 1; $i <= 12; $i++) {
+            $dadosMes[] = $associadosPorMes[$i] ?? 0;
+        }
+
+
+        return view("dashboard.admin", compact('user', 'totalAssociados', 'situacoes', 'dadosMes', 'labelsMes', 'ano'));
     }
 
     private function associadoDashboard($user)
