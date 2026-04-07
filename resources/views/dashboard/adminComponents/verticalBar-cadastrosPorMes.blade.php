@@ -30,7 +30,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Cadastros por Mês'
+                        text: 'Cadastros por Mês no ano de {{ date('Y') }}'
                     }
                 }
             }

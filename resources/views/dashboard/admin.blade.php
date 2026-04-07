@@ -42,8 +42,54 @@
         </div>
     </div> --}}
 
-    @include('dashboard.adminComponents.doughnut-situacoes')
+    {{-- @include('dashboard.adminComponents.doughnut-situacoes')
 
-    @include('dashboard.adminComponents.verticalBar-cadastrosPorMes')
+    @include('dashboard.adminComponents.verticalBar-cadastrosPorMes') --}}
+
+    <div id="dashboardCollapse">
+
+        <div class="d-flex gap-2 mb-3 justify-content-center">
+            <button id="btnSituacoes" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseSituacoes">
+                📊 Situação dos Associados
+            </button>
+
+            <button id="btnMes" class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#collapseMes">
+                📈 Associados cadastrados por Mês
+            </button>
+        </div>
+
+        <div id="collapseSituacoes" class="collapse show" data-bs-parent="#dashboardCollapse">
+            @include('dashboard.adminComponents.doughnut-situacoes')
+        </div>
+
+        <div id="collapseMes" class="collapse" data-bs-parent="#dashboardCollapse">
+            @include('dashboard.adminComponents.verticalBar-cadastrosPorMes')
+        </div>
+
+    </div>
+
+    <script>
+        const btnSituacoes = document.getElementById('btnSituacoes');
+        const btnMes = document.getElementById('btnMes');
+
+        const collapseSituacoes = document.getElementById('collapseSituacoes');
+        const collapseMes = document.getElementById('collapseMes');
+
+        collapseSituacoes.addEventListener('show.bs.collapse', () => {
+            btnSituacoes.classList.add('btn-primary');
+            btnSituacoes.classList.remove('btn-outline-primary');
+
+            btnMes.classList.add('btn-outline-primary');
+            btnMes.classList.remove('btn-primary');
+        });
+
+        collapseMes.addEventListener('show.bs.collapse', () => {
+            btnMes.classList.add('btn-primary');
+            btnMes.classList.remove('btn-outline-primary');
+
+            btnSituacoes.classList.add('btn-outline-primary');
+            btnSituacoes.classList.remove('btn-primary');
+        });
+    </script>
 
 @endsection
