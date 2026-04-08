@@ -7,7 +7,7 @@
     <div class="container body-offset">
 
         <div class="meu-container mb-3">
-            <h1 style="color: #0a499c; font-size: 3rem; text-;">Clubes de Beneficios</h1>
+            <h1 style="color: #0a499c; font-size: 3rem; text-;">Clubes de Benefícios</h1>
         </div>
         @auth
             @hasanyrole(['admin', 'moderador'])
