@@ -4,7 +4,6 @@
 
 @section('content')
 
-
     @include('dashboard.layouts.nav-dashboard')
 
     {{-- <div class="container text-center alert alert-light">
