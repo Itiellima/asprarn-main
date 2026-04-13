@@ -25,6 +25,10 @@ use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\OpmController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\PrestadorDeServicosController;
+use App\Http\Controllers\PagamentosController;
+
+
+
 
 //////////////////////////////// ********* INDEX ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -192,8 +196,10 @@ Route::post('/notificacoes/marcar-como-lida/{id}', [NotificacaoController::class
 
 ///////////////////////////////// ********* RELATORIOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/relatorios', [RelatorioController::class, 'index'])->name('relatorios.index');
-Route::get('/relatorios/gerar', [RelatorioController::class, 'gerarRelatorio'])->name('relatorios.gerar');
+Route::get('/relatorios/gerar/todos', [RelatorioController::class, 'gerarRelatorio'])->name('relatorios.gerar.todos');
 
+
+///////////////////////////////// ********* CONFIGURACOES OPMS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::post('/configuracoes/opms/store', [OpmController::class, 'store'])->name('opms.store');
 Route::delete('/configuracoes/opms/destroy/{id}', [OpmController::class, 'destroy'])->name('opms.destroy');
 
@@ -227,3 +233,8 @@ Route::delete('/empresas/destroy/{id}', [EmpresaController::class, 'destroy'])->
 Route::get('/carteira-associados/{id}', [AssociadoController::class, 'showCarteirinha'])->name('carteira-associados');
 Route::get('/carteira-associados1/{id}', [AssociadoController::class, 'showVerticalCarteirinha'])->name('carteira-associados-vertical');
 Route::get('/carteira-associado-verificacao/{id}', [AssociadoController::class, 'validarCarteirinha'])->name('validar-carteirinha');
+
+
+////////////////////////////////// ********* PAGAMENTOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Route::get('/pagamentos', [PagamentosController::class, 'index'])->name('pagamentos.index');
+Route::post('/pagamentos/read-archive', [PagamentosController::class, 'readArchive'])->name('pagamentos.readArchive');
