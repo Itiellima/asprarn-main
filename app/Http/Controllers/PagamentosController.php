@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Associado;
 
 class PagamentosController extends Controller
 {
@@ -82,20 +83,22 @@ class PagamentosController extends Controller
             return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
-        // Lógica para processar os pagamentos
-        // Recebe os dados do formulário e processa os pagamentos conforme necessário
 
-        $cpf = $request->input('cpf');
+        $dados = json_decode($request->input('dados'), true);
 
-        foreach ($cpf as $cpfAssociado) {
-            // Lógica para processar o pagamento do associado com o CPF $cpfAssociado
-            // Exemplo: Atualizar o status de pagamento no banco de dados, enviar notificações, etc.
-            
+        foreach ($dados as $linha) {
+            $associado = Associado::where('cpf', $linha['cpf'])->first();
 
+            if (!$associado) {
+                continue;
+            }
+
+            Pagamentos::create([
+                'associado_id' => $associado->id,
+                'valor' => str_replace(',', '.', $linha['valor']),
+                'mes_referencia' => $linha['mes_referencia'],
+            ]);
         }
-
-
-
 
 
         return redirect()->route('pagamentos.index')->with('success', 'Pagamentos processados com sucesso.');

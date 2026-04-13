@@ -238,3 +238,4 @@ Route::get('/carteira-associado-verificacao/{id}', [AssociadoController::class, 
 ////////////////////////////////// ********* PAGAMENTOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/pagamentos', [PagamentosController::class, 'index'])->name('pagamentos.index');
 Route::post('/pagamentos/read-archive', [PagamentosController::class, 'readArchive'])->name('pagamentos.readArchive');
+Route::post('/pagamentos/processar', [PagamentosController::class, 'processarPagamentos'])->name('pagamentos.processar');

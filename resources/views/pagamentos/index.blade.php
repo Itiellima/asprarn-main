@@ -19,11 +19,22 @@
         </form>
     </div>
 
+
     <div class="container">
 
         @if (empty($dadosCsv))
             <p>Nenhum dado disponível.</p>
         @else
+            <form action="{{ route('pagamentos.processar') }}" method="POST">
+                @csrf
+
+                <input type="hidden" name="dados" value='@json($dadosCsv)'>
+
+                <button type="submit">
+                    Confirmar importação
+                </button>
+            </form>
+            
             <table class="table table-hover">
                 <thead>
                     <tr>
