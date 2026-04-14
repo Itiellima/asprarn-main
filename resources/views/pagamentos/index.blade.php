@@ -4,6 +4,22 @@
 
 @section('content')
 
+    {{-- @if (session()->all())
+        <pre>
+        {{ print_r(session()->all(), true) }}
+    </pre>
+    @endif --}}
+
+    @if (session('sucesso') !== null)
+        <div class="alert alert-info">
+            <strong>Resultado da importação:</strong><br>
+
+            ✅ Sucesso: {{ session('sucesso') }}<br>
+            ❌ Falhas: {{ session('falhas') }}
+        </div>
+    @endif
+
+
     <div class="container">
         <h1>Pagamentos</h1>
         <p>Bem-vindo à página de pagamentos!</p>
@@ -25,16 +41,25 @@
         @if (empty($dadosCsv))
             <p>Nenhum dado disponível.</p>
         @else
-            <form action="{{ route('pagamentos.processar') }}" method="POST">
-                @csrf
+            <div class="alert alert-dark mt-3">
+                <form action="{{ route('pagamentos.processar') }}" method="POST">
+                    @csrf
 
-                <input type="hidden" name="dados" value='@json($dadosCsv)'>
+                    <input type="hidden" name="dados" value='@json($dadosCsv)'>
+                    <button type="submit" class="btn btn-primary mt-3 mb-3">
+                        Confirmar importação
+                    </button>
+                    <div class="form-group">
+                        <label for="observacao" class="form-label text-black">Observação (opcional):</label>
+                        <input type="text" name="observacao" id="observacao" class="form-control mb-2"
+                            placeholder="Observação (opcional)">
+                        <label for="data_pagamento" class="form-label text-black">Data de pagamento:</label>
+                        <input type="date" name="data_pagamento" id="data_pagamento" class="form-control mb-2"
+                            placeholder="Data de pagamento">
+                    </div>
+                </form>
+            </div>
 
-                <button type="submit">
-                    Confirmar importação
-                </button>
-            </form>
-            
             <table class="table table-hover">
                 <thead>
                     <tr>

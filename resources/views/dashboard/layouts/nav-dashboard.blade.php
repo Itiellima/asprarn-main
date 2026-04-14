@@ -16,10 +16,6 @@
                     <a href="{{ route('associado.informacoes', $associado->id) }}" class="btn btn-primary m-1 col-lg-3">👤 Meus
                         Dados</a>
                     <a href="/profile" class="btn btn-primary m-1 col-lg-3">👮 Perfil</a>
-                    {{-- <a href="#" class="btn btn-primary m-1 col-lg-3">📝 Meus Requerimentos</a>
-                    <a href="#" class="btn btn-primary m-1 col-lg-3">🎁 Meus Benefícios</a>
-                    <a href="#" class="btn btn-primary m-1 col-lg-3">📋 Meus Planos</a>
-                    <a href="#" class="btn btn-primary m-1 col-lg-3">🏠 Declarações</a> --}}
                 @endhasanyrole
 
                 {{-- Administração --}}
@@ -27,6 +23,7 @@
                     <a href="{{ route('associado.index') }}" class="btn btn-primary m-1 col-lg-3">👥 Associados</a>
                     <a href="/profile" class="btn btn-primary mx-1 m-1 col-lg-3">👮 Alterar Perfil</a>
                     <a href="{{ route('planos.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">📋 Planos</a>
+                    <a href="{{ route('pagamentos.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">💳 Pagamentos</a>
 
                     {{-- Button Administração --}}
                     <div class="dropdown col-lg-3 m-1 p-0">

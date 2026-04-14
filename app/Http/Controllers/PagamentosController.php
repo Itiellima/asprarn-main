@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Associado;
+use App\Models\Pagamento;
+use Carbon\Carbon;
+
 
 class PagamentosController extends Controller
 {
@@ -83,24 +86,59 @@ class PagamentosController extends Controller
             return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
-
         $dados = json_decode($request->input('dados'), true);
+        if (!$dados) {
+            return redirect()->back()->with('error', 'Dados inválidos para processamento.');
+        }
+
+        $sucesso = 0;
+        $falhas = 0;
 
         foreach ($dados as $linha) {
-            $associado = Associado::where('cpf', $linha['cpf'])->first();
+            $cpf = preg_replace('/\D/', '', $linha['cpf']);
+            $associado = Associado::where('cpf', $cpf)->first();
 
             if (!$associado) {
+                $falhas++;
                 continue;
             }
 
-            Pagamentos::create([
+
+            $valor = str_replace(',', '.', $linha['valor']);
+            $valor = trim($valor);
+
+
+            $data_pagamento = $request->input('data_pagamento') ? $request->input('data_pagamento') : now();
+            $mesReferencia = Carbon::createFromFormat('m/Y', $linha['mes_referencia'])->startOfMonth();
+
+            $existe = Pagamento::where('associado_id', $associado->id)
+                ->where('mes_referencia', $mesReferencia)
+                ->where('valor', $valor)
+                ->exists();
+
+            if ($existe) {
+                $falhas++;
+                continue;
+            }
+
+            Pagamento::create([
                 'associado_id' => $associado->id,
-                'valor' => str_replace(',', '.', $linha['valor']),
-                'mes_referencia' => $linha['mes_referencia'],
+                'user_id' => $user->id,
+                'valor' => $valor,
+                'mes_referencia' => $mesReferencia,
+                'data_pagamento' => $data_pagamento,
+                'metodo_pagamento' => 'importacao_csv',
+                'observacao' => $request->input('observacao') ?? null,
             ]);
+
+            $sucesso++;
         }
 
 
-        return redirect()->route('pagamentos.index')->with('success', 'Pagamentos processados com sucesso.');
+        return redirect()->route('pagamentos.index')->with([
+            'success' => 'Pagamentos processados com sucesso.',
+            'sucesso' => $sucesso,
+            'falhas' => $falhas,
+        ]);
     }
 }
