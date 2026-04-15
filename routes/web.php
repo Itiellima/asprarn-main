@@ -240,3 +240,4 @@ Route::get('/pagamentos', [PagamentosController::class, 'index'])->name('pagamen
 Route::post('/pagamentos/read-archive', [PagamentosController::class, 'readArchive'])->name('pagamentos.readArchive');
 Route::post('/pagamentos/processar', [PagamentosController::class, 'processarPagamentos'])->name('pagamentos.processar');
 Route::get('/pagamentos/show/{associadoId}', [PagamentosController::class, 'show'])->name('pagamentos.show');
+Route::get('/pagamentos/edit/{pagamentoId}', [PagamentosController::class, 'edit'])->name('pagamentos.edit');

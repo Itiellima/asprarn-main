@@ -187,4 +187,44 @@ class PagamentosController extends Controller
 
         return view('pagamentos.show', compact('pagamentos', 'associado'));
     }
+
+    public function edit($pagamentoId)
+    {
+        $user = Auth::user();
+        if (!$user || !$user->hasRole('admin|moderador')) {
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $pagamento = Pagamento::findOrFail($pagamentoId);
+
+        return view('pagamentos.edit', compact('pagamento'));
+    }
+
+    public function update(Request $request, $pagamentoId)
+    {
+        $user = Auth::user();
+        if (!$user || !$user->hasRole('admin|moderador')) {
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $pagamento = Pagamento::findOrFail($pagamentoId);
+
+        $request->validate([
+            'valor' => 'required|numeric',
+            'data_pagamento' => 'required|date',
+            'mes_referencia' => 'required|date_format:m/Y',
+            'metodo_pagamento' => 'nullable|string|max:255',
+            'observacao' => 'nullable|string',
+        ]);
+
+        $pagamento->update([
+            'valor' => $request->input('valor'),
+            'data_pagamento' => $request->input('data_pagamento'),
+            'mes_referencia' => Carbon::createFromFormat('m/Y', $request->input('mes_referencia'))->startOfMonth(),
+            'metodo_pagamento' => $request->input('metodo_pagamento'),
+            'observacao' => $request->input('observacao'),
+        ]);
+
+        return redirect()->route('pagamentos.show', $pagamento->associado_id)->with('success', 'Pagamento atualizado com sucesso.');
+    }
 }

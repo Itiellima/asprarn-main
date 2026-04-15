@@ -14,17 +14,22 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Valor</th>
                     <th>Mês Referência</th>
+                    <th>Valor</th>
                     <th>Data Pagamento</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($pagamentos as $pagamento)
                     <tr>
-                        <td>R$ {{ number_format($pagamento->valor, 2, ',', '.') }}</td>
                         <td>{{ $pagamento->mes_referencia->format('m/Y') }}</td>
+                        <td>R$ {{ number_format($pagamento->valor, 2, ',', '.') }}</td>
                         <td>{{ $pagamento->data_pagamento->format('d/m/Y') }}</td>
+                        <td>
+                            <a href="{{ route('pagamentos.edit', $pagamento->id) }}" class="btn btn-sm btn-primary">Editar</a>
+                            <a href="#" class="btn btn-sm btn-danger">Excluir</a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
