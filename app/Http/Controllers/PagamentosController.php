@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Associado;
 use App\Models\Pagamento;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\DB;
 
 class PagamentosController extends Controller
 {
@@ -94,12 +94,22 @@ class PagamentosController extends Controller
         $sucesso = 0;
         $falhas = 0;
 
+        $falhasDetalhes = [];
+
+        DB::beginTransaction();
         foreach ($dados as $linha) {
             $cpf = preg_replace('/\D/', '', $linha['cpf']);
             $associado = Associado::where('cpf', $cpf)->first();
 
             if (!$associado) {
                 $falhas++;
+
+                $falhasDetalhes[] = [
+                    'cpf' =>  $cpf,
+                    'nome' => $linha['nome'] ?? 'N/A',
+                    'motivo' => 'Associado não encontrado'
+                ];
+
                 continue;
             }
 
@@ -118,6 +128,13 @@ class PagamentosController extends Controller
 
             if ($existe) {
                 $falhas++;
+
+                $falhasDetalhes[] = [
+                    'cpf' =>  $cpf,
+                    'nome' => $linha['nome'] ?? 'N/A',
+                    'motivo' => 'Pagamento já registrado para este mês de referência (mesmo valor e mês)'
+                ];
+
                 continue;
             }
 
@@ -134,11 +151,24 @@ class PagamentosController extends Controller
             $sucesso++;
         }
 
+        $falhasAgrupadas = [];
+
+        foreach ($falhasDetalhes as $erro) {
+            $motivo = $erro['motivo'];
+
+            if (!isset($falhasAgrupadas[$motivo])) {
+                $falhasAgrupadas[$motivo] = [];
+            }
+
+            $falhasAgrupadas[$motivo][] = $erro;
+        }
+        DB::commit();
 
         return redirect()->route('pagamentos.index')->with([
             'success' => 'Pagamentos processados com sucesso.',
             'sucesso' => $sucesso,
             'falhas' => $falhas,
+            'falhasAgrupadas' => $falhasAgrupadas
         ]);
     }
 }

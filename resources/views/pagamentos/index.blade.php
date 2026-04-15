@@ -19,6 +19,44 @@
         </div>
     @endif
 
+    {{-- @if (session('falhasDetalhes'))
+        <div class="alert alert-danger mt-3">
+            <strong>Detalhes das falhas:</strong>
+
+            <ul class="mb-0">
+                @foreach (session('falhasDetalhes') as $erro)
+                    <li>
+                        CPF: <strong>{{ $erro['cpf'] }}</strong> -
+                        Nome: <strong>{{ $erro['nome'] }}</strong> -
+                        Motivo:
+                        {{ $erro['motivo'] }}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif --}}
+
+    @if (session('falhasAgrupadas'))
+        <div class="alert alert-danger mt-3">
+            <strong>Detalhes das falhas:</strong>
+
+            @foreach (session('falhasAgrupadas') as $motivo => $erros)
+                <div class="mt-2">
+                    <strong>{{ $motivo }} ({{ count($erros) }})</strong>
+
+                    <ul>
+                        @foreach ($erros as $erro)
+                            <li>
+                                <strong>CPF:</strong> {{ $erro['cpf'] }}
+                                <strong>Nome:</strong> {{ $erro['nome'] }}
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endforeach
+        </div>
+    @endif
+
 
     <div class="container">
         <h1>Pagamentos</h1>

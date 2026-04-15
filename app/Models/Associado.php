@@ -112,4 +112,10 @@ class Associado extends Model
         return $this->hasMany(Notificacao::class, 'associado_id');
     }
 
+    public function pagamentos()
+    {
+        return $this->hasMany(Pagamento::class, 'associado_id');
+    }
+    
+
 }
