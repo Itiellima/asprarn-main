@@ -171,4 +171,20 @@ class PagamentosController extends Controller
             'falhasAgrupadas' => $falhasAgrupadas
         ]);
     }
+
+    public function show($associadoId)
+    {
+        $user = Auth::user();
+        if (!$user || !$user->hasRole('admin|moderador')) {
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $associado = Associado::findOrFail($associadoId);
+
+        $pagamentos = $associado->pagamentos()
+            ->orderBy('data_pagamento', 'desc')
+            ->paginate(10);
+
+        return view('pagamentos.show', compact('pagamentos', 'associado'));
+    }
 }

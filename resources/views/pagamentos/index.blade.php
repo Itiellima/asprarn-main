@@ -4,6 +4,8 @@
 
 @section('content')
 
+    @include('dashboard.layouts.nav-dashboard')
+
     {{-- @if (session()->all())
         <pre>
         {{ print_r(session()->all(), true) }}
