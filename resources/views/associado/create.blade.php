@@ -402,10 +402,16 @@
                             </div>
                         @endif
 
+
+                        @include('associado.components.como-nos-encontrou')
+
+
                         <div class="container border-bottom border-primary mt-3 text-end">
                             <input type="submit" class="btn btn-primary mb-3" id="submitBtn"
                                 value="{{ $associado->id ? 'Salvar alterações' : 'Cadastrar' }}">
                         </div>
+
+
                     </form>
                 </fieldset>
                 <div class="container row mt-3 text-end">
@@ -425,6 +431,7 @@
 
             </div>
         </div>
+
 
     </div>
 

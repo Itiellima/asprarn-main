@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('como_nos_encontrou', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->string('descricao')->nullable();
+            $table->string('indicacao')->nullable();
+            
+
             $table->timestamps();
         });
     }
