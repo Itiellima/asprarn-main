@@ -139,13 +139,14 @@ class PagamentosController extends Controller
             }
 
             Pagamento::create([
-                'associado_id' => $associado->id,
-                'user_id' => $user->id,
-                'valor' => $valor,
-                'mes_referencia' => $mesReferencia,
-                'data_pagamento' => $data_pagamento,
-                'metodo_pagamento' => 'importacao_csv',
-                'observacao' => $request->input('observacao') ?? null,
+                'associado_id'      => $associado->id,
+                'user_id'           => $user->id,
+                'valor'             => $valor,
+                'mes_referencia'    => $mesReferencia,
+                'data_pagamento'    => $data_pagamento,
+                'metodo_pagamento'  => 'desconto_em_folha',
+                'origem'            => 'importacao_csv',
+                'observacao'        => $request->input('observacao') ?? null,
             ]);
 
             $sucesso++;
@@ -210,18 +211,32 @@ class PagamentosController extends Controller
         $pagamento = Pagamento::findOrFail($pagamentoId);
 
         $request->validate([
-            'valor' => 'required|numeric',
+            'valor' => 'required|string',
             'data_pagamento' => 'required|date',
-            'mes_referencia' => 'required|date_format:m/Y',
+            'mes_referencia' => 'required',
             'metodo_pagamento' => 'nullable|string|max:255',
+            'tipo' => 'nullable|string|max:255',
+            'status' => 'nullable|string|max:255',
+            'numero_documento' => 'nullable|string|max:255',
+            'origem' => 'nullable|string|max:255',
             'observacao' => 'nullable|string',
         ]);
 
+        $valor = str_replace('.', '', $request->input('valor'));
+        $valor = str_replace(',', '.', $request->input('valor'));
+        $valor = trim($valor);
+
+        $mesReferencia = Carbon::createFromFormat('Y-m', $request->input('mes_referencia'))->startOfMonth();
+
         $pagamento->update([
-            'valor' => $request->input('valor'),
+            'valor' => $valor,
             'data_pagamento' => $request->input('data_pagamento'),
-            'mes_referencia' => Carbon::createFromFormat('m/Y', $request->input('mes_referencia'))->startOfMonth(),
+            'mes_referencia' => $mesReferencia,
             'metodo_pagamento' => $request->input('metodo_pagamento'),
+            'tipo' => $request->input('tipo'),
+            'status' => $request->input('status'),
+            'numero_documento' => $request->input('numero_documento'),
+            'origem' => $request->input('origem'),
             'observacao' => $request->input('observacao'),
         ]);
 

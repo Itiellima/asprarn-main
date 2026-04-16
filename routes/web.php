@@ -241,3 +241,4 @@ Route::post('/pagamentos/read-archive', [PagamentosController::class, 'readArchi
 Route::post('/pagamentos/processar', [PagamentosController::class, 'processarPagamentos'])->name('pagamentos.processar');
 Route::get('/pagamentos/show/{associadoId}', [PagamentosController::class, 'show'])->name('pagamentos.show');
 Route::get('/pagamentos/edit/{pagamentoId}', [PagamentosController::class, 'edit'])->name('pagamentos.edit');
+Route::put('/pagamentos/update/{pagamentoId}', [PagamentosController::class, 'update'])->name('pagamentos.update');

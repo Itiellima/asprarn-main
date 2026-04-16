@@ -7,7 +7,7 @@
     @include('dashboard.layouts.nav-dashboard')
 
     <div class="container">
-        <h3>Pagamentos de {{ $associado->nome }}</h3>
+        <h3>Pagamentos de <strong>{{ $associado->nome }}</strong></h3>
     </div>
 
     <div class="container">
