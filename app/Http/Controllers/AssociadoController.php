@@ -7,6 +7,7 @@ use App\Events\NotificacaoCriada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Associado;
+use App\Models\ComoNosEncontrou;
 use App\Models\Contato;
 use App\Models\Endereco;
 use App\Models\DadosBancarios;
@@ -254,6 +255,13 @@ class AssociadoController extends Controller
                     'path' => $path,
                 ]);
             }
+
+            ComoNosEncontrou::create([
+                'associado_id' => $associado->id,
+                'nome' => $request->input('nome'),
+                'descricao' => $request->input('como_nos_encontrou_descricao'),
+                'indicacao' => $request->input('como_nos_encontrou_indicacao'),
+            ]);
 
 
             DB::commit();

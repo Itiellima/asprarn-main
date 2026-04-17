@@ -26,7 +26,7 @@ use App\Http\Controllers\OpmController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\PrestadorDeServicosController;
 use App\Http\Controllers\PagamentosController;
-
+use App\Http\Controllers\ComoNosEncontrouController;
 
 
 
@@ -242,3 +242,8 @@ Route::post('/pagamentos/processar', [PagamentosController::class, 'processarPag
 Route::get('/pagamentos/show/{associadoId}', [PagamentosController::class, 'show'])->name('pagamentos.show');
 Route::get('/pagamentos/edit/{pagamentoId}', [PagamentosController::class, 'edit'])->name('pagamentos.edit');
 Route::put('/pagamentos/update/{pagamentoId}', [PagamentosController::class, 'update'])->name('pagamentos.update');
+
+
+
+////////////////////////////////// ********* COMO NOS ENCONTROU ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Route::get('/como-nos-encontrou', [ComoNosEncontrouController::class, 'index'])->name('como-nos-encontrou.index');
