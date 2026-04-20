@@ -19,6 +19,8 @@ class ComoNosEncontrouController extends Controller
         $comoNosEncontrou = ComoNosEncontrou::orderBy('created_at', 'desc')
             ->paginate(10);
 
+        
+
 
         return view('como-nos-encontrou.index', compact('comoNosEncontrou'));
     }

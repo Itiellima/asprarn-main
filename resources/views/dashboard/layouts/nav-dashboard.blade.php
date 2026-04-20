@@ -25,7 +25,7 @@
                     <a href="{{ route('planos.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">📋 Planos</a>
                     <a href="{{ route('pagamentos.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">💳 Pagamentos</a>
 
-                    {{-- Button Administração --}}
+                    {{-- Button Gestão --}}
                     <div class="dropdown col-lg-3 m-1 p-0">
                         <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -77,8 +77,9 @@
                             <li>
                                 <a href="{{ route('notificacoes.index') }}" class="dropdown-item">🔔 Notificações</a>
                             </li>
+                            <li class="dropdown-divider"></li>
                             <li>
-                                <a href="#" class="dropdown-item">💰 Financeiro*</a>
+                                <a href="{{ route('como-nos-encontrou.index') }}" class="dropdown-item">Como nos encontrou</a>
                             </li>
                         </ul>
                     </div>

@@ -242,7 +242,8 @@ Route::post('/pagamentos/processar', [PagamentosController::class, 'processarPag
 Route::get('/pagamentos/show/{associadoId}', [PagamentosController::class, 'show'])->name('pagamentos.show');
 Route::get('/pagamentos/edit/{pagamentoId}', [PagamentosController::class, 'edit'])->name('pagamentos.edit');
 Route::put('/pagamentos/update/{pagamentoId}', [PagamentosController::class, 'update'])->name('pagamentos.update');
-
+Route::get('/pagamentos/create/{associadoId}', [PagamentosController::class, 'create'])->name('pagamentos.create');
+Route::post('/pagamentos/store/{associadoId}', [PagamentosController::class, 'store'])->name('pagamentos.store');
 
 
 ////////////////////////////////// ********* COMO NOS ENCONTROU ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

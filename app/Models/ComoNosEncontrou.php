@@ -15,4 +15,9 @@ class ComoNosEncontrou extends Model
         'descricao',
         'indicacao',
     ];
+
+    public function associado()
+    {
+        return $this->belongsTo(Associado::class, 'associado_id');
+    }
 }

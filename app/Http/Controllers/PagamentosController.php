@@ -242,4 +242,62 @@ class PagamentosController extends Controller
 
         return redirect()->route('pagamentos.show', $pagamento->associado_id)->with('success', 'Pagamento atualizado com sucesso.');
     }
+
+    public function create($associadoId)
+    {
+        $user = Auth::user();
+        if (!$user || !$user->hasRole('admin|moderador')) {
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $associado = Associado::findOrFail($associadoId);
+
+        $pagamento = new Pagamento();
+
+        return view('pagamentos.create', compact('associado', 'pagamento'));
+    }
+
+    public function store(Request $request, $associadoId)
+    {
+        $user = Auth::user();
+        if (!$user || !$user->hasRole('admin|moderador')) {
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $associado = Associado::findOrFail($associadoId);
+
+        $request->validate([
+            'valor' => 'required|string',
+            'data_pagamento' => 'required|date',
+            'mes_referencia' => 'required',
+            'metodo_pagamento' => 'nullable|string|max:255',
+            'tipo' => 'nullable|string|max:255',
+            'status' => 'nullable|string|max:255',
+            'numero_documento' => 'nullable|string|max:255',
+            'origem' => 'nullable|string|max:255',
+            'observacao' => 'nullable|string',
+        ]);
+
+        $valor = str_replace('.', '', $request->input('valor'));
+        $valor = str_replace(',', '.', $request->input('valor'));
+        $valor = trim($valor);
+
+        $mesReferencia = Carbon::createFromFormat('Y-m', $request->input('mes_referencia'))->startOfMonth();
+
+        Pagamento::create([
+            'associado_id' => $associado->id,
+            'user_id' => $user->id,
+            'valor' => $valor,
+            'data_pagamento' => $request->input('data_pagamento'),
+            'mes_referencia' => $mesReferencia,
+            'metodo_pagamento' => $request->input('metodo_pagamento'),
+            'tipo' => $request->input('tipo'),
+            'status' => $request->input('status'),
+            'numero_documento' => $request->input('numero_documento'),
+            'origem' => $request->input('origem'),
+            'observacao' => $request->input('observacao'),
+        ]);
+
+        return redirect()->route('pagamentos.show', $associadoId)->with('success', 'Pagamento criado com sucesso.');
+    }
 }

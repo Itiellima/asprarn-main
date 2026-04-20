@@ -50,10 +50,11 @@ class Associado extends Model
             ->withTimestamps();
     }
 
-    public function situacoes(){
+    public function situacoes()
+    {
         return $this->belongsToMany(Situacao::class, 'associado_situacao')
-        ->withPivot(['data_inicio', 'data_fim', 'ativo'])
-        ->withTimestamps();
+            ->withPivot(['data_inicio', 'data_fim', 'ativo'])
+            ->withTimestamps();
     }
 
     public function mensalidades()
@@ -116,6 +117,9 @@ class Associado extends Model
     {
         return $this->hasMany(Pagamento::class, 'associado_id');
     }
-    
 
+    public function comoNosEncontrou()
+    {
+        return $this->hasMany(ComoNosEncontrou::class, 'associado_id');
+    }
 }

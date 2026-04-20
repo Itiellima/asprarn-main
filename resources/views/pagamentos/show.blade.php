@@ -9,6 +9,9 @@
     <div class="container">
         <h3>Pagamentos de <strong>{{ $associado->nome }}</strong></h3>
     </div>
+    <div class="container">
+        <a href="{{ route('pagamentos.create', $associado->id) }}" class="btn btn-success mb-3">Adicionar Pagamento</a>
+    </div>
 
     <div class="container">
         <table class="table table-striped">

@@ -6,6 +6,7 @@
 
     @include('dashboard.layouts.nav-dashboard')
 
+    @include('pagamentos.components.form')
 
 
 

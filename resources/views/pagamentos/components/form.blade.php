@@ -1,7 +1,7 @@
 <div class="container">
     <h3>Editar Pagamento</h3>
 
-    <form action="{{ $pagamento->id ? route('pagamentos.update', $pagamento->id) : route('pagamentos.store') }}"
+    <form action="{{ $pagamento->id ? route('pagamentos.update', $pagamento->id) : route('pagamentos.store', $associado->id) }}"
         method="POST">
         @csrf
         @if ($pagamento->id)
@@ -19,13 +19,14 @@
         <div class="mb-3">
             <label for="data_pagamento" class="form-label">Data de Pagamento</label>
             <input type="date" class="form-control" id="data_pagamento" name="data_pagamento"
-                value="{{ old('data_pagamento', $pagamento->data_pagamento->format('Y-m-d')) }}" required>
+                value="{{ old('data_pagamento', optional($pagamento->data_pagamento)->format('Y-m-d')) ?? now()->format('Y-m-d') }}"
+                required>
         </div>
 
         <div class="mb-3">
             <label for="mes_referencia" class="form-label">Mês de Referência</label>
             <input type="month" class="form-control" id="mes_referencia" name="mes_referencia"
-                value="{{ old('mes_referencia', $pagamento->mes_referencia->format('Y-m')) }}" required>
+                value="{{ old('mes_referencia', optional($pagamento->mes_referencia)->format('Y-m')) }}" required>
         </div>
 
         <div class="mb-3">
@@ -46,7 +47,8 @@
                     {{ old('metodo_pagamento', $pagamento->metodo_pagamento) === 'dinheiro' ? 'selected' : '' }}>
                     Dinheiro
                 </option>
-                <option value="desconto_em_folha" {{ old('metodo_pagamento', $pagamento->metodo_pagamento) === 'desconto_em_folha' ? 'selected' : '' }}>
+                <option value="desconto_em_folha"
+                    {{ old('metodo_pagamento', $pagamento->metodo_pagamento) === 'desconto_em_folha' ? 'selected' : '' }}>
                     Desconto em folha
                 </option>
             </select>
