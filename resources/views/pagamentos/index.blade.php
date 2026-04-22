@@ -21,22 +21,6 @@
         </div>
     @endif
 
-    {{-- @if (session('falhasDetalhes'))
-        <div class="alert alert-danger mt-3">
-            <strong>Detalhes das falhas:</strong>
-
-            <ul class="mb-0">
-                @foreach (session('falhasDetalhes') as $erro)
-                    <li>
-                        CPF: <strong>{{ $erro['cpf'] }}</strong> -
-                        Nome: <strong>{{ $erro['nome'] }}</strong> -
-                        Motivo:
-                        {{ $erro['motivo'] }}
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-    @endif --}}
 
     @if (session('falhasAgrupadas'))
         <div class="alert alert-danger mt-3">
@@ -61,14 +45,28 @@
 
 
     <div class="container">
-        <h1>Pagamentos</h1>
-        <p>Bem-vindo à página de pagamentos!</p>
+        <h1>Importar Pagamentos</h1>
+        <p>Bem-vindo à página de importação de pagamentos!</p>
+
+        <p>Faça upload de um arquivo CSV contendo os pagamentos para processar os dados e atualizar as informações de
+            pagamento dos associados.</p>
+        <p><a href="https://consig.rn.gov.br/rnconsig/index.php?class=LoginServidor" target="_blank">Acesse o RNConsig</a>
+            para baixar o modelo de arquivo CSV correto.</p>
+        Encontrara o arquivo em "Relatório > Pagamentos > Exportar CSV". Certifique-se de baixar o arquivo no formato
+        correto para garantir que os dados sejam processados corretamente.
+
+        <p>O arquivo CSV deve conter as seguintes colunas: Nome, CPF, Matrícula, Valor e Mês de Referência. Após o upload,
+            os dados serão validados e processados para atualizar os registros de pagamento dos associados.</p>
+        <p>Se houver algum erro durante o processamento, uma mensagem detalhada será exibida indicando quais registros
+            falharam e o motivo da falha.</p>
+        <p>Após a importação, você poderá revisar os pagamentos processados e verificar se as informações foram atualizadas
+            corretamente.</p>
 
         <form action="{{ route('pagamentos.readArchive') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-3">
-                <label for="arquivo" class="form-label">Selecione o arquivo de pagamentos:</label>
+                <label for="arquivo" class="form-label">Selecione o arquivo CSV de pagamentos:</label>
                 <input type="file" class="form-control" id="arquivo" name="arquivo" required>
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>

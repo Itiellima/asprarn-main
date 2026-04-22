@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'AspraRN - Bem vindo')
+@section('title', 'AspraRN - Pagamentos')
 
 @section('content')
 
@@ -31,7 +31,7 @@
                         <td>{{ $pagamento->data_pagamento->format('d/m/Y') }}</td>
                         <td>
                             <a href="{{ route('pagamentos.edit', $pagamento->id) }}" class="btn btn-sm btn-primary">Editar</a>
-                            
+
                             <form action="{{ route('pagamentos.destroy', $pagamento->id) }}" method="POST" style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')

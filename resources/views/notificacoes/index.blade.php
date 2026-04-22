@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'AspraRN - Bem vindo')
+@section('title', 'AspraRN - Notificações')
 
 @section('content')
 
