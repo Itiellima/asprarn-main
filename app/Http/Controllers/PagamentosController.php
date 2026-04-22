@@ -97,73 +97,78 @@ class PagamentosController extends Controller
         $falhasDetalhes = [];
 
         DB::beginTransaction();
-        foreach ($dados as $linha) {
-            $cpf = preg_replace('/\D/', '', $linha['cpf']);
-            $associado = Associado::where('cpf', $cpf)->first();
+        try {
+            foreach ($dados as $linha) {
+                $cpf = preg_replace('/\D/', '', $linha['cpf']);
+                $associado = Associado::where('cpf', $cpf)->first();
 
-            if (!$associado) {
-                $falhas++;
+                if (!$associado) {
+                    $falhas++;
 
-                $falhasDetalhes[] = [
-                    'cpf' =>  $cpf,
-                    'nome' => $linha['nome'] ?? 'N/A',
-                    'motivo' => 'Associado não encontrado'
-                ];
+                    $falhasDetalhes[] = [
+                        'cpf' =>  $cpf,
+                        'nome' => $linha['nome'] ?? 'N/A',
+                        'motivo' => 'Associado não encontrado'
+                    ];
 
-                continue;
+                    continue;
+                }
+
+                $valor = str_replace('.', '', $linha['valor']);
+                $valor = str_replace(',', '.', $linha['valor']);
+                $valor = trim($valor);
+
+
+                $data_pagamento = $request->input('data_pagamento') ? $request->input('data_pagamento') : now();
+                $mesReferencia = Carbon::createFromFormat('m/Y', $linha['mes_referencia'])->startOfMonth();
+
+                $existe = Pagamento::where('associado_id', $associado->id)
+                    ->where('mes_referencia', $mesReferencia)
+                    ->where('valor', $valor)
+                    ->exists();
+
+                if ($existe) {
+                    $falhas++;
+
+                    $falhasDetalhes[] = [
+                        'cpf' =>  $cpf,
+                        'nome' => $linha['nome'] ?? 'N/A',
+                        'motivo' => 'Pagamento já registrado para este mês de referência (mesmo valor e mês)'
+                    ];
+
+                    continue;
+                }
+
+                Pagamento::create([
+                    'associado_id'      => $associado->id,
+                    'user_id'           => $user->id,
+                    'valor'             => $valor,
+                    'mes_referencia'    => $mesReferencia,
+                    'data_pagamento'    => $data_pagamento,
+                    'metodo_pagamento'  => 'desconto_em_folha',
+                    'origem'            => 'importacao_csv',
+                    'observacao'        => $request->input('observacao') ?? null,
+                ]);
+
+                $sucesso++;
             }
 
+            $falhasAgrupadas = [];
 
-            $valor = str_replace(',', '.', $linha['valor']);
-            $valor = trim($valor);
+            foreach ($falhasDetalhes as $erro) {
+                $motivo = $erro['motivo'];
 
+                if (!isset($falhasAgrupadas[$motivo])) {
+                    $falhasAgrupadas[$motivo] = [];
+                }
 
-            $data_pagamento = $request->input('data_pagamento') ? $request->input('data_pagamento') : now();
-            $mesReferencia = Carbon::createFromFormat('m/Y', $linha['mes_referencia'])->startOfMonth();
-
-            $existe = Pagamento::where('associado_id', $associado->id)
-                ->where('mes_referencia', $mesReferencia)
-                ->where('valor', $valor)
-                ->exists();
-
-            if ($existe) {
-                $falhas++;
-
-                $falhasDetalhes[] = [
-                    'cpf' =>  $cpf,
-                    'nome' => $linha['nome'] ?? 'N/A',
-                    'motivo' => 'Pagamento já registrado para este mês de referência (mesmo valor e mês)'
-                ];
-
-                continue;
+                $falhasAgrupadas[$motivo][] = $erro;
             }
-
-            Pagamento::create([
-                'associado_id'      => $associado->id,
-                'user_id'           => $user->id,
-                'valor'             => $valor,
-                'mes_referencia'    => $mesReferencia,
-                'data_pagamento'    => $data_pagamento,
-                'metodo_pagamento'  => 'desconto_em_folha',
-                'origem'            => 'importacao_csv',
-                'observacao'        => $request->input('observacao') ?? null,
-            ]);
-
-            $sucesso++;
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Ocorreu um erro ao processar os pagamentos: ' . $e->getMessage());
         }
-
-        $falhasAgrupadas = [];
-
-        foreach ($falhasDetalhes as $erro) {
-            $motivo = $erro['motivo'];
-
-            if (!isset($falhasAgrupadas[$motivo])) {
-                $falhasAgrupadas[$motivo] = [];
-            }
-
-            $falhasAgrupadas[$motivo][] = $erro;
-        }
-        DB::commit();
 
         return redirect()->route('pagamentos.index')->with([
             'success' => 'Pagamentos processados com sucesso.',
