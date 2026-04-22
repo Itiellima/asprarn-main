@@ -31,7 +31,12 @@
                         <td>{{ $pagamento->data_pagamento->format('d/m/Y') }}</td>
                         <td>
                             <a href="{{ route('pagamentos.edit', $pagamento->id) }}" class="btn btn-sm btn-primary">Editar</a>
-                            <a href="#" class="btn btn-sm btn-danger">Excluir</a>
+                            
+                            <form action="{{ route('pagamentos.destroy', $pagamento->id) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este pagamento?')">Excluir</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

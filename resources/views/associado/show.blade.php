@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Aspra Associado')
+@section('title', 'AspraRN - Associado')
 
 @section('content')
 

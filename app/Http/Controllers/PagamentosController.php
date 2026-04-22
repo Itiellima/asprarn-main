@@ -300,4 +300,18 @@ class PagamentosController extends Controller
 
         return redirect()->route('pagamentos.show', $associadoId)->with('success', 'Pagamento criado com sucesso.');
     }
+
+    public function destroy($pagamentoId)
+    {
+        $user = Auth::user();
+        if (!$user || !$user->hasRole('admin|moderador')) {
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $pagamento = Pagamento::findOrFail($pagamentoId);
+        $associadoId = $pagamento->associado_id;
+        $pagamento->delete();
+
+        return redirect()->route('pagamentos.show', $associadoId)->with('success', 'Pagamento excluído com sucesso.');
+    }
 }

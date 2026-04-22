@@ -244,6 +244,7 @@ Route::get('/pagamentos/edit/{pagamentoId}', [PagamentosController::class, 'edit
 Route::put('/pagamentos/update/{pagamentoId}', [PagamentosController::class, 'update'])->name('pagamentos.update');
 Route::get('/pagamentos/create/{associadoId}', [PagamentosController::class, 'create'])->name('pagamentos.create');
 Route::post('/pagamentos/store/{associadoId}', [PagamentosController::class, 'store'])->name('pagamentos.store');
+Route::delete('/pagamentos/destroy/{pagamentoId}', [PagamentosController::class, 'destroy'])->name('pagamentos.destroy');
 
 
 ////////////////////////////////// ********* COMO NOS ENCONTROU ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
