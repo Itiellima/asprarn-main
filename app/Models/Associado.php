@@ -83,7 +83,8 @@ class Associado extends Model
         'matricula',
         'opm',
         'dependentes',
-        'obs'
+        'obs',
+        'dt_inclusao'
     ];
 
     protected static function booted()

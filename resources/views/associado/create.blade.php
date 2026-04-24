@@ -170,6 +170,12 @@
                                     placeholder="Insira o nome da mãe"
                                     value="{{ old('nome_mae', $associado->nome_mae) }}">
                             </div>
+                            <div class="mb-3 col-md-6 col-sm-6">
+                                <label for="formGroup" class="form-label">Data de Filiação:</label>
+                                <input type="date" class="form-control " id="dt_inclusao" name="dt_inclusao"
+                                    placeholder="Insira a data de filiação"
+                                    value="{{ old('dt_inclusao', $associado->dt_inclusao) }}">
+                            </div>
                         </div>
 
                         {{-- Endereço --}}

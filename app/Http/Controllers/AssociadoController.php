@@ -174,6 +174,7 @@ class AssociadoController extends Controller
             'cpf'   => 'required|unique:associados,cpf|digits:11',
             'email' => 'required|unique:users,email',
             'picture_profile' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'dt_inclusao' => 'nullable|date',
         ], [
             'cpf.unique'   => 'Já existe um associado cadastrado com esse CPF.',
             'cpf.digits'     => 'O CPF deve conter exatamente 11 dígitos numericos.',
@@ -181,6 +182,7 @@ class AssociadoController extends Controller
             'picture_profile.image' => 'O arquivo deve ser uma imagem.',
             'picture_profile.mimes' => 'O arquivo deve ser do tipo: jpeg, png, jpg.',
             'picture_profile.max' => 'O arquivo não pode exceder 2MB.',
+            'dt_inclusao.date' => 'A data de inclusão deve ser uma data válida.',
         ]);
 
         if (!\App\Helpers\CpfHelper::validar($request->cpf)) {
@@ -206,7 +208,8 @@ class AssociadoController extends Controller
                 'matricula',
                 'opm',
                 'dependentes',
-                'obs'
+                'obs',
+                'dt_inclusao'
             ]));
 
             // 4. Cria endereço
@@ -359,7 +362,8 @@ class AssociadoController extends Controller
                 'matricula',
                 'opm',
                 'dependentes',
-                'obs'
+                'obs',
+                'dt_inclusao'
             ]));
 
             // Atualiza o endereço (assume que o relacionamento existe)
