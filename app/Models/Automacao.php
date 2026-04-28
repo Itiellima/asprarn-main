@@ -18,6 +18,7 @@ class Automacao extends Model
         'ativo',
         'situacao_id',
         'ultima_execucao',
+        'tipo_execucao',
     ];
 
     public function situacao()

@@ -98,8 +98,8 @@
 
                         <div class="col-md-3 d-flex align-items-center">
                             <div class="form-check form-switch">
-                                <input type="checkbox" name="ativo" id="ativo"
-                                    class="form-check-input" value="1">
+                                <input type="checkbox" name="ativo" id="ativo" class="form-check-input"
+                                    value="1">
                                 <label class="form-check-label fw-bold">
                                     Ativo?
                                 </label>
@@ -118,11 +118,20 @@
                         </div>
 
                     </div>
-                    <div class="">
-                        <label for="form-label">Repetir todo mês no dia:</label>
-                        <input type="number" name="repetir_dias" id="repetir_dias" class="form-control"
-                            min="0" max="31" placeholder="Ex: 30">
+                    <div class="row g3 mt-3">
+                        <div class="col-md-6">
+                            <label for="form-label">Repetir todo mês no dia:</label>
+                            <input type="number" name="repetir_dias" id="repetir_dias" class="form-control" min="0"
+                                max="31" placeholder="Ex: 30">
                             <label class="form-label">Deixe em branco para não repetir mensalmente</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="form-label">Tipo de execução:</label>
+                            <select name="tipo_execucao" id="tipo_execucao" class="form-control">
+                                <option value="">Selecione</option>
+                                <option value="aniversario">Aniversário</option>
+                            </select>
+                        </div>
                     </div>
 
                 </div>

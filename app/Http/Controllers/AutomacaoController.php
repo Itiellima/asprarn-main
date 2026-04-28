@@ -70,6 +70,119 @@ class AutomacaoController extends Controller
         ]);
     }
 
+    // public function executar()
+    // {
+    //     // pega a data de hoje
+    //     $agora = now()->toDateString();
+
+    //     // pega as automacoes ativas
+    //     $automacoes = Automacao::where('ativo', true)->get();
+    //     // inicializa array de resultados
+    //     $resultados = [];
+
+
+    //     foreach ($automacoes as $auto) {
+
+    //         // garante valor padrão false
+    //         $deveExecutar = false;
+
+    //         // data inicio
+    //         $dataInicio = Carbon::parse($auto->data_inicio)->toDateString();
+
+    //         // não executa antes da data de início
+    //         if ($agora < $dataInicio) {
+    //             continue;
+    //         }
+
+    //         /**
+    //          * CASO 1: repetir_dias (todo mês)
+    //          */
+    //         if (!empty($auto->repetir_dias)) {
+
+    //             $diaHoje = Carbon::now()->day;
+    //             $diaRepetir = (int) $auto->repetir_dias;
+
+    //             // só executa no dia configurado
+    //             if ($diaHoje === $diaRepetir) {
+
+    //                 // evita executar duas vezes no mesmo dia
+    //                 if (!$auto->ultima_execucao || $auto->ultima_execucao !== $agora) {
+    //                     $deveExecutar = true;
+    //                 }
+    //             }
+    //         }
+    //         /**
+    //          * CASO 2: intervalo normal
+    //          */
+    //         else {
+
+    //             // se nunca executou, executa na data_inicio
+    //             if (!$auto->ultima_execucao) {
+    //                 $deveExecutar = $agora >= $dataInicio;
+
+    //                 // se já executou, verifica intervalo usando Carbon
+    //             } else {
+    //                 $proximaExec = Carbon::parse($auto->ultima_execucao)
+    //                     ->addDays($auto->intervalo_dias)
+    //                     ->toDateString();
+
+    //                 $deveExecutar = $agora >= $proximaExec;
+    //             }
+    //         }
+
+    //         // CASO 3: tipo_execucao específico (ex: aniversariantes)
+    //         if ($auto->tipo_execucao === 'aniversario') {
+    //             $deveExecutar = true;
+    //         }
+
+
+    //         if (!$deveExecutar) {
+    //             continue;
+    //         }
+
+
+    //         $associados = Associado::whereHas('situacoes', function ($query) use ($auto) {
+    //             $query->where('situacoes.id', $auto->situacao_id);
+    //         });
+
+    //         if ($auto->tipo_execucao === 'aniversario') {
+
+    //             $hojeMes = now()->month;
+    //             $hojeDia = now()->day;
+
+    //             $associados->whereMonth('data_nascimento', $hojeMes)
+    //                 ->whereDay('data_nascimento', $hojeDia);
+    //         }
+
+    //         $associados = $associados->get();
+
+    //         if ($auto->tipo_execucao === 'aniversario') {
+    //             if ($auto->ultima_execucao === $agora) {
+    //                 continue;
+    //             }
+    //         }
+
+    //         $resultados[] = [
+    //             'automacao' => $auto->nome,
+    //             'mensagem' => $auto->mensagem,
+    //             'associados' => $associados->pluck('nome'),
+    //             'telefones' => $associados->map(function ($assoc) {
+    //                 return optional($assoc->contato)->tel_celular ?? $assoc->telefone ?? 'sem telefone';
+    //             }),
+    //         ];
+
+    //         $auto->ultima_execucao = $agora;
+    //         $auto->save();
+    //     }
+
+
+    //     return response()->json([
+    //         'status' => 'ok',
+    //         // 'automacoes' => $automacoes->pluck('nome'),
+    //         'resultados' => $resultados
+    //     ]);
+    // }
+
     public function executar()
     {
         $agora = now()->toDateString();
@@ -79,36 +192,42 @@ class AutomacaoController extends Controller
 
         foreach ($automacoes as $auto) {
 
-            // garante valor padrão
+            // evita executar mais de uma vez no mesmo dia
+            if ($auto->ultima_execucao === $agora) {
+                continue;
+            }
+
             $deveExecutar = false;
 
-            // data inicio
+            // data início
             $dataInicio = Carbon::parse($auto->data_inicio)->toDateString();
 
-            // não executa antes da data de início
             if ($agora < $dataInicio) {
                 continue;
             }
 
             /**
-             * CASO 1: repetir_dias (todo mês)
+             * CASO 1: ANIVERSÁRIO
              */
-            if (!empty($auto->repetir_dias)) {
+            if ($auto->tipo_execucao === 'aniversario') {
+                $deveExecutar = true;
+            }
 
-                $diaHoje = Carbon::now()->day;
+            /**
+             * CASO 2: repetir_dias (mensal)
+             */
+            elseif (!empty($auto->repetir_dias)) {
+
+                $diaHoje = now()->day;
                 $diaRepetir = (int) $auto->repetir_dias;
 
-                // só executa no dia configurado
                 if ($diaHoje === $diaRepetir) {
-
-                    // evita executar duas vezes no mesmo dia
-                    if (!$auto->ultima_execucao || $auto->ultima_execucao !== $agora) {
-                        $deveExecutar = true;
-                    }
+                    $deveExecutar = true;
                 }
             }
+
             /**
-             * CASO 2: intervalo normal
+             * CASO 3: intervalo
              */
             else {
 
@@ -127,29 +246,58 @@ class AutomacaoController extends Controller
                 continue;
             }
 
-
-
-            $associados = Associado::whereHas('situacoes', function ($query) use ($auto) {
+            /**
+             * BUSCA ASSOCIADOS
+             */
+            $associadosQuery = Associado::whereHas('situacoes', function ($query) use ($auto) {
                 $query->where('situacoes.id', $auto->situacao_id);
-            })->get();
+            });
 
+            // filtro de aniversário
+            if ($auto->tipo_execucao === 'aniversario') {
+
+                $hojeMes = now()->month;
+                $hojeDia = now()->day;
+
+                $associadosQuery->whereMonth('dt_nasc', $hojeMes)
+                    ->whereDay('dt_nasc', $hojeDia);
+            }
+
+            $associados = $associadosQuery
+                ->with('contato') // evita N+1
+                ->get();
+
+            // evita execução sem ninguém
+            if ($associados->isEmpty()) {
+                continue;
+            }
+
+            /**
+             * RESULTADO
+             */
             $resultados[] = [
                 'automacao' => $auto->nome,
-                'mensagem' => $auto->mensagem,
+                // mensagem personalizada
+                'mensagens' => $auto->mensagem,
+
                 'associados' => $associados->pluck('nome'),
+                
                 'telefones' => $associados->map(function ($assoc) {
-                    return optional($assoc->contato)->tel_celular ?? $assoc->telefone ?? 'sem telefone';
+                    return optional($assoc->contato)->tel_celular
+                        ?? $assoc->telefone
+                        ?? 'sem telefone';
                 }),
             ];
 
+            /**
+             * ATUALIZA EXECUÇÃO
+             */
             $auto->ultima_execucao = $agora;
             $auto->save();
         }
 
-
         return response()->json([
             'status' => 'ok',
-            // 'automacoes' => $automacoes->pluck('nome'),
             'resultados' => $resultados
         ]);
     }
@@ -187,9 +335,11 @@ class AutomacaoController extends Controller
             'intervalo_dias' => 'nullable|integer|min:0',
             'situacao_id' => 'required|exists:situacoes,id',
             'ativo' => 'required|boolean',
+            'tipo_execucao' => 'nullable|string',
         ]);
 
         $data['ativo'] = $request->has('ativo');
+        
 
         Automacao::create($data);
 
