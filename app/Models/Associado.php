@@ -8,6 +8,26 @@ use Illuminate\Support\Facades\Storage;
 class Associado extends Model
 {
     // Um associado pertence a um usuario
+    protected $fillable = [
+        'nome',
+        'cpf',
+        'rg',
+        'org_expedidor',
+        'nome_pai',
+        'nome_mae',
+        'dt_nasc',
+        'estado_civil',
+        'grau_instrucao',
+        'graduacao',
+        'nome_guerra',
+        'nmr_praca',
+        'matricula',
+        'opm',
+        'dependentes',
+        'obs',
+        'dt_inclusao'
+    ];
+
     public function user()
     {
         return $this->hasOne(User::class);
@@ -18,10 +38,12 @@ class Associado extends Model
     {
         return $this->hasOne(Endereco::class);
     }
+
     public function contato()
     {
         return $this->hasOne(Contato::class);
     }
+
     public function dadosBancarios()
     {
         return $this->hasOne(DadosBancarios::class);
@@ -67,26 +89,6 @@ class Associado extends Model
         return $this->hasOne(PictureProfile::class);
     }
 
-    protected $fillable = [
-        'nome',
-        'cpf',
-        'rg',
-        'org_expedidor',
-        'nome_pai',
-        'nome_mae',
-        'dt_nasc',
-        'estado_civil',
-        'grau_instrucao',
-        'graduacao',
-        'nome_guerra',
-        'nmr_praca',
-        'matricula',
-        'opm',
-        'dependentes',
-        'obs',
-        'dt_inclusao'
-    ];
-
     protected static function booted()
     {
         static::deleting(function ($associado) {
@@ -123,5 +125,4 @@ class Associado extends Model
     {
         return $this->hasOne(ComoNosEncontrou::class, 'associado_id');
     }
-    
 }
