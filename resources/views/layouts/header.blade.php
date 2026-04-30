@@ -8,11 +8,8 @@
         </a>
 
         {{-- BOTÃO MOBILE --}}
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarsExample11"
-            aria-controls="navbarsExample11"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11"
+            aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
 
             <span class="navbar-toggler-icon"></span>
 
@@ -24,19 +21,27 @@
             <ul class="navbar-nav  justify-content-lg-center mx-auto">
 
                 <li class="nav-item">
-                    <a href="/" class="nav-link"><h4>Início</h4></a>
+                    <a href="/" class="nav-link">
+                        <h4>Início</h4>
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('beneficio.index') }}" class="nav-link"><h4>Benefícios</h4></a>
+                    <a href="{{ route('beneficio.index') }}" class="nav-link">
+                        <h4>Benefícios</h4>
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('quem.somos') }}" class="nav-link"><h4>Quem somos</h4></a>
+                    <a href="{{ route('quem.somos') }}" class="nav-link">
+                        <h4>Quem somos</h4>
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('contato.index') }}" class="nav-link"><h4>Contato</h4></a>
+                    <a href="{{ route('contato.index') }}" class="nav-link">
+                        <h4>Contato</h4>
+                    </a>
                 </li>
 
                 <li class="nav-item">
@@ -46,13 +51,15 @@
                 </li>
 
                 @auth
-                <li class="nav-item">
-                    <a href="/dashboard" class="nav-link"><h4>Minha Página</h4></a>
-                </li>
+                    <li class="nav-item">
+                        <a href="/dashboard" class="nav-link">
+                            <h4>Minha Página</h4>
+                        </a>
+                    </li>
 
-                <li class="nav-item">
-                    <livewire:notificacoes-alerta />
-                </li>
+                    <li class="nav-item">
+                        <livewire:notificacoes-alerta />
+                    </li>
                 @endauth
 
             </ul>
@@ -61,28 +68,28 @@
             <div class="ms-auto">
 
                 @auth
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
 
-                    <label style="color:#fff">
-                        Olá, {{ auth()->user()->name }}!
-                    </label><br>
+                        <label style="color:#fff">
+                            Olá, {{ auth()->user()->name }}!
+                        </label><br>
 
-                    <button id="sair" class="btn btn-primary px-4" type="submit">
-                        Sair
-                    </button>
-                </form>
-
+                        <button id="sair" class="btn btn-primary px-4" type="submit">
+                            Sair
+                        </button>
+                    </form>
                 @else
-
-                <a class="btn btn-danger" href="/login">
-                    <strong>Login</strong>
-                </a>
+                    <a class="btn btn-danger" href="/login">
+                        <strong>Login</strong>
+                    </a>
 
                 @endauth
 
             </div>
-
+            <button id="theme-toggle" class="btn btn-outline-secondary m-1">
+                🌙
+            </button>
         </div>
 
     </div>

@@ -84,26 +84,51 @@
 
 /* pulsar botao */
 .elementor-button {
-    box-shadow: 0 0 0 0 #000; /* sombra inicial */
-    animation: pulse-white 2s infinite; /* aplica a animação */
+    box-shadow: 0 0 0 0 #000;
+    /* sombra inicial */
+    animation: pulse-white 2s infinite;
+    /* aplica a animação */
 }
 
 @keyframes pulse-white {
     0% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 #B28C57; /* sombra inicial dourada */
+        box-shadow: 0 0 0 0 #B28C57;
+        /* sombra inicial dourada */
     }
+
     70% {
-        transform: scale(1.01); /* pequeno aumento */
-        box-shadow: 0 0 0 10px transparent; /* expande e some */
+        transform: scale(1.01);
+        /* pequeno aumento */
+        box-shadow: 0 0 0 10px transparent;
+        /* expande e some */
     }
+
     100% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 transparent; /* volta ao normal */
+        box-shadow: 0 0 0 0 transparent;
+        /* volta ao normal */
     }
 }
 
 .form-check-input:disabled {
     opacity: 1 !important;
     cursor: not-allowed;
+}
+
+body {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.card {
+    border-radius: 12px;
+}
+
+.btn {
+    border-radius: 8px;
+}
+
+#theme-toggle {
+    font-size: 18px;
+    padding: 6px 10px;
 }
