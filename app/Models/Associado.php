@@ -121,6 +121,7 @@ class Associado extends Model
 
     public function comoNosEncontrou()
     {
-        return $this->hasMany(ComoNosEncontrou::class, 'associado_id');
+        return $this->hasOne(ComoNosEncontrou::class, 'associado_id');
     }
+    
 }

@@ -10,16 +10,19 @@
         <h1>Como nos encontrou?</h1>
     </div>
     <div class="container">
-        @foreach ($comoNosEncontrou as $data)
-            <div class="card mb-3">
-                <div class="card-body">
-                    <strong>Associado ID:</strong> <a href="{{ route('associado.show', $data->associado_id) }}">{{ $data->associado_id }}</a>
-                    <h5 class="card-title">{{ $data->nome }}</h5>
-                    <p class="card-text"><strong>Descrição:</strong> {{ $data->descricao }}</p>
-                    <p class="card-text"><strong>Indicação:</strong> {{ $data->indicacao }}</p>
+        <div class="row">
+            @foreach ($comoNosEncontrou as $data)
+                <div class="card m-3 col-md-3 shadow">
+                    <div class="card-body">
+                        <strong>Associado ID:</strong> <a
+                            href="{{ route('associado.show', $data->associado_id) }}">{{ $data->associado_id }}</a>
+                        <h5 class="card-title">{{ $data->nome }}</h5>
+                        <p class="card-text"><strong>Descrição:</strong> {{ $data->descricao }}</p>
+                        <p class="card-text"><strong>Indicação:</strong> {{ $data->indicacao }}</p>
+                    </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        </div>
     </div>
 
     <div class="container mt-4">

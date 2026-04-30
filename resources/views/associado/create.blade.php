@@ -406,10 +406,9 @@
                                 <input type="file" class="form-control mt-3" id="img" name="picture_profile">
                                 <div id="preview-container" class="mt-3"></div>
                             </div>
-
-
-                            @include('associado.components.como-nos-encontrou')
                         @endif
+                        
+                        @include('associado.components.como-nos-encontrou')
 
 
 

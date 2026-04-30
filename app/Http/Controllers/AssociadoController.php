@@ -341,7 +341,7 @@ class AssociadoController extends Controller
             'tel_trabalho' => preg_replace('/[^0-9]/', '', $request->tel_trabalho),
         ]);
 
-        $associado = Associado::with(['endereco', 'contato', 'dadosBancarios'])->findOrFail($id);
+        $associado = Associado::with(['endereco', 'contato', 'dadosBancarios', 'comoNosEncontrou'])->findOrFail($id);
 
         DB::beginTransaction();
         try {
@@ -403,6 +403,17 @@ class AssociadoController extends Controller
                     'tipo'
                 ])
             );
+
+            $associado->comoNosEncontrou()->updateOrCreate(
+                [
+                    'associado_id' => $associado->id,
+                ],
+                [
+                    'descricao' => $request->input('como_nos_encontrou_descricao'),
+                    'indicacao' => $request->input('como_nos_encontrou_indicacao'),
+                ]
+            );
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
