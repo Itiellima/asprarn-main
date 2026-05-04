@@ -409,6 +409,7 @@ class AssociadoController extends Controller
                     'associado_id' => $associado->id,
                 ],
                 [
+                    'nome' => $request->input('nome'),
                     'descricao' => $request->input('como_nos_encontrou_descricao'),
                     'indicacao' => $request->input('como_nos_encontrou_indicacao'),
                 ]
