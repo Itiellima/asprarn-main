@@ -111,8 +111,6 @@
             <h2>Mais opções</h2>
         </strong>
         <div class="row mx-3 my-3 justify-content-center">
-            {{-- <a href="{{ route('associado.documentos.index', $associado->id) }}"
-                class="btn btn-primary col-2 mx-2">Documentos</a> --}}
 
             <a href="{{ route('associado.pasta.index', $associado->id) }}" class="btn btn-primary col-2 mx-2">Arquivos</a>
             <a href="{{ route('pagamentos.show', $associado->id) }}" class="btn btn-primary col-2 mx-2">Pagamentos</a>
