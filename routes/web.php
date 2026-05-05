@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AcaoJudicialController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\AssociadoController;
@@ -249,3 +250,8 @@ Route::delete('/pagamentos/destroy/{pagamentoId}', [PagamentosController::class,
 
 ////////////////////////////////// ********* COMO NOS ENCONTROU ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::get('/como-nos-encontrou', [ComoNosEncontrouController::class, 'index'])->name('como-nos-encontrou.index');
+
+
+////////////////////////////////// ********* ACAO JUDICIAL ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Route::get('/acao-judicial', [AcaoJudicialController::class, 'index'])->name('acao-judicial.index');
+Route::post('/acao-judicial/store', [AcaoJudicialController::class, 'store'])->name('acao-judicial.store');
