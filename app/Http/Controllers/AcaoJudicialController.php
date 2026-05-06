@@ -4,19 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AcaoJudicial;
+use Illuminate\Support\Facades\Auth;
 
 class AcaoJudicialController extends Controller
 {
     //
-    public function index()
-    {
-        $acoes = AcaoJudicial::all();
+    // public function index()
+    // {
+    //     $acoes = AcaoJudicial::all();
 
-        return view('acao-judicial.index', compact('acoes'));
-    }
+    //     return view('acao-judicial.index', compact('acoes'));
+    // }
 
     public function store(Request $request)
     {
+
+        $user = Auth::user();
+
+        if (!$user || !$user->hasRole('admin|moderador')) {
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
         $request->validate([
             'nome' => 'required|string|max:255',
         ]);
@@ -26,6 +34,40 @@ class AcaoJudicialController extends Controller
         ]);
 
 
-        return redirect()->route('acao-judicial.index');
+        return redirect()->route('configuracoes.index')->with('success', 'Ação Judicial criada com sucesso!');
+    }
+
+    public function destroy($id)
+    {
+        $user = Auth::user();
+
+        if (!$user || !$user->hasRole('admin|moderador')) {
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $acao = AcaoJudicial::findOrFail($id);
+        $acao->delete();
+
+        return redirect()->route('configuracoes.index')->with('success', 'Ação Judicial deletada com sucesso!');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = Auth::user();
+
+        if (!$user || !$user->hasRole('admin|moderador')) {
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $request->validate([
+            'nome' => 'required|string|max:255',
+        ]);
+
+        $acao = AcaoJudicial::findOrFail($id);
+        $acao->update([
+            'nome' => $request->nome,
+        ]);
+
+        return redirect()->route('configuracoes.index')->with('success', 'Ação Judicial atualizada com sucesso!');
     }
 }

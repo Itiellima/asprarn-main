@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Situacao;
 use App\Models\Opm;
+use App\Models\AcaoJudicial;
 use Illuminate\Support\Facades\Auth;
 
 class ConfiguracoesController extends Controller
@@ -21,8 +22,10 @@ class ConfiguracoesController extends Controller
 
         $situacoes = Situacao::all();
 
-        $opms = Opm::orderBy('nome')->get();
+        $acoes = AcaoJudicial::all();
 
-        return view('configuracoes.index', compact('situacoes', 'opms'));
+        $opms = Opm::orderBy('nome', 'asc')->get();
+
+        return view('configuracoes.index', compact('situacoes', 'opms', 'acoes'));
     }
 }

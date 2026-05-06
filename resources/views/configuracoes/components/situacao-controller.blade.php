@@ -1,9 +1,14 @@
 <div class="container alert alert-light text-black text-center">
     <strong class="text-black">
-        <h2>Situações (Ativo/Inativo)</h2>
+        <h2>Situações</h2>
     </strong>
 
-    <div class="row content-center justify-content-center">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" mb-3 data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Nova situação
+    </button>
+
+    <div class="row mt-3 content-center justify-content-center">
         @foreach ($situacoes as $situacao)
             <form class="col-sm-6 col-md-4 col-lg-3" action="{{ route('situacao.destroy', $situacao->id) }}" method="POST"
                 onsubmit="return confirm('Deseja excluir essa situação?')">
@@ -26,10 +31,7 @@
 
     <br>
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Nova situação
-    </button>
+
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -44,7 +46,7 @@
                         @csrf
 
                         <label for="nome"> Nome da situação</label>
-                        <input type="text" name="nome" id="nome" class="form-control" placeholder="Situação">
+                        <input type="text" name="nome" id="nome" class="form-control" placeholder="Situação" oninput="this.value = this.value.toUpperCase();">
 
                         <hr>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
@@ -57,8 +59,8 @@
 
     <!-- Modal Edit -->
     @foreach ($situacoes as $situacao)
-        <div class="modal fade" id="modalEdit{{ $situacao->id }}" tabindex="-1" aria-labelledby="modalEditLabel{{ $situacao->id }}"
-            aria-hidden="true">
+        <div class="modal fade" id="modalEdit{{ $situacao->id }}" tabindex="-1"
+            aria-labelledby="modalEditLabel{{ $situacao->id }}" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -72,8 +74,8 @@
 
                             <label for="nome_{{ $situacao->id }}"> Nome da situação</label>
                             <input type="text" name="nome" id="nome_{{ $situacao->id }}" class="form-control"
-                                value="{{ $situacao->nome }}">
-                                
+                                value="{{ $situacao->nome }}" oninput="this.value = this.value.toUpperCase();">
+
                             <hr>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
                             <button type="submit" class="btn btn-primary mt-3 mb-3">Salvar</button>

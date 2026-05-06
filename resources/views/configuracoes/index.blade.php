@@ -17,6 +17,8 @@
 
         @include('configuracoes.components.situacao-controller')
 
+        @include('configuracoes.components.acao-judicial')
+
         @include('configuracoes.components.opms-controller')
 
 
