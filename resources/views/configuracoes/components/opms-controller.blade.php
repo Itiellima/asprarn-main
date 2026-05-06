@@ -6,18 +6,20 @@
 
     <div class="row content-center justify-content-center">
         @foreach ($opms as $opm)
-            <div class="alert alert-light m-1 p-1" style="background-color: white; color: black;">
-                <strong>
-                    {{ $opm->nome }}
-                </strong>
-            </div>
-            <form action="{{ route('opms.destroy', $opm->id) }}" method="POST" class="d-inline"
-                onsubmit="return confirm('Deseja excluir essa situação?')">
-                @csrf
-                @method('DELETE')
+            <div class="col-md-6 mb-2 alert alert-light">
+                <div class="alert alert-light m-1 p-1" style="background-color: white; color: black;">
+                    <strong>
+                        {{ $opm->nome }}
+                    </strong>
+                </div>
+                <form action="{{ route('opms.destroy', $opm->id) }}" method="POST" class="d-inline"
+                    onsubmit="return confirm('Deseja excluir essa situação?')">
+                    @csrf
+                    @method('DELETE')
 
-                <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
-            </form>
+                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                </form>
+            </div>
         @endforeach
     </div>
 
