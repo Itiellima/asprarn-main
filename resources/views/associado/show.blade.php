@@ -95,6 +95,8 @@
     {{-- situacao do associado --}}
     @include('associado.components.situacao-associado')
 
+    @include('associado.components.acao-judicial')
+
 
     @include('dashboard.associadoComponents.associado-carteirinha-digital')
 

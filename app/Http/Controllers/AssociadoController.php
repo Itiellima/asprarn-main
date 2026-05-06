@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Notificacao;
 use App\Events\NotificacaoCriada;
+use App\Models\AcaoJudicial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Associado;
@@ -87,8 +88,9 @@ class AssociadoController extends Controller
 
         $totalAssociados = Associado::count();
         $situacoes = Situacao::all();
+        $acoes = AcaoJudicial::all();
 
-        return view('associado.index', ['associados' => $associados, 'search' => $search, 'totalAssociados' => $totalAssociados, 'cidades' => $cidades, 'opms' => $opms, 'situacoes' => $situacoes]);
+        return view('associado.index', ['associados' => $associados, 'search' => $search, 'totalAssociados' => $totalAssociados, 'cidades' => $cidades, 'opms' => $opms, 'situacoes' => $situacoes, 'acoes' => $acoes]);
     }
 
     // view detalhes informaçoes
@@ -106,6 +108,7 @@ class AssociadoController extends Controller
             'dadosBancarios',
             'historicoSituacoes',
             'mensalidades',
+            'acoesJudiciais',
         ])->findOrFail($id);
 
         $contato = $associado->contato ?? new Contato();
@@ -113,8 +116,9 @@ class AssociadoController extends Controller
         $dadosBancarios = $associado->dadosBancarios ?? new DadosBancarios();
 
         $situacoes = Situacao::all();
+        $acoes = AcaoJudicial::all();
 
-        return view('associado.show', compact('associado', 'contato', 'endereco', 'dadosBancarios', 'situacoes'));
+        return view('associado.show', compact('associado', 'contato', 'endereco', 'dadosBancarios', 'situacoes', 'acoes'));
     }
 
     // view para criar um associado

@@ -125,4 +125,10 @@ class Associado extends Model
     {
         return $this->hasOne(ComoNosEncontrou::class, 'associado_id');
     }
+
+    public function acoesJudiciais()
+    {
+        return $this->belongsToMany(AcaoJudicial::class, 'acao_judicial_associado')
+            ->withTimestamps();
+    }
 }

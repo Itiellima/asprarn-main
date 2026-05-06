@@ -19,7 +19,7 @@ class AcaoJudicial extends Model
 
     public function associados()
     {
-        return $this->belongsToMany(Associado::class, 'acao_judicial_associado', 'acao_judicial_id', 'associado_id')
+        return $this->belongsToMany(Associado::class, 'acao_judicial_associado')
             ->withTimestamps();
     }
 
