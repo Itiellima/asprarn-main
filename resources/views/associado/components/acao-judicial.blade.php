@@ -5,7 +5,7 @@
         <h2>Ações em Andamento</h2>
     </strong>
 
-    <form action="" method="POST">
+    <form action="{{ route('acao-judicial.update-acoes', $associado->id) }}" method="POST">
         @csrf
 
         @foreach ($acoes as $acao)

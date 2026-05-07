@@ -7,7 +7,7 @@
 
     <form action="{{ route('situacao.update', $associado->id) }}" method="POST">
         @csrf
-
+        
         @foreach ($situacoes as $situacao)
             <div class="form-check form-check-inline">
                 <input 

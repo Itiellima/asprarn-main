@@ -257,6 +257,7 @@ Route::get('/acao-judicial', [AcaoJudicialController::class, 'index'])->name('ac
 Route::post('/acao-judicial/store', [AcaoJudicialController::class, 'store'])->name('acao-judicial.store');
 Route::delete('/acao-judicial/destroy/{id}', [AcaoJudicialController::class, 'destroy'])->name('acao-judicial.destroy');
 Route::put('/acao-judicial/update/{id}', [AcaoJudicialController::class, 'update'])->name('acao-judicial.update');
+Route::post('/acao-judicial/update-acoes/{id}', [AcaoJudicialController::class, 'updateAcoes'])->name('acao-judicial.update-acoes');
 
 // Exemplo rota protegida por middleware de autenticação e autorização
 // Route::middleware(['auth', 'role:admin|moderador'])->group(function () {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\AcaoJudicial;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Associado;
 
 class AcaoJudicialController extends Controller
 {
@@ -69,5 +70,27 @@ class AcaoJudicialController extends Controller
         ]);
 
         return redirect()->route('configuracoes.index')->with('success', 'Ação Judicial atualizada com sucesso!');
+    }
+
+    public function updateAcoes(Request $request, $id)
+    {
+        $user = Auth::user();
+
+        if (!$user || !$user->hasRole('admin|moderador')) {
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $request->validate([
+            'acoes' => 'required|array',
+            'acoes.*' => 'exists:acao_judicial,id',
+        ]);
+
+        $associado = Associado::findOrFail($id);
+
+        $acoes = $request->input('acoes', []);
+
+        $associado->acoesJudiciais()->sync($acoes);
+
+        return redirect()->route('associado.show', $associado->id)->with('success', 'Ação Judicial atualizada com sucesso!');
     }
 }

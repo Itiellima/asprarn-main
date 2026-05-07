@@ -109,6 +109,7 @@ class AssociadoController extends Controller
             'historicoSituacoes',
             'mensalidades',
             'acoesJudiciais',
+            'situacoes',
         ])->findOrFail($id);
 
         $contato = $associado->contato ?? new Contato();
