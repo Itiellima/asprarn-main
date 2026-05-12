@@ -72,7 +72,7 @@
 <body>
 
     <div class="pagina">
-        <div class="cabecalho" >
+        <div class="cabecalho">
             <img src="/img/aspra-logo-noname.png" alt="Logo" class="me-2">
             <div class="titulo">
                 ASSOCIAÇÃO DOS PRAÇAS DA POLÍCIA MILITAR <br>
@@ -84,20 +84,37 @@
 
         <div class="titulo" style="margin-top: 2cm">
             <p>
-                <h4 class="text-center" style="text-decoration: underline; font-weight: bold;">
-                    RELATORIO
-                </h4>
+            <h4 class="text-center" style="text-decoration: underline; font-weight: bold;">
+                RELATORIO
+            </h4>
             </p>
         </div>
         <div class="conteudo">
-            @foreach ($associados as $associado)
-                <p class="border">
+
+            {{-- <p class="border">
                     {{ $associado->id }} - {{ $associado->nome }} <br>
                     &nbsp; &nbsp; &nbsp; CPF: {{ $associado->cpf }}, RG: {{ $associado->rg }},
                     Nascimento: {{ \Carbon\Carbon::parse($associado->dt_nasc)->format('d/m/Y') }}
-                </p>
-                
-            @endforeach
+                </p> --}}
+
+            <table class="table table-hover">
+                <thead>
+                    <th scope="col">Nome</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Data Nasc</th>
+                    <th scope="col">Idade</th>
+                </thead>
+                @foreach ($associados as $associado)
+                    <tbody>
+                        <tr>
+                            <td>{{ $associado->nome }}</td>
+                            <td>{{ $associado->cpf }}</td>
+                            <td>{{ \Carbon\Carbon::parse($associado->dt_nasc)->format('d/m/Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($associado->dt_nasc)->age }}</td>
+                        </tr>
+                    </tbody>
+                @endforeach
+            </table>
         </div>
 
 
