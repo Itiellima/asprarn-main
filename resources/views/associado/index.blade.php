@@ -122,7 +122,8 @@
                     <a href="/associado/show/{{ $associado->id }}">Mostar informações</a>
                 </div>
                 <div class="card-body">
-                    <input type="checkbox" class="form-check-input checkbox-no-opacity" disabled id="situacao_{{ $associado->id }}"
+                    <input type="checkbox" class="form-check-input checkbox-no-opacity" disabled
+                        id="situacao_{{ $associado->id }}"
                         {{ $associado->situacoes->contains(function ($situacao) {
                             return strtolower($situacao->nome) === 'ativo';
                         })

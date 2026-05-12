@@ -83,7 +83,7 @@
                             <div class="mb-3 col-md-3 col-sm-6">
                                 <label for="formGroup" class="form-label">Data de nascimento: *</label>
                                 <input type="date" class="form-control " id="dt_nasc" name="dt_nasc" required
-                                    value="{{ old('dt_nasc', $associado->dt_nasc) }}">
+                                    value="{{ old('dt_nasc', $associado->dt_nasc?->format('Y-m-d')) }}">
                                 <div class="invalid-feedback">
                                     Data invalida.
                                 </div>
