@@ -28,6 +28,10 @@ class Associado extends Model
         'dt_inclusao'
     ];
 
+    protected $casts = [
+        'dt_nasc' => 'date',
+    ];
+
     public function user()
     {
         return $this->hasOne(User::class);

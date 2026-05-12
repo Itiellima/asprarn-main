@@ -91,11 +91,9 @@
         </div>
         <div class="conteudo">
 
-            {{-- <p class="border">
-                    {{ $associado->id }} - {{ $associado->nome }} <br>
-                    &nbsp; &nbsp; &nbsp; CPF: {{ $associado->cpf }}, RG: {{ $associado->rg }},
-                    Nascimento: {{ \Carbon\Carbon::parse($associado->dt_nasc)->format('d/m/Y') }}
-                </p> --}}
+            <p class="border">
+                Apresentando {{ $associados->count() }} associados.
+            </p>
 
             <table class="table table-hover">
                 <thead>
@@ -105,14 +103,16 @@
                     <th scope="col">Idade</th>
                 </thead>
                 @foreach ($associados as $associado)
-                    <tbody>
-                        <tr>
-                            <td>{{ $associado->nome }}</td>
-                            <td>{{ $associado->cpf }}</td>
-                            <td>{{ \Carbon\Carbon::parse($associado->dt_nasc)->format('d/m/Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($associado->dt_nasc)->age }}</td>
-                        </tr>
-                    </tbody>
+                    @if ($associado->dt_nasc->age >= 10 && $associado->dt_nasc->age <= 150)
+                        <tbody>
+                            <tr>
+                                <td>{{ $associado->nome }}</td>
+                                <td>{{ $associado->cpf }}</td>
+                                <td>{{ \Carbon\Carbon::parse($associado->dt_nasc)->format('d/m/Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($associado->dt_nasc)->age }}</td>
+                            </tr>
+                        </tbody>
+                    @endif
                 @endforeach
             </table>
         </div>
