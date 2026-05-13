@@ -91,9 +91,6 @@
         </div>
         <div class="conteudo">
 
-            <p class="border">
-                Apresentando {{ $associados->count() }} associados.
-            </p>
 
             <table class="table table-hover">
                 <thead>
@@ -103,7 +100,7 @@
                     <th scope="col">Idade</th>
                 </thead>
                 @foreach ($associados as $associado)
-                    @if ($associado->dt_nasc->age >= 10 && $associado->dt_nasc->age <= 150)
+                    {{-- @if ($associado->dt_nasc->age >= 10 && $associado->dt_nasc->age <= 150) --}}
                         <tbody>
                             <tr>
                                 <td>{{ $associado->nome }}</td>
@@ -112,7 +109,7 @@
                                 <td>{{ \Carbon\Carbon::parse($associado->dt_nasc)->age }}</td>
                             </tr>
                         </tbody>
-                    @endif
+                    {{-- @endif --}}
                 @endforeach
             </table>
         </div>

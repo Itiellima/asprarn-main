@@ -12,22 +12,37 @@
                 Relatórios
             </h1>
         </div>
-        
 
-        <div class="container mb-3">
-
-            <a href="{{ route('relatorios.gerar.todos') }}" class="btn btn-primary"> + Imprimir relatorio completo de associados</a>
-            
-            <a href="#" class="btn btn-success"> + Imprimir relatorio de associados ativos</a>
+        <div class="container text-center">
+            <h2>
+                Selecionar filtros para gerar o relatório:
+            </h2>
         </div>
 
+        <form action="{{ route('relatorios.gerar.todos') }}" method="GET" target="_blank">
+            
+            <div class="col-md-2 mb-3">
+                <label class="form-label"><strong>Situação</strong></label>
+                <select name="situacao_id" class="form-select">
 
-        
+                    <option value="">Todos</option>
+
+                    @foreach ($situacoes as $situacao)
+                        <option value="{{ $situacao->id }}"
+                            {{ request('situacao_id') == $situacao->id ? 'selected' : '' }}>
+                            {{ strtoupper($situacao->nome) }}
+                        </option>
+                    @endforeach
+
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Gerar Relatório</button>
+
+        </form>
 
 
 
 
 
-
-
-@endsection
+    @endsection

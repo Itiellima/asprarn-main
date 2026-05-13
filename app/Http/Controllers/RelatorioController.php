@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Associado;
+use App\Models\Situacao;
 
 class RelatorioController extends Controller
 {
@@ -17,19 +18,46 @@ class RelatorioController extends Controller
             return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
-        return view('relatorios.index');
+        $associados = Associado::with([
+            'situacoes',
+        ])->get();
+
+        $situacoes = Situacao::all();
+            
+
+        return view('relatorios.index', compact('associados', 'situacoes'));
     }
 
-    public function gerarRelatorio()
+    // public function gerarRelatorio()
+    // {
+    //     $user = Auth::user();
+    //     if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
+    //         return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+    //     }
+
+    //     $associados = Associado::all();
+
+    //     return view('relatorios.gerar', compact('associados'));
+    // }
+
+    public function gerarRelatorio(Request $request)
     {
         $user = Auth::user();
         if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
             return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
         }
 
-        $associados = Associado::all();
+
+        $associados = Associado::query()
+            ->when(request('situacao_id'), function ($query, $situacao_id) {
+                $query->whereHas('situacoes', function ($q) use ($situacao_id) {
+                    $q->where('id', $situacao_id);
+                });
+            })
+            ->with('situacoes')
+            ->get();
 
         return view('relatorios.gerar', compact('associados'));
-
     }
+
 }
