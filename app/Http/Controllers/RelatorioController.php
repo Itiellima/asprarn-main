@@ -9,8 +9,6 @@ use App\Models\Situacao;
 
 class RelatorioController extends Controller
 {
-    //
-
     public function index()
     {
         $user = Auth::user();
@@ -27,18 +25,6 @@ class RelatorioController extends Controller
 
         return view('relatorios.index', compact('associados', 'situacoes'));
     }
-
-    // public function gerarRelatorio()
-    // {
-    //     $user = Auth::user();
-    //     if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-    //         return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-    //     }
-
-    //     $associados = Associado::all();
-
-    //     return view('relatorios.gerar', compact('associados'));
-    // }
 
     public function gerarRelatorio(Request $request)
     {
