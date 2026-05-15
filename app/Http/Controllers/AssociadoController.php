@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use App\Events\AssociadoCriado;
+
 
 
 class AssociadoController extends Controller
@@ -280,7 +282,11 @@ class AssociadoController extends Controller
                 'associado_id' => $associado->id,
             ];
 
+
             event(new NotificacaoCriada($data));
+
+            event(new AssociadoCriado($associado));
+
 
             $authUser = Auth::user();
 

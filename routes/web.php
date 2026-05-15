@@ -28,7 +28,7 @@ use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\PrestadorDeServicosController;
 use App\Http\Controllers\PagamentosController;
 use App\Http\Controllers\ComoNosEncontrouController;
-
+use Illuminate\Support\Facades\Mail;
 
 
 //////////////////////////////// ********* INDEX ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -131,7 +131,7 @@ Route::middleware(['auth'])->group(function () {
     // Rota para atualizar as permissoes de um usuario
     Route::post('/usuarios/{user}/role', [UsuariosController::class, 'updateRole'])->name('usuarios.updateRole');
     Route::delete('/usuarios/{user}', [UsuariosController::class, 'destroy'])->name('usuarios.destroy');
-    Route::post('/usuarios/{id}/reset-password',[UsuariosController::class, 'resetPassword'])->name('usuarios.resetPassword');
+    Route::post('/usuarios/{id}/reset-password', [UsuariosController::class, 'resetPassword'])->name('usuarios.resetPassword');
 });
 
 //////////////////////////////// ********* LOGIN/REGISTER ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -264,3 +264,30 @@ Route::post('/acao-judicial/update-acoes/{id}', [AcaoJudicialController::class, 
 //     Route::get('/configuracoes', [App\Http\Controllers\ConfiguracoesController::class, 'index'])->name('configuracoes.index');
 //     Route::post('/acao-judicial/store', [AcaoJudicialController::class, 'store'])->name('acao-judicial.store');
 // });
+
+
+Route::get('/test-email', function () {
+
+    $response = Http::withHeaders([
+        'x-api-key' => env('N8N_API_KEY'),
+    ])->post('https://n8n.asprarn.com.br/webhook/d79be14c-319f-476d-bd5e-c24b06eb3a00', [
+        'nome' => 'itiel',
+        'email' => 'itiel.lima.cavalcante@gmail.com',
+        'msg' => 'Olá, teste de envio via Laravel + n8n',
+    ]);
+
+    return [
+        'status' => $response->status(),
+        'body' => $response->body(),
+        'ok' => $response->successful(),
+    ];
+});
+
+
+Route::get('/teste-email-n8n', function () {
+    return Http::post('https://n8n.asprarn.com.br/webhook/d79be14c-319f-476d-bd5e-c24b06eb3a00', [
+        'nome' => 'itiel',
+        'email' => 'itiel.lima.cavalcante@gmail.com',
+        'msg' => 'Olá, teste de envio via Laravel + n8n',
+    ]);
+});
