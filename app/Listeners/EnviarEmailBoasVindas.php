@@ -24,7 +24,8 @@ class EnviarEmailBoasVindas
 
         Http::withHeaders([
             'x-api-key' => env('N8N_API_KEY'),
-        ])->post('https://n8n.asprarn.com.br/webhook/a58b3e96-1779-440e-9c5d-256710e691a3', [
+        ])->post('https://n8n.asprarn.com.br/webhook/e7d3cda2-bc0f-4b21-a46d-def676506122', [
+            'evento' => 'associado_criado',
             'nome' => $event->associado->nome,
             'email' => $event->associado->contato?->email,
             'msg' => 'Olá, Bem-vindo à ASPRARN! Esta é uma mensagem de boas-vindas para confirmar que sua associação foi criada com sucesso. Se você tiver alguma dúvida ou precisar de assistência, não hesite em entrar em contato conosco.',

@@ -285,7 +285,10 @@ Route::get('/test-email', function () {
 
 
 Route::get('/teste-email-n8n', function () {
-    return Http::post('https://n8n.asprarn.com.br/webhook/d79be14c-319f-476d-bd5e-c24b06eb3a00', [
+    return Http::withHeaders([
+        'x-api-key' => env('N8N_API_KEY'),
+    ])->post('https://n8n.asprarn.com.br/webhook/e7d3cda2-bc0f-4b21-a46d-def676506122', [
+        'evento' => 'Teste de Evento',
         'nome' => 'itiel',
         'email' => 'itiel.lima.cavalcante@gmail.com',
         'msg' => 'Olá, teste de envio via Laravel + n8n',
