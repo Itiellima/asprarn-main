@@ -6,6 +6,8 @@
     "display": "fullscreen",
     "theme_color": "#0d6efd",
     "background_color": "#ffffff",
+    "description": "Aplicativo para gestão da ASPRA PM RN.",
+    "orientation": "portrait-primary",
     "icons": [
         {
             "src": "/icons/icon-192.png",
