@@ -112,14 +112,11 @@
         <strong class="text-black text-center">
             <h2>Mais opções</h2>
         </strong>
-        <div class="row mx-3 my-3 justify-content-center">
+        <div class="justify-content-center align-items-center d-flex flex-wrap gap-2 mt-3">
 
-            <a href="{{ route('associado.pasta.index', $associado->id) }}" class="btn btn-primary col-2 mx-2">Arquivos</a>
-            <a href="{{ route('pagamentos.show', $associado->id) }}" class="btn btn-primary col-2 mx-2">Pagamentos</a>
+            <a href="{{ route('associado.pasta.index', $associado->id) }}" class="btn btn-primary mx-2">Arquivos</a>
+            <a href="{{ route('pagamentos.show', $associado->id) }}" class="btn btn-primary mx-2">Pagamentos</a>
 
-            {{-- <a href="#" class="btn btn-primary col-2 mx-2">Historico</a>
-            <a href="#" class="btn btn-primary col-2 mx-2">Financeiro</a>
-            <a href="#" class="btn btn-primary col-2 mx-2 disabled">#</a> --}}
         </div>
     </div>
 

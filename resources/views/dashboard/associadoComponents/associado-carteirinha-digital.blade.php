@@ -32,20 +32,33 @@
                 </div>
             </div>
 
-
             <div class="d-flex flex-wrap gap-2 mt-2">
 
-                <a class="btn btn-sm btn-primary" href="{{ route('carteira-associados', $associado->id) }}" target="_blank">
+                <a class="btn btn-sm btn-primary"
+                @if ($associado->pictureProfile)
+                    href="{{ route('carteira-associados', $associado->id) }}" target="_blank">
+                @else
+                    onclick="alert('Faça o upload de uma foto para baixar a carteirinha')">
+                @endif
                     📄 Download Cateirinha
                 </a>
 
-                <a class="btn btn-sm btn-primary" href="{{ route('carteira-associados-vertical', $associado->id) }}" target="_blank">
-                    📄 Visualizar Carteirinha
+                <a class="btn btn-sm btn-primary" 
+                @if ($associado->pictureProfile)
+                    href="{{ route('carteira-associados-vertical', $associado->id) }}" target="_blank">
+                @else
+                    onclick="alert('Faça o upload de uma foto para visualizar a carteirinha')">
+                @endif
+                📄 Visualizar Carteirinha
                 </a>
 
                 <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                     data-bs-target="#pictureModal">
-                    Editar foto
+                    @if ($associado->pictureProfile)
+                        Editar foto
+                    @else
+                        Adicionar foto
+                    @endif
                 </button>
 
                 <form action="{{ route('associado.picture-profile.destroy', $associado->id) }}" method="POST"
@@ -57,7 +70,7 @@
                     </button>
                 </form>
 
-                <a href="{{ route('validar-carteirinha', $associado->id) }}" class="btn btn-sm btn-warning">
+                <a href="{{ route('validar-carteirinha', $associado->id) }}" class="btn btn-sm btn-warning" target="_blank">
                     Validar Carteirinha
                 </a>
 
