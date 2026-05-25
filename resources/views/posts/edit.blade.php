@@ -4,6 +4,8 @@
 
 @section('content')
 
+    @include('dashboard.layouts.nav-dashboard')
+
     <div class="container body-offset">
 
         <div class="meu-container alert alert-light">

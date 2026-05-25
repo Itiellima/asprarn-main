@@ -1,8 +1,11 @@
 @extends('layouts.main')
 
-@section('title', '')
+@section('title', 'Comunicação')
 
 @section('content')
+
+    @include('dashboard.layouts.nav-dashboard')
+
 
     <div class="container body-offset">
 
