@@ -241,6 +241,7 @@ Route::get('/importar-pagamentos', [PagamentosController::class, 'index'])->name
 Route::post('/importar-pagamentos/read-archive', [PagamentosController::class, 'readArchive'])->name('importar-pagamentos.readArchive');
 Route::post('/importar-pagamentos/processar', [PagamentosController::class, 'processarPagamentos'])->name('importar-pagamentos.processar');
 
+Route::get('/pagamentos/index', [PagamentosController::class, 'pagamentosIndex'])->name('pagamentos.index');
 Route::get('/pagamentos/show/{associadoId}', [PagamentosController::class, 'show'])->name('pagamentos.show');
 Route::get('/pagamentos/edit/{pagamentoId}', [PagamentosController::class, 'edit'])->name('pagamentos.edit');
 Route::put('/pagamentos/update/{pagamentoId}', [PagamentosController::class, 'update'])->name('pagamentos.update');
@@ -267,31 +268,31 @@ Route::post('/acao-judicial/update-acoes/{id}', [AcaoJudicialController::class, 
 // });
 
 
-Route::get('/test-email', function () {
+// Route::get('/test-email', function () {
 
-    $response = Http::withHeaders([
-        'x-api-key' => env('N8N_API_KEY'),
-    ])->post('https://n8n.asprarn.com.br/webhook/d79be14c-319f-476d-bd5e-c24b06eb3a00', [
-        'nome' => 'itiel',
-        'email' => 'itiel.lima.cavalcante@gmail.com',
-        'msg' => 'Olá, teste de envio via Laravel + n8n',
-    ]);
+//     $response = Http::withHeaders([
+//         'x-api-key' => env('N8N_API_KEY'),
+//     ])->post('https://n8n.asprarn.com.br/webhook/d79be14c-319f-476d-bd5e-c24b06eb3a00', [
+//         'nome' => 'itiel',
+//         'email' => 'itiel.lima.cavalcante@gmail.com',
+//         'msg' => 'Olá, teste de envio via Laravel + n8n',
+//     ]);
 
-    return [
-        'status' => $response->status(),
-        'body' => $response->body(),
-        'ok' => $response->successful(),
-    ];
-});
+//     return [
+//         'status' => $response->status(),
+//         'body' => $response->body(),
+//         'ok' => $response->successful(),
+//     ];
+// });
 
 
-Route::get('/teste-email-n8n', function () {
-    return Http::withHeaders([
-        'x-api-key' => env('N8N_API_KEY'),
-    ])->post('https://n8n.asprarn.com.br/webhook/e7d3cda2-bc0f-4b21-a46d-def676506122', [
-        'evento' => 'Teste de Evento',
-        'nome' => 'itiel',
-        'email' => 'itiel.lima.cavalcante@gmail.com',
-        'msg' => 'Olá, teste de envio via Laravel + n8n',
-    ]);
-});
+// Route::get('/teste-email-n8n', function () {
+//     return Http::withHeaders([
+//         'x-api-key' => env('N8N_API_KEY'),
+//     ])->post('https://n8n.asprarn.com.br/webhook/e7d3cda2-bc0f-4b21-a46d-def676506122', [
+//         'evento' => 'Teste de Evento',
+//         'nome' => 'itiel',
+//         'email' => 'itiel.lima.cavalcante@gmail.com',
+//         'msg' => 'Olá, teste de envio via Laravel + n8n',
+//     ]);
+// });

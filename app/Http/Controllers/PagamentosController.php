@@ -319,4 +319,32 @@ class PagamentosController extends Controller
 
         return redirect()->route('pagamentos.show', $associadoId)->with('success', 'Pagamento excluído com sucesso.');
     }
+
+    public function pagamentosIndex () {
+
+        $user = Auth::user();
+        if(!$user || !$user->hasRole(['admin', 'moderador'])){
+            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $search = request('search');
+
+        $pagamentos = Pagamento::with(['associado'])
+        
+        ->when(request('search'), function ($query, $search) {
+
+            $query->whereHas('associado', function ($q) use ($search) {
+
+                $q->where('nome', 'like', "%{$search}%")
+                    ->orWhere('cpf', 'like', "%{$search}%");
+            });
+        })
+
+        ->paginate('10');
+
+        return view('pagamentos.index', compact('pagamentos', 'search'));
+    }
+
+
+
 }

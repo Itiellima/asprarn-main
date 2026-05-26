@@ -23,13 +23,30 @@
                     <a href="{{ route('associado.index') }}" class="btn btn-primary m-1 col-lg-3">👥 Associados</a>
                     <a href="/profile" class="btn btn-primary mx-1 m-1 col-lg-3">👮 Alterar Perfil</a>
                     <a href="{{ route('planos.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">📋 Planos</a>
-                    <a href="{{ route('importar-pagamentos.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">💳 Pagamentos</a>
+
+                    <div class="dropdown col-lg-3 m-1 p-0">
+                        <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            💳 Financeiro
+                        </button>
+
+                        <ul class="dropdown-menu w-100">
+                            <li>
+                                <a href="{{ route('importar-pagamentos.index') }}" class="dropdown-item">
+                                    Importar pagamentos</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('pagamentos.index') }}" class="dropdown-item">
+                                    Pagamentos</a>
+                            </li>
+                        </ul>
+                    </div>
 
                     {{-- Button Gestão --}}
                     <div class="dropdown col-lg-3 m-1 p-0">
                         <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            Gestão
+                            👥 Gestão
                         </button>
 
                         <ul class="dropdown-menu w-100">
@@ -60,7 +77,7 @@
 
                         <ul class="dropdown-menu w-100">
                             <li>
-                                <a href="{{ route('automacoes.index') }}" class="dropdown-item">⚙️ Automacoes</a>
+                                <a href="{{ route('automacoes.index') }}" class="dropdown-item">⚙️ Mensagens WhatsApp</a>
                             </li>
                             <li>
                                 <a href="/usuarios" class="dropdown-item">🔐 Controle de Acesso</a>
