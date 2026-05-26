@@ -237,9 +237,10 @@ Route::get('/carteira-associado-verificacao/{id}', [AssociadoController::class, 
 
 
 ////////////////////////////////// ********* PAGAMENTOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-Route::get('/pagamentos', [PagamentosController::class, 'index'])->name('pagamentos.index');
-Route::post('/pagamentos/read-archive', [PagamentosController::class, 'readArchive'])->name('pagamentos.readArchive');
-Route::post('/pagamentos/processar', [PagamentosController::class, 'processarPagamentos'])->name('pagamentos.processar');
+Route::get('/importar-pagamentos', [PagamentosController::class, 'index'])->name('importar-pagamentos.index');
+Route::post('/importar-pagamentos/read-archive', [PagamentosController::class, 'readArchive'])->name('importar-pagamentos.readArchive');
+Route::post('/importar-pagamentos/processar', [PagamentosController::class, 'processarPagamentos'])->name('importar-pagamentos.processar');
+
 Route::get('/pagamentos/show/{associadoId}', [PagamentosController::class, 'show'])->name('pagamentos.show');
 Route::get('/pagamentos/edit/{pagamentoId}', [PagamentosController::class, 'edit'])->name('pagamentos.edit');
 Route::put('/pagamentos/update/{pagamentoId}', [PagamentosController::class, 'update'])->name('pagamentos.update');

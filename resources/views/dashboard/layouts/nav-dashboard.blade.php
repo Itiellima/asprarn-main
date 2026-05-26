@@ -23,7 +23,7 @@
                     <a href="{{ route('associado.index') }}" class="btn btn-primary m-1 col-lg-3">👥 Associados</a>
                     <a href="/profile" class="btn btn-primary mx-1 m-1 col-lg-3">👮 Alterar Perfil</a>
                     <a href="{{ route('planos.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">📋 Planos</a>
-                    <a href="{{ route('pagamentos.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">💳 Pagamentos</a>
+                    <a href="{{ route('importar-pagamentos.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">💳 Pagamentos</a>
 
                     {{-- Button Gestão --}}
                     <div class="dropdown col-lg-3 m-1 p-0">

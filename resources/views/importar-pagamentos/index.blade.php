@@ -62,7 +62,7 @@
         <p>Após a importação, você poderá revisar os pagamentos processados e verificar se as informações foram atualizadas
             corretamente.</p>
 
-        <form action="{{ route('pagamentos.readArchive') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('importar-pagamentos.readArchive') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-3">
@@ -80,7 +80,7 @@
             <p>Nenhum dado disponível.</p>
         @else
             <div class="alert alert-dark mt-3">
-                <form action="{{ route('pagamentos.processar') }}" method="POST">
+                <form action="{{ route('importar-pagamentos.processar') }}" method="POST">
                     @csrf
 
                     <input type="hidden" name="dados" value='@json($dadosCsv)'>

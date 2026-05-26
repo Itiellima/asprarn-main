@@ -20,7 +20,7 @@ class PagamentosController extends Controller
 
 
         // Lógica para exibir a página de pagamentos
-        return view('pagamentos.index');
+        return view('importar-pagamentos.index');
     }
 
     public function readArchive(Request $request)
@@ -76,7 +76,7 @@ class PagamentosController extends Controller
         }
 
 
-        return view('pagamentos.index', compact('dadosCsv'));
+        return view('importar-pagamentos.index', compact('dadosCsv'));
     }
 
     public function processarPagamentos(Request $request)
@@ -170,7 +170,7 @@ class PagamentosController extends Controller
             return redirect()->back()->with('error', 'Ocorreu um erro ao processar os pagamentos: ' . $e->getMessage());
         }
 
-        return redirect()->route('pagamentos.index')->with([
+        return redirect()->route('importar-pagamentos.index')->with([
             'success' => 'Pagamentos processados com sucesso.',
             'sucesso' => $sucesso,
             'falhas' => $falhas,
