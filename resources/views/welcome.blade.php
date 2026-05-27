@@ -13,6 +13,8 @@
 
     @livewire('instagram-post')
 
+    
+
     <div class="container body-offset">
         <div class="row mt-3">
             <div class="col-md-8">

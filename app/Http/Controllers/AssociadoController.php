@@ -432,7 +432,7 @@ class AssociadoController extends Controller
             return redirect()->back()->with('error', 'Erro ao atualizar associado');
         }
 
-        return redirect('/associado')->with('msg', 'Associado alterado com sucesso!');
+        return redirect()->route('associado.show', $associado->id)->with('msg', 'Associado alterado com sucesso!');
     }
 
     // Deletar associado

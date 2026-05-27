@@ -29,6 +29,13 @@
         padding-left: 50px;
         padding-right: 50px;
     }
+    .item{
+        transition: 0.3s;
+    }
+
+    .item:hover{
+        transform: scale(1.05);
+    }
 </style>
 
 

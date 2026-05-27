@@ -326,27 +326,56 @@
                                         {{ old('pensionista', $associado->graduacao) == 'pensionista' ? 'selected' : '' }}>
                                         Pensionista</option>
                                     <option value="soldado"
-                                        {{ old('soldado', $associado->graduacao) == 'Soldado' ? 'selected' : '' }}>Soldado
+                                        {{ old('soldado', $associado->graduacao) == 'soldado' ? 'selected' : '' }}>Soldado
                                     </option>
                                     <option value="cabo"
-                                        {{ old('cabo', $associado->graduacao) == 'Cabo' ? 'selected' : '' }}>
+                                        {{ old('cabo', $associado->graduacao) == 'cabo' ? 'selected' : '' }}>
                                         Cabo</option>
                                     <option value="3_sargento"
-                                        {{ old('3_sargento', $associado->graduacao) == '3º sargento' ? 'selected' : '' }}>
+                                        {{ old('3_sargento', $associado->graduacao) == '3_sargento' ? 'selected' : '' }}>
                                         3°
                                         Sargento</option>
                                     <option value="2_sargento"
-                                        {{ old('2_sargento', $associado->graduacao) == '2º sargento' ? 'selected' : '' }}>
+                                        {{ old('2_sargento', $associado->graduacao) == '2_sargento' ? 'selected' : '' }}>
                                         2°
                                         Sargento</option>
                                     <option value="1_sargento"
-                                        {{ old('1_sargento', $associado->graduacao) == '1º sargento' ? 'selected' : '' }}>
+                                        {{ old('1_sargento', $associado->graduacao) == '1_sargento' ? 'selected' : '' }}>
                                         1°
                                         Sargento</option>
                                     <option value="subtenente"
-                                        {{ old('subtenente', $associado->graduacao) == 'Subtenente' ? 'selected' : '' }}>
+                                        {{ old('subtenente', $associado->graduacao) == 'subtenente' ? 'selected' : '' }}>
                                         Subtenente
                                     </option>
+                                    <option value="asp"
+                                        {{ old('asp', $associado->graduacao) == 'asp' ? 'selected' : '' }}>
+                                        Aspirante
+                                    </option>
+                                    <option value="2_tenente"
+                                        {{ old('2_tenente', $associado->graduacao) == '2_tenente' ? 'selected' : '' }}>
+                                        2º Tenente
+                                    </option>
+                                    <option value="1_tenente"
+                                        {{ old('1_tenente', $associado->graduacao) == '1_tenente' ? 'selected' : '' }}>
+                                        1º Tenente
+                                    </option>
+                                    <option value="capitao"
+                                        {{ old('capitao', $associado->graduacao) == 'capitao' ? 'selected' : '' }}>
+                                        Capitão
+                                    </option>
+                                    <option value="major"
+                                        {{ old('major', $associado->graduacao) == 'major' ? 'selected' : '' }}>
+                                        Major
+                                    </option>
+                                    <option value="ten_cel"
+                                        {{ old('ten_cel', $associado->graduacao) == 'ten_cel' ? 'selected' : '' }}>
+                                        Tenente Coronel
+                                    </option>
+                                    <option value="coronel"
+                                        {{ old('coronel', $associado->graduacao) == 'coronel' ? 'selected' : '' }}>
+                                        Coronel
+                                    </option>
+
                                 </select>
                             </div>
                             <div class="mb-3 col-md-4 col-sm-6">
