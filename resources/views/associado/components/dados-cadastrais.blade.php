@@ -1,7 +1,7 @@
 <div class="container alert alert-light text-black">
         <h2 class="text-center mb-4">Dados cadastrais</h2>
 
-        <div class="card shadow-sm">
+        <div class="border rounded shadow-sm">
             <div class="row m-3">
 
                 {{-- COLUNA ESQUERDA --}}
