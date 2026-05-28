@@ -22,7 +22,32 @@
                 <hr>
                 <div class="row justify-content-center">
                     @foreach ($feedPosts as $post)
-                        <div class="card m-3 rounded-5 overflow-hidden p-0 shadow-lg col-sm-6" style="width: 18rem;">
+                        <div class="container m-3 card col-md-11">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img src="{{ asset('storage/' . $post->files->first()->path) }}" alt="{{ $post->titulo }}"
+                                        style="height: 10rem; width: 10rem;" class="rounded">
+                                </div>
+                                <div class="col-md-8 mt-3">
+                                    <strong>
+                                        <p>
+                                            <a href="{{ route('posts.show', $post->id) }}" style="font-size: large"
+                                                class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover
+                                                icon-link icon-link-hover">
+                                                {{ $post->titulo }}
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="bi" viewBox="0 0 16 16"
+                                                    aria-hidden="true">
+                                                    <path
+                                                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                                </svg>
+                                            </a>
+                                        </p>
+                                    </strong>
+                                    <p class="card-text">{{ $post->assunto }}.</p>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <div class="card m-3 rounded-5 overflow-hidden p-0 shadow-lg col-sm-6" style="width: 18rem;">
 
                             <div class="card-head">
                                 <img src="{{ asset('storage/' . $post->files->first()->path) }}" class="card-img-top"
@@ -42,7 +67,7 @@
                             <div class="card-footer">
                                 <a class="btn btn-sm btn-secondary" href="/posts/{{ $post->id }}">Leia mais</a>
                             </div>
-                        </div>
+                        </div> --}}
                     @endforeach
                 </div>
             </div>
