@@ -13,7 +13,7 @@
 
     @livewire('instagram-post')
 
-    
+
 
     <div class="container body-offset">
         <div class="row mt-3">
@@ -22,16 +22,24 @@
                 <hr>
                 <div class="row justify-content-center">
                     @foreach ($feedPosts as $post)
-                        <div class="card m-1 rounded-5 overflow-hidden p-0 shadow-lg col-sm-6" style="width: 20rem;">
+                        <div class="card m-3 rounded-5 overflow-hidden p-0 shadow-lg col-sm-6" style="width: 18rem;">
 
-                            <img src="{{ asset('storage/' . $post->files->first()->path) }}" class="card-img-top"
-                                style="height: 200px; width: 100%; object-fit: cover;" alt="{{ $post->titulo }}">
+                            <div class="card-head">
+                                <img src="{{ asset('storage/' . $post->files->first()->path) }}" class="card-img-top"
+                                    style="height: 200px; width: 100%; object-fit: cover;" alt="{{ $post->titulo }}">
+                            </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">{{ $post->titulo }}</h5>
+                                <a href="{{ route('posts.show', $post->id) }}"
+                                    style="font-size: large"
+                                    class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">
+                                    {{ $post->titulo }}
+                                </a>
+                                <hr>
+
                                 <p class="card-text">{{ $post->assunto }}.</p>
                             </div>
-                            <div class="mb-3 text-center">
+                            <div class="card-footer">
                                 <a class="btn btn-sm btn-secondary" href="/posts/{{ $post->id }}">Leia mais</a>
                             </div>
                         </div>

@@ -107,10 +107,8 @@
     </footer>
 
     <!-- Botão Flutuante WhatsApp HTML -->
-    <a href="https://wa.me/message/ABFVUULB5HXIK1"
-        style="position:fixed;width:60px;height:60px;bottom:40px;right:40px;background-color:#25d366;color:#FFF;border-radius:50px;text-align:center;font-size:30px;box-shadow: 1px 1px 2px #888;z-index:10000;display:flex;justify-content:center;align-items:center;"
-        target="_blank">
-        <img src="/img/whatsapp.png" style="width: 35px; height: 35px;" alt="WhatsApp" />
+    <a href="https://wa.me/message/ABFVUULB5HXIK1" class="whatsapp-btn" target="_blank">
+        <img src="/img/whatsapp.png" alt="WhatsApp">
     </a>
 
 

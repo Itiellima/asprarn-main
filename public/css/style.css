@@ -141,3 +141,41 @@ body {
     transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
+
+.whatsapp-btn{
+    position: fixed;
+
+    width: 60px;
+    height: 60px;
+
+    bottom: 40px;
+    right: 40px;
+
+    background-color: #25d366;
+    color: #FFF;
+
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow: 1px 1px 2px #888;
+
+    z-index: 10000;
+
+    transition: .6s;
+}
+
+.whatsapp-btn img{
+    width: 35px;
+    height: 35px;
+}
+
+.whatsapp-btn:hover{
+    transform: rotate(360deg) scale(1.1);
+
+    box-shadow:
+        0 0 10px #25d366,
+        0 0 25px #25d366;
+}

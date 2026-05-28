@@ -30,8 +30,8 @@ Este sistema foi desenvolvido para atender às necessidades administrativas da A
 - Laravel 10 (PHP)
 - MySQL
 - Blade + Vite
-- Laravel Breeze (autenticação)
-- Bootstrap / Tailwind (dependendo do seu front-end)
+- Laravel jetstream (autenticação)
+- Bootstrap
 - Git e GitHub para versionamento
 
 ## 📦 Instalação
