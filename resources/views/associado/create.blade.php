@@ -31,7 +31,7 @@
             <div class="container">
 
                 <fieldset id="formFields" @if ($associado->exists) disabled @endif>
-                    <form class="needs-validation" novalidate enctype="multipart/form-data"
+                    <form id="myForm" class="needs-validation" novalidate enctype="multipart/form-data"
                         action="{{ $associado->id ? route('associado.update', $associado->id) : route('associado.store') }}"
                         method="POST">
                         @csrf
@@ -436,7 +436,7 @@
                                 <div id="preview-container" class="mt-3"></div>
                             </div>
                         @endif
-                        
+
                         @include('associado.components.como-nos-encontrou')
 
 
@@ -511,61 +511,7 @@
             });
         </script>
 
-
-
         <script src="{{ asset('js/form-edit.js') }}"></script>
-
-        {{-- legado,  --}}
-        {{-- <script>
-            document.addEventListener("DOMContentLoaded", function() {
-
-                const ufSelect = document.getElementById('uf');
-                const cidadeSelect = document.getElementById('cidade');
-
-                const cidadeAtual = "{{ old('cidade', $associado->endereco->cidade ?? '') }}";
-
-                function carregarCidades(uf, selecionarCidade = null) {
-                    cidadeSelect.innerHTML = '<option>Carregando...</option>';
-                    cidadeSelect.disabled = true;
-
-                    fetch(`/api/cidades/${uf}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            cidadeSelect.innerHTML = '<option value="">Selecione a cidade</option>';
-
-                            data.forEach(cidade => {
-                                const opt = document.createElement('option');
-                                opt.value = cidade.nome;
-                                opt.textContent = cidade.nome;
-
-                                if (selecionarCidade && cidade.nome === selecionarCidade) {
-                                    opt.selected = true;
-                                }
-
-                                cidadeSelect.appendChild(opt);
-                            });
-
-                            cidadeSelect.disabled = false;
-                        });
-                }
-
-                // Quando o usuário troca a UF
-                ufSelect.addEventListener('change', function() {
-                    if (this.value) {
-                        carregarCidades(this.value);
-                    } else {
-                        cidadeSelect.innerHTML = '<option>Selecione a UF primeiro</option>';
-                        cidadeSelect.disabled = true;
-                    }
-                });
-
-                // Carregar automaticamente no EDIT
-                if (ufSelect.value) {
-                    carregarCidades(ufSelect.value, cidadeAtual);
-                }
-
-            });
-        </script> --}}
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -600,6 +546,22 @@
                     }, false)
                 })
             })();
+        </script>
+
+        <script>
+            document.getElementById('myForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const firstInvalid = this.querySelector(':invalid');
+
+                if (firstInvalid) {
+                    firstInvalid.focus();
+                    firstInvalid.classList.add('is-invalid');
+                    return;
+                }
+
+                this.submit();
+            });
         </script>
     @endpush
 
