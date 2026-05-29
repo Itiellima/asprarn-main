@@ -47,10 +47,14 @@
                 @if ($associado->situacoes->contains(fn($situacao) => strtolower($situacao->nome) === 'ativo'))
                     <div class="alert alert-success shadow-lg text-black" role="alert">
                         <h2 class="mb-0">{{ $associado->nome }} é associado e está com vínculo ativo!</h2>
+                        <h2 class="mb-0">CPF: {{ $associado->cpf }}!</h2>
+
                     </div>
                 @else
                     <div class="alert alert-warning shadow-lg text-black" role="alert">
                         <h2 class="mb-0">{{ $associado->nome }} não tem vínculo ativo!</h2>
+                        <h2 class="mb-0">CPF: {{ $associado->cpf }}!</h2>
+
                     </div>
                 @endif
             </div>

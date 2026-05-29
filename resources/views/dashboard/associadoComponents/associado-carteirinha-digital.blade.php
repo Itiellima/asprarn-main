@@ -35,44 +35,43 @@
             <div class="d-flex flex-wrap gap-2 mt-2">
 
                 <a class="btn btn-sm btn-primary"
-                @if ($associado->pictureProfile)
-                    href="{{ route('carteira-associados', $associado->id) }}" target="_blank">
+                    @if ($associado->pictureProfile) href="{{ route('carteira-associados', $associado->id) }}" target="_blank">
                 @else
-                    onclick="alert('Faça o upload de uma foto para baixar a carteirinha')">
-                @endif
-                    📄 Download Cateirinha
-                </a>
+                    onclick="alert('Faça o upload de uma foto para baixar a carteirinha')"> @endif
+                    📄 Download Cateirinha </a>
 
-                <a class="btn btn-sm btn-primary" 
-                @if ($associado->pictureProfile)
-                    href="{{ route('carteira-associados-vertical', $associado->id) }}" target="_blank">
+                    <a class="btn btn-sm btn-primary"
+                        @if ($associado->pictureProfile) href="{{ route('carteira-associados-vertical', $associado->id) }}" target="_blank">
                 @else
-                    onclick="alert('Faça o upload de uma foto para visualizar a carteirinha')">
-                @endif
-                📄 Visualizar Carteirinha
-                </a>
+                    onclick="alert('Faça o upload de uma foto para visualizar a carteirinha')"> @endif
+                        📄 Visualizar Carteirinha </a>
 
-                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                    data-bs-target="#pictureModal">
-                    @if ($associado->pictureProfile)
-                        Editar foto
-                    @else
-                        Adicionar foto
-                    @endif
-                </button>
+                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                            data-bs-target="#pictureModal">
+                            @if ($associado->pictureProfile)
+                                Editar foto
+                            @else
+                                Adicionar foto
+                            @endif
+                        </button>
 
-                <form action="{{ route('associado.picture-profile.destroy', $associado->id) }}" method="POST"
-                    class="m-0">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Deseja remover essa foto?')">
-                        Excluir foto
-                    </button>
-                </form>
+                        @if ($associado->pictureProfile)
+                            <form action="{{ route('associado.picture-profile.destroy', $associado->id) }}"
+                                method="POST" class="m-0">
+                                @csrf
+                                @method('DELETE')
 
-                <a href="{{ route('validar-carteirinha', $associado->id) }}" class="btn btn-sm btn-warning" target="_blank">
-                    Validar Carteirinha
-                </a>
+                                <button type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Deseja remover essa foto?')">
+                                    Excluir foto
+                                </button>
+                            </form>
+                        @endif
+
+                        <a href="{{ route('validar-carteirinha', $associado->id) }}" class="btn btn-sm btn-warning"
+                            target="_blank">
+                            Validar Carteirinha
+                        </a>
 
             </div>
 
