@@ -81,7 +81,7 @@ class AcaoJudicialController extends Controller
         }
 
         $request->validate([
-            'acoes' => 'required|array',
+            'acoes' => 'array',
             'acoes.*' => 'exists:acao_judicial,id',
         ]);
 
