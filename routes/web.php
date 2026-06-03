@@ -28,7 +28,8 @@ use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\PrestadorDeServicosController;
 use App\Http\Controllers\PagamentosController;
 use App\Http\Controllers\ComoNosEncontrouController;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Financeiro\FinanceiroController;
+use App\Http\Controllers\Financeiro\CategoriaController;
 
 
 //////////////////////////////// ********* INDEX ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -260,6 +261,19 @@ Route::post('/acao-judicial/store', [AcaoJudicialController::class, 'store'])->n
 Route::delete('/acao-judicial/destroy/{id}', [AcaoJudicialController::class, 'destroy'])->name('acao-judicial.destroy');
 Route::put('/acao-judicial/update/{id}', [AcaoJudicialController::class, 'update'])->name('acao-judicial.update');
 Route::post('/acao-judicial/update-acoes/{id}', [AcaoJudicialController::class, 'updateAcoes'])->name('acao-judicial.update-acoes');
+
+
+////////////////////////////////// ********* FINANCEIRO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Route::get('/financeiro', [FinanceiroController::class, 'index'])->name('financeiro.index');
+
+
+
+Route::get('/financeiro/categoria', [CategoriaController::class, 'categoria'])->name('financeiro.categoria');
+Route::get('/financeiro/categoria/create', [CategoriaController::class, 'createCategoria'])->name('financeiro.categoria.create');
+Route::post('/financeiro/categoria/criar', [CategoriaController::class, 'criarCategoria'])->name('financeiro.categoria.criar');
+Route::put('/financeiro/categoria/editar/{id}', [CategoriaController::class, 'editarCategoria'])->name('financeiro.categoria.editar');
+Route::delete('/financeiro/categoria/excluir/{id}', [CategoriaController::class, 'excluirCategoria'])->name('financeiro.categoria.excluir');
+
 
 // Exemplo rota protegida por middleware de autenticação e autorização
 // Route::middleware(['auth', 'role:admin|moderador'])->group(function () {
