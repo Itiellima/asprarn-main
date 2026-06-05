@@ -1,5 +1,9 @@
 @extends('financeiro.components.layout')
 
+@section('financeiro-content-header')
+    Categorias
+@endsection
+
 @section('financeiro-content')
     <div class="container rounded">
         <a href="{{ route('financeiro.categoria.create') }}" class="btn btn-primary">

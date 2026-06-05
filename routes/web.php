@@ -30,6 +30,7 @@ use App\Http\Controllers\PagamentosController;
 use App\Http\Controllers\ComoNosEncontrouController;
 use App\Http\Controllers\Financeiro\FinanceiroController;
 use App\Http\Controllers\Financeiro\CategoriaController;
+use App\Http\Controllers\Financeiro\ContasBancariasController;
 
 
 //////////////////////////////// ********* INDEX ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -275,6 +276,15 @@ Route::middleware(['auth', 'role:admin|financeiro'])->group(function (){
     Route::get('/financeiro/categoria/edit/{id}', [CategoriaController::class, 'editarCategoria'])->name('financeiro.categoria.editar');
     Route::put('/financeiro/categoria/editar/{id}', [CategoriaController::class, 'updateCategoria'])->name('financeiro.categoria.update');
     Route::delete('/financeiro/categoria/excluir/{id}', [CategoriaController::class, 'excluirCategoria'])->name('financeiro.categoria.excluir');
+
+
+    Route::get('/financeiro/contas-bancarias', [ContasBancariasController::class, 'index'])->name('financeiro.contas_bancarias');
+    Route::get('/financeiro/contas-bancarias/create', [ContasBancariasController::class, 'create'])->name('financeiro.contas_bancarias.create');
+
+
+
+
+
 });
 
 

@@ -4,16 +4,16 @@
 
 @section('content')
 
-    <div class="container-fluid mt-3">
+    <div class="container-fluid ">
 
         <div class="row">
 
             <!-- SIDEBAR -->
             <div class="col-md-3 col-lg-2">
 
-                <div class="">
+                <div class="border rounded rounded-4 bg-light mb-3">
 
-                    <div class="card-header">
+                    <div class="card-header p-3">
                         Financeiro
                     </div>
 
@@ -27,11 +27,15 @@
                             Lançamentos
                         </a>
 
-                        <a href="{{ route('financeiro.categoria') }}" class="list-group-item list-group-item-action">
+                        <a href="{{ route('financeiro.categoria') }}" 
+                            class="list-group-item list-group-item-action
+                            {{ request()->routeIs('financeiro.categoria*') ? 'active' : '' }}">
                             Categorias
                         </a>
 
-                        <a href="" class="list-group-item list-group-item-action">
+                        <a href="{{ route('financeiro.contas_bancarias') }}" 
+                            class="list-group-item list-group-item-action
+                            {{ request()->routeIs('financeiro.contas_bancarias*') ? 'active' : '' }}">
                             Contas Bancárias
                         </a>
 
@@ -56,11 +60,11 @@
             <!-- CONTEÚDO -->
             <div class="col-md-9 col-lg-10">
 
-                <div class="alert alert-light text-left">
-
-                    <h1>Financeiro</h1>
-
-                    <p>Bem-vindo à página de financeiro!</p>
+                <div class="rounded rounded-4 border bg-light p-3 mb-3">
+                    
+                    <h3>
+                        @yield('financeiro-content-header', 'Financeiro')
+                    </h3>
 
                 </div>
 
