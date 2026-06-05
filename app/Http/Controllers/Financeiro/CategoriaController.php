@@ -18,7 +18,9 @@ class CategoriaController extends Controller
 
     public function createCategoria()
     {
-        return view('financeiro.categoria.create');
+        $categoria = new FinanceiroCategoria();
+
+        return view('financeiro.categoria.create', compact('categoria'));
     }
 
     public function criarCategoria(Request $request)
@@ -35,7 +37,14 @@ class CategoriaController extends Controller
         return redirect()->route('financeiro.categoria')->with('success', 'Categoria criada com sucesso!');
     }
 
-    public function editarCategoria(Request $request, $id)
+    public function editarCategoria($id)
+    {
+        $categoria = FinanceiroCategoria::findOrFail($id);
+
+        return view('financeiro.categoria.create', compact('categoria'));
+    }
+
+    public function updateCategoria(Request $request, $id)
     {
         $categoria = FinanceiroCategoria::findOrFail($id);
 

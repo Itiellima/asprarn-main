@@ -264,15 +264,18 @@ Route::post('/acao-judicial/update-acoes/{id}', [AcaoJudicialController::class, 
 
 
 ////////////////////////////////// ********* FINANCEIRO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-Route::get('/financeiro', [FinanceiroController::class, 'index'])->name('financeiro.index');
+Route::middleware(['auth', 'role:admin|financeiro'])->group(function (){
+   
 
-
-
-Route::get('/financeiro/categoria', [CategoriaController::class, 'categoria'])->name('financeiro.categoria');
-Route::get('/financeiro/categoria/create', [CategoriaController::class, 'createCategoria'])->name('financeiro.categoria.create');
-Route::post('/financeiro/categoria/criar', [CategoriaController::class, 'criarCategoria'])->name('financeiro.categoria.criar');
-Route::put('/financeiro/categoria/editar/{id}', [CategoriaController::class, 'editarCategoria'])->name('financeiro.categoria.editar');
-Route::delete('/financeiro/categoria/excluir/{id}', [CategoriaController::class, 'excluirCategoria'])->name('financeiro.categoria.excluir');
+    Route::get('/financeiro', [FinanceiroController::class, 'index'])->name('financeiro.index');
+    
+    Route::get('/financeiro/categoria', [CategoriaController::class, 'categoria'])->name('financeiro.categoria');
+    Route::get('/financeiro/categoria/create', [CategoriaController::class, 'createCategoria'])->name('financeiro.categoria.create');
+    Route::post('/financeiro/categoria/criar', [CategoriaController::class, 'criarCategoria'])->name('financeiro.categoria.criar');
+    Route::get('/financeiro/categoria/edit/{id}', [CategoriaController::class, 'editarCategoria'])->name('financeiro.categoria.editar');
+    Route::put('/financeiro/categoria/editar/{id}', [CategoriaController::class, 'updateCategoria'])->name('financeiro.categoria.update');
+    Route::delete('/financeiro/categoria/excluir/{id}', [CategoriaController::class, 'excluirCategoria'])->name('financeiro.categoria.excluir');
+});
 
 
 // Exemplo rota protegida por middleware de autenticação e autorização
