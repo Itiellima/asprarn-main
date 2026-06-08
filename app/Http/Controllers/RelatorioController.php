@@ -21,7 +21,7 @@ class RelatorioController extends Controller
         ])->get();
 
         $situacoes = Situacao::all();
-            
+
 
         return view('relatorios.index', compact('associados', 'situacoes'));
     }
@@ -37,7 +37,7 @@ class RelatorioController extends Controller
         $associados = Associado::query()
             ->when(request('situacao_id'), function ($query, $situacao_id) {
                 $query->whereHas('situacoes', function ($q) use ($situacao_id) {
-                    $q->where('id', $situacao_id);
+                    $q->whereKey($situacao_id);
                 });
             })
             ->with('situacoes')
@@ -45,5 +45,4 @@ class RelatorioController extends Controller
 
         return view('relatorios.gerar', compact('associados'));
     }
-
 }
