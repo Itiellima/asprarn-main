@@ -26,7 +26,7 @@
                 <td>{{ $categoria->nome }}</td>
                 <td>{{ ucfirst($categoria->tipo) }}</td>
                 <td>
-                    <a href="{{ route('financeiro.categoria.editar', $categoria->id) }}" class="btn btn-sm btn-secondary">Editar</a>
+                    <a href="{{ route('financeiro.categoria.editar', $categoria->id) }}" class="btn btn-sm btn-warning">Editar</a>
                     <form method="POST" action="{{ route('financeiro.categoria.excluir', $categoria->id) }}"
                         style="display:inline;" onclick="return confirm('Tem certeza que deseja excluir esta categoria?');">
                         @csrf

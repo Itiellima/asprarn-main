@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="footer">
-            <a href="{{ route('financeiro.categoria') }}" class="btn btn-secondary">Voltar</a>
+            <a href="{{ route('financeiro.categoria') }}" class="btn btn-warning">Voltar</a>
             <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
     </form>

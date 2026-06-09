@@ -133,11 +133,11 @@ body {
     padding: 6px 10px;
 }
 
-.card {
+.grow {
     transition: 0.3s;
 }
 
-.card:hover {
+.grow:hover {
     transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }

@@ -19,6 +19,8 @@ return new class extends Migration
 
             $table->string('agencia')->nullable();
             $table->string('conta')->nullable();
+
+            $table->string('descricao')->nullable();
             $table->timestamps();
         });
     }

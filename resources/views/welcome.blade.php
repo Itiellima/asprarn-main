@@ -22,7 +22,7 @@
                 <hr>
                 <div class="row justify-content-center">
                     @foreach ($feedPosts as $post)
-                        <div class="container m-3 card col-md-11">
+                        <div class="container m-3 card grow col-md-11">
                             <div class="row">
                                 <div class="col-md-3">
                                     <img src="{{ asset('storage/' . $post->files->first()->path) }}" alt="{{ $post->titulo }}"
