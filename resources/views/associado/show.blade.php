@@ -9,11 +9,29 @@
     {{-- Dados Cadastrais --}}
     @include('associado.components.dados-cadastrais')
 
-    {{-- situacao do associado --}}
-    @include('associado.components.situacao-associado')
+    <div id="dashboardCollapse">
 
-    {{-- acoes judiciais --}}
-    @include('associado.components.acao-judicial')
+        <div class="d-flex gap-2 mb-3 justify-content-center">
+            <button id="btnSituacoes" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseSituacoes">
+                Situação do Associado
+            </button>
+
+            <button id="btnMes" class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#collapseMes">
+                Ações em andamento
+            </button>
+        </div>
+
+        <div id="collapseSituacoes" class="collapse show" data-bs-parent="#dashboardCollapse">
+            {{-- situacao do associado --}}
+            @include('associado.components.situacao-associado')
+        </div>
+
+        <div id="collapseMes" class="collapse" data-bs-parent="#dashboardCollapse">
+            {{-- acoes judiciais --}}
+            @include('associado.components.acao-judicial')
+        </div>
+
+    </div>
 
     {{-- carteirinha digital --}}
     @include('dashboard.associadoComponents.associado-carteirinha-digital')
@@ -131,14 +149,13 @@
             </button>
 
             {{-- Modal Historico --}}
-            <div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false"
-                tabindex="-1" aria-labelledby="staticBackdropLabel3" aria-hidden="true">
+            <div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel3" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="staticBackdropLabel3">Modal title</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <h3>Historico de {{ $associado->nome }}</h3>
@@ -172,5 +189,29 @@
 
     </div>
 
+    @push('scripts')
+        <script>
+            const btnSituacoes = document.getElementById('btnSituacoes');
+            const btnMes = document.getElementById('btnMes');
 
+            const collapseSituacoes = document.getElementById('collapseSituacoes');
+            const collapseMes = document.getElementById('collapseMes');
+
+            collapseSituacoes.addEventListener('show.bs.collapse', () => {
+                btnSituacoes.classList.add('btn-primary');
+                btnSituacoes.classList.remove('btn-outline-primary');
+
+                btnMes.classList.add('btn-outline-primary');
+                btnMes.classList.remove('btn-primary');
+            });
+
+            collapseMes.addEventListener('show.bs.collapse', () => {
+                btnMes.classList.add('btn-primary');
+                btnMes.classList.remove('btn-outline-primary');
+
+                btnSituacoes.classList.add('btn-outline-primary');
+                btnSituacoes.classList.remove('btn-primary');
+            });
+        </script>
+    @endpush
 @endsection

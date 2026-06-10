@@ -31,6 +31,7 @@ use App\Http\Controllers\ComoNosEncontrouController;
 use App\Http\Controllers\Financeiro\FinanceiroController;
 use App\Http\Controllers\Financeiro\CategoriaController;
 use App\Http\Controllers\Financeiro\ContasBancariasController;
+use App\Http\Controllers\Diretoria\DiretoriaController;
 
 
 //////////////////////////////// ********* INDEX ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -288,38 +289,17 @@ Route::middleware(['auth', 'role:admin|financeiro'])->group(function (){
 });
 
 
+Route::middleware(['auth', 'role:admin'])->group(function(){
+    Route::get('/diretoria', [DiretoriaController::class, 'index'])->name('diretoria.index');
+    Route::get('/diretoria/create', [DiretoriaController::class, 'create'])->name('diretoria.create');
+    Route::post('/diretoria/store', [DiretoriaController::class, 'store'])->name('diretoria.store');
+
+    Route::get('/quadro-diretoria-index', [DiretoriaController::class, 'quadroDiretoria'])->name('quadroDiretoria.index');
+});
+
 // Exemplo rota protegida por middleware de autenticação e autorização
 // Route::middleware(['auth', 'role:admin|moderador'])->group(function () {
 //     Route::get('/configuracoes', [App\Http\Controllers\ConfiguracoesController::class, 'index'])->name('configuracoes.index');
 //     Route::post('/acao-judicial/store', [AcaoJudicialController::class, 'store'])->name('acao-judicial.store');
 // });
 
-
-// Route::get('/test-email', function () {
-
-//     $response = Http::withHeaders([
-//         'x-api-key' => env('N8N_API_KEY'),
-//     ])->post('https://n8n.asprarn.com.br/webhook/d79be14c-319f-476d-bd5e-c24b06eb3a00', [
-//         'nome' => 'itiel',
-//         'email' => 'itiel.lima.cavalcante@gmail.com',
-//         'msg' => 'Olá, teste de envio via Laravel + n8n',
-//     ]);
-
-//     return [
-//         'status' => $response->status(),
-//         'body' => $response->body(),
-//         'ok' => $response->successful(),
-//     ];
-// });
-
-
-// Route::get('/teste-email-n8n', function () {
-//     return Http::withHeaders([
-//         'x-api-key' => env('N8N_API_KEY'),
-//     ])->post('https://n8n.asprarn.com.br/webhook/e7d3cda2-bc0f-4b21-a46d-def676506122', [
-//         'evento' => 'Teste de Evento',
-//         'nome' => 'itiel',
-//         'email' => 'itiel.lima.cavalcante@gmail.com',
-//         'msg' => 'Olá, teste de envio via Laravel + n8n',
-//     ]);
-// });
