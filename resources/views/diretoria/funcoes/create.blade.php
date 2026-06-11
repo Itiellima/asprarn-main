@@ -6,16 +6,16 @@
         <div class="card shadow-sm">
 
             <div class="card-header">
-                <h4 class="mb-0">Cadastrar Diretoria</h4>
+                <h4 class="mb-0">Cadastrar Função</h4>
             </div>
 
             <div class="card-body">
 
                 <form
-                    action="{{ $diretoria->exists ? route('diretoria.update', $diretoria->id) : route('diretoria.store') }}"
+                    action="{{ $funcao->exists ? route('diretoria.update', $funcao->id) : route('diretoria.funcoes.store') }}"
                     method="POST">
                     @csrf
-                    @if ($diretoria->exists)
+                    @if ($funcao->exists)
                         @method('PUT')
                     @else
                         @method('POST')
@@ -24,12 +24,12 @@
 
                     <div class="mb-3">
                         <label for="nome" class="form-label">
-                            Nome da Diretoria
+                            Nome
                         </label>
 
                         <input type="text" class="form-control @error('nome') is-invalid @enderror" id="nome"
-                            name="nome" value="{{ old('nome', $diretoria->nome ?? '') }}"
-                            placeholder="Ex: Diretoria Executiva" required>
+                            name="nome" value="{{ old('nome', $funcao->nome ?? '') }}"
+                            placeholder="Ex: Presidente" required autofocus>
 
                         @error('nome')
                             <div class="invalid-feedback">
@@ -39,15 +39,15 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="sigla" class="form-label">
-                            Sigla
+                        <label for="descricao" class="form-label">
+                            Descricao
                         </label>
 
-                        <input type="text" class="form-control @error('sigla') is-invalid @enderror" id="sigla"
-                            name="sigla" value="{{ old('sigla', $diretoria->sigla ?? '') }}" placeholder="Ex: DIREX"
-                            maxlength="20" oninput="this.value = this.value.toUpperCase()" required>
+                        <input type="text" class="form-control @error('descricao') is-invalid @enderror" id="descricao"
+                            name="descricao" value="{{ old('descricao', $funcao->descricao ?? '') }}" placeholder="Ex: Descrição da função"
+                            maxlength="255" required>
 
-                        @error('sigla')
+                        @error('descricao')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -65,12 +65,12 @@
                             <option value="">Selecione</option>
 
                             <option value="ativo"
-                                {{ old('status', $diretoria->status ?? '') == 'ativo' ? 'selected' : '' }}>
+                                {{ old('status', $funcao->status ?? '') == 'ativo' ? 'selected' : '' }}>
                                 Ativo
                             </option>
 
                             <option value="inativo"
-                                {{ old('status', $diretoria->status ?? '') == 'inativo' ? 'selected' : '' }}>
+                                {{ old('status', $funcao->status ?? '') == 'inativo' ? 'selected' : '' }}>
                                 Inativo
                             </option>
 
@@ -85,12 +85,12 @@
 
                     <div class="d-flex justify-content-end gap-2">
 
-                        <a href="{{ route('diretoria.index') }}" class="btn btn-secondary">
+                        <a href="{{ route('diretoria.funcoes.index') }}" class="btn btn-secondary">
                             Cancelar
                         </a>
 
                         <button type="submit" class="btn btn-primary">
-                            Salvar Diretoria
+                            Salvar Função
                         </button>
 
                     </div>

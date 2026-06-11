@@ -4,35 +4,35 @@
     <div class="container py-4">
 
         <div class="text-center mb-5">
-            <h2>Diretorias</h2>
+            <h2>Funções</h2>
             <p class="text-muted">
-                Conheça as diretorias da ASPRA-RN
+                Conheça as funções das diretorias da ASPRA-RN
             </p>
         </div>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="{{ route('diretoria.create') }}" class="btn btn-sm btn-warning">Nova diretoria</a>
+            <a href="{{ route('diretoria.funcoes.create') }}" class="btn btn-sm btn-warning">Nova função</a>
         </div>
 
         <table class="table striped">
             <thead>
                 <tr>
                     <th>Nome</th>
-                    <th>Sigla</th>
+                    <th>Descrição</th>
                     <th>Status</th>
                     <th>Ações</th>
                 </tr>
             </thead>
-            @foreach ($diretorias as $dir)
+            @foreach ($funcoes as $funcao)
                 <tbody>
                     <tr>
-                        <th>{{ $dir->nome }}</td>
-                        <td>{{ $dir->sigla }}</td>
-                        <td>{{ strtoupper($dir->status) }}</td>
+                        <th>{{ $funcao->nome }}</td>
+                        <td>{{ $funcao->descricao }}</td>
+                        <td>{{ strtoupper($funcao->status) }}</td>
                         <td>
-                            <a href="{{ route('diretoria.edit', $dir->id) }}" class="btn btn-sm btn-warning">Editar</a>
-                            <form action="{{ route('diretoria.destroy', $dir->id) }}" method="POST" style="display:inline;"
-                                onclick="return confirm('Deseja excluir essa diretoria, {{ $dir->nome }}?');">
+                            <a href="{{ route('diretoria.funcoes.edit', $funcao->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                            <form action="{{ route('diretoria.funcoes.destroy', $funcao->id) }}" method="POST" style="display:inline;"
+                                onclick="return confirm('Deseja excluir essa funcao, {{ $funcao->nome }}?');">
                                 @csrf
                                 @method('DELETE')
 
@@ -44,6 +44,7 @@
                 </tbody>
             @endforeach
         </table>
+
 
     </div>
 @endsection
