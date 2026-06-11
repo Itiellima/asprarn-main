@@ -12,7 +12,7 @@
             <div class="card-body">
 
                 <form
-                    action="{{ $funcao->exists ? route('diretoria.update', $funcao->id) : route('diretoria.funcoes.store') }}"
+                    action="{{ $funcao->exists ? route('diretoria.funcoes.update', $funcao->id) : route('diretoria.funcoes.store') }}"
                     method="POST">
                     @csrf
                     @if ($funcao->exists)
@@ -90,7 +90,7 @@
                         </a>
 
                         <button type="submit" class="btn btn-primary">
-                            Salvar Função
+                            {{ $funcao->exists ? 'Salvar alterações.' : 'Salvar nova função.'}}
                         </button>
 
                     </div>

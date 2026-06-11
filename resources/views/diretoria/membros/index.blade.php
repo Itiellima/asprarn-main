@@ -8,6 +8,7 @@
             <p class="text-muted">
                 Conheça os membros da diretoria da ASPRA-RN
             </p>
+            <a href="{{ route('diretoria.membros.create') }}" class="btn btn-sm btn-warning">Novo membro</a>
         </div>
 
         <div class="row g-4">
@@ -18,7 +19,7 @@
 
                     <div class="card-header bg-primary text-white text-center">
                         <h5 class="mb-0">
-                            diretoria
+                            Diretoria
                         </h5>
                     </div>
 
@@ -28,11 +29,11 @@
                             style="width:120px;height:120px;object-fit:cover;" alt="Diretor">
 
                         <h5>
-                            nome
+                            NOME
                         </h5>
 
                         <span class="badge bg-secondary">
-                            funcao
+                            FUNCAO
                         </span>
 
                     </div>

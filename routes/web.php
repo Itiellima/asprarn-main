@@ -33,7 +33,7 @@ use App\Http\Controllers\Financeiro\CategoriaController;
 use App\Http\Controllers\Financeiro\ContasBancariasController;
 use App\Http\Controllers\Diretoria\DiretoriaController;
 use App\Http\Controllers\Diretoria\FuncaoController;
-
+use App\Http\Controllers\Diretoria\MembroController;
 
 //////////////////////////////// ********* INDEX ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -267,11 +267,11 @@ Route::post('/acao-judicial/update-acoes/{id}', [AcaoJudicialController::class, 
 
 
 ////////////////////////////////// ********* FINANCEIRO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-Route::middleware(['auth', 'role:admin|financeiro'])->group(function (){
-   
+Route::middleware(['auth', 'role:admin|financeiro'])->group(function () {
+
 
     Route::get('/financeiro', [FinanceiroController::class, 'index'])->name('financeiro.index');
-    
+
     Route::get('/financeiro/categoria', [CategoriaController::class, 'categoria'])->name('financeiro.categoria');
     Route::get('/financeiro/categoria/create', [CategoriaController::class, 'createCategoria'])->name('financeiro.categoria.create');
     Route::post('/financeiro/categoria/criar', [CategoriaController::class, 'criarCategoria'])->name('financeiro.categoria.criar');
@@ -284,13 +284,10 @@ Route::middleware(['auth', 'role:admin|financeiro'])->group(function (){
     Route::get('/financeiro/contas-bancarias/create', [ContasBancariasController::class, 'create'])->name('financeiro.contas_bancarias.create');
     Route::post('/financeiro/contas-bancarias/store', [ContasBancariasController::class, 'store'])->name('financeiro.contas_bancarias.store');
     Route::get('/financeiro/contas-bancarias/edit/{id}', [ContasBancariasController::class, 'edit'])->name('financeiro.contas_bancarias.edit');
-
-
-
 });
 
 
-Route::middleware(['auth', 'role:admin'])->group(function(){
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/diretoria', [DiretoriaController::class, 'index'])->name('diretoria.index');
     Route::get('/diretoria/create', [DiretoriaController::class, 'create'])->name('diretoria.create');
@@ -304,9 +301,10 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::post('/diretoria/funcoes/store', [FuncaoController::class, 'store'])->name('diretoria.funcoes.store');
     Route::delete('/diretoria/funcoes/destroy/{id}', [FuncaoController::class, 'destroy'])->name('diretoria.funcoes.destroy');
     Route::get('/diretoria/funcoes/edit/{id}', [FuncaoController::class, 'edit'])->name('diretoria.funcoes.edit');
+    Route::put('/diretoria/funcoes/update/{id}', [FuncaoController::class, 'update'])->name('diretoria.funcoes.update');
 
-
-    Route::get('/quadro-diretoria-index', [DiretoriaController::class, 'quadroDiretoria'])->name('quadroDiretoria.index');
+    Route::get('/membros/index', [MembroController::class, 'index'])->name('diretoria.membros.index');
+    Route::get('/membros/create', [MembroController::class, 'create'])->name('diretoria.membros.create');
 });
 
 // Exemplo rota protegida por middleware de autenticação e autorização
@@ -314,4 +312,3 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
 //     Route::get('/configuracoes', [App\Http\Controllers\ConfiguracoesController::class, 'index'])->name('configuracoes.index');
 //     Route::post('/acao-judicial/store', [AcaoJudicialController::class, 'store'])->name('acao-judicial.store');
 // });
-
