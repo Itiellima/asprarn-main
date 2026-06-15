@@ -12,7 +12,7 @@
             <div class="card-body">
 
                 <form
-                    action="{{ $membro->exists ? route('diretoria.funcoes.update', $membro->id) : route('diretoria.funcoes.store') }}"
+                    action="{{ $membro->exists ? route('diretoria.funcoes.update', $membro->id) : route('diretoria.membros.store') }}"
                     method="POST">
                     @csrf
                     @if ($membro->exists)
@@ -102,6 +102,19 @@
                         @enderror
                     </div>
 
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="inicio_mandato">Inicio do mandato</label>
+                                <input type="date" name="inicio_mandato" id="inicio_mandato" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fim_mandato">Fim do mandato</label>
+                                <input type="date" name="fim_mandato" id="fim_mandato" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="d-flex justify-content-end gap-2">
 
                         <a href="{{ route('diretoria.membros.index') }}" class="btn btn-secondary">
@@ -109,7 +122,7 @@
                         </a>
 
                         <button type="submit" class="btn btn-primary">
-                            {{ $membro->exists ? 'Salvar alterações.' : 'Salvar nova função.' }}
+                            {{ $membro->exists ? 'Salvar alterações.' : 'Salvar novo membro.' }}
                         </button>
 
                     </div>

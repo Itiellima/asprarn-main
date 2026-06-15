@@ -303,8 +303,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/diretoria/funcoes/edit/{id}', [FuncaoController::class, 'edit'])->name('diretoria.funcoes.edit');
     Route::put('/diretoria/funcoes/update/{id}', [FuncaoController::class, 'update'])->name('diretoria.funcoes.update');
 
-    Route::get('/membros/index', [MembroController::class, 'index'])->name('diretoria.membros.index');
-    Route::get('/membros/create', [MembroController::class, 'create'])->name('diretoria.membros.create');
+    Route::get('/diretoria/membros/index', [MembroController::class, 'index'])->name('diretoria.membros.index');
+    Route::get('/diretoria/membros/create', [MembroController::class, 'create'])->name('diretoria.membros.create');
+    Route::post('/diretoria/membros/store', [MembroController::class, 'store'])->name('diretoria.membros.store');
+    Route::delete('/diretoria/membros/destroy/{id}', [MembroController::class, 'destroy'])->name('diretoria.membros.destroy');
 });
 
 // Exemplo rota protegida por middleware de autenticação e autorização

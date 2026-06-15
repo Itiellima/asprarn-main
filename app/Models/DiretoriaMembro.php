@@ -9,10 +9,14 @@ class DiretoriaMembro extends Model
     protected $fillable = [
         'associado_id',
         'diretoria_id',
-        'diretoria_funcao_id',
+        'diretoria_funcoes_id',
         'inicio_mandato',
         'fim_mandato',
         'ativo'
+    ];
+
+    protected $casts = [
+        'ativo' => 'boolean',
     ];
 
 
@@ -26,9 +30,9 @@ class DiretoriaMembro extends Model
         return $this->belongsTo(Diretoria::class);
     }
 
-    public function diretoria_funcao()
+    public function funcao()
     {
-        return $this->belongsTo(DiretoriaFuncao::class);
+        return $this->belongsTo(DiretoriaFuncao::class, 'diretoria_funcoes_id');
     }
 
 }
