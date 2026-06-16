@@ -22,8 +22,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\Events\AssociadoCriado;
-
-
+use App\Models\DiretoriaMembro;
 
 class AssociadoController extends Controller
 {
@@ -563,9 +562,12 @@ class AssociadoController extends Controller
                 ->with('error', 'Acesso negado.');
         }
 
-        $associado = Associado::with(['endereco', 'contato', 'dadosBancarios'])->findOrFail($id);
+        $associado = Associado::with('membro.diretoria', 'membro.funcao')->findOrFail($id);
 
-        return view('dashboard.associadoComponents.carteirinha-download', compact('associado'));
+        $membro = $associado->membro;
+
+
+        return view('dashboard.associadoComponents.carteirinha-download', compact('associado', 'membro'));
     }
 
     public function showVerticalCarteirinha($id)
@@ -577,9 +579,11 @@ class AssociadoController extends Controller
                 ->with('error', 'Acesso negado.');
         }
 
-        $associado = Associado::findOrFail($id);
+        $associado = Associado::with('membro.diretoria', 'membro.funcao')->findOrFail($id);
 
-        return view('dashboard.associadoComponents.carteirinha-vertical', compact('associado'));
+        $membro = $associado->membro;
+
+        return view('dashboard.associadoComponents.carteirinha-vertical', compact('associado', 'membro'));
     }
 
     public function associadoInfo($id)

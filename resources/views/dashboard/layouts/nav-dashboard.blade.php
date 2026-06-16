@@ -23,6 +23,7 @@
                     <a href="{{ route('associado.index') }}" class="btn btn-primary m-1 col-lg-3">👥 Associados</a>
                     <a href="/profile" class="btn btn-primary mx-1 m-1 col-lg-3">👮 Alterar Perfil</a>
                     <a href="{{ route('planos.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">📋 Planos</a>
+                    <a href="{{ route('diretoria.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">📋 Diretorias</a>
 
                     <div class="dropdown col-lg-3 m-1 p-0">
                         <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"

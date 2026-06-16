@@ -4,8 +4,10 @@
 
 @section('content')
 
+    @include('dashboard.layouts.nav-dashboard')
 
-    <div class="container mb-3">
+    <hr>
+    <div class="container mb">
         <div class="justify-content-center text-center">
             <a href="{{ route('diretoria.index') }}" class="btn btn-primary mb-3">Diretorias</a>
             <a href="{{ route('diretoria.funcoes.index') }}" class="btn btn-primary mb-3">Funções</a>

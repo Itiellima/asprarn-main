@@ -135,4 +135,9 @@ class Associado extends Model
         return $this->belongsToMany(AcaoJudicial::class, 'acao_judicial_associado')
             ->withTimestamps();
     }
+
+    public function membro()
+    {
+        return $this->hasOne(DiretoriaMembro::class);
+    }
 }

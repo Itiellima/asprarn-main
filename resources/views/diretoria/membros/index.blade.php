@@ -4,7 +4,7 @@
     <div class="container py-4">
 
         <div class="text-center mb-5">
-            <h2>Diretorias</h2>
+            <h2>Membros</h2>
             <p class="text-muted">
                 Conheça os membros da diretoria da ASPRA-RN
             </p>

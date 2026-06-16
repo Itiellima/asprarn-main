@@ -59,7 +59,7 @@
         }
 
         .dados {
-            margin-top: 45px;
+            margin-top: 30px;
             font-size: 13px;
             line-height: 20px;
         }
@@ -111,7 +111,7 @@
 
             <div class="info">
                 <div class="nome">{{ $associado->nome }}</div>
-                <div class="tipo">Associado</div>
+                <div class="tipo">{{ $membro->diretoria->nome ?? 'Associado'  }}</div>
             </div>
         </div>
 
