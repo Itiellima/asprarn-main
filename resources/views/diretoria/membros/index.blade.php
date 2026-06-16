@@ -40,9 +40,9 @@
                         </div>
 
                         <div class="card-footer text-center bg-white">
-                            <button class="btn btn-outline-primary btn-sm">
-                                Ver Perfil
-                            </button>
+                            <a href="{{ route('diretoria.membros.edit', $membro->id ) }}" class="btn btn-outline-primary btn-sm">
+                                Editar
+                            </a>
                             <form action="{{ route('diretoria.membros.destroy', $membro->id) }}" method="POST" style="display:inline;"
                                 onclick="return confirm('Deseja excluir esse membro? {{ $membro->associado->nome }}?')">
                                 @csrf

@@ -43,8 +43,8 @@ class MembroController extends Controller
             'associado' => ['required', 'exists:associados,id'],
             'diretoria' => ['required', 'exists:diretorias,id'],
             'funcao' => ['required', 'exists:diretoria_funcoes,id'],
-            'inicio_mandato' => ['nullable','date'],
-            'fim_mandato' => ['nullable','date'],
+            'inicio_mandato' => ['nullable', 'date'],
+            'fim_mandato' => ['nullable', 'date'],
         ]);
 
         try {
@@ -55,7 +55,7 @@ class MembroController extends Controller
                 'inicio_mandato' => $validated['inicio_mandato'] ?? null,
                 'fim_mandato' => $validated['fim_mandato'] ?? null,
             ]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return redirect()->route('diretoria.membros.index')->with('error', 'Erro ao cadastrar novo membro. ' . $e->getMessage());
         }
 
@@ -69,5 +69,45 @@ class MembroController extends Controller
         $membro->delete();
 
         return redirect()->route('diretoria.membros.index')->with('success', 'Membro excluido com sucesso.');
+    }
+
+    public function edit($id) 
+    {
+        $membro = DiretoriaMembro::findOrFail($id);
+        
+        $associados = Associado::all();
+
+        $diretorias = Diretoria::all();
+
+        $funcoes = DiretoriaFuncao::all();
+
+        return view('diretoria.membros.create', compact('membro', 'associados', 'diretorias', 'funcoes'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $membro = DiretoriaMembro::findOrFail($id);
+
+        $validated = $request->validate([
+            'associado' => ['required', 'exists:associados,id'],
+            'diretoria' => ['required', 'exists:diretorias,id'],
+            'funcao' => ['required', 'exists:diretoria_funcoes,id'],
+            'inicio_mandato' => ['nullable', 'date'],
+            'fim_mandato' => ['nullable', 'date', 'after_or_equal:inicio_mandato'],
+        ]);
+
+        try {
+            $membro->update([
+                'associado_id' => $validated['associado'],
+                'diretoria_id' => $validated['diretoria'],
+                'diretoria_funcoes_id' => $validated['funcao'],
+                'inicio_mandato' => $validated['inicio_mandato'] ?? null,
+                'fim_mandato' => $validated['fim_mandato'] ?? null,
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('diretoria.membros.index')->with('error', 'Erro ao cadastrar novo membro. ' . $e->getMessage());
+        }
+
+        return redirect()->route('diretoria.membros.index')->with('success', 'Membro atualizado com sucesso.');
     }
 }

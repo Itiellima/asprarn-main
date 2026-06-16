@@ -12,7 +12,7 @@
             <div class="card-body">
 
                 <form
-                    action="{{ $membro->exists ? route('diretoria.funcoes.update', $membro->id) : route('diretoria.membros.store') }}"
+                    action="{{ $membro->exists ? route('diretoria.membros.update', $membro->id) : route('diretoria.membros.store') }}"
                     method="POST">
                     @csrf
                     @if ($membro->exists)
@@ -26,7 +26,6 @@
                         <label for="associado" class="form-label">
                             Nome
                         </label>
-
                         <select class="form-select @error('associado') is-invalid @enderror" id="associado" name="associado"
                             required>
 
@@ -48,8 +47,6 @@
                         @enderror
                     </div>
 
-
-
                     <div class="mb-3">
                         <label for="diretoria" class="form-label">
                             Diretoria
@@ -62,7 +59,7 @@
 
                             @foreach ($diretorias as $diretoria)
                                 <option value="{{ $diretoria->id }}"
-                                    {{ old('diretoria', $diretoria_id ?? '') == $diretoria->id ? 'selected' : '' }}>
+                                    {{ old('diretoria', $membro->diretoria_id ?? '') == $diretoria->id ? 'selected' : '' }}>
                                     {{ $diretoria->nome }}
                                 </option>
                             @endforeach
@@ -88,7 +85,7 @@
 
                             @foreach ($funcoes as $funcao)
                                 <option value="{{ $funcao->id }}"
-                                    {{ old('funcao', $funcao_id ?? '') == $funcao->id ? 'selected' : '' }}>
+                                    {{ old('funcao', $membro->diretoria_funcoes_id ?? '') == $funcao->id ? 'selected' : '' }}>
                                     {{ $funcao->nome }}
                                 </option>
                             @endforeach
@@ -106,11 +103,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="inicio_mandato">Inicio do mandato</label>
-                                <input type="date" name="inicio_mandato" id="inicio_mandato" class="form-control">
+                                <input type="date" name="inicio_mandato" id="inicio_mandato" class="form-control"
+                                    value="{{ old('inicio_mandato', $membro->inicio_mandato ?? '') }}">
                             </div>
                             <div class="col-md-6">
                                 <label for="fim_mandato">Fim do mandato</label>
-                                <input type="date" name="fim_mandato" id="fim_mandato" class="form-control">
+                                <input type="date" name="fim_mandato" id="fim_mandato" class="form-control"
+                                    value="{{ old('fim_mandato', $membro->fim_mandato ?? '') }}">
                             </div>
                         </div>
                     </div>
