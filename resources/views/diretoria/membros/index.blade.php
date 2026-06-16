@@ -11,8 +11,6 @@
             <a href="{{ route('diretoria.membros.create') }}" class="btn btn-sm btn-warning">Novo membro</a>
         </div>
 
-        <p>Total: {{ $membros->count() }}</p>
-
         <div class="row g-4">
 
             @foreach ($membros as $membro)
@@ -45,9 +43,15 @@
                             <button class="btn btn-outline-primary btn-sm">
                                 Ver Perfil
                             </button>
-                            <button class="btn btn-outline-danger btn-sm">
-                                Excluir
-                            </button>
+                            <form action="{{ route('diretoria.membros.destroy', $membro->id) }}" method="POST" style="display:inline;"
+                                onclick="return confirm('Deseja excluir esse membro? {{ $membro->associado->nome }}?')">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    Excluir
+                                </button>
+                            </form>
                         </div>
 
                     </div>

@@ -8,11 +8,9 @@
             <p class="text-muted">
                 Conheça as diretorias da ASPRA-RN
             </p>
-        </div>
-
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <a href="{{ route('diretoria.create') }}" class="btn btn-sm btn-warning">Nova diretoria</a>
         </div>
+
 
         <table class="table striped">
             <thead>
@@ -32,7 +30,7 @@
                         <td>
                             <a href="{{ route('diretoria.edit', $dir->id) }}" class="btn btn-sm btn-warning">Editar</a>
                             <form action="{{ route('diretoria.destroy', $dir->id) }}" method="POST" style="display:inline;"
-                                onclick="return confirm('Deseja excluir essa diretoria, {{ $dir->nome }}?');">
+                                onclick="return confirm('Deseja excluir essa diretoria, {{ $dir->nome }}? Ao excluir uma diretoria todos os membros vinculados a ela serão excluidos!');">
                                 @csrf
                                 @method('DELETE')
 

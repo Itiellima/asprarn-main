@@ -8,11 +8,9 @@
             <p class="text-muted">
                 Conheça as funções das diretorias da ASPRA-RN
             </p>
-        </div>
-
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <a href="{{ route('diretoria.funcoes.create') }}" class="btn btn-sm btn-warning">Nova função</a>
         </div>
+
 
         <table class="table striped">
             <thead>
@@ -32,7 +30,7 @@
                         <td>
                             <a href="{{ route('diretoria.funcoes.edit', $funcao->id) }}" class="btn btn-sm btn-warning">Editar</a>
                             <form action="{{ route('diretoria.funcoes.destroy', $funcao->id) }}" method="POST" style="display:inline;"
-                                onclick="return confirm('Deseja excluir essa funcao, {{ $funcao->nome }}?');">
+                                onclick="return confirm('Deseja excluir essa funcao, {{ $funcao->nome }}? Ao excluir uma função todos os membros vinculados a ela serão excluidos!');">
                                 @csrf
                                 @method('DELETE')
 
