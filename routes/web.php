@@ -34,6 +34,8 @@ use App\Http\Controllers\Financeiro\ContasBancariasController;
 use App\Http\Controllers\Diretoria\DiretoriaController;
 use App\Http\Controllers\Diretoria\FuncaoController;
 use App\Http\Controllers\Diretoria\MembroController;
+use App\Http\Controllers\PerguntasFrequentesController;
+use App\Models\PerguntasFrequentes;
 
 //////////////////////////////// ********* INDEX ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -286,7 +288,7 @@ Route::middleware(['auth', 'role:admin|financeiro'])->group(function () {
     Route::get('/financeiro/contas-bancarias/edit/{id}', [ContasBancariasController::class, 'edit'])->name('financeiro.contas_bancarias.edit');
 });
 
-
+// DIRETORIA / FUNCOES / MEMBROS
 Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/diretoria', [DiretoriaController::class, 'index'])->name('diretoria.index');
@@ -310,6 +312,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/diretoria/membros/edit/{id}', [MembroController::class, 'edit'])->name('diretoria.membros.edit');
     Route::put('/diretoria/membros/update/{id}', [MembroController::class, 'update'])->name('diretoria.membros.update');
 });
+
+Route::get('/perguntasfrequentes/index', [PerguntasFrequentesController::class, 'index'])->name('perguntasfrequentes.index');
+
+
 
 // Exemplo rota protegida por middleware de autenticação e autorização
 // Route::middleware(['auth', 'role:admin|moderador'])->group(function () {

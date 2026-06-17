@@ -1,3 +1,9 @@
+<style>
+    .nav-link{
+        color: white;
+    }
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-bg navbar-dark" aria-label="Thirteenth navbar example">
 
     <div class="container-fluid">
@@ -20,44 +26,53 @@
             {{-- LINKS --}}
             <ul class="navbar-nav  justify-content-lg-center mx-auto">
 
-                <li class="nav-item">
-                    <a href="/" class="nav-link">
-                        <h4>Início</h4>
+                <li class="nav-item d-flex align-items-center justify-content-center">
+                    <a href="/" class="nav-link text-center fw-bold">
+                        Início
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('beneficio.index') }}" class="nav-link">
-                        <h4>Benefícios</h4>
+                <li class="nav-item d-flex align-items-center justify-content-center">
+                    <a href="{{ route('beneficio.index') }}" class="nav-link text-center fw-bold ">
+                        Benefícios
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('quem.somos') }}" class="nav-link">
-                        <h4>Quem somos</h4>
+                <li class="nav-item d-flex align-items-center justify-content-center">
+                    <a href="{{ route('quem.somos') }}" class="nav-link text-center fw-bold ">
+                        Quem somos
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('contato.index') }}" class="nav-link">
-                        <h4>Contato</h4>
+                <li class="nav-item d-flex align-items-center justify-content-center">
+                    <a href="{{ route('contato.index') }}" class="nav-link text-center fw-bold ">
+                        Contato
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('associado.create') }}" class="nav-link border-bottom">
-                        <h4>Quero me associar</h4>
+                <li class="nav-item d-flex align-items-center justify-content-center">
+                    <a href="{{ route('perguntasfrequentes.index') }}" class="nav-link text-center fw-bold ">
+                        Perguntas Frequentes
                     </a>
                 </li>
+
+
+                <li class="nav-item d-flex align-items-center justify-content-center">
+                    <a href="{{ route('associado.create') }}" class="nav-link text-center fw-bold  border-bottom">
+                        Quero me associar
+                    </a>
+                </li>
+
+
 
                 @auth
-                    <li class="nav-item">
-                        <a href="/dashboard" class="nav-link">
-                            <h4>Minha Página</h4>
+                    <li class="nav-item d-flex align-items-center justify-content-center">
+                        <a href="/dashboard" class="nav-link text-center fw-bold ">
+                            Minha Página
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item d-flex align-items-center justify-content-center">
                         <livewire:notificacoes-alerta />
                     </li>
                 @endauth
