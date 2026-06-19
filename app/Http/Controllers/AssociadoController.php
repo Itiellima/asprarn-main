@@ -631,4 +631,39 @@ class AssociadoController extends Controller
 
         return view('dashboard.associadoComponents.verificar', compact('associado', 'situacoes'));
     }
+
+    public function resetPassword($id)
+    {
+        $user = Auth::user();
+
+        if (!$user || !$user->hasRole('admin|moderador')) {
+            return redirect()->route('associado.index')
+                ->with('error', 'Acesso negado.');
+        }
+
+        $associado = Associado::findOrFail($id);
+
+        $cpf = preg_replace('/\D/', '', $associado->cpf);
+
+        if ($associado->user) {
+
+            $associado->user->update([
+                'password' => Hash::make($cpf)
+            ]);
+        } else {
+            $novoUser = User::create([
+                'nome' => $associado->nome,
+                'email' => $associado->email ?? $cpf . '@temp.com',
+                'password' => Hash::make($cpf),
+            ]);
+
+
+            $associado->update([
+                'user_id' => $novoUser->id,
+            ]);
+        }
+
+
+        return redirect()->back()->with('success', 'Senha resetada para o CPF do associado.');
+    }
 }

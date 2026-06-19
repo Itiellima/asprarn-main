@@ -450,17 +450,36 @@
 
                     </form>
                 </fieldset>
-                <div class="container row mt-3 text-end">
-                    @hasanyrole('admin|editor')
+                <div class="container row mt-3 justify-content-end">
+
+                    @hasanyrole('admin|moderador')
+
                         @if ($associado->id)
-                            <form action="{{ route('associado.destroy', $associado->id) }}" method="POST"
-                                onsubmit="return confirm('Tem certeza que deseja excluir este associado? {{ $associado->nome }}');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Excluir Associado</button>
-                                <button type="button" id="enableEdit" class="btn btn-warning">Habilitar Edição</button>
-                            </form>
+                            <div class="d-flex gap-2 justify-content-end">
+
+                                <form action="{{ route('associado.reset.password', $associado->id) }}" method="POST">
+                                    @csrf
+
+                                    <button class="btn btn-warning" style="display: inline;"
+                                        onclick="return confirm('Resetar senha para o CPF({{ $associado->cpf }})?')">
+                                        Resetar senha
+                                    </button>
+
+                                </form>
+
+                                <form action="{{ route('associado.destroy', $associado->id) }}" method="POST"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir este associado? {{ $associado->nome }}');">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit" class="btn btn-danger">Excluir Associado</button>
+                                    <button type="button" id="enableEdit" class="btn btn-warning">Habilitar Edição</button>
+
+                                </form>
+
+                            </div>
                         @endif
+
                     @endhasanyrole
 
                 </div>

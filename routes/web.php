@@ -110,6 +110,9 @@ Route::delete('/associado/delete/{id}', [AssociadoController::class, 'destroy'])
 //ROTA INFORMACOES ASSSOCIADO
 Route::get('/asssociado/informacoes/{id}', [AssociadoController::class, 'associadoInfo'])->name('associado.informacoes');
 
+Route::post('/associado/resetpassword/{id}', [AssociadoController::class, 'resetPassword'])->name('associado.reset.password');
+
+
 
 //////////////////////////////// ********* PICTURE PROFILES ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::post('/associado/{associadoId}/picture-profile/store', [AssociadoController::class, 'storePictureProfile'])->name('associado.picture-profile.store');
