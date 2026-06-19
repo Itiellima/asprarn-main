@@ -50,11 +50,11 @@
                     </a>
                 </li>
 
-                <li class="nav-item d-flex align-items-center justify-content-center">
+                {{-- <li class="nav-item d-flex align-items-center justify-content-center">
                     <a href="{{ route('perguntasfrequentes.index') }}" class="nav-link text-center fw-bold ">
                         Perguntas Frequentes
                     </a>
-                </li>
+                </li> --}}
 
 
                 <li class="nav-item d-flex align-items-center justify-content-center">

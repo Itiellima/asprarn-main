@@ -10,6 +10,7 @@
 
         @include('dashboard.associadoComponents.associado-carteirinha-digital')
 
+        @include('dashboard.associadoPagamentos.listarPagamentos')
         {{-- Aba meus beneficios --}}
         {{-- <div class="alert alert-light">
             <h4 class="text-black">Meus Benefícios</h4>

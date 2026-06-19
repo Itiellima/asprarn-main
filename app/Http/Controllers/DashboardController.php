@@ -80,6 +80,12 @@ class DashboardController extends Controller
         if (!$associado) {
             abort(403, 'Acesso negado.');
         }
-        return view('dashboard.associado', compact('user', 'associado'));
+
+        $pagamentos = $associado->pagamentos()
+            ->orderBy('data_pagamento', 'desc')
+            ->paginate(10);
+
+        
+        return view('dashboard.associado', compact('user', 'associado', 'pagamentos'));
     }
 }
