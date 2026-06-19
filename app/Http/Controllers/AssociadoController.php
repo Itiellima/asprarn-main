@@ -650,16 +650,13 @@ class AssociadoController extends Controller
             $associado->user->update([
                 'password' => Hash::make($cpf)
             ]);
+
         } else {
-            $novoUser = User::create([
-                'nome' => $associado->nome,
+            $usuario = User::create([
+                'name' => $associado->nome,
                 'email' => $associado->email ?? $cpf . '@temp.com',
                 'password' => Hash::make($cpf),
-            ]);
-
-
-            $associado->update([
-                'user_id' => $novoUser->id,
+                'associado_id' => $associado->id,
             ]);
         }
 
