@@ -86,6 +86,10 @@
         .logo img {
             width: 120px;
         }
+
+        strong {
+            padding-left: 10px;
+        }
     </style>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
