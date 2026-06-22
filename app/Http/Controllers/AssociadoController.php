@@ -654,7 +654,7 @@ class AssociadoController extends Controller
         } else {
             $usuario = User::create([
                 'name' => $associado->nome,
-                'email' => $associado->email ?? $cpf . '@temp.com',
+                'email' => $associado->contato->email ?? $cpf . '@temp.com',
                 'password' => Hash::make($cpf),
                 'associado_id' => $associado->id,
             ]);
