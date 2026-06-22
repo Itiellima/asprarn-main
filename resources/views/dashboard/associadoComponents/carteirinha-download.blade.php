@@ -10,6 +10,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/img/Escudo-pm.png" type="image/x-icon">
+
     <title>CARTEIRA ASSOCIADO - ASPRA</title>
     <style>
         body {
@@ -68,7 +70,7 @@
         .qrcode {
             position: absolute;
             right: 20px;
-            bottom: 20px;
+            bottom: 40px;
         }
 
         .qrcode img {
@@ -77,7 +79,7 @@
 
         .logo {
             position: absolute;
-            top: 20px;
+            top: 5px;
             right: 20px;
         }
 
@@ -111,7 +113,7 @@
 
             <div class="info">
                 <div class="nome">{{ $associado->nome }}</div>
-                <div class="tipo">{{ $membro->diretoria->nome ?? 'Associado'  }}</div>
+                <div class="tipo">{{ $membro->diretoria->nome ?? 'Associado' }}</div>
             </div>
         </div>
 
@@ -146,7 +148,7 @@
 
     </div>
 
-    <button class="mt-3" onclick="salvarImagem()">Salvar como imagem</button>
+    <button class="mt-3" btn btn-primary onclick="salvarImagem()">Salvar como imagem</button>
 
     <script>
         function salvarImagem() {

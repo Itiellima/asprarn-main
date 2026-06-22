@@ -11,6 +11,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/Escudo-pm.png" type="image/x-icon">
+
     <title>CARTEIRA ASSOCIADO - ASPRA</title>
     <style>
         .cartao {
@@ -64,7 +66,7 @@
         .dados {
             font-size: 16px;
             line-height: 22px;
-            text-align: left;
+            text-align: center;
             margin-top: 10px;
             margin-bottom: 30px;
         }
@@ -101,6 +103,8 @@
 
             .dados {
                 font-size: 16px;
+                padding-left: 20px;
+                
             }
 
             .logo img {
