@@ -658,6 +658,8 @@ class AssociadoController extends Controller
                 'password' => Hash::make($cpf),
                 'associado_id' => $associado->id,
             ]);
+
+            $usuario->syncRoles(['associado', 'user']);
         }
 
 
