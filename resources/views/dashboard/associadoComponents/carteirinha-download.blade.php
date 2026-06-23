@@ -25,7 +25,9 @@
             border-radius: 12px;
             color: white;
             padding: 20px;
-            background: linear-gradient(135deg, #0a3a4a, #0c6b8c);
+            background: linear-gradient(135deg, 
+                {{ $membro?->diretoria ? '#dc2626' : '#0a3a4a' }},
+                #0c6b8c);
             position: relative;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
@@ -117,7 +119,7 @@
 
             <div class="info">
                 <div class="nome">{{ $associado->nome }}</div>
-                <div class="tipo">{{ $membro->diretoria->nome ?? 'Associado' }}</div>
+                <div class="tipo">{{ $membro->diretoria->nome ?? 'Associado Regular' }}</div>
             </div>
         </div>
 

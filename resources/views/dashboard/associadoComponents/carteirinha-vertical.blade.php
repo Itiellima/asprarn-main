@@ -27,7 +27,9 @@
             color: white;
             padding: 15px;
 
-            background: linear-gradient(135deg, #0a3a4a, #0c6b8c);
+            background: linear-gradient(135deg,
+                    {{ $membro?->diretoria ? '#dc2626' : '#0a3a4a' }},
+                    #0c6b8c);
             position: relative;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             text-align: center;
@@ -104,7 +106,6 @@
             .dados {
                 font-size: 16px;
                 padding-left: 20px;
-                
             }
 
             .logo img {
@@ -142,7 +143,7 @@
         </div>
 
         <div class="tipo">
-            Associado
+            {{ $membro->diretoria->nome ?? 'Associado Regular' }}
         </div>
 
         <div class="dados">

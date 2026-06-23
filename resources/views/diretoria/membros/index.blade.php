@@ -26,8 +26,16 @@
 
                         <div class="card-body text-center">
 
-                            <img src="/img/Escudo-pm.png" class="rounded-circle border mb-3"
-                                style="width:120px;height:120px;object-fit:cover;" alt="Diretor">
+                            @if ($membro->associado->pictureProfile?->path)
+                                <img src="{{ asset('storage/' . $membro->associado->pictureProfile->path) }}"
+                                    style="width:120px;height:120px;object-fit:cover;" alt="Diretor"
+                                    class="rounded-circle border mb-3">
+                            @else
+                                <img src="/img/Escudo-pm.png" class="rounded-circle border mb-3"
+                                    style="width:120px;height:120px;object-fit:cover;" alt="Diretor">
+                            @endif
+
+
 
                             <h5>
                                 {{ $membro->associado->nome }}
@@ -40,10 +48,12 @@
                         </div>
 
                         <div class="card-footer text-center bg-white">
-                            <a href="{{ route('diretoria.membros.edit', $membro->id ) }}" class="btn btn-outline-primary btn-sm">
+                            <a href="{{ route('diretoria.membros.edit', $membro->id) }}"
+                                class="btn btn-outline-primary btn-sm">
                                 Editar
                             </a>
-                            <form action="{{ route('diretoria.membros.destroy', $membro->id) }}" method="POST" style="display:inline;"
+                            <form action="{{ route('diretoria.membros.destroy', $membro->id) }}" method="POST"
+                                style="display:inline;"
                                 onclick="return confirm('Deseja excluir esse membro? {{ $membro->associado->nome }}?')">
                                 @csrf
                                 @method('DELETE')
