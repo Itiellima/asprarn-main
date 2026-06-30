@@ -35,6 +35,7 @@ use App\Http\Controllers\Diretoria\DiretoriaController;
 use App\Http\Controllers\Diretoria\FuncaoController;
 use App\Http\Controllers\Diretoria\MembroController;
 use App\Http\Controllers\PerguntasFrequentesController;
+use App\Http\Controllers\SorteioController;
 use App\Models\PerguntasFrequentes;
 
 //////////////////////////////// ********* INDEX ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -315,6 +316,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/diretoria/membros/edit/{id}', [MembroController::class, 'edit'])->name('diretoria.membros.edit');
     Route::put('/diretoria/membros/update/{id}', [MembroController::class, 'update'])->name('diretoria.membros.update');
 });
+
+Route::middleware(['auth', 'role:admin|moderador'])->group(function () {
+    Route::resource('sorteios', SorteioController::class);
+
+    Route::post('/sorteios/{id}/participante', [SorteioController::class, 'adicionarParticipante'])->name('sorteios.participante.store');
+    
+    Route::post('/sorteios/{id}/sortear', [SorteioController::class, 'sortear'])->name('sorteios.sortear');
+});
+
+
 
 Route::get('/perguntasfrequentes/index', [PerguntasFrequentesController::class, 'index'])->name('perguntasfrequentes.index');
 
