@@ -25,6 +25,7 @@
                     <a href="{{ route('planos.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">📋 Planos</a>
                     <a href="{{ route('diretoria.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">📋 Diretorias</a>
 
+                    {{-- Financeiro --}}
                     <div class="dropdown col-lg-3 m-1 p-0">
                         <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -43,7 +44,7 @@
                         </ul>
                     </div>
 
-                    {{-- Button Gestão --}}
+                    {{-- Gestão --}}
                     <div class="dropdown col-lg-3 m-1 p-0">
                         <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -69,7 +70,7 @@
                         </ul>
                     </div>
 
-                    {{-- Button Administração --}}
+                    {{-- Administração --}}
                     <div class="dropdown col-lg-3 m-1 p-0">
                         <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -77,6 +78,9 @@
                         </button>
 
                         <ul class="dropdown-menu w-100">
+                            <li>
+                                <a href="{{ route('sorteios.index') }}" class="dropdown-item">🍀​ Sorteios</a>
+                            </li>
                             <li>
                                 <a href="{{ route('automacoes.index') }}" class="dropdown-item">⚙️ Mensagens WhatsApp</a>
                             </li>

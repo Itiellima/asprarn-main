@@ -53,7 +53,11 @@ class SorteioController extends Controller
             'resultados.participante'
         ])->findOrFail($id);
 
-        return view('sorteios.show', compact('sorteio'));
+        $resultados = $sorteio->resultados()
+            ->orderBy('posicao')
+            ->get();
+
+        return view('sorteios.show', compact('sorteio', 'resultados'));
     }
 
 

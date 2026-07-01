@@ -132,7 +132,7 @@
 
 
 
-                        @forelse($sorteio->resultados as $resultado)
+                        @forelse($resultados as $resultado)
                             <div class="alert alert-success">
 
 
