@@ -318,6 +318,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin|moderador'])->group(function () {
+    
     Route::resource('sorteios', SorteioController::class);
 
     Route::post('/sorteios/{id}/participante', [SorteioController::class, 'adicionarParticipante'])->name('sorteios.participante.store');
