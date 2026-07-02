@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Sorteio;
 use App\Models\SorteioParticipante;
 use App\Models\SorteioResultado;
+use App\Models\Associado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -71,11 +72,14 @@ class SorteioController extends Controller
             'cpf' => ['required'],
         ]);
 
+        $cpf = $request->cpf;
+
+        $associado = Associado::where('cpf', $cpf)->first();
 
         SorteioParticipante::create([
             'sorteio_id' => $id,
 
-            'associado_id' => $request->associado_id,
+            'associado_id' => $associado ? $associado->id : null,
 
             'nome' => $request->nome,
 
@@ -200,5 +204,20 @@ class SorteioController extends Controller
 
         return back()
             ->with('success', 'Sorteio removido.');
+    }
+
+
+
+
+    public function encerrar($id)
+    {
+        $sorteio = Sorteio::findOrFail($id);
+
+        $sorteio->update([
+            'status' => 'finalizado'
+        ]);
+
+        return back()
+            ->with('success', 'Sorteio encerrado.');
     }
 }

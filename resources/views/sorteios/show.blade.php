@@ -146,6 +146,8 @@
                                 <strong>
 
                                     {{ $resultado->participante?->nome }}
+                                    <br>
+                                    CPF: {{ $resultado->participante?->cpf }}
 
                                 </strong>
 
@@ -269,7 +271,18 @@
 
 
             </form>
-        @endif
+
+            <form action="{{ route('sorteios.encerrar', $sorteio->id) }}" method="POST" class="mt-3 text-end">
+
+                 @csrf
+
+                 <button class="btn btn-danger" onclick="return confirm('Deseja encerrar o sorteio?')">
+
+                     🛑 Encerrar sorteio
+
+                 </button>
+
+            @endif
 
 
 

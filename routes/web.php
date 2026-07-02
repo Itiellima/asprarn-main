@@ -323,6 +323,8 @@ Route::middleware(['auth', 'role:admin|moderador'])->group(function () {
     Route::post('/sorteios/{id}/participante', [SorteioController::class, 'adicionarParticipante'])->name('sorteios.participante.store');
     
     Route::post('/sorteios/{id}/sortear', [SorteioController::class, 'sortear'])->name('sorteios.sortear');
+
+    Route::post('/sorteios/{id}/encerrar', [SorteioController::class, 'encerrar'])->name('sorteios.encerrar');
 });
 
 
