@@ -5,8 +5,12 @@
 @endsection
 
 @section('financeiro-content')
-    <form method="POST" action="{{ route('financeiro.contas_bancarias.store') }}">
+    <form method="POST" action="{{ $conta->exists ? route('financeiro.contas_bancarias.update', $conta->id) : route('financeiro.contas_bancarias.store') }}">
         @csrf
+        @if ($conta)
+            @method('PUT')
+        @endif
+
         <div class="body">
             <div class="row">
 
@@ -67,33 +71,6 @@
 
         </div>
 
-
-
     </form>
 
-
-
-
-    {{-- @push('scripts')
-        <script>
-            function aplicarMascaraConta(input) {
-
-                let valor = input.value.replace(/\D/g, '');
-
-                if (valor.length > 1) {
-                    valor = valor.slice(0, -1) + '-' + valor.slice(-1);
-                }
-
-                input.value = valor;
-            }
-
-            document.getElementById('agencia').addEventListener('input', function() {
-                aplicarMascaraConta(this);
-            });
-
-            document.getElementById('conta').addEventListener('input', function() {
-                aplicarMascaraConta(this);
-            });
-        </script>
-    @endpush --}}
 @endsection

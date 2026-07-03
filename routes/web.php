@@ -31,11 +31,13 @@ use App\Http\Controllers\ComoNosEncontrouController;
 use App\Http\Controllers\Financeiro\FinanceiroController;
 use App\Http\Controllers\Financeiro\CategoriaController;
 use App\Http\Controllers\Financeiro\ContasBancariasController;
+use App\Http\Controllers\Financeiro\Contas_a_PagarController;
 use App\Http\Controllers\Diretoria\DiretoriaController;
 use App\Http\Controllers\Diretoria\FuncaoController;
 use App\Http\Controllers\Diretoria\MembroController;
 use App\Http\Controllers\PerguntasFrequentesController;
 use App\Http\Controllers\SorteioController;
+
 use App\Models\PerguntasFrequentes;
 
 //////////////////////////////// ********* INDEX ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -290,6 +292,10 @@ Route::middleware(['auth', 'role:admin|financeiro'])->group(function () {
     Route::get('/financeiro/contas-bancarias/create', [ContasBancariasController::class, 'create'])->name('financeiro.contas_bancarias.create');
     Route::post('/financeiro/contas-bancarias/store', [ContasBancariasController::class, 'store'])->name('financeiro.contas_bancarias.store');
     Route::get('/financeiro/contas-bancarias/edit/{id}', [ContasBancariasController::class, 'edit'])->name('financeiro.contas_bancarias.edit');
+    Route::put('/financeiro/contas-bancarias/update/{id}', [ContasBancariasController::class, 'update'])->name('financeiro.contas_bancarias.update');
+
+    Route::resource('financeiro/contas-a-pagar', Contas_a_PagarController::class);
+    
 });
 
 // DIRETORIA / FUNCOES / MEMBROS

@@ -39,7 +39,7 @@
                             Contas Bancárias
                         </a>
 
-                        <a href="" class="list-group-item list-group-item-action">
+                        <a href="{{ route('contas-a-pagar.index') }}" class="list-group-item list-group-item-action">
                             A Pagar
                         </a>
 
