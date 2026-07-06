@@ -16,7 +16,7 @@ class ContasBancariasController extends Controller
     {
         $contas = FinanceiroContaBancaria::all();
 
-        return view('financeiro.contas_bancarias', compact('contas'));
+        return view('financeiro.contas_bancarias.index', compact('contas'));
     }
 
     public function create(ListarBancosService $ListarBancosService)
@@ -49,7 +49,7 @@ class ContasBancariasController extends Controller
             return redirect()->back()->with('error', '$e');
         };
 
-        return redirect()->route('financeiro.contas_bancarias')->with('success', 'Conta Bancaria cadastrada com sucesso!');
+        return redirect()->route('financeiro.contas_bancarias.index')->with('success', 'Conta Bancaria cadastrada com sucesso!');
     }
 
     public function edit($id, ListarBancosService $ListarBancosService)
@@ -81,6 +81,6 @@ class ContasBancariasController extends Controller
             return redirect()->back()->with('error', '$e');
         };
 
-        return redirect()->route('financeiro.contas_bancarias')->with('success', 'Conta Bancaria atualizada com sucesso!');
+        return redirect()->route('financeiro.contas_bancarias.index')->with('success', 'Conta Bancaria atualizada com sucesso!');
     }
 }

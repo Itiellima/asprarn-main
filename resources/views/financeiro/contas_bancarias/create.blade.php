@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="footer">
-                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a>
+                    <a href="{{ route('financeiro.contas_bancarias.index') }}" class="btn btn-secondary">Voltar</a>
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
 

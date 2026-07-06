@@ -280,7 +280,7 @@ Route::middleware(['auth', 'role:admin|financeiro'])->group(function () {
 
     Route::get('/financeiro', [FinanceiroController::class, 'index'])->name('financeiro.index');
 
-    Route::get('/financeiro/categoria', [CategoriaController::class, 'categoria'])->name('financeiro.categoria');
+    Route::get('/financeiro/categoria/index', [CategoriaController::class, 'categoria'])->name('financeiro.categoria.index');
     Route::get('/financeiro/categoria/create', [CategoriaController::class, 'createCategoria'])->name('financeiro.categoria.create');
     Route::post('/financeiro/categoria/criar', [CategoriaController::class, 'criarCategoria'])->name('financeiro.categoria.criar');
     Route::get('/financeiro/categoria/edit/{id}', [CategoriaController::class, 'editarCategoria'])->name('financeiro.categoria.editar');
@@ -288,7 +288,7 @@ Route::middleware(['auth', 'role:admin|financeiro'])->group(function () {
     Route::delete('/financeiro/categoria/excluir/{id}', [CategoriaController::class, 'excluirCategoria'])->name('financeiro.categoria.excluir');
 
 
-    Route::get('/financeiro/contas-bancarias', [ContasBancariasController::class, 'index'])->name('financeiro.contas_bancarias');
+    Route::get('/financeiro/contas-bancarias/index', [ContasBancariasController::class, 'index'])->name('financeiro.contas_bancarias.index');
     Route::get('/financeiro/contas-bancarias/create', [ContasBancariasController::class, 'create'])->name('financeiro.contas_bancarias.create');
     Route::post('/financeiro/contas-bancarias/store', [ContasBancariasController::class, 'store'])->name('financeiro.contas_bancarias.store');
     Route::get('/financeiro/contas-bancarias/edit/{id}', [ContasBancariasController::class, 'edit'])->name('financeiro.contas_bancarias.edit');

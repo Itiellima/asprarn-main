@@ -13,7 +13,7 @@ class CategoriaController extends Controller
 
         $categorias = FinanceiroCategoria::all();
 
-        return view('financeiro.categoria', compact('categorias'));
+        return view('financeiro.categoria.index', compact('categorias'));
     }
 
     public function createCategoria()
@@ -34,7 +34,7 @@ class CategoriaController extends Controller
 
         FinanceiroCategoria::create($validated);
 
-        return redirect()->route('financeiro.categoria')->with('success', 'Categoria criada com sucesso!');
+        return redirect()->route('financeiro.categoria.index')->with('success', 'Categoria criada com sucesso!');
     }
 
     public function editarCategoria($id)
@@ -56,7 +56,7 @@ class CategoriaController extends Controller
 
         $categoria->update($validated);
 
-        return redirect()->route('financeiro.categoria')->with('success', 'Categoria atualizada com sucesso!');
+        return redirect()->route('financeiro.categoria.index')->with('success', 'Categoria atualizada com sucesso!');
     }
 
     public function excluirCategoria($id)
@@ -64,6 +64,6 @@ class CategoriaController extends Controller
         $categoria = FinanceiroCategoria::findOrFail($id);
         $categoria->delete();
 
-        return redirect()->route('financeiro.categoria')->with('success', 'Categoria excluída com sucesso!');
+        return redirect()->route('financeiro.categoria.index')->with('success', 'Categoria excluída com sucesso!');
     }
 }

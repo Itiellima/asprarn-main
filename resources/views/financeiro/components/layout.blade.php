@@ -27,13 +27,13 @@
                             Lançamentos
                         </a>
 
-                        <a href="{{ route('financeiro.categoria') }}" 
+                        <a href="{{ route('financeiro.categoria.index') }}" 
                             class="list-group-item list-group-item-action
                             {{ request()->routeIs('financeiro.categoria*') ? 'active' : '' }}">
                             Categorias
                         </a>
 
-                        <a href="{{ route('financeiro.contas_bancarias') }}" 
+                        <a href="{{ route('financeiro.contas_bancarias.index') }}" 
                             class="list-group-item list-group-item-action
                             {{ request()->routeIs('financeiro.contas_bancarias*') ? 'active' : '' }}">
                             Contas Bancárias
