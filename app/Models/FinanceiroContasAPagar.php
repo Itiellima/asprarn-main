@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class FinanceiroContasAPagar extends Model
 {
-    protected $table = 'contas_a_pagar';
+    protected $table = 'financeiro_contas_a_pagar';
+
+    protected $casts = [
+        'data_lancamento' => 'date',
+        'data_vencimento' => 'date',
+        'data_pagamento'  => 'date',
+    ];
 
     protected $fillable = [
         'tipo',
@@ -16,11 +22,21 @@ class FinanceiroContasAPagar extends Model
         'data_pagamento',
         'repeticao',
         'categoria_id',
-        'categoria',
+        'categoria_nome',
         'conta_id',
         'pago',
         'descricao',
         'observacao'
     ];
-    
+
+    public function categoria()
+    {
+        return $this->belongsTo(FinanceiroCategoria::class, 'categoria_id');
+    }
+
+    public function conta()
+    {
+        return $this->belongsTo(FinanceiroContaBancaria::class, 'conta_id');
+    }
+
 }

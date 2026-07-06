@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contas_a_pagar', function (Blueprint $table) {
+        Schema::create('financeiro_contas_a_pagar', function (Blueprint $table) {
             $table->id();
 
             $table->enum('tipo', ['despesa', 'receita', 'transferencia',]);
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->enum('repeticao', ['diaria', 'semanal', 'quinzenal', 'mensal', 'anual', 'unica']);
 
             $table->foreignId('categoria_id')->nullable()->constrained('financeiro_categorias')->nullOnDelete();
-            $table->string('categoria')->nullable();
+            $table->string('categoria_nome')->nullable();
 
             $table->foreignId('conta_id')->nullable()->constrained('financeiro_contas_bancarias')->nullOnDelete();
 
@@ -44,6 +44,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contas_a_pagar');
+        Schema::dropIfExists('financeiro_contas_a_pagar');
     }
 };
