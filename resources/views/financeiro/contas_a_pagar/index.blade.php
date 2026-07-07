@@ -11,7 +11,7 @@
         </a>
     </div>
     <div class="card-body">
-        <table class="table table-striped">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -25,7 +25,7 @@
             </thead>
             <tbody>
                 @foreach ($contas as $conta)
-                    <tr>
+                    <tr style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#modalConta">
                         <td>{{ $conta->id }}</td>
                         <td>{{ ucfirst($conta->tipo) }}</td>
                         <td>{{ number_format($conta->valor, 2, ',', '.') }}</td>
@@ -38,6 +38,33 @@
                             </a>
                         </td>
                     </tr>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="modalConta" tabindex="-1" aria-labelledby="modalContaLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="modalContaLabel">Detalhes da Conta a Pagar</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <strong>ID:</strong> {{ $conta->id }}<br>
+                                    <strong>Tipo:</strong> {{ ucfirst($conta->tipo) }}<br>
+                                    <strong>Valor:</strong> {{ number_format($conta->valor, 2, ',', '.') }}<br>
+                                    <strong>Data do Lançamento:</strong> {{ date('d/m/Y', strtotime($conta->data_lancamento)) }}<br>
+                                    <strong>Categoria:</strong> {{ $conta->categoria->nome ?? 'Nenhuma' }}<br>
+                                    <strong>Conta:</strong> {{ $conta->conta->nome ?? 'Nenhuma' }}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
             </tbody>
         </table>

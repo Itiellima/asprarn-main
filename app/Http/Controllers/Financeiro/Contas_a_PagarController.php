@@ -30,11 +30,14 @@ class Contas_a_PagarController extends Controller
     {
         $categorias = FinanceiroCategoria::orderBy('nome')->get();
 
-        $contas = FinanceiroContaBancaria::orderBy('nome')->get();
+        $contasBancarias = FinanceiroContaBancaria::orderBy('nome')->get();
 
+        $conta = new FinanceiroContasAPagar();
+        
         return view('financeiro.contas_a_pagar.create', compact(
             'categorias',
-            'contas'
+            'contasBancarias',
+            'conta'
         ));
     }
 
@@ -95,12 +98,12 @@ class Contas_a_PagarController extends Controller
 
         $categorias = FinanceiroCategoria::orderBy('nome')->get();
 
-        $contas = FinanceiroContaBancaria::orderBy('nome')->get();
+        $contasBancarias = FinanceiroContaBancaria::orderBy('nome')->get();
 
         return view('financeiro.contas_a_pagar.create', compact(
             'conta',
             'categorias',
-            'contas'
+            'contasBancarias'
         ));
     }
 
@@ -125,29 +128,17 @@ class Contas_a_PagarController extends Controller
             'observacao'       => 'nullable|string',
         ]);
 
-        // Categoria
-        if (!empty($dados['categoria_id'])) {
+        $categoria = FinanceiroCategoria::select('id', 'nome')->find($dados['categoria_id']);
 
-            $categoria = FinanceiroCategoria::find($dados['categoria_id']);
+        $dados['categoria_nome'] = $categoria?->nome;
 
-            $dados['categoria_nome'] = $categoria->nome;
-        } else {
-
-            $dados['categoria_nome'] = null;
+        try {
+            $conta->update($dados);
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->with('error', 'Erro ao atualizar o lançamento: ' . $e->getMessage());
         }
-
-        // Conta bancária
-        if (!empty($dados['conta_id'])) {
-
-            $contaBancaria = FinanceiroContaBancaria::find($dados['conta_id']);
-
-            $dados['conta_nome'] = $contaBancaria->nome;
-        } else {
-
-            $dados['conta_nome'] = null;
-        }
-
-        $conta->update($dados);
 
         return redirect()
             ->route('contas-a-pagar.index')
