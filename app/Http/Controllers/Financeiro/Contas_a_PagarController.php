@@ -150,7 +150,19 @@ class Contas_a_PagarController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $conta = FinanceiroContasAPagar::findOrFail($id);
+
+        try {
+            $conta->delete();
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->with('error', 'Erro ao excluir o lançamento: ' . $e->getMessage());
+        }
+
+        return redirect()
+            ->route('contas-a-pagar.index')
+            ->with('success', 'Lançamento excluído com sucesso.');
     }
 
     public function pagar(Request $request, string $id)

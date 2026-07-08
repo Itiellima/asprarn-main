@@ -115,7 +115,7 @@
                         <label class="form-label">Data do lançamento</label>
 
                         <input type="date" name="data_lancamento" class="form-control"
-                            value="{{ old('data_lancamento', $conta->data_lancamento?->format('Y-m-d') ?? '') }}" required>
+                            value="{{ old('data_lancamento', $conta->data_lancamento?->format('Y-m-d') ?? date('Y-m-d')) }}" required>
                     </div>
 
                     <div class="col-md-4 mb-3">

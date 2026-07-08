@@ -20,7 +20,7 @@
                     <th scope="col">Data do lançamento</th>
                     <th scope="col">Categoria</th>
                     <th scope="col">Conta</th>
-                    {{-- <th scope="col">Ações</th> --}}
+                    <th scope="col">Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,11 +32,9 @@
                         <td>{{ date('d/m/Y', strtotime($conta->data_lancamento)) }}</td>
                         <td>{{ $conta->categoria->nome ?? 'Nenhuma' }}</td>
                         <td>{{ $conta->conta->nome ?? 'Nenhuma' }}</td>
-                        {{-- <td>
-                            <a href="{{ route('contas-a-pagar.edit', $conta->id) }}" class="btn btn-sm btn-warning">
-                                Editar
-                            </a>
-                        </td> --}}
+                        <td>
+                            {{ $conta->pago ? 'Pago' : 'Não pago' }}<br>    
+                        </td>
                     </tr>
 
                     <!-- Modal -->
