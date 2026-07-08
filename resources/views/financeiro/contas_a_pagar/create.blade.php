@@ -6,174 +6,184 @@
 
 @section('financeiro-content')
     @if ($conta->exists)
-
-        <div class="card shadow-sm">
+        <div class="card shadow-sm mb-3">
             <div class="card-header">
                 <h5 class="mb-0">Alterar Conta a Pagar</h5>
             </div>
             <div class="card-body">
-                
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="pago" id="pago"
-                        {{ old('pago', $conta->pago) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="pago">
-                        Marcar como pago
-                    </label>
-                </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Data de Pagamento</label>
-                    <input type="date" name="data_pagamento" class="form-control"
-                        value="{{ old('data_pagamento', $conta->data_pagamento?->format('Y-m-d') ?? '') }}">
-                </div>
-
-            </div>
-        </div>
-
-    @endif
-
-
-        <div class="card shadow-sm">
-            <div class="card-header">
-                <h5 class="mb-0">Cadastrar Lançamento</h5>
-            </div>
-
-            <div class="card-body">
-
-                <form
-                    action="{{ $conta->exists ? route('contas-a-pagar.update', $conta->id) : route('contas-a-pagar.store') }}"
-                    method="POST">
+                <form action="{{ route('financeiro.contas-a-pagar.pagar', $conta->id) }}" method="POST">
                     @csrf
-                    @if ($conta->exists)
-                        @method('PUT')
-                    @endif
+                    @method('PUT')
 
-                    <div class="row">
-
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Tipo</label>
-
-                            <select name="tipo" class="form-select" required>
-                                <option value="">Selecione</option>
-                                <option value="despesa" @selected(old('tipo', $conta->tipo) === 'despesa')>
-                                    Despesa
-                                </option>
-                                <option value="receita" @selected(old('tipo', $conta->tipo) === 'receita')>
-                                    Receita
-                                </option>
-                                <option value="transferencia" @selected(old('tipo', $conta->tipo) === 'transferencia')>
-                                    Transferência
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Valor</label>
-
-                            <input type="number" step="0.01" min="0" class="form-control" name="valor"
-                                value="{{ old('valor', $conta->valor ?? '') }}" required>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Repetição</label>
-
-                            <select name="repeticao" class="form-select">
-                                <option value="">Selecione</option>
-                                <option value="unica" @selected(old('repeticao', $conta->repeticao) === 'unica')>
-                                    Única
-                                </option>
-                                <option value="diaria" @selected(old('repeticao', $conta->repeticao) === 'diaria')>
-                                    Diária
-                                </option>
-                                <option value="semanal" @selected(old('repeticao', $conta->repeticao) === 'semanal')>
-                                    Semanal
-                                </option>
-                                <option value="quinzenal" @selected(old('repeticao', $conta->repeticao) === 'quinzenal')>
-                                    Quinzenal
-                                </option>
-                                <option value="mensal" @selected(old('repeticao', $conta->repeticao) === 'mensal')>
-                                    Mensal
-                                </option>
-                                <option value="anual" @selected(old('repeticao', $conta->repeticao) === 'anual')>
-                                    Anual
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Data do lançamento</label>
-
-                            <input type="date" name="data_lancamento" class="form-control"
-                                value="{{ old('data_lancamento', $conta->data_lancamento?->format('Y-m-d') ?? '') }}"
-                                required>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Data de vencimento</label>
-
-                            <input type="date" name="data_vencimento" class="form-control"
-                                value="{{ old('data_vencimento', $conta->data_vencimento?->format('Y-m-d') ?? '') }}">
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Conta Bancária</label>
-
-                            <select name="conta_id" class="form-select">
-                                <option value="">Selecione</option>
-
-                                @foreach ($contasBancarias as $contaBancaria)
-                                    <option value="{{ $contaBancaria->id }}" @selected(old('conta_id', $conta->conta_id) == $contaBancaria->id)>
-                                        {{ $contaBancaria->nome }}
-                                    </option>
-                                @endforeach
-
-                            </select>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Categoria</label>
-
-                            <select name="categoria_id" class="form-select">
-                                <option value="">Selecione</option>
-
-                                @foreach ($categorias as $categoria)
-                                    <option value="{{ $categoria->id }}" @selected(old('categoria_id', $conta->categoria_id) == $categoria->id)>
-                                        {{ $categoria->nome }}
-                                    </option>
-                                @endforeach
-
-                            </select>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Descrição</label>
-
-                            <input type="text" class="form-control" name="descricao"
-                                value="{{ old('descricao', $conta->descricao ?? '') }}">
-                        </div>
-
-                        <div class="col-12 mb-3">
-                            <label class="form-label">Observação</label>
-
-                            <textarea class="form-control" rows="4" name="observacao">{{ old('observacao', $conta->observacao ?? '') }}</textarea>
-                        </div>
-
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="pago" id="pago"
+                            {{ old('pago', $conta->pago) ? 'checked' : '' }}>
+                        <label class="form-check-label" for="pago">
+                            Marcar como pago
+                        </label>
                     </div>
 
-                    <div class="text-end">
-
-                        <a href="{{ route('contas-a-pagar.index') }}" class="btn btn-secondary">
-                            Cancelar
-                        </a>
-
-                        <button class="btn btn-success">
-                            Salvar
-                        </button>
-
+                    <div class="mb-3">
+                        <label class="form-label">Data de Pagamento</label>
+                        <div class="row d-flex align-items-end gap-2">
+                            <div class="col-md-3">
+                                <input type="date" name="data_pagamento" class="form-control"
+                                    value="{{ old('data_pagamento', $conta->data_pagamento?->format('Y-m-d') ?? '') }}">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary mt-2">
+                                    Salvar
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                 </form>
-
             </div>
         </div>
-    @endsection
+    @endif
+
+
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h5 class="mb-0">Cadastrar Lançamento</h5>
+        </div>
+
+        <div class="card-body">
+
+            <form action="{{ $conta->exists ? route('contas-a-pagar.update', $conta->id) : route('contas-a-pagar.store') }}"
+                method="POST">
+                @csrf
+                @if ($conta->exists)
+                    @method('PUT')
+                @endif
+
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Tipo</label>
+
+                        <select name="tipo" class="form-select" required>
+                            <option value="">Selecione</option>
+                            <option value="despesa" @selected(old('tipo', $conta->tipo) === 'despesa')>
+                                Despesa
+                            </option>
+                            <option value="receita" @selected(old('tipo', $conta->tipo) === 'receita')>
+                                Receita
+                            </option>
+                            <option value="transferencia" @selected(old('tipo', $conta->tipo) === 'transferencia')>
+                                Transferência
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Valor</label>
+
+                        <input type="number" step="0.01" min="0" class="form-control" name="valor"
+                            value="{{ old('valor', $conta->valor ?? '') }}" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Repetição</label>
+
+                        <select name="repeticao" class="form-select">
+                            <option value="">Selecione</option>
+                            <option value="unica" @selected(old('repeticao', $conta->repeticao) === 'unica')>
+                                Única
+                            </option>
+                            <option value="diaria" @selected(old('repeticao', $conta->repeticao) === 'diaria')>
+                                Diária
+                            </option>
+                            <option value="semanal" @selected(old('repeticao', $conta->repeticao) === 'semanal')>
+                                Semanal
+                            </option>
+                            <option value="quinzenal" @selected(old('repeticao', $conta->repeticao) === 'quinzenal')>
+                                Quinzenal
+                            </option>
+                            <option value="mensal" @selected(old('repeticao', $conta->repeticao) === 'mensal')>
+                                Mensal
+                            </option>
+                            <option value="anual" @selected(old('repeticao', $conta->repeticao) === 'anual')>
+                                Anual
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Data do lançamento</label>
+
+                        <input type="date" name="data_lancamento" class="form-control"
+                            value="{{ old('data_lancamento', $conta->data_lancamento?->format('Y-m-d') ?? '') }}" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Data de vencimento</label>
+
+                        <input type="date" name="data_vencimento" class="form-control"
+                            value="{{ old('data_vencimento', $conta->data_vencimento?->format('Y-m-d') ?? '') }}">
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Conta Bancária</label>
+
+                        <select name="conta_id" class="form-select">
+                            <option value="">Selecione</option>
+
+                            @foreach ($contasBancarias as $contaBancaria)
+                                <option value="{{ $contaBancaria->id }}" @selected(old('conta_id', $conta->conta_id) == $contaBancaria->id)>
+                                    {{ $contaBancaria->nome }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Categoria</label>
+
+                        <select name="categoria_id" class="form-select">
+                            <option value="">Selecione</option>
+
+                            @foreach ($categorias as $categoria)
+                                <option value="{{ $categoria->id }}" @selected(old('categoria_id', $conta->categoria_id) == $categoria->id)>
+                                    {{ $categoria->nome }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Descrição</label>
+
+                        <input type="text" class="form-control" name="descricao"
+                            value="{{ old('descricao', $conta->descricao ?? '') }}">
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="form-label">Observação</label>
+
+                        <textarea class="form-control" rows="4" name="observacao">{{ old('observacao', $conta->observacao ?? '') }}</textarea>
+                    </div>
+
+                </div>
+
+                <div class="text-start">
+
+                    <a href="{{ route('contas-a-pagar.index') }}" class="btn btn-secondary">
+                        Cancelar
+                    </a>
+
+                    <button class="btn btn-success">
+                        Salvar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+@endsection

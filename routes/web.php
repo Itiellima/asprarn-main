@@ -295,6 +295,8 @@ Route::middleware(['auth', 'role:admin|financeiro'])->group(function () {
     Route::put('/financeiro/contas-bancarias/update/{id}', [ContasBancariasController::class, 'update'])->name('financeiro.contas_bancarias.update');
 
     Route::resource('financeiro/contas-a-pagar', Contas_a_PagarController::class);
+
+    Route::put('/financeiro/contas-a-pagar/{id}/pagar', [Contas_a_PagarController::class, 'pagar'])->name('financeiro.contas-a-pagar.pagar');
     
 });
 

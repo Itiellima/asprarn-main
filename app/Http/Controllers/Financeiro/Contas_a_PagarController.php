@@ -33,7 +33,7 @@ class Contas_a_PagarController extends Controller
         $contasBancarias = FinanceiroContaBancaria::orderBy('nome')->get();
 
         $conta = new FinanceiroContasAPagar();
-        
+
         return view('financeiro.contas_a_pagar.create', compact(
             'categorias',
             'contasBancarias',
@@ -151,5 +151,25 @@ class Contas_a_PagarController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function pagar(Request $request, string $id)
+    {
+        $conta = FinanceiroContasAPagar::findOrFail($id);
+
+        $request->validate([
+            'data_pagamento' => 'required|date',
+        ]);
+
+        $pago = $request->boolean('pago');
+
+        $conta->update([
+            'pago' => $pago,
+            'data_pagamento' => $pago ? $request->data_pagamento : null,
+        ]);
+
+        return redirect()
+            ->route('contas-a-pagar.index')
+            ->with('success', $pago ? 'Lançamento marcado como pago com sucesso.' : 'Lançamento marcado como não pago com sucesso.');
     }
 }

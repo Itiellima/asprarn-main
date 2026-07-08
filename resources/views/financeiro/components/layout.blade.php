@@ -4,6 +4,12 @@
 
 @section('content')
 
+<style>
+    .list-group-item {
+        font-weight: bold;
+    }
+</style>
+
     <div class="container-fluid ">
 
         <div class="row">
@@ -14,7 +20,7 @@
                 <div class="border rounded rounded-4 bg-light mb-3">
 
                     <div class="card-header p-3">
-                        Financeiro
+                        <strong>Financeiro</strong>
                     </div>
 
                     <div class="list-group list-group-flush">

@@ -20,7 +20,7 @@
                     <th scope="col">Data do lançamento</th>
                     <th scope="col">Categoria</th>
                     <th scope="col">Conta</th>
-                    <th scope="col">Ações</th>
+                    {{-- <th scope="col">Ações</th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -32,11 +32,11 @@
                         <td>{{ date('d/m/Y', strtotime($conta->data_lancamento)) }}</td>
                         <td>{{ $conta->categoria->nome ?? 'Nenhuma' }}</td>
                         <td>{{ $conta->conta->nome ?? 'Nenhuma' }}</td>
-                        <td>
+                        {{-- <td>
                             <a href="{{ route('contas-a-pagar.edit', $conta->id) }}" class="btn btn-sm btn-warning">
                                 Editar
                             </a>
-                        </td>
+                        </td> --}}
                     </tr>
 
                     <!-- Modal -->
@@ -46,21 +46,30 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="modalContaLabel">Detalhes da Conta a Pagar</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                     </button>
                                 </div>
                                 <div class="modal-body">
                                     <strong>ID:</strong> {{ $conta->id }}<br>
                                     <strong>Tipo:</strong> {{ ucfirst($conta->tipo) }}<br>
                                     <strong>Valor:</strong> {{ number_format($conta->valor, 2, ',', '.') }}<br>
-                                    <strong>Data do Lançamento:</strong> {{ date('d/m/Y', strtotime($conta->data_lancamento)) }}<br>
+                                    <strong>Data do Lançamento:</strong>
+                                    {{ date('d/m/Y', strtotime($conta->data_lancamento)) }}<br>
                                     <strong>Categoria:</strong> {{ $conta->categoria->nome ?? 'Nenhuma' }}<br>
-                                    <strong>Conta:</strong> {{ $conta->conta->nome ?? 'Nenhuma' }}
+                                    <strong>Conta:</strong> {{ $conta->conta->nome ?? 'Nenhuma' }}<br>
+                                    <strong>Pago:</strong> {{ $conta->pago ? 'Sim' : 'Não' }}<br>
+                                    <strong>Data de Pagamento:</strong> {{ $conta->data_pagamento ? date('d/m/Y', strtotime($conta->data_pagamento)) : 'Não informado' }}<br>
+                                    <strong>Descrição:</strong> {{ $conta->descricao ?? 'Nenhuma' }}<br>
+                                    <strong>Observação:</strong> {{ $conta->observacao ?? 'Nenhuma' }}
                                 </div>
                                 <div class="modal-footer">
+
+                                    <a href="{{ route('contas-a-pagar.edit', $conta->id) }}"
+                                        class="btn btn-warning">
+                                        Editar
+                                    </a>
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
                                 </div>
                             </div>
                         </div>
