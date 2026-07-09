@@ -34,6 +34,10 @@
 
                         <ul class="dropdown-menu w-100">
                             <li>
+                                <a href="{{ route('financeiro.index') }}" class="dropdown-item">
+                                    Gestão Financeira</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('importar-pagamentos.index') }}" class="dropdown-item">
                                     Importar pagamentos</a>
                             </li>
