@@ -35,6 +35,7 @@ use App\Http\Controllers\Financeiro\Contas_a_PagarController;
 use App\Http\Controllers\Diretoria\DiretoriaController;
 use App\Http\Controllers\Diretoria\FuncaoController;
 use App\Http\Controllers\Diretoria\MembroController;
+use App\Http\Controllers\Financeiro\Contas_a_receberController;
 use App\Http\Controllers\PerguntasFrequentesController;
 use App\Http\Controllers\SorteioController;
 
@@ -297,8 +298,11 @@ Route::middleware(['auth', 'role:admin|financeiro'])->group(function () {
     Route::resource('financeiro/contas-a-pagar', Contas_a_PagarController::class);
 
     Route::put('/financeiro/contas-a-pagar/{id}/pagar', [Contas_a_PagarController::class, 'pagar'])->name('financeiro.contas-a-pagar.pagar');
-    
-});
+
+    Route::resource('financeiro/contas-a-receber', Contas_a_receberController::class);
+
+    Route::put('/financeiro/contas-a-receber/{id}/receber', [Contas_a_receberController::class, 'receber'])->name('financeiro.contas-a-receber.receber');
+    });
 
 // DIRETORIA / FUNCOES / MEMBROS
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -326,11 +330,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin|moderador'])->group(function () {
-    
+
     Route::resource('sorteios', SorteioController::class);
 
     Route::post('/sorteios/{id}/participante', [SorteioController::class, 'adicionarParticipante'])->name('sorteios.participante.store');
-    
+
     Route::post('/sorteios/{id}/sortear', [SorteioController::class, 'sortear'])->name('sorteios.sortear');
 
     Route::post('/sorteios/{id}/encerrar', [SorteioController::class, 'encerrar'])->name('sorteios.encerrar');

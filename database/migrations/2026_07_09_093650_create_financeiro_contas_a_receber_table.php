@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('financeiro_contas_a_pagar', function (Blueprint $table) {
+        Schema::create('financeiro_contas_a_receber', function (Blueprint $table) {
             $table->id();
 
             $table->enum('tipo', ['despesa', 'receita', 'transferencia',]);
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->string('descricao')->nullable();
 
             $table->text('observacao')->nullable();
-
+            
             $table->timestamps();
         });
     }
@@ -44,6 +44,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('financeiro_contas_a_pagar');
+        Schema::dropIfExists('financeiro_contas_a_receber');
     }
 };

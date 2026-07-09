@@ -1,18 +1,18 @@
 @extends('financeiro.components.layout')
 
 @section('financeiro-content-header')
-    Nova Conta a Pagar
+    Nova Conta a Receber
 @endsection
 
 @section('financeiro-content')
     @if ($conta->exists)
         <div class="card shadow-sm mb-3">
             <div class="card-header">
-                <h5 class="mb-0">Alterar Conta a Pagar</h5>
+                <h5 class="mb-0">Alterar Conta a Receber</h5>
             </div>
             <div class="card-body">
 
-                <form action="{{ route('financeiro.contas-a-pagar.pagar', $conta->id) }}" method="POST">
+                <form action="{{ route('financeiro.contas-a-receber.receber', $conta->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
@@ -20,7 +20,7 @@
                         <input class="form-check-input" type="checkbox" name="situacao" id="pago"
                             {{ old('situacao', $conta->situacao === 'pago') ? 'checked' : '' }}>
                         <label class="form-check-label" for="pago">
-                            Marcar como pago
+                            Marcar como Recebido
                         </label>
                     </div>
 
@@ -52,7 +52,8 @@
 
         <div class="card-body">
 
-            <form action="{{ $conta->exists ? route('contas-a-pagar.update', $conta->id) : route('contas-a-pagar.store') }}"
+            <form
+                action="{{ $conta->exists ? route('contas-a-receber.update', $conta->id) : route('contas-a-receber.store') }}"
                 method="POST">
                 @csrf
                 @if ($conta->exists)
@@ -115,7 +116,8 @@
                         <label class="form-label">Data do lançamento</label>
 
                         <input type="date" name="data_lancamento" class="form-control"
-                            value="{{ old('data_lancamento', $conta->data_lancamento?->format('Y-m-d') ?? date('Y-m-d')) }}" required>
+                            value="{{ old('data_lancamento', $conta->data_lancamento?->format('Y-m-d') ?? date('Y-m-d')) }}"
+                            required>
                     </div>
 
                     <div class="col-md-4 mb-3">
@@ -172,13 +174,13 @@
 
                 <div class="text-start">
 
-                    <a href="{{ route('contas-a-pagar.index') }}" class="btn btn-secondary">
-                        Cancelar
-                    </a>
-
                     <button class="btn btn-success">
                         Salvar
                     </button>
+
+                    <a href="{{ route('contas-a-receber.index') }}" class="btn btn-secondary">
+                        Cancelar
+                    </a>
 
                 </div>
 

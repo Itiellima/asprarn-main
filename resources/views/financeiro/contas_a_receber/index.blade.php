@@ -1,13 +1,13 @@
 @extends('financeiro.components.layout')
 
 @section('financeiro-content-header')
-    Contas a pagar
+    Contas a receber
 @endsection
 
 @section('financeiro-content')
     <div class="container rounded">
-        <a href="{{ route('contas-a-pagar.create') }}" class="btn btn-primary">
-            Nova conta a pagar
+        <a href="{{ route('contas-a-receber.create') }}" class="btn btn-primary">
+            Nova conta a receber
         </a>
     </div>
     <div class="card-body">
@@ -43,7 +43,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="modalContaLabel">Detalhes da Conta a Pagar</h1>
+                                    <h1 class="modal-title fs-5" id="modalContaLabel">Detalhes da Conta a Receber</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                     </button>
                                 </div>
@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="modal-footer">
 
-                                    <a href="{{ route('contas-a-pagar.edit', $conta->id) }}"
+                                    <a href="{{ route('contas-a-receber.edit', $conta->id) }}"
                                         class="btn btn-warning">
                                         Editar
                                     </a>

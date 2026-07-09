@@ -5,45 +5,35 @@ namespace App\Http\Controllers\Financeiro;
 use App\Http\Controllers\Controller;
 use App\Models\FinanceiroCategoria;
 use App\Models\FinanceiroContaBancaria;
-use App\Models\FinanceiroContasAPagar;
+use App\Models\FinanceiroContasAReceber;
 use Illuminate\Http\Request;
 
-
-class Contas_a_PagarController extends Controller
+class Contas_a_receberController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $contas = FinanceiroContasAPagar::with(['categoria', 'conta'])
+        $contas = FinanceiroContasAReceber::with(['categoria', 'conta'])
             ->orderBy('data_lancamento', 'desc')
             ->get();
 
-        return view('financeiro.contas_a_pagar.index', compact('contas'));
+        return view('financeiro.contas_a_receber.index', compact('contas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $categorias = FinanceiroCategoria::orderBy('nome')->get();
 
         $contasBancarias = FinanceiroContaBancaria::orderBy('nome')->get();
 
-        $conta = new FinanceiroContasAPagar();
+        $conta = new FinanceiroContasAReceber();
 
-        return view('financeiro.contas_a_pagar.create', compact(
+        return view('financeiro.contas_a_receber.create', compact(
             'categorias',
             'contasBancarias',
             'conta'
         ));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $dados = $request->validate([
@@ -74,45 +64,31 @@ class Contas_a_PagarController extends Controller
             $dados['conta'] = $conta->nome;
         }
 
-        FinanceiroContasAPagar::create($dados);
+        FinanceiroContasAReceber::create($dados);
 
         return redirect()
-            ->route('contas-a-pagar.index')
+            ->route('contas-a-receber.index')
             ->with('success', 'Lançamento cadastrado com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        $conta = FinanceiroContasAPagar::findOrFail($id);
+        $conta = FinanceiroContasAReceber::findOrFail($id);
 
         $categorias = FinanceiroCategoria::orderBy('nome')->get();
 
         $contasBancarias = FinanceiroContaBancaria::orderBy('nome')->get();
 
-        return view('financeiro.contas_a_pagar.create', compact(
+        return view('financeiro.contas_a_receber.create', compact(
             'conta',
             'categorias',
             'contasBancarias'
         ));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        $conta = FinanceiroContasAPagar::findOrFail($id);
+        $conta = FinanceiroContasAReceber::findOrFail($id);
 
         $dados = $request->validate([
             'tipo'             => 'required|in:despesa,receita,transferencia',
@@ -140,16 +116,13 @@ class Contas_a_PagarController extends Controller
         }
 
         return redirect()
-            ->route('contas-a-pagar.index')
+            ->route('contas-a-receber.index')
             ->with('success', 'Lançamento atualizado com sucesso.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        $conta = FinanceiroContasAPagar::findOrFail($id);
+        $conta = FinanceiroContasAReceber::findOrFail($id);
 
         try {
             $conta->delete();
@@ -160,13 +133,13 @@ class Contas_a_PagarController extends Controller
         }
 
         return redirect()
-            ->route('contas-a-pagar.index')
+            ->route('contas-a-receber.index')
             ->with('success', 'Lançamento excluído com sucesso.');
     }
 
     public function pagar(Request $request, string $id)
     {
-        $conta = FinanceiroContasAPagar::findOrFail($id);
+        $conta = FinanceiroContasAReceber::findOrFail($id);
 
         $request->validate([
             'data_pagamento' => 'required|date',
@@ -180,7 +153,27 @@ class Contas_a_PagarController extends Controller
         ]);
 
         return redirect()
-            ->route('contas-a-pagar.index')
+            ->route('contas-a-receber.index')
             ->with('success', $situacao === 'pago' ? 'Lançamento marcado como pago com sucesso.' : 'Lançamento marcado como não pago com sucesso.');
+    }
+
+    public function cancelar(Request $request, string $id)
+    {
+        $conta = FinanceiroContasAReceber::findOrFail($id);
+
+        $request->validate([
+            'data_cancelamento' => 'required|date',
+        ]);
+
+        $situacao = 'cancelado';
+
+        $conta->update([
+            'situacao' => $situacao,
+            'data_cancelamento' => $situacao === 'cancelado' ? $request->data_cancelamento : null,
+        ]);
+
+        return redirect()
+            ->route('contas-a-receber.index')
+            ->with('success', $situacao === 'cancelado' ? 'Lançamento marcado como cancelado com sucesso.' : 'Lançamento marcado como não cancelado com sucesso.');
     }
 }

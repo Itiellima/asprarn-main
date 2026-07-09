@@ -51,7 +51,9 @@
                             A Pagar
                         </a>
 
-                        <a href="" class="list-group-item list-group-item-action">
+                        <a href="{{ route('contas-a-receber.index') }}" 
+                            class="list-group-item list-group-item-action
+                            {{ request()->routeIs('contas-a-receber*') ? 'active' : '' }}">
                             A Receber
                         </a>
 
