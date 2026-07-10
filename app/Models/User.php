@@ -3,9 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Http;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -81,5 +84,21 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    
+    public function sendPasswordResetNotification($token): void
+    {
+        $url = url(route('password.reset', [
+            'token' => $token,
+            'email' => $this->email,
+        ], false));
+
+        Http::withHeaders([
+            'x-api-key' => env('N8N_API_KEY'),
+        ])->post('https://n8n.asprarn.com.br/webhook/e7d3cda2-bc0f-4b21-a46d-def676506122', [
+                'email'     => $this->email,
+                'nome'      => 'reset_password',
+                'usuario'   => $this->name,
+                'url'       => $url,
+                'evento'    => 'reset_password',
+            ]);
+    }
 }
