@@ -95,10 +95,11 @@ class User extends Authenticatable
             'x-api-key' => env('N8N_API_KEY'),
         ])->post('https://n8n.asprarn.com.br/webhook/e7d3cda2-bc0f-4b21-a46d-def676506122', [
                 'email'     => $this->email,
-                'nome'      => 'reset_password',
+                'nome'      => 'Recuperação de Senha',
                 'usuario'   => $this->name,
                 'url'       => $url,
                 'evento'    => 'reset_password',
+                
             ]);
     }
 }
