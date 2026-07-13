@@ -25,7 +25,7 @@
             </thead>
             <tbody>
                 @foreach ($contas as $conta)
-                    <tr style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#modalConta">
+                    <tr style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#modalConta{{ $conta->id }}">
                         <td>{{ $conta->id }}</td>
                         <td>{{ ucfirst($conta->tipo) }}</td>
                         <td>{{ number_format($conta->valor, 2, ',', '.') }}</td>
@@ -38,12 +38,12 @@
                     </tr>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="modalConta" tabindex="-1" aria-labelledby="modalContaLabel"
+                    <div class="modal fade" id="modalConta{{ $conta->id }}" tabindex="-1" aria-labelledby="modalContaLabel{{ $conta->id }}"
                         aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="modalContaLabel">Detalhes da Conta a Pagar</h1>
+                                    <h1 class="modal-title fs-5" id="modalContaLabel{{ $conta->id }}">Detalhes da Conta a Pagar</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                     </button>
                                 </div>

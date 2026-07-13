@@ -183,4 +183,17 @@ class Contas_a_PagarController extends Controller
             ->route('contas-a-pagar.index')
             ->with('success', $situacao === 'pago' ? 'Lançamento marcado como pago com sucesso.' : 'Lançamento marcado como não pago com sucesso.');
     }
+
+    public function cancelarPagamento(string $id)
+    {
+        $conta = FinanceiroContasAPagar::findOrFail($id);
+        $conta->update([
+            'situacao' => 'cancelado',
+            'data_pagamento' => null,
+        ]);
+
+        return redirect()
+            ->route('contas-a-pagar.index')
+            ->with('success', 'Pagamento cancelado com sucesso.');
+    }
 }
