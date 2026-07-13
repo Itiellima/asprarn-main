@@ -198,13 +198,13 @@
 
                 <div class="text-start">
 
-                    <a href="{{ route('contas-a-pagar.index') }}" class="btn btn-secondary">
-                        Cancelar
-                    </a>
-
                     <button class="btn btn-success">
                         Salvar
                     </button>
+
+                    <a href="{{ route('contas-a-pagar.index') }}" class="btn btn-secondary">
+                        Voltar
+                    </a>
 
                 </div>
 

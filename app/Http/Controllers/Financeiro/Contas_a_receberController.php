@@ -14,7 +14,7 @@ class Contas_a_receberController extends Controller
     {
         $contas = FinanceiroContasAReceber::with(['categoria', 'conta'])
             ->orderBy('data_lancamento', 'desc')
-            ->get();
+            ->paginate(10);
 
         return view('financeiro.contas_a_receber.index', compact('contas'));
     }
@@ -175,5 +175,18 @@ class Contas_a_receberController extends Controller
         return redirect()
             ->route('contas-a-receber.index')
             ->with('success', $situacao === 'cancelado' ? 'Lançamento marcado como cancelado com sucesso.' : 'Lançamento marcado como não cancelado com sucesso.');
+    }
+
+    public function cancelarRecebimento(string $id)
+    {
+        $conta = FinanceiroContasAReceber::findOrFail($id);
+        $conta->update([
+            'situacao' => 'cancelado',
+            'data_pagamento' => null,
+        ]);
+
+        return redirect()
+            ->route('contas-a-receber.index')
+            ->with('success', 'Recebimento cancelado com sucesso.');
     }
 }

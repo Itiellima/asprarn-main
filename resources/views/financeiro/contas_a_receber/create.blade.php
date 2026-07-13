@@ -4,9 +4,18 @@
     Nova Conta a Receber
 @endsection
 
+@push('scripts')
+    @if ($conta->situacao === 'cancelado')
+        <script>
+            document.querySelectorAll('#formulario input, #formulario select, #formulario textarea, #formulario button')
+                .forEach(el => el.disabled = true);
+        </script>
+    @endif
+@endpush
+
 @section('financeiro-content')
     @if ($conta->exists)
-        <div class="card shadow-sm mb-3">
+        <div class="card shadow-sm mb-3" id="formulario">
             <div class="card-header">
                 <h5 class="mb-0">Alterar Conta a Receber</h5>
             </div>
@@ -40,12 +49,28 @@
                     </div>
 
                 </form>
+
+                <div class="mb-3">
+                    <div class="row d-flex align-items-end gap-2">
+                        <div class="col-auto">
+                            <form action="{{ route('financeiro.contas-a-receber.cancelar-recebimento', $conta->id) }}"
+                                method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-danger mt-2"
+                                    onclick="return confirm('Deseja cancelar esse recebimento?')">
+                                    Cancelar recebimento
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     @endif
 
 
-    <div class="card shadow-sm">
+    <div class="card shadow-sm" id="formulario">
         <div class="card-header">
             <h5 class="mb-0">Cadastrar Lançamento</h5>
         </div>
@@ -179,7 +204,7 @@
                     </button>
 
                     <a href="{{ route('contas-a-receber.index') }}" class="btn btn-secondary">
-                        Cancelar
+                        Voltar
                     </a>
 
                 </div>

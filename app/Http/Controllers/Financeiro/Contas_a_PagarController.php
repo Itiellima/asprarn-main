@@ -18,7 +18,7 @@ class Contas_a_PagarController extends Controller
     {
         $contas = FinanceiroContasAPagar::with(['categoria', 'conta'])
             ->orderBy('data_lancamento', 'desc')
-            ->get();
+            ->paginate(10);
 
         return view('financeiro.contas_a_pagar.index', compact('contas'));
     }

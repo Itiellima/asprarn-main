@@ -300,8 +300,8 @@ Route::middleware(['auth', 'role:admin|financeiro'])->group(function () {
     Route::put('/financeiro/contas-a-pagar/{id}/cancelar-pagamento', [Contas_a_PagarController::class, 'cancelarPagamento'])->name('financeiro.contas-a-pagar.cancelar-pagamento');
 
     Route::resource('financeiro/contas-a-receber', Contas_a_receberController::class);
-
     Route::put('/financeiro/contas-a-receber/{id}/receber', [Contas_a_receberController::class, 'receber'])->name('financeiro.contas-a-receber.receber');
+    Route::put('/financeiro/contas-a-receber/{id}/cancelar-recebimento', [Contas_a_receberController::class, 'cancelarRecebimento'])->name('financeiro.contas-a-receber.cancelar-recebimento');
     });
 
 // DIRETORIA / FUNCOES / MEMBROS
