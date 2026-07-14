@@ -36,6 +36,8 @@ use App\Http\Controllers\Diretoria\DiretoriaController;
 use App\Http\Controllers\Diretoria\FuncaoController;
 use App\Http\Controllers\Diretoria\MembroController;
 use App\Http\Controllers\Financeiro\Contas_a_receberController;
+use App\Http\Controllers\Financeiro\ExtratoController;
+use App\Http\Controllers\Financeiro\LancamentosController;
 use App\Http\Controllers\PerguntasFrequentesController;
 use App\Http\Controllers\SorteioController;
 
@@ -302,6 +304,13 @@ Route::middleware(['auth', 'role:admin|financeiro'])->group(function () {
     Route::resource('financeiro/contas-a-receber', Contas_a_receberController::class);
     Route::put('/financeiro/contas-a-receber/{id}/receber', [Contas_a_receberController::class, 'receber'])->name('financeiro.contas-a-receber.receber');
     Route::put('/financeiro/contas-a-receber/{id}/cancelar-recebimento', [Contas_a_receberController::class, 'cancelarRecebimento'])->name('financeiro.contas-a-receber.cancelar-recebimento');
+    
+    Route::resource('financeiro/lancamentos', LancamentosController::class);
+    Route::put('/financeiro/lancamentos/{id}/pagar', [LancamentosController::class, 'pagar'])->name('financeiro.lancamentos.pagar');
+    Route::put('/financeiro/lancamentos/{id}/cancelar-recebimento', [LancamentosController::class, 'cancelarRecebimento'])->name('financeiro.lancamentos.cancelar-recebimento');
+    
+    Route::get('/financeiro/extrato', [ExtratoController::class, 'index'])->name('financeiro.extrato');
+
     });
 
 // DIRETORIA / FUNCOES / MEMBROS

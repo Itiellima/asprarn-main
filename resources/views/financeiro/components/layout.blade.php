@@ -25,11 +25,13 @@
 
                     <div class="list-group list-group-flush">
 
-                        <a href="" class="list-group-item list-group-item-action">
+                        <a href="{{ route('financeiro.extrato') }}" class="list-group-item list-group-item-action
+                            {{ request()->routeIs('financeiro.extrato') ? 'active' : '' }}">
                             Extratos
                         </a>
 
-                        <a href="" class="list-group-item list-group-item-action">
+                        <a href="{{ route('lancamentos.index') }}" class="list-group-item list-group-item-action
+                            {{ request()->routeIs('lancamentos*') ? 'active' : '' }}">
                             Lançamentos
                         </a>
 
