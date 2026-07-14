@@ -310,6 +310,7 @@ Route::middleware(['auth', 'role:admin|financeiro'])->group(function () {
     Route::put('/financeiro/lancamentos/{id}/cancelar-recebimento', [LancamentosController::class, 'cancelarRecebimento'])->name('financeiro.lancamentos.cancelar-recebimento');
     
     Route::get('/financeiro/extrato', [ExtratoController::class, 'index'])->name('financeiro.extrato');
+    
 
     });
 
