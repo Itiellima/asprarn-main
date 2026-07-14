@@ -91,16 +91,16 @@
                         <label class="form-label">Tipo</label>
 
                         <select name="tipo" class="form-select" required>
-                            <option value="">Selecione</option>
-                            <option value="despesa" @selected(old('tipo', $conta->tipo) === 'despesa')>
+                            {{-- <option value="">Selecione</option> --}}
+                            {{-- <option value="despesa" @selected(old('tipo', $conta->tipo) === 'despesa')>
                                 Despesa
-                            </option>
+                            </option> --}}
                             <option value="receita" @selected(old('tipo', $conta->tipo) === 'receita')>
                                 Receita
                             </option>
-                            <option value="transferencia" @selected(old('tipo', $conta->tipo) === 'transferencia')>
+                            {{-- <option value="transferencia" @selected(old('tipo', $conta->tipo) === 'transferencia')>
                                 Transferência
-                            </option>
+                            </option> --}}
                         </select>
                     </div>
 

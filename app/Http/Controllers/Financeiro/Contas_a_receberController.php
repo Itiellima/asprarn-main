@@ -13,6 +13,7 @@ class Contas_a_receberController extends Controller
     public function index()
     {
         $contas = FinanceiroContasAReceber::with(['categoria', 'conta'])
+            ->orderByRaw("FIELD(situacao, 'pendente', 'pago', 'cancelado')")
             ->orderBy('data_lancamento', 'desc')
             ->paginate(10);
 

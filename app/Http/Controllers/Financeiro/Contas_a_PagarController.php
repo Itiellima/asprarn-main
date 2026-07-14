@@ -17,6 +17,7 @@ class Contas_a_PagarController extends Controller
     public function index()
     {
         $contas = FinanceiroContasAPagar::with(['categoria', 'conta'])
+            ->orderByRaw("FIELD(situacao, 'pendente', 'pago', 'cancelado')")
             ->orderBy('data_lancamento', 'desc')
             ->paginate(10);
 
