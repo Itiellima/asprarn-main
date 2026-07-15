@@ -29,7 +29,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($contas as $conta)
+                    @forelse ($contas as $conta)
                         <tr style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#modalConta{{ $conta->id }}">
                             <td>{{ $conta->id }}</td>
                             <td>{{ ucfirst($conta->tipo) }}</td>
@@ -80,7 +80,14 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                Nenhum registro encontrado.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

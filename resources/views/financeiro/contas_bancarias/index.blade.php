@@ -32,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($contas as $conta)
+                    @forelse ($contas as $conta)
                         <tr>
                             <td>{{ $conta->nome }}</td>
                             <td>{{ $conta->banco }}</td>
@@ -51,7 +51,14 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                Nenhum registro encontrado.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
 

@@ -5,7 +5,6 @@
 @endsection
 
 @section('financeiro-content')
-
     <div class="container">
         {{ $contas->appends(request()->query())->links('pagination::bootstrap-5') }}
     </div>
@@ -21,7 +20,7 @@
 
         <div class="card-body">
 
-            <table class="table table-sm table-hover">
+            <table class="table table-hover">
 
                 <thead>
 
@@ -70,7 +69,8 @@
                                         <strong>Valor:</strong> {{ number_format($conta->valor, 2, ',', '.') }}<br>
                                         <strong>Data do Lançamento:</strong>
                                         {{ date('d/m/Y', strtotime($conta->data_lancamento)) }}<br>
-                                        <strong>Categoria:</strong> {{ $conta->categoria?->nome ?? ($conta->categoria_nome ?? 'Nenhuma') }}<br>
+                                        <strong>Categoria:</strong>
+                                        {{ $conta->categoria?->nome ?? ($conta->categoria_nome ?? 'Nenhuma') }}<br>
                                         <strong>Conta:</strong> {{ $conta->conta->nome ?? 'Nenhuma' }}<br>
                                         <strong>Situação:</strong> {{ ucfirst($conta->situacao) }}<br>
                                         <strong>Data de Pagamento:</strong>
@@ -94,7 +94,7 @@
 
                         <tr>
                             <td colspan="7" class="text-center">
-                                Nenhuma conta.
+                                Nenhum registro encontrado.
                             </td>
                         </tr>
                     @endforelse

@@ -31,7 +31,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($contas as $conta)
+                    @forelse ($contas as $conta)
                         <tr style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#modalConta{{ $conta->id }}">
                             <td>{{ $conta->id }}</td>
                             <td>{{ ucfirst($conta->tipo) }}</td>
@@ -61,7 +61,8 @@
                                         <strong>Valor:</strong> {{ number_format($conta->valor, 2, ',', '.') }}<br>
                                         <strong>Data do Lançamento:</strong>
                                         {{ date('d/m/Y', strtotime($conta->data_lancamento)) }}<br>
-                                        <strong>Categoria:</strong> {{ $conta->categoria->nome ?? $conta->categoria_nome ?? 'Nenhuma' }}<br>
+                                        <strong>Categoria:</strong>
+                                        {{ $conta->categoria->nome ?? ($conta->categoria_nome ?? 'Nenhuma') }}<br>
                                         <strong>Conta:</strong> {{ $conta->conta->nome ?? 'Nenhuma' }}<br>
                                         <strong>Situação:</strong> {{ ucfirst($conta->situacao) }}<br>
                                         <strong>Data de Pagamento:</strong>
@@ -81,10 +82,17 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                        @empty
 
-    </div>
-@endsection
+                            <tr>
+                                <td colspan="7" class="text-center">
+                                    Nenhum registro encontrado.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    @endsection
