@@ -14,7 +14,7 @@ class ContasBancariasController extends Controller
 {
     public function index()
     {
-        $contas = FinanceiroContaBancaria::all();
+        $contas = FinanceiroContaBancaria::paginate(10);
 
         return view('financeiro.contas_bancarias.index', compact('contas'));
     }
