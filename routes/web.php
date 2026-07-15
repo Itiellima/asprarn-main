@@ -296,6 +296,7 @@ Route::middleware(['auth', 'role:admin|financeiro'])->group(function () {
     Route::post('/financeiro/contas-bancarias/store', [ContasBancariasController::class, 'store'])->name('financeiro.contas_bancarias.store');
     Route::get('/financeiro/contas-bancarias/edit/{id}', [ContasBancariasController::class, 'edit'])->name('financeiro.contas_bancarias.edit');
     Route::put('/financeiro/contas-bancarias/update/{id}', [ContasBancariasController::class, 'update'])->name('financeiro.contas_bancarias.update');
+    Route::delete('/financeiro/contas-bancarias/destroy/{id}', [ContasBancariasController::class, 'destroy'])->name('financeiro.contas_bancarias.destroy');
 
     Route::resource('financeiro/contas-a-pagar', Contas_a_PagarController::class);
     Route::put('/financeiro/contas-a-pagar/{id}/pagar', [Contas_a_PagarController::class, 'pagar'])->name('financeiro.contas-a-pagar.pagar');

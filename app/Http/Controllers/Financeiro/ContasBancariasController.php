@@ -83,4 +83,16 @@ class ContasBancariasController extends Controller
 
         return redirect()->route('financeiro.contas_bancarias.index')->with('success', 'Conta Bancaria atualizada com sucesso!');
     }
+
+    public function destroy($id)
+    {
+        try {
+            $conta = FinanceiroContaBancaria::findOrFail($id);
+            $conta->delete();
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', '$e');
+        };
+
+        return redirect()->route('financeiro.contas_bancarias.index')->with('success', 'Conta Bancaria excluída com sucesso!');
+    }
 }

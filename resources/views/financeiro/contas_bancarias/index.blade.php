@@ -33,7 +33,13 @@
                     <td>
                         <a class="btn btn-sm btn-warning"
                             href="{{ route('financeiro.contas_bancarias.edit', $conta->id) }}">Editar</a>
-                        <button class="btn btn-sm btn-danger">Excluir</button>
+                        <form action="{{ route('financeiro.contas_bancarias.destroy', $conta->id) }}" method="POST"
+                            class="d-inline" onsubmit="confirm('Deseja excluir essa conta?')">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
