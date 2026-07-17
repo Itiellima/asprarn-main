@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Associado;
+use App\Models\FinanceiroLancamento;
 use App\Models\Pagamento;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -139,7 +140,7 @@ class PagamentosController extends Controller
                     continue;
                 }
 
-                Pagamento::create([
+                $pagamento = Pagamento::create([
                     'associado_id'      => $associado->id,
                     'user_id'           => $user->id,
                     'valor'             => $valor,
@@ -148,6 +149,24 @@ class PagamentosController extends Controller
                     'metodo_pagamento'  => 'desconto_em_folha',
                     'origem'            => 'importacao_csv',
                     'observacao'        => $request->input('observacao') ?? null,
+                    'associado_nome'    => $associado->nome,
+                    'associado_cpf'     => $associado->cpf
+                ]);
+
+                FinanceiroLancamento::create([
+                    'tipo' => 'receita',
+                    'valor' => $valor,
+                    'data_lancamento' => $mesReferencia,
+                    'data_vencimento' => $mesReferencia,
+                    'repeticao' => 'unica',
+                    'categoria_id' => null,
+                    'categoria_nome' => 'Mensalidade',
+                    'conta_id' => null,
+                    'situacao' => 'pago',
+                    'descricao' => "Pagamento de mensalidade do associado {$associado->nome} ({$associado->cpf})",
+                    'observacao' => $request->input('observacao') ?? null,
+                    'origem' => 'mensalidade_associado',
+                    'origem_id' => $pagamento->id
                 ]);
 
                 $sucesso++;

@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->dropForeign(['associado_id']);
 
-            $table->foreign('associado_id')->references('id')->on('associados')->nullOnDelete();
+            $table->foreign('associado_id')->references('id')->on('associados')->restrictOnDelete();
         });
     }
 
@@ -30,7 +30,7 @@ return new class extends Migration
 
             $table->dropForeign(['associado_id']);
 
-            $table->foreign('associado_id')->references('id')->on('associados')->cascadeOnDelete();
+            $table->foreign('associado_id')->references('id')->on('associados')->restrictOnDelete();
         });
     }
 };

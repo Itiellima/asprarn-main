@@ -9,6 +9,8 @@ class Pagamento extends Model
     //
     protected $fillable = [
         'associado_id',
+        'associado_nome',
+        'associado_cpf',
         'valor',
         'data_pagamento',
         'mes_referencia',
@@ -19,6 +21,8 @@ class Pagamento extends Model
         'origem',
         'user_id',
         'observacao',
+        'origem_id',
+        'origem'
     ];
 
     protected $casts = [

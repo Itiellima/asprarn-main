@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('pagamentos', function (Blueprint $table) {
             //
-            $table->string('associado_nome')->after('associado_id');
-            $table->string('associado_cpf', 14)->after('associado_nome');
+            $table->string('associado_nome')->nullable()->after('associado_id');
+            $table->string('associado_cpf', 14)->nullable()->after('associado_nome');
         });
     }
 
