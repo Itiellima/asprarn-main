@@ -138,7 +138,7 @@ class Contas_a_receberController extends Controller
             ->with('success', 'Lançamento excluído com sucesso.');
     }
 
-    public function pagar(Request $request, string $id)
+    public function receber(Request $request, string $id)
     {
         $conta = FinanceiroContasAReceber::findOrFail($id);
 

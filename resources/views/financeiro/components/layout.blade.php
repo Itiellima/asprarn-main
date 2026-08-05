@@ -63,9 +63,9 @@
                             A Receber
                         </a>
 
-                        <a href="" class="list-group-item list-group-item-action">
+                        {{-- <a href="" class="list-group-item list-group-item-action">
                             Relatório por Categoria
-                        </a>
+                        </a> --}}
 
                     </div>
 
