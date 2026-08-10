@@ -445,6 +445,10 @@ class AssociadoController extends Controller
 
         $associado = Associado::findOrFail($id);
 
+        if ($associado->pagamentos()->exists()) {
+            return redirect()->back()->with('error', 'Não é possível deletar o associado, pois ele possui pagamentos vinculados.');
+        }
+
         try {
             DB::beginTransaction();
 
