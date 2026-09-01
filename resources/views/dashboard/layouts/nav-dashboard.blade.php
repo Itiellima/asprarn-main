@@ -1,119 +1,115 @@
-<div class="container">
+<div class="container py-3">
 
+<div class="text-center mb-3">
+    <h3 class="fw-bold mb-1">Dashboard</h3>
+    <small class="text-muted">
+        Bem-vindo, {{ auth()->user()->name }}
+    </small>
+</div>
 
-    <h2 class="text-black text-center m-3 alert alert-light">Dashboard: {{ auth()->user()->name }}</h2>
+@auth
+    <div class="row g-2 justify-content-center">
 
-    <nav class="m-3">
-        @auth
-            <div class="container content-center items-center row justify-content-center">
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="{{ route('dashboard') }}" class="btn btn-success w-100">
+                <i class="fa-solid fa-house me-1"></i> Início
+            </a>
+        </div>
 
-                {{-- Inicio --}}
-                <a href="/dashboard" class="btn btn-success m-1 col-lg-3">🏠 Inicio</a>
-
-
-                {{-- Associados --}}
-                @hasanyrole('associado')
-                    <a href="{{ route('associado.informacoes', $associado->id) }}" class="btn btn-primary m-1 col-lg-3">👤 Meus
-                        Dados</a>
-                    <a href="/profile" class="btn btn-primary m-1 col-lg-3">👮 Perfil</a>
-                @endhasanyrole
-
-                {{-- Administração --}}
-                @hasanyrole('admin|moderador')
-                    <a href="{{ route('associado.index') }}" class="btn btn-primary m-1 col-lg-3">👥 Associados</a>
-                    <a href="/profile" class="btn btn-primary mx-1 m-1 col-lg-3">👮 Alterar Perfil</a>
-                    <a href="{{ route('planos.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">📋 Planos</a>
-                    <a href="{{ route('diretoria.index') }}" class="btn btn-primary mx-1 m-1 col-lg-3">📋 Diretorias</a>
-
-                    {{-- Financeiro --}}
-                    <div class="dropdown col-lg-3 m-1 p-0">
-                        <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            💳 Financeiro
-                        </button>
-
-                        <ul class="dropdown-menu w-100">
-                            <li>
-                                <a href="{{ route('financeiro.index') }}" class="dropdown-item">
-                                    Gestão Financeira</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('importar-pagamentos.index') }}" class="dropdown-item">
-                                    Importar pagamentos</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('pagamentos.index') }}" class="dropdown-item">
-                                    Pagamentos</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {{-- Gestão --}}
-                    <div class="dropdown col-lg-3 m-1 p-0">
-                        <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            👥 Gestão
-                        </button>
-
-                        <ul class="dropdown-menu w-100">
-                            <li>
-                                <a href="{{ route('funcionarios.index') }}" class="dropdown-item">
-                                    👥 Funcionários
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('prestador-de-servicos-autonomos.index') }}" class="dropdown-item">
-                                    👥 Prestadores de Serviços
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('empresas.index') }}" class="dropdown-item">
-                                    🏢 Empresas
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {{-- Administração --}}
-                    <div class="dropdown col-lg-3 m-1 p-0">
-                        <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Administração
-                        </button>
-
-                        <ul class="dropdown-menu w-100">
-                            <li>
-                                <a href="{{ route('sorteios.index') }}" class="dropdown-item">🍀​ Sorteios</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('automacoes.index') }}" class="dropdown-item">⚙️ Mensagens WhatsApp</a>
-                            </li>
-                            <li>
-                                <a href="/usuarios" class="dropdown-item">🔐 Controle de Acesso</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('posts.index') }}" class="dropdown-item">​📣 Comunicação</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('banner.create') }}" class="dropdown-item">​📣 Banner</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('configuracoes.index') }}" class="dropdown-item">⚙️ Configurações</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('notificacoes.index') }}" class="dropdown-item">🔔 Notificações</a>
-                            </li>
-                            <li class="dropdown-divider"></li>
-                            <li>
-                                <a href="{{ route('como-nos-encontrou.index') }}" class="dropdown-item">Como nos encontrou</a>
-                            </li>
-                        </ul>
-                    </div>
-                @endhasanyrole
+        @hasanyrole('associado')
+            <div class="col-12 col-sm-6 col-lg-3">
+                <a href="{{ route('associado.informacoes', $associado->id) }}" class="btn btn-primary w-100">
+                    <i class="fa-solid fa-user me-1"></i> Meus Dados
+                </a>
             </div>
-        @endauth
-    </nav>
 
+            <div class="col-12 col-sm-6 col-lg-3">
+                <a href="{{ route('profile.show') }}" class="btn btn-primary w-100">
+                    <i class="fa-solid fa-id-card me-1"></i> Perfil
+                </a>
+            </div>
+        @endhasanyrole
 
+        @hasanyrole('admin|moderador')
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <a href="{{ route('associado.index') }}" class="btn btn-primary w-100">
+                    <i class="fa-solid fa-users me-1"></i> Associados
+                </a>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <a href="{{ route('profile.show') }}" class="btn btn-primary w-100">
+                    <i class="fa-solid fa-user-gear me-1"></i> Perfil
+                </a>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <a href="{{ route('planos.index') }}" class="btn btn-primary w-100">
+                    <i class="fa-solid fa-clipboard-list me-1"></i> Planos
+                </a>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <a href="{{ route('diretoria.index') }}" class="btn btn-primary w-100">
+                    <i class="fa-solid fa-building-columns me-1"></i> Diretorias
+                </a>
+            </div>
+
+            {{-- Financeiro --}}
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle w-100" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-credit-card me-1"></i> Financeiro
+                    </button>
+
+                    <ul class="dropdown-menu w-100">
+                        <li><a href="{{ route('financeiro.index') }}" class="dropdown-item">Gestão Financeira</a></li>
+                        <li><a href="{{ route('importar-pagamentos.index') }}" class="dropdown-item">Importar Pagamentos</a></li>
+                        <li><a href="{{ route('pagamentos.index') }}" class="dropdown-item">Pagamentos</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            {{-- Gestão --}}
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle w-100" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-users-gear me-1"></i> Gestão
+                    </button>
+
+                    <ul class="dropdown-menu w-100">
+                        <li><a href="{{ route('funcionarios.index') }}" class="dropdown-item">Funcionários</a></li>
+                        <li><a href="{{ route('prestador-de-servicos-autonomos.index') }}" class="dropdown-item">Prestadores</a></li>
+                        <li><a href="{{ route('empresas.index') }}" class="dropdown-item">Empresas</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            {{-- Administração --}}
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle w-100" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-gears me-1"></i> Administração
+                    </button>
+
+                    <ul class="dropdown-menu w-100">
+                        <li><a href="{{ route('sorteios.index') }}" class="dropdown-item">Sorteios</a></li>
+                        <li><a href="{{ route('automacoes.index') }}" class="dropdown-item">Mensagens WhatsApp</a></li>
+                        <li><a href="/usuarios" class="dropdown-item">Controle de Acesso</a></li>
+                        <li><a href="{{ route('posts.index') }}" class="dropdown-item">Comunicação</a></li>
+                        <li><a href="{{ route('banner.create') }}" class="dropdown-item">Banner</a></li>
+                        <li><a href="{{ route('configuracoes.index') }}" class="dropdown-item">Configurações</a></li>
+                        <li><a href="{{ route('notificacoes.index') }}" class="dropdown-item">Notificações</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a href="{{ route('como-nos-encontrou.index') }}" class="dropdown-item">Como nos encontrou</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        @endhasanyrole
+
+    </div>
+@endauth
 
 </div>

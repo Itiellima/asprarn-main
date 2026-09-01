@@ -3,6 +3,7 @@
 @section('title', 'AspraRN - Financeiro')
 
 @section('content')
+    @include('dashboard.layouts.nav-dashboard')
 
     <style>
         .list-group-item {
