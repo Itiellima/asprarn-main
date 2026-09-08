@@ -9,7 +9,7 @@
     {{-- Dados Cadastrais --}}
     @include('associado.components.dados-cadastrais')
 
-    <div id="dashboardCollapse">
+    <div id="dashboardCollapse" class=" my-3">
 
         <div class="d-flex gap-2 mb-3 justify-content-center">
             <button id="btnSituacoes" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseSituacoes">
@@ -37,156 +37,218 @@
     @include('dashboard.associadoComponents.associado-carteirinha-digital')
 
 
-    {{-- ACOES --}}
-    <div class="container align-items-center alert alert-light text-black">
-        <strong class="text-black text-center">
-            <h2>Mais opções</h2>
-        </strong>
-        <div class="justify-content-center align-items-center d-flex flex-wrap gap-2 mt-3">
+    {{-- Mais opções --}}
+    <div class="container mb-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white py-2 text-center">
+                <strong>Mais opções</strong>
+            </div>
 
-            <a href="{{ route('associado.pasta.index', $associado->id) }}" class="btn btn-primary mx-2">Arquivos</a>
-            <a href="{{ route('pagamentos.show', $associado->id) }}" class="btn btn-primary mx-2">Pagamentos</a>
+            <div class="card-body d-flex flex-wrap justify-content-center gap-2 p-3">
+                <a href="{{ route('associado.pasta.index', $associado->id) }}" class="btn btn-sm btn-primary">
+                    <i class="bi bi-folder"></i> Arquivos
+                </a>
 
+                <a href="{{ route('pagamentos.show', $associado->id) }}" class="btn btn-sm btn-primary">
+                    <i class="bi bi-cash-stack"></i> Pagamentos
+                </a>
+            </div>
         </div>
     </div>
 
-    {{-- Painel Historico de situação --}}
-    <div class="container alert alert-light text-black">
 
-        <div class="container my-3">
-            <h3>Histórico de Situações do associado</h3>
-            @if ($associado->historicoSituacoes && $associado->historicoSituacoes->count() > 0)
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Situação</th>
-                            <th>Data de inicio</th>
-                            <th>Data de finalização</th>
-                            <th>Observacao</th>
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($associado->historicoSituacoes as $historico)
-                            <tr>
-                                <td>{{ $historico->situacao }}</td>
-                                <td>{{ $historico->data_inicio }}</td>
-                                <td>{{ $historico->data_fim }}</td>
-                                <td>{{ $historico->observacao }}</td>
-                                <td>
-                                    <form
-                                        action="{{ route('associado.historico.destroy', [$associado->id, $historico->id]) }}"
-                                        method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger btn-sm m-1" style="width: 3cm" type="submit"
-                                            onclick="return confirm('Tem certeza que deseja excluir este historico?')">
-                                            Excluir
-                                        </button>
-                                    </form>
-                                    <button class="btn btn-warning btn-sm m-1" style="width: 3cm" type="button"
-                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop1{{ $historico->id }}">
-                                        Editar
-                                    </button>
+    {{-- Histórico de situações --}}
+    <div class="container mb-3">
+        <div class="card shadow-sm border-0">
 
-                                </td>
-                            </tr>
-
-                            {{-- Modal Editar --}}
-                            <div class="modal fade" id="staticBackdrop1{{ $historico->id }}" data-bs-backdrop="static"
-                                data-bs-keyboard="false" tabindex="-1"
-                                aria-labelledby="staticBackdropLabel1{{ $historico->id }}" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="staticBackdropLabel1{{ $historico->id }}">
-                                                Editar Historico</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h3>Historico de {{ $associado->nome }}</h3>
-
-                                            <form
-                                                action="{{ route('associado.historico.update', [$associado->id, $historico->id]) }}"
-                                                method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
-                                                <label>Situação</label>
-                                                <input type="text" class="form-control" name="situacao" required
-                                                    value="{{ $historico->situacao }}">
-                                                <label>Observação</label>
-                                                <input type="text" class="form-control" name="observacao"
-                                                    value="{{ $historico->observacao }}">
-                                                <label>Data de Inicio</label>
-                                                <input type="date" class="form-control" name="data_inicio" required
-                                                    value="{{ $historico->data_inicio }}">
-                                                <label>Encerramento</label>
-                                                <input type="date" class="form-control" name="data_fim"
-                                                    value="{{ $historico->data_fim }}">
-
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Voltar</button>
-                                                    <button type="submit" class="btn btn-primary">Salvar</button>
-                                                </div>
-                                            </form>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </tbody>
-                </table>
-            @else
-                <p>Não há histórico de situações para este associado.</p>
-            @endif
-
-            {{-- Botão para abrir modal de inserir historico --}}
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop3">
-                Inserir Historico
-            </button>
-
-            {{-- Modal Historico --}}
-            <div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="staticBackdropLabel3" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel3">Novo Historico</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <h3>Historico de {{ $associado->nome }}</h3>
-                            {{-- Formulário de envio documento --}}
-                            <form action="{{ route('associado.historico.store', $associado->id) }}" method="POST"
-                                enctype="multipart/form-data">
-                                @csrf
-                                <label>Situação</label>
-                                <input type="text" class="form-control" name="situacao" required>
-                                <label>Observação</label>
-                                <input type="text" class="form-control" name="observacao">
-                                <label>Data de Inicio</label>
-                                <input type="date" class="form-control" name="data_inicio" required>
-                                <label>Encerramento</label>
-                                <input type="date" class="form-control" name="data_fim">
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Voltar</button>
-                                    <button type="submit" class="btn btn-primary">Inserir</button>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
+            <div class="card-header bg-primary text-white py-2">
+                <strong>Histórico de situações</strong>
             </div>
 
+            <div class="card-body">
 
+                @if ($associado->historicoSituacoes?->count())
+
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover align-middle mb-3">
+                            <thead>
+                                <tr>
+                                    <th>Situação</th>
+                                    <th>Início</th>
+                                    <th>Fim</th>
+                                    <th>Observação</th>
+                                    <th class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($associado->historicoSituacoes as $historico)
+                                    <tr>
+                                        <td>{{ $historico->situacao }}</td>
+                                        <td>{{ $historico->data_inicio }}</td>
+                                        <td>{{ $historico->data_fim ?? '-' }}</td>
+                                        <td>{{ $historico->observacao ?? '-' }}</td>
+
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                                data-bs-target="#editarHistorico{{ $historico->id }}">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+
+                                            <form
+                                                action="{{ route('associado.historico.destroy', [$associado->id, $historico->id]) }}"
+                                                method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button type="submit" class="btn btn-sm btn-danger"
+                                                    onclick="return confirm('Tem certeza que deseja excluir este histórico?')">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+                                    {{-- Modal editar --}}
+                                    <div class="modal fade" id="editarHistorico{{ $historico->id }}" tabindex="-1">
+
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                                <form
+                                                    action="{{ route('associado.historico.update', [$associado->id, $historico->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">
+                                                            Editar histórico
+                                                        </h5>
+
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="modal-body">
+
+                                                        <div class="mb-2">
+                                                            <label class="form-label">Situação</label>
+                                                            <input type="text" class="form-control" name="situacao"
+                                                                value="{{ $historico->situacao }}" required>
+                                                        </div>
+
+                                                        <div class="mb-2">
+                                                            <label class="form-label">Observação</label>
+                                                            <input type="text" class="form-control" name="observacao"
+                                                                value="{{ $historico->observacao }}">
+                                                        </div>
+
+                                                        <div class="row g-2">
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Data de início</label>
+                                                                <input type="date" class="form-control"
+                                                                    name="data_inicio"
+                                                                    value="{{ $historico->data_inicio }}" required>
+                                                            </div>
+
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Encerramento</label>
+                                                                <input type="date" class="form-control" name="data_fim"
+                                                                    value="{{ $historico->data_fim }}">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary btn-sm"
+                                                            data-bs-dismiss="modal">
+                                                            Cancelar
+                                                        </button>
+
+                                                        <button type="submit" class="btn btn-primary btn-sm">
+                                                            Salvar
+                                                        </button>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <p class="text-muted text-center mb-3">
+                        Não há histórico de situações para este associado.
+                    </p>
+                @endif
+
+                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#novoHistorico">
+                    <i class="bi bi-plus-lg"></i> Inserir histórico
+                </button>
+
+            </div>
         </div>
+    </div>
 
+    <div class="modal fade" id="novoHistorico" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <form action="{{ route('associado.historico.store', $associado->id) }}" method="POST">
+                    @csrf
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Novo histórico</h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="mb-2">
+                            <label class="form-label">Situação</label>
+                            <input type="text" class="form-control" name="situacao" required>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label">Observação</label>
+                            <input type="text" class="form-control" name="observacao">
+                        </div>
+
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="form-label">Data de início</label>
+                                <input type="date" class="form-control" name="data_inicio" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Encerramento</label>
+                                <input type="date" class="form-control" name="data_fim">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            Inserir
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
     </div>
 
     @push('scripts')

@@ -1,44 +1,46 @@
-{{-- acao-judicial --}}
-<div class="container alert alert-light text-black text-center">
-    
-    <strong class="text-black">
-        <h2>Ações em Andamento</h2>
-    </strong>
+<div class="container mb-3">
+    <div class="card shadow-sm border-0">
 
-    <form action="{{ route('acao-judicial.update-acoes', $associado->id) }}" method="POST">
-        @csrf
+        <div class="card-header bg-primary text-white text-center py-2">
+            <strong>Ações em andamento</strong>
+        </div>
 
-        <div class="row justify-content-center">
+        <div class="card-body">
 
-            @foreach ($acoes as $acao)
-            <div class="col-md-3 mb-3">
-                
-                <div class="form-check form-check-inline">
-                    <input 
-                    class="form-check-input" 
-                    type="checkbox" 
-                    id="acao_{{ $acao->id }}" 
-                    name="acoes[]"
-                    value="{{ $acao->id }}" {{ $associado->acoesJudiciais->contains('id', $acao->id) ? 'checked' : '' }}>
-    
-                    <label class="form-check-label" for="acao_{{ $acao->id }}">
-                        {{ $acao->nome }}
-                    </label>
+            <form action="{{ route('acao-judicial.update-acoes', $associado->id) }}" method="POST">
+                @csrf
+
+                <div class="row g-2">
+                    @foreach ($acoes as $acao)
+                        <div class="col-6 col-md-3">
+                            <label class="border rounded p-2 w-100 d-flex align-items-center gap-2">
+                                <input
+                                    class="form-check-input m-0"
+                                    type="checkbox"
+                                    name="acoes[]"
+                                    value="{{ $acao->id }}"
+                                    {{ $associado->acoesJudiciais->contains('id', $acao->id) ? 'checked' : '' }}>
+
+                                <span>{{ $acao->nome }}</span>
+                            </label>
+                        </div>
+                    @endforeach
                 </div>
-            
-            </div>
-            @endforeach
-        
-        </div>
-        
-        <div class="container">
-            @if ($acoes->count() > 0)
-                <button type="submit" class="btn btn-primary mt-3 mb-3">Salvar</button>
-            @else
-                <p>Nenhuma ação judicial disponível.</p>
-            @endif
-        </div>
 
-    </form>
+                @if ($acoes->count())
+                    <div class="text-center mt-3">
+                        <button class="btn btn-primary btn-sm px-4">
+                            Salvar
+                        </button>
+                    </div>
+                @else
+                    <p class="text-muted text-center mb-0">
+                        Nenhuma ação judicial disponível.
+                    </p>
+                @endif
 
+            </form>
+
+        </div>
+    </div>
 </div>

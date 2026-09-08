@@ -1,84 +1,86 @@
-<div class="container alert alert-light text-black">
-        <h2 class="text-center mb-4">Dados cadastrais</h2>
+<div class="container py-3">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
 
-        <div class="border rounded shadow-sm">
-            <div class="row m-3">
+            <h4 class="text-center mb-3">Dados cadastrais</h4>
 
-                {{-- COLUNA ESQUERDA --}}
+            <div class="row g-2">
                 <div class="col-md-6">
-                    <div class="form-control mb-3 bg-white">
-                        <strong>Nome:</strong> {{ $associado->nome }}
-                    </div>
-
-                    <div class="form-control mb-3 bg-white">
-                        <strong>CPF:</strong> {{ $associado->cpf }}
-                    </div>
-
-                    <div class="form-control mb-3 bg-white">
-                        <strong>RG:</strong> {{ $associado->rg }}
-                    </div>
-
-                    <div class="form-control mb-3 bg-white">
-                        <strong>Órgão Expedidor:</strong> {{ $associado->org_expedidor }}
+                    <div class="border rounded p-2">
+                        <small class="text-muted">Nome</small>
+                        <div class="fw-semibold">{{ $associado->nome }}</div>
                     </div>
                 </div>
 
-                {{-- COLUNA DIREITA --}}
                 <div class="col-md-6">
-                    <div class="form-control mb-3 bg-white">
-                        <strong>Telefone:</strong> {{ $associado->contato->tel_celular ?? 'Não informado' }}
+                    <div class="border rounded p-2">
+                        <small class="text-muted">CPF</small>
+                        <div>{{ $associado->cpf }}</div>
                     </div>
+                </div>
 
-                    <div class="form-control mb-3 bg-white">
-                        <strong>Data de Nascimento:</strong> {{ date('d/m/Y', strtotime($associado->dt_nasc)) }}
+                <div class="col-md-6">
+                    <div class="border rounded p-2">
+                        <small class="text-muted">RG</small>
+                        <div>{{ $associado->rg }}</div>
                     </div>
+                </div>
 
-                    <div class="form-control mb-3 bg-white">
-                        <strong>Email:</strong> {{ $associado->contato->email ?? 'Não informado' }}
+                <div class="col-md-6">
+                    <div class="border rounded p-2">
+                        <small class="text-muted">Órgão Expedidor</small>
+                        <div>{{ $associado->org_expedidor }}</div>
                     </div>
+                </div>
 
-                    {{-- BOTÕES --}}
-                    <div class="row mt-2">
-                        <div class="col-md-6">
-                            <a href="{{ route('associado.edit', $associado->id) }}" class="btn btn-primary w-100">Ver
-                                mais</a>
-                        </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-2">
+                        <small class="text-muted">Telefone</small>
+                        <div>{{ $associado->contato->tel_celular ?? 'Não informado' }}</div>
+                    </div>
+                </div>
 
-                        <div class="col-md-6">
-                            <div class="dropdown w-100">
-                                <button class="btn btn-primary dropdown-toggle w-100" data-bs-toggle="dropdown">
-                                    Gerar PDF
-                                </button>
-                                <ul class="dropdown-menu w-100">
-                                    <li>
-                                        <a class="dropdown-item"
-                                            href="{{ route('associado.pdf.requerimento', $associado->id) }}"
-                                            target="_blank">Requerimento</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('associado.pdf.sesc', $associado->id) }}"
-                                            target="_blank">Declaração SESC</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('associado.pdf.unp', $associado->id) }}"
-                                            target="_blank">Declaração UNP</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item"
-                                            href="{{ route('associado.pdf.declaracao', $associado->id) }}"
-                                            target="_blank">Declaração Genérica</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item"
-                                            href="{{ route('associado.pdf.desfiliacao', $associado->id) }}"
-                                            target="_blank">Req. de Desfiliação</a>
-                                    </li>
-                                </ul>
-                            </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-2">
+                        <small class="text-muted">Nascimento</small>
+                        <div>{{ $associado->dt_nasc ? date('d/m/Y', strtotime($associado->dt_nasc)) : 'Não informado' }}
                         </div>
                     </div>
+                </div>
 
+                <div class="col-12">
+                    <div class="border rounded p-2">
+                        <small class="text-muted">Email</small>
+                        <div>{{ $associado->contato->email ?? 'Não informado' }}</div>
+                    </div>
                 </div>
             </div>
+
+            <div class="d-flex gap-2 mt-3">
+                <a href="{{ route('associado.edit', $associado->id) }}" class="btn btn-primary flex-fill">
+                    Ver mais
+                </a>
+
+                <div class="dropdown flex-fill">
+                    <button class="btn btn-secondary dropdown-toggle w-100" data-bs-toggle="dropdown">
+                        PDF
+                    </button>
+
+                    <ul class="dropdown-menu w-100">
+                        <li><a class="dropdown-item"
+                                href="{{ route('associado.pdf.requerimento', $associado->id) }}">Requerimento</a></li>
+                        <li><a class="dropdown-item" href="{{ route('associado.pdf.sesc', $associado->id) }}">SESC</a>
+                        </li>
+                        <li><a class="dropdown-item" href="{{ route('associado.pdf.unp', $associado->id) }}">UNP</a>
+                        </li>
+                        <li><a class="dropdown-item"
+                                href="{{ route('associado.pdf.declaracao', $associado->id) }}">Declaração</a></li>
+                        <li><a class="dropdown-item"
+                                href="{{ route('associado.pdf.desfiliacao', $associado->id) }}">Desfiliação</a></li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </div>
+</div>

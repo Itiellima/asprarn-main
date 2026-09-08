@@ -47,27 +47,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="card m-3 rounded-5 overflow-hidden p-0 shadow-lg col-sm-6" style="width: 18rem;">
-
-                            <div class="card-head">
-                                <img src="{{ asset('storage/' . $post->files->first()->path) }}" class="card-img-top"
-                                    style="height: 200px; width: 100%; object-fit: cover;" alt="{{ $post->titulo }}">
-                            </div>
-
-                            <div class="card-body">
-                                <a href="{{ route('posts.show', $post->id) }}"
-                                    style="font-size: large"
-                                    class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">
-                                    {{ $post->titulo }}
-                                </a>
-                                <hr>
-
-                                <p class="card-text">{{ $post->assunto }}.</p>
-                            </div>
-                            <div class="card-footer">
-                                <a class="btn btn-sm btn-secondary" href="/posts/{{ $post->id }}">Leia mais</a>
-                            </div>
-                        </div> --}}
                     @endforeach
                 </div>
             </div>

@@ -12,7 +12,7 @@
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
             <div>
                 <h3 class="mb-1">
-                    <i class="fa-solid fa-users me-2"></i>
+                    <i class="bi bi-people me-2"></i>
                     Associados
                 </h3>
                 <p class="text-muted mb-0">
@@ -25,7 +25,7 @@
         <div class="card shadow border-0 mb-4">
             <div class="card-header bg-white py-3">
                 <h5 class="mb-0">
-                    <i class="fa-solid fa-filter me-2"></i>
+                    <i class="bi bi-filter me-2"></i>
                     Filtros
                 </h5>
             </div>
@@ -44,7 +44,7 @@
 
                             <div class="input-group">
                                 <span class="input-group-text">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <i class="bi bi-search"></i>
                                 </span>
 
                                 <input type="text" id="search" name="search" class="form-control"
@@ -107,12 +107,12 @@
                         <div class="col-12 d-flex flex-column flex-sm-row justify-content-end gap-2 mt-3">
 
                             <a href="{{ route('associado.index') }}" class="btn btn-outline-secondary">
-                                <i class="fa-solid fa-rotate-left me-1"></i>
+                                <i class="bi bi-arrow-left me-1"></i>
                                 Limpar filtros
                             </a>
 
                             <button type="submit" class="btn btn-primary">
-                                <i class="fa-solid fa-magnifying-glass me-1"></i>
+                                <i class="bi bi-search me-1"></i>
                                 Pesquisar
                             </button>
 
@@ -207,16 +207,17 @@
                                 <div class="d-flex justify-content-between align-items-start mb-3">
 
                                     <div class="rounded-circle bg-primary bg-opacity-10 p-3">
-                                        <i class="fa-solid fa-user text-primary fs-5"></i>
+                                        <i class=" text-primary fs-5"></i>
                                     </div>
 
                                     @if ($ativo)
                                         <span class="badge text-bg-success">
-                                            <i class="fa-solid fa-circle-check me-1"></i>
+                                            <i class="bi bi-check-circle me-1"></i>
                                             Ativo
                                         </span>
                                     @else
                                         <span class="badge text-bg-secondary">
+                                            <i class="bi bi-x-circle me-1"></i>
                                             Inativo
                                         </span>
                                     @endif
@@ -233,7 +234,7 @@
 
                                 <a href="{{ route('associado.show', $associado->id) }}"
                                     class="btn btn-outline-primary btn-sm w-100">
-                                    <i class="fa-solid fa-eye me-1"></i>
+                                    <i class="bi bi-eye me-1"></i>
                                     Ver informações
                                 </a>
 
@@ -251,7 +252,7 @@
                 <div class="card-body text-center py-5">
 
                     <div class="mb-3">
-                        <i class="fa-solid fa-users-slash fa-3x text-muted"></i>
+                        <i class="bi bi-people-fill fa-3x text-muted"></i>
                     </div>
 
                     <h5>Nenhum associado encontrado</h5>
@@ -261,7 +262,7 @@
                     </p>
 
                     <a href="{{ route('associado.index') }}" class="btn btn-outline-primary">
-                        <i class="fa-solid fa-rotate-left me-1"></i>
+                        <i class="bi bi-rotate-left me-1"></i>
                         Limpar filtros
                     </a>
 

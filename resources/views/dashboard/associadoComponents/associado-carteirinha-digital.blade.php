@@ -1,106 +1,107 @@
-        {{-- Aba carteirinha digital --}}
-        <div class="alert alert-light text-black container">
-            <h4 class="text-black">Carteirinha digital</h4>
-            <div class="row mt-3 mb-3">
+{{-- Carteirinha digital --}}
+<div class="container mb-3">
+    <div class="card shadow-sm border-0">
 
-                <div class="col-md-6 mb-3 mt-3 d-flex align-items-center justify-content-center">
-                    <div class="row d-flex align-items-center justify-content-center">
-                        <div class="justify-content-center d-flex align-items-center">
-                            @if ($associado->pictureProfile?->path)
-                                <img src="{{ asset('storage/' . $associado->pictureProfile->path) }}" alt="Foto de perfil"
-                                    class="rounded shadow" width="auto" height="200px" style="object-fit: contain;">
-                            @else
-                                <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150"
-                                    fill="currentColor" class="bi bi-person-bounding-box" viewBox="0 0 16 16">
-                                    <path
-                                        d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5" />
-                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                                </svg>
-                            @endif
+        <div class="card-header bg-primary text-white py-2">
+            <strong>Carteirinha digital</strong>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row align-items-center g-3">
+
+                {{-- Foto --}}
+                <div class="col-md-4 text-center">
+                    @if ($associado->pictureProfile?->path)
+                        <img src="{{ asset('storage/' . $associado->pictureProfile->path) }}"
+                             alt="Foto de perfil"
+                             class="rounded shadow"
+                             style="height: 180px; max-width: 100%; object-fit: contain;">
+                    @else
+                        <i class="bi bi-person-bounding-box text-secondary"
+                           style="font-size: 120px;"></i>
+                    @endif
+                </div>
+
+                {{-- Dados --}}
+                <div class="col-md-8">
+                    <div class="mb-2">
+                        <small class="text-muted">Nome</small>
+                        <div class="fw-semibold">{{ $associado->nome }}</div>
+                    </div>
+
+                    <div class="mb-2">
+                        <small class="text-muted">CPF</small>
+                        <div>{{ $associado->cpf }}</div>
+                    </div>
+
+                    <div class="mb-2">
+                        <small class="text-muted">Data de nascimento</small>
+                        <div>
+                            {{ \Carbon\Carbon::parse($associado->dt_nasc)->format('d/m/Y') }}
                         </div>
                     </div>
+
+                    <small class="text-muted">
+                        Associação dos Praças da Polícia Militar do Rio Grande do Norte
+                        (ASPRA PM/RN)
+                    </small>
                 </div>
 
-                <div class="col-md-6">
-                    <ul>
-                        <li>Nome: {{ $associado->nome }}</li>
-                        <li>CPF: {{ $associado->cpf }}</li>
-                        <li>Data de Nascimento: {{ \Carbon\Carbon::parse($associado->dt_nasc)->format('d/m/Y') }}</li>
-
-                        <li>Associação dos Praças da Polícia Militar do Rio Grande do Norte (ASPRA PM/RN)</li>
-                    </ul>
-                </div>
             </div>
 
-            <div class="d-flex flex-wrap gap-2 mt-2">
+            {{-- Ações --}}
+            <div class="d-flex flex-wrap gap-2 mt-3 pt-3 border-top">
 
                 <a class="btn btn-sm btn-primary"
-                    @if ($associado->pictureProfile) href="{{ route('carteira-associados', $associado->id) }}" target="_blank">
-                @else
-                    onclick="alert('Faça o upload de uma foto para baixar a carteirinha')"> @endif
-                    📄 Download Cateirinha </a>
+                   @if ($associado->pictureProfile)
+                       href="{{ route('carteira-associados', $associado->id) }}"
+                       target="_blank"
+                   @else
+                       onclick="alert('Faça o upload de uma foto para baixar a carteirinha')"
+                   @endif>
+                    <i class="bi bi-download"></i> Download
+                </a>
 
-                    <a class="btn btn-sm btn-primary"
-                        @if ($associado->pictureProfile) href="{{ route('carteira-associados-vertical', $associado->id) }}" target="_blank">
-                @else
-                    onclick="alert('Faça o upload de uma foto para visualizar a carteirinha')"> @endif
-                        📄 Visualizar Carteirinha </a>
+                <a class="btn btn-sm btn-primary"
+                   @if ($associado->pictureProfile)
+                       href="{{ route('carteira-associados-vertical', $associado->id) }}"
+                       target="_blank"
+                   @else
+                       onclick="alert('Faça o upload de uma foto para visualizar a carteirinha')"
+                   @endif>
+                    <i class="bi bi-eye"></i> Visualizar
+                </a>
 
-                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                            data-bs-target="#pictureModal">
-                            @if ($associado->pictureProfile)
-                                Editar foto
-                            @else
-                                Adicionar foto
-                            @endif
+                <button type="button"
+                        class="btn btn-sm btn-warning"
+                        data-bs-toggle="modal"
+                        data-bs-target="#pictureModal">
+                    <i class="bi bi-camera"></i>
+                    {{ $associado->pictureProfile ? 'Editar foto' : 'Adicionar foto' }}
+                </button>
+
+                @if ($associado->pictureProfile)
+                    <form action="{{ route('associado.picture-profile.destroy', $associado->id) }}"
+                          method="POST" class="m-0">
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit"
+                                class="btn btn-sm btn-danger"
+                                onclick="return confirm('Deseja remover essa foto?')">
+                            <i class="bi bi-trash"></i> Excluir foto
                         </button>
+                    </form>
+                @endif
 
-                        @if ($associado->pictureProfile)
-                            <form action="{{ route('associado.picture-profile.destroy', $associado->id) }}"
-                                method="POST" class="m-0">
-                                @csrf
-                                @method('DELETE')
-
-                                <button type="submit" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Deseja remover essa foto?')">
-                                    Excluir foto
-                                </button>
-                            </form>
-                        @endif
-
-                        <a href="{{ route('validar-carteirinha', $associado->id) }}" class="btn btn-sm btn-warning"
-                            target="_blank">
-                            Validar Carteirinha
-                        </a>
+                <a href="{{ route('validar-carteirinha', $associado->id) }}"
+                   class="btn btn-sm btn-warning"
+                   target="_blank">
+                    <i class="bi bi-shield-check"></i> Validar
+                </a>
 
             </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="pictureModal" tabindex="-1" aria-labelledby="pictureModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form action="{{ route('associado.picture-profile.store', $associado->id) }}" method="POST"
-                            enctype="multipart/form-data">
-                            @csrf
-                            @method('POST')
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="pictureModalLabel">Nova foto</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-
-                                Selecione uma nova foto de perfil:
-                                <input type="file" class="form-control mt-3" name="picture_profile">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
-                                <button type="submit" class="btn btn-primary">Salvar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
         </div>
+    </div>
+</div>

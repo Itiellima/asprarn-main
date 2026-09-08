@@ -1,42 +1,46 @@
-{{-- situacao --}}
-<div class="container alert alert-light text-black text-center">
+<div class="container mb-3">
+    <div class="card shadow-sm border-0">
 
-    <strong class="text-black">
-        <h2>Situação do associado</h2>
-    </strong>
+        <div class="card-header bg-primary text-white text-center py-2">
+            <strong>Situação do associado</strong>
+        </div>
 
-    <form action="{{ route('situacao.update', $associado->id) }}" method="POST">
-        @csrf
+        <div class="card-body">
 
-        <div class="row justify-content-center">
+            <form action="{{ route('situacao.update', $associado->id) }}" method="POST">
+                @csrf
 
+                <div class="row g-2">
+                    @foreach ($situacoes as $situacao)
+                        <div class="col-6 col-md-3">
+                            <label class="border rounded p-2 w-100 d-flex align-items-center gap-2">
+                                <input
+                                    class="form-check-input m-0"
+                                    type="checkbox"
+                                    name="situacoes[]"
+                                    value="{{ $situacao->id }}"
+                                    {{ $associado->situacoes->contains($situacao->id) ? 'checked' : '' }}>
 
-            @foreach ($situacoes as $situacao)
-                <div class="col-md-3 mb-3">
-
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="situacao_{{ $situacao->id }}"
-                            name="situacoes[]" value="{{ $situacao->id }}"
-                            {{ $associado->situacoes->contains($situacao->id) ? 'checked' : '' }}>
-
-                        <label class="form-check-label" for="situacao_{{ $situacao->id }}">
-                            {{ $situacao->nome }}
-                        </label>
-                    </div>
-                    
+                                <span>{{ $situacao->nome }}</span>
+                            </label>
+                        </div>
+                    @endforeach
                 </div>
-            @endforeach
+
+                @if ($situacoes->count())
+                    <div class="text-center mt-3">
+                        <button class="btn btn-primary btn-sm px-4">
+                            Salvar
+                        </button>
+                    </div>
+                @else
+                    <p class="text-muted text-center mb-0">
+                        Nenhuma situação disponível.
+                    </p>
+                @endif
+
+            </form>
 
         </div>
-
-        <div class="container">
-
-            @if ($situacoes->count() > 0)
-                <button type="submit" class="btn btn-primary mt-3 mb-3">Salvar</button>
-            @else
-                <p>Nenhuma ação judicial disponível.</p>
-            @endif
-        </div>
-    </form>
-
+    </div>
 </div>
