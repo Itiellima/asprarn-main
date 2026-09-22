@@ -77,6 +77,8 @@
                                 href="{{ route('associado.pdf.declaracao', $associado->id) }}">Declaração</a></li>
                         <li><a class="dropdown-item"
                                 href="{{ route('associado.pdf.desfiliacao', $associado->id) }}">Desfiliação</a></li>
+                        <li><a class="dropdown-item"
+                                href="{{ route('associado.pdf.termo-de-adesao-acp', $associado->id) }}">Termo de Adesão ACP</a></li>
                     </ul>
                 </div>
             </div>

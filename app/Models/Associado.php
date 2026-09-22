@@ -30,6 +30,7 @@ class Associado extends Model
 
     protected $casts = [
         'dt_nasc' => 'date',
+        'dt_inclusao' => 'date',
     ];
 
     public function user()

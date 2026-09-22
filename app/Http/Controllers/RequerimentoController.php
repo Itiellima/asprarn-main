@@ -81,4 +81,16 @@ class RequerimentoController extends Controller
 
         return view('associado.pdf.desfiliacao', compact('associado'));
     }
+
+    public function termoDeAdesaoAcp($id)
+    {
+        $user = Auth::user();
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
+            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $associado = Associado::findOrFail($id);
+
+        return view('associado.pdf.termo-de-adesao-acp', compact('associado'));
+    }
 }
