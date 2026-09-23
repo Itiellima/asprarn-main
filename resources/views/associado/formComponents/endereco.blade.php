@@ -34,7 +34,7 @@
         <label for="formGroup" class="form-label">Estado:
         </label>
         <input class="form-control" name="uf" type="text" id="uf" placeholder="UF"
-            value="{{ old('estado', $associado->endereco?->estado) }}" />
+            value="{{ old('uf', $associado->endereco?->uf) }}" />
     </div>
 
     <div class="mb-3 col-md-3 col-sm-6">

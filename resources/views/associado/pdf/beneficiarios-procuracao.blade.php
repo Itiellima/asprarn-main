@@ -172,7 +172,7 @@
 
             <div class="linha">
                 <span class="campo-label">ENDEREÇO:</span>
-                <span class="campo" contenteditable="true" data-placeholder="rua/avenida" id="endereco">{{ $associado->endereco->logradouro ?? '' }}{{ $associado->endereco->bairro ? ', ' . $associado->endereco->bairro : '' }}{{ $associado->endereco->cidade ? ', ' . $associado->endereco->cidade : '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="rua/avenida" id="endereco">{{ $associado->endereco->logradouro ?? '' }}{{ $associado->endereco->bairro ? ', ' . $associado->endereco->bairro : '' }}{{ $associado->endereco->cidade ? ', ' . $associado->endereco->cidade : '' }}{{ $associado->endereco->uf ? ', ' . $associado->endereco->uf : '' }}</span>
                 <span class="campo-label">Nº:</span>
                 <span class="campo" contenteditable="true" data-placeholder="número" id="numero" style="flex: 0 0 90px;">{{ $associado->endereco->nmr ?? '' }}</span>
             </div>

@@ -306,9 +306,9 @@
             </div>
 
             <div class="linha">
-                <span class="campo-label">5.3) Cidade/RN:</span>
+                <span class="campo-label">5.3) Cidade/UF:</span>
                 <span class="campo" contenteditable="true" data-placeholder="cidade"
-                    id="cidade">{{ $associado->endereco->cidade ?? '' }}</span>
+                    id="cidade">{{ $associado->endereco->cidade ?? '' }}{{ $associado->endereco->uf ? ', ' . $associado->endereco->uf : '' }}</span>
             </div>
 
             <div class="linha">
