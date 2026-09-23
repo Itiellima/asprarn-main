@@ -167,30 +167,44 @@
         <div class="dados">
             <div class="linha">
                 <span class="campo-label">OUTORGANTE:</span>
-                <span class="campo" contenteditable="true" data-placeholder="nome completo" id="nome">{{ $associado->nome ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="nome completo"
+                    id="nome">{{ $associado->nome ?? '' }}</span>
+            </div>
+            <div class="linha">
+                <span class="campo" contenteditable="true"
+                    data-placeholder="complemento">Brasileiro(a){{ $associado->estado_civil ? ', ' . $associado->estado_civil : '' }},
+                    inscrito no
+                    CPF: {{ $associado->cpf ?? '' }}, RG:
+                    {{ $associado->rg ?? '' }}{{ $associado->org_expedidor ? ' - ' . $associado->org_expedidor : '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">ENDEREÇO:</span>
-                <span class="campo" contenteditable="true" data-placeholder="rua/avenida" id="endereco">{{ $associado->endereco->logradouro ?? '' }}{{ $associado->endereco->bairro ? ', ' . $associado->endereco->bairro : '' }}{{ $associado->endereco->cidade ? ', ' . $associado->endereco->cidade : '' }}{{ $associado->endereco->uf ? ', ' . $associado->endereco->uf : '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="rua/avenida"
+                    id="endereco">{{ $associado->endereco->logradouro ?? '' }}{{ $associado->endereco->bairro ? ', ' . $associado->endereco->bairro : '' }}{{ $associado->endereco->cidade ? ', ' . $associado->endereco->cidade : '' }}{{ $associado->endereco->uf ? ', ' . $associado->endereco->uf : '' }}</span>
                 <span class="campo-label">Nº:</span>
-                <span class="campo" contenteditable="true" data-placeholder="número" id="numero" style="flex: 0 0 90px;">{{ $associado->endereco->nmr ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="número" id="numero"
+                    style="flex: 0 0 90px;">{{ $associado->endereco->nmr ?? '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">COMPLEMENTO:</span>
-                <span class="campo" contenteditable="true" data-placeholder="complemento" id="complemento">{{ $associado->endereco->complemento ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="complemento"
+                    id="complemento">{{ $associado->endereco->complemento ?? '' }}</span>
                 <span class="campo-label">CEP:</span>
-                <span class="campo" contenteditable="true" data-placeholder="00000-000" id="cep" style="flex: 0 0 140px;">{{ $associado->endereco->cep ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="00000-000" id="cep"
+                    style="flex: 0 0 140px;">{{ $associado->endereco->cep ?? '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">TELEFONE:</span>
-                <span class="campo" contenteditable="true" data-placeholder="(84) 90000-0000" id="telefone">{{ $associado->contato->tel_celular ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="(84) 90000-0000"
+                    id="telefone">{{ $associado->contato->tel_celular ?? '' }}</span>
             </div>
             <div class="linha">
                 <span class="campo-label">EMAIL:</span>
-                <span class="campo" contenteditable="true" data-placeholder="email@exemplo.com" id="email">{{ $associado->contato->email ?? '' }}</span>    
+                <span class="campo" contenteditable="true" data-placeholder="email@exemplo.com"
+                    id="email">{{ $associado->contato->email ?? '' }}</span>
             </div>
         </div>
 
@@ -254,10 +268,14 @@
         </div>
 
         <div class="text-center" style="margin-top: 2.5rem;">
-            <span class="campo" contenteditable="true" data-placeholder="cidade" id="cidade" style="min-width: 160px;">{{ $associado->cidade ?? 'Natal/RN' }}</span>,
-            <span class="campo" contenteditable="true" data-placeholder="dd" id="dia" style="min-width: 25px;">{{ now()->format('d') }}</span> /
-            <span class="campo" contenteditable="true" data-placeholder="mm" id="mes" style="min-width: 25px;">{{ now()->format('m') }}</span> /
-            <span class="campo" contenteditable="true" data-placeholder="aaaa" id="ano" style="min-width: 45px;">{{ now()->format('Y') }}</span>
+            <span class="campo" contenteditable="true" data-placeholder="cidade" id="cidade"
+                style="min-width: 160px;">{{ $associado->cidade ?? 'Natal/RN' }}</span>,
+            <span class="campo" contenteditable="true" data-placeholder="dd" id="dia"
+                style="min-width: 25px;">{{ now()->format('d') }}</span> /
+            <span class="campo" contenteditable="true" data-placeholder="mm" id="mes"
+                style="min-width: 25px;">{{ now()->format('m') }}</span> /
+            <span class="campo" contenteditable="true" data-placeholder="aaaa" id="ano"
+                style="min-width: 45px;">{{ now()->format('Y') }}</span>
         </div>
 
         <div class="assinaturas">
@@ -274,7 +292,7 @@
         // Limpa todos os campos editáveis, útil para reaproveitar a procuração em branco
         function limparCampos() {
             if (!confirm('Limpar todos os campos preenchidos?')) return;
-            document.querySelectorAll('.campo[contenteditable="true"]').forEach(function (campo) {
+            document.querySelectorAll('.campo[contenteditable="true"]').forEach(function(campo) {
                 campo.textContent = '';
             });
         }
