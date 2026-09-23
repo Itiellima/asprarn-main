@@ -80,6 +80,7 @@ Route::get('/pdf.unp/{id}', [RequerimentoController::class, 'unp'])->name('assoc
 Route::get('/pdf.declaracao/{id}', [RequerimentoController::class, 'declaracao'])->name('associado.pdf.declaracao');
 Route::get('/pdf.desfiliacao/{id}', [RequerimentoController::class, 'desfiliacao'])->name('associado.pdf.desfiliacao');
 Route::get('/pdf.termo-de-adesao-acp/{id}', [RequerimentoController::class, 'termoDeAdesaoAcp'])->name('associado.pdf.termo-de-adesao-acp');
+Route::get('/pdf.beneficiarios-procuracao/{id}', [RequerimentoController::class, 'beneficiariosProcuracao'])->name('associado.pdf.beneficiarios-procuracao');
 
 
 //////////////////////////////// ********* CRUD PASTA ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
