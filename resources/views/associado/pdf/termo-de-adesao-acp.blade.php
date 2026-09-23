@@ -53,7 +53,7 @@
             border-bottom: 1px dotted #333;
             padding: 0 4px;
             font-weight: bold;
-            text-decoration: underline;
+            text-decoration: none;
             outline: none;
             cursor: text;
         }
@@ -167,7 +167,7 @@
             }
 
             .campo {
-                border-bottom: 1px dotted #333;
+                border-bottom: 1px solid #333;
             }
 
             .campo:empty::before {
@@ -187,9 +187,7 @@
     <div class="pagina" id="documento">
         <div class="cabecalho">
             <div class="titulo">
-                ASSOCIAÇÃO DOS PRAÇAS DA POLÍCIA MILITAR <br>
-                DO ESTADO DO RIO GRANDE DO NORTE <br>
-                (ASPRA PM/RN)
+
             </div>
         </div>
 
@@ -257,7 +255,8 @@
         <div class="dados">
             <div class="linha">
                 <span class="campo-label">1) Militar/Pensionista aderente (nome):</span>
-                <span class="campo" contenteditable="true" data-placeholder="nome completo" id="nome">{{ $associado->nome ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="nome completo"
+                    id="nome">{{ $associado->nome ?? '' }}</span>
             </div>
 
             <div class="linha">
@@ -278,89 +277,114 @@
 
             <div class="linha">
                 <span class="campo-label">3) Identidade profissional:</span>
-                <span class="campo" contenteditable="true" data-placeholder="nº da identidade" id="identidade">{{ $associado->rg ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="nº da identidade"
+                    id="identidade">{{ $associado->rg ?? '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">4) CPF:</span>
-                <span class="campo" contenteditable="true" data-placeholder="000.000.000-00" id="cpf">{{ $associado->cpf ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="000.000.000-00"
+                    id="cpf">{{ $associado->cpf ?? '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">5) Endereço:</span>
-                <span class="campo" contenteditable="true" data-placeholder="rua, número, complemento" id="endereco">{{ $associado->endereco->logradouro ?? '' }}{{ $associado->endereco->nmr ? ', ' . $associado->endereco->nmr : '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="rua, número, complemento"
+                    id="endereco">{{ $associado->endereco->logradouro ?? '' }}{{ $associado->endereco->nmr ? ', ' . $associado->endereco->nmr : '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">5.1) Bairro:</span>
-                <span class="campo" contenteditable="true" data-placeholder="bairro" id="bairro">{{ $associado->endereco->bairro ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="bairro"
+                    id="bairro">{{ $associado->endereco->bairro ?? '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">5.2) CEP:</span>
-                <span class="campo" contenteditable="true" data-placeholder="00000-000" id="cep">{{ $associado->endereco->cep ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="00000-000"
+                    id="cep">{{ $associado->endereco->cep ?? '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">5.3) Cidade/RN:</span>
-                <span class="campo" contenteditable="true" data-placeholder="cidade" id="cidade">{{ $associado->endereco->cidade ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="cidade"
+                    id="cidade">{{ $associado->endereco->cidade ?? '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">6) Email:</span>
-                <span class="campo" contenteditable="true" data-placeholder="email@exemplo.com" id="email">{{ $associado->contato->email ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="email@exemplo.com"
+                    id="email">{{ $associado->contato->email ?? '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">7) Telefone:</span>
-                <span class="campo" contenteditable="true" data-placeholder="(84) 90000-0000" id="telefone">{{ $associado->contato->tel_celular ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="(84) 90000-0000"
+                    id="telefone">{{ $associado->contato->tel_celular ?? '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">8) Cargo:</span>
-                <span class="campo" contenteditable="true" data-placeholder="cargo/posto/graduação" id="cargo">{{ $associado->cargo ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="cargo/posto/graduação"
+                    id="cargo">{{ $associado->cargo ?? '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">9) Data de admissão:</span>
-                <span class="campo" contenteditable="true" data-placeholder="dd/mm/aaaa" id="data_admissao">{{ $associado->dt_inclusao ? $associado->dt_inclusao->format('d/m/Y') : '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="dd/mm/aaaa"
+                    id="data_admissao">{{ $associado->dt_inclusao ? $associado->dt_inclusao->format('d/m/Y') : '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">10) Conta corrente:</span>
-                <span class="campo" contenteditable="true" data-placeholder="nº da conta" id="conta_corrente">{{ $associado->dados_bancarios->conta_corrente ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="nº da conta"
+                    id="conta_corrente">{{ $associado->dados_bancarios->conta_corrente ?? '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">11) Agência/Banco:</span>
-                <span class="campo" contenteditable="true" data-placeholder="agência / banco" id="agencia_banco">{{ $associado->dados_bancarios->agencia_banco ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="agência / banco"
+                    id="agencia_banco">{{ $associado->dados_bancarios->agencia_banco ?? '' }}</span>
             </div>
         </div>
 
         <div class="text-center" style="margin-top: 2.5rem;">
             Natal/RN,
-            <span class="campo" contenteditable="true" data-placeholder="dd" id="dia" style="min-width: 25px;">{{ now()->format('d') }}</span> /
-            <span class="campo" contenteditable="true" data-placeholder="mm" id="mes" style="min-width: 25px;">{{ now()->format('m') }}</span> /
-            <span class="campo" contenteditable="true" data-placeholder="aaaa" id="ano" style="min-width: 45px;">{{ now()->format('Y') }}</span>
+            <span class="campo" contenteditable="true" data-placeholder="dd" id="dia"
+                style="min-width: 25px;">{{ now()->format('d') }}</span> /
+            <span class="campo" contenteditable="true" data-placeholder="mm" id="mes"
+                style="min-width: 25px;">{{ now()->format('m') }}</span> /
+            <span class="campo" contenteditable="true" data-placeholder="aaaa" id="ano"
+                style="min-width: 45px;">{{ now()->format('Y') }}</span>
         </div>
 
         <div class="assinaturas">
             <div class="assinatura-linha">
                 <span>MILITAR/PENSIONISTA ADERENTE</span>
+
+                <span style="border-top: none; border-bottom: none;" class="campo" contenteditable="true"
+                    data-placeholder="000.000.000-00" id="cpf_assinatura">{{ $associado->cpf ?? '' }}</span>
+                <span>CPF</span>
+
+                
             </div>
 
             <div class="testemunhas">
                 <div class="testemunha">
                     <div class="linha-assinatura"></div>
                     <div>TESTEMUNHA 1</div>
-                    <div>NOME: <span class="campo" contenteditable="true" data-placeholder="nome" id="test1_nome"></span></div>
-                    <div>CPF: <span class="campo" contenteditable="true" data-placeholder="cpf" id="test1_cpf"></span></div>
+                    <div>NOME: <span class="campo" contenteditable="true" data-placeholder="nome"
+                            id="test1_nome"></span></div>
+                    <div>CPF: <span class="campo" contenteditable="true" data-placeholder="cpf"
+                            id="test1_cpf"></span></div>
                 </div>
                 <div class="testemunha">
                     <div class="linha-assinatura"></div>
                     <div>TESTEMUNHA 2</div>
-                    <div>NOME: <span class="campo" contenteditable="true" data-placeholder="nome" id="test2_nome"></span></div>
-                    <div>CPF: <span class="campo" contenteditable="true" data-placeholder="cpf" id="test2_cpf"></span></div>
+                    <div>NOME: <span class="campo" contenteditable="true" data-placeholder="nome"
+                            id="test2_nome"></span></div>
+                    <div>CPF: <span class="campo" contenteditable="true" data-placeholder="cpf"
+                            id="test2_cpf"></span></div>
                 </div>
             </div>
         </div>
@@ -372,7 +396,7 @@
     <script>
         // Marca a opção de estado civil clicada e desmarca as demais
         function marcarEstadoCivil(elemento) {
-            document.querySelectorAll('.estado-civil-opcao .caixa').forEach(function (caixa) {
+            document.querySelectorAll('.estado-civil-opcao .caixa').forEach(function(caixa) {
                 caixa.textContent = '';
             });
             elemento.querySelector('.caixa').textContent = 'X';
@@ -381,10 +405,10 @@
         // Limpa todos os campos editáveis, útil para reaproveitar o termo em branco
         function limparCampos() {
             if (!confirm('Limpar todos os campos preenchidos?')) return;
-            document.querySelectorAll('.campo[contenteditable="true"]').forEach(function (campo) {
+            document.querySelectorAll('.campo[contenteditable="true"]').forEach(function(campo) {
                 campo.textContent = '';
             });
-            document.querySelectorAll('.estado-civil-opcao .caixa').forEach(function (caixa) {
+            document.querySelectorAll('.estado-civil-opcao .caixa').forEach(function(caixa) {
                 caixa.textContent = '';
             });
         }
