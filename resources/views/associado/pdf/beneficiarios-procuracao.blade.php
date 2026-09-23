@@ -15,35 +15,35 @@
         .pagina {
             width: 21cm;
             min-height: 29.7cm;
-            padding: 1.5cm 2cm 2cm 2cm;
+            padding: 1.5cm 1.5cm 1.5cm 1.5cm;
             margin: 1cm auto;
             border: 1px solid #ccc;
             background: #fff;
             font-family: 'Times New Roman', Arial, sans-serif;
-            font-size: 12pt;
+            font-size: 10pt;
             box-sizing: border-box;
         }
 
         .cabecalho {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .titulo {
-            font-size: 13pt;
+            font-size: 12pt;
             font-weight: bold;
-            line-height: 1.4;
+            line-height: 1.2;
         }
 
         .conteudo {
-            font-size: 12.5pt;
+            font-size: 10pt;
             margin-top: 25px;
             text-align: justify;
-            line-height: 1.5;
+            line-height: 1.2;
         }
 
         .conteudo p {
-            margin-top: 1.2rem;
+            margin-top: 1rem;
         }
 
         /* Campos editáveis dentro do texto corrido */
@@ -71,7 +71,7 @@
 
         /* Bloco de dados cadastrais do outorgante (formulário) */
         .dados {
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             border: 1px solid #000;
             padding: 10px 14px;
         }
@@ -79,7 +79,7 @@
         .dados .linha {
             display: flex;
             flex-wrap: wrap;
-            margin-bottom: 10px;
+            margin-bottom: none;
             align-items: baseline;
         }
 
@@ -99,7 +99,7 @@
         }
 
         .assinaturas {
-            margin-top: 3cm;
+            margin-top: 1cm;
         }
 
         .assinatura-linha {
@@ -113,7 +113,7 @@
             width: 320px;
             margin: 0 auto;
             padding-top: 4px;
-            font-size: 11pt;
+            font-size: 10pt;
         }
 
         .barra-acoes {
@@ -137,8 +137,6 @@
             .pagina {
                 border: none;
                 margin: 0;
-                width: auto;
-                min-height: auto;
             }
 
             .campo {
@@ -174,7 +172,7 @@
 
             <div class="linha">
                 <span class="campo-label">ENDEREÇO:</span>
-                <span class="campo" contenteditable="true" data-placeholder="rua/avenida" id="endereco">{{ $associado->endereco->logradouro ?? '' }}</span>
+                <span class="campo" contenteditable="true" data-placeholder="rua/avenida" id="endereco">{{ $associado->endereco->logradouro ?? '' }}{{ $associado->endereco->bairro ? ', ' . $associado->endereco->bairro : '' }}{{ $associado->endereco->cidade ? ', ' . $associado->endereco->cidade : '' }}</span>
                 <span class="campo-label">Nº:</span>
                 <span class="campo" contenteditable="true" data-placeholder="número" id="numero" style="flex: 0 0 90px;">{{ $associado->endereco->nmr ?? '' }}</span>
             </div>
@@ -265,9 +263,6 @@
         <div class="assinaturas">
             <div class="assinatura-linha">
                 <span>OUTORGANTE</span>
-                <span style="border-top: none; border-bottom: none;" class="campo" contenteditable="true"
-                    data-placeholder="000.000.000-00" id="cpf_assinatura">{{ $associado->cpf ?? '' }}</span>
-                <span>CPF</span>
             </div>
         </div>
     </div>

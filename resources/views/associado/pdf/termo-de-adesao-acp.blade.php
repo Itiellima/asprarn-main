@@ -278,7 +278,7 @@
             <div class="linha">
                 <span class="campo-label">3) Identidade profissional:</span>
                 <span class="campo" contenteditable="true" data-placeholder="nº da identidade"
-                    id="identidade">{{ $associado->rg ?? '' }}</span>
+                    id="identidade">{{ $associado->rg ?? '' }}{{ $associado->org_expedidor ? ' - ' . $associado->org_expedidor : '' }}</span>
             </div>
 
             <div class="linha">
