@@ -90,26 +90,27 @@
                             </div>
                             <div class="mb-3 col-md-3 col-sm-6">
                                 <label for="formGroup" class="form-label">Estado civil:</label>
-                                <select class="form-select " name="estado_civil" id="estado_civil">
+                                <select class="form-select" name="estado_civil" id="estado_civil">
                                     <option value="">Selecione</option>
                                     <option value="solteiro"
                                         {{ old('estado_civil', $associado->estado_civil) == 'solteiro' ? 'selected' : '' }}>
-                                        Solteiro
+                                        Solteiro(a)
                                     </option>
                                     <option value="casado"
                                         {{ old('estado_civil', $associado->estado_civil) == 'casado' ? 'selected' : '' }}>
-                                        Casado
+                                        Casado(a)
                                     </option>
-                                    <option
-                                        value="uniao_estavel {{ old('estado_civil', $associado->estado_civil) == 'uniao_estavel' ? 'selected' : '' }}">
-                                        Uniao Estavel</option>
+                                    <option value="uniao_estavel"
+                                        {{ old('estado_civil', $associado->estado_civil) == 'uniao_estavel' ? 'selected' : '' }}>
+                                        União Estável
+                                    </option>
                                     <option value="divorciado"
                                         {{ old('estado_civil', $associado->estado_civil) == 'divorciado' ? 'selected' : '' }}>
-                                        Divorciado
+                                        Divorciado(a)
                                     </option>
                                     <option value="viuvo"
                                         {{ old('estado_civil', $associado->estado_civil) == 'viuvo' ? 'selected' : '' }}>
-                                        Viuvo
+                                        Viúvo(a)
                                     </option>
                                     <option value="outro"
                                         {{ old('estado_civil', $associado->estado_civil) == 'outro' ? 'selected' : '' }}>

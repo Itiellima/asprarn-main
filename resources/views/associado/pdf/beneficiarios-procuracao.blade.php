@@ -172,7 +172,17 @@
             </div>
             <div class="linha">
                 <span class="campo" contenteditable="true"
-                    data-placeholder="complemento">Brasileiro(a){{ $associado->estado_civil ? ', ' . $associado->estado_civil : '' }},
+                    data-placeholder="complemento">Brasileiro(a){{ $associado->estado_civil
+                        ? ', ' .
+                            match ($associado->estado_civil) {
+                                'casado' => 'casado(a)',
+                                'solteiro' => 'solteiro(a)',
+                                'divorciado' => 'divorciado(a)',
+                                'viuvo' => 'viúvo(a)',
+                                'uniao_estavel' => 'união estável',
+                                default => $associado->estado_civil,
+                            }
+                        : '' }},
                     inscrito no
                     CPF: {{ $associado->cpf ?? '' }}, RG:
                     {{ $associado->rg ?? '' }}{{ $associado->org_expedidor ? ' - ' . $associado->org_expedidor : '' }}</span>

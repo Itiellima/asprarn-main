@@ -267,12 +267,16 @@
                 <span class="estado-civil-opcao" onclick="marcarEstadoCivil(this)" data-valor="solteiro">
                     <span class="caixa"></span> solteiro
                 </span>
+                <span class="estado-civil-opcao" onclick="marcarEstadoCivil(this)" data-valor="uniao_estavel">
+                    <span class="caixa"></span> união estável
+                </span>
                 <span class="estado-civil-opcao" onclick="marcarEstadoCivil(this)" data-valor="divorciado">
                     <span class="caixa"></span> divorciado
                 </span>
                 <span class="estado-civil-opcao" onclick="marcarEstadoCivil(this)" data-valor="viuvo">
                     <span class="caixa"></span> viúvo
                 </span>
+                
             </div>
 
             <div class="linha">
