@@ -105,4 +105,16 @@ class RequerimentoController extends Controller
 
         return view('associado.pdf.beneficiarios-procuracao', compact('associado'));
     }
+
+    public function declaracaoAssociadoPromocao($id)
+    {
+        $user = Auth::user();
+        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
+            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        }
+
+        $associado = Associado::findOrFail($id);
+
+        return view('associado.pdf.declaracao-associado-promocao', compact('associado'));
+    }
 }

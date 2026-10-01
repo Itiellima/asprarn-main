@@ -67,22 +67,29 @@
                     </button>
 
                     <ul class="dropdown-menu w-100">
-                        <li><a class="dropdown-item"
-                                href="{{ route('associado.pdf.requerimento', $associado->id) }}" target="_blank">Requerimento</a></li>
-                        <li><a class="dropdown-item" href="{{ route('associado.pdf.sesc', $associado->id) }}" target="_blank">SESC</a>
+                        <li><a class="dropdown-item" href="{{ route('associado.pdf.requerimento', $associado->id) }}"
+                                target="_blank">Requerimento</a></li>
+                        <li><a class="dropdown-item" href="{{ route('associado.pdf.sesc', $associado->id) }}"
+                                target="_blank">SESC</a>
                         </li>
-                        <li><a class="dropdown-item" href="{{ route('associado.pdf.unp', $associado->id) }}" target="_blank">UNP</a>
+                        <li><a class="dropdown-item" href="{{ route('associado.pdf.unp', $associado->id) }}"
+                                target="_blank">UNP</a>
                         </li>
+                        <li><a class="dropdown-item" href="{{ route('associado.pdf.declaracao', $associado->id) }}"
+                                target="_blank">Declaração</a></li>
+                        <li><a class="dropdown-item" href="{{ route('associado.pdf.desfiliacao', $associado->id) }}"
+                                target="_blank">Desfiliação</a></li>
                         <li><a class="dropdown-item"
-                                href="{{ route('associado.pdf.declaracao', $associado->id) }}" target="_blank">Declaração</a></li>
-                        <li><a class="dropdown-item"
-                                href="{{ route('associado.pdf.desfiliacao', $associado->id) }}" target="_blank">Desfiliação</a></li>
-                        <li><a class="dropdown-item"
-                                href="{{ route('associado.pdf.termo-de-adesao-acp', $associado->id) }}" target="_blank">Termo de Adesão
+                                href="{{ route('associado.pdf.termo-de-adesao-acp', $associado->id) }}"
+                                target="_blank">Termo de Adesão
                                 ACP</a></li>
                         <li><a class="dropdown-item"
-                                href="{{ route('associado.pdf.beneficiarios-procuracao', $associado->id) }}" target="_blank">Beneficiários
+                                href="{{ route('associado.pdf.beneficiarios-procuracao', $associado->id) }}"
+                                target="_blank">Beneficiários
                                 Procuração</a></li>
+                        <li><a class="dropdown-item"
+                                href="{{ route('associado.pdf.declaracao-associado-promocao', $associado->id) }}"
+                                target="_blank">Declaração de Promoção</a></li>
                     </ul>
                 </div>
             </div>
