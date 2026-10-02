@@ -40,11 +40,18 @@ class ExecutarAutomacoes extends Command
                 continue;
             }
 
-            $destinatarios = Associado::where('situacao_id', $automacao->situacao_id)->get();
+            $destinatarios = Associado::with('contato')->where('situacao_id', $automacao->situacao_id)->get();
 
             foreach ($destinatarios as $destinatario) {
+                $numero = $destinatario->contato?->tel_celular;
+
+                // Pula associados sem celular cadastrado
+                if (empty($numero)) {
+                    continue;
+                }
+
                 Http::post('https://n8n.asprarn.com.br/webhook-test/776ee56a-3e3c-4e7b-81f1-fdc6dab2683b', [
-                    'numero'   => $destinatario->contsto->tel_celular,
+                    'numero'   => $numero,
                     'mensagem' => $automacao->mensagem,
                     'instancia' => 'AspraAdm'
                 ]);
