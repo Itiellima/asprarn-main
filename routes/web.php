@@ -19,7 +19,6 @@ use App\Http\Controllers\PlanosController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\InstagramController;
-use App\Http\Controllers\WhatsappController;
 use App\Http\Controllers\searchPostController;
 use App\Http\Controllers\NotificacaoController;
 use App\Http\Controllers\RelatorioController;
@@ -199,9 +198,6 @@ Route::get('/api/cidades/{uf}', [AssociadoController::class, 'cidades']);
 
 Route::get('/search', [searchPostController::class, 'index'])->name('search');
 
-///////////////////////////////// ********* WHATSAPP ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-// NAO UTILIZADO, VERIFICAR E DELETAR
-Route::post('/enviar-mensagens', [WhatsappController::class, 'enviarMensagens'])->name('whatsapp.enviarMensagens');
 
 Route::get('/automacoes/index', [AutomacaoController::class, 'index'])->name('automacoes.index');
 Route::post('/automacoes/create', [AutomacaoController::class, 'create'])->name('automacoes.create');

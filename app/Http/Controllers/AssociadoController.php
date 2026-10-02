@@ -630,6 +630,11 @@ class AssociadoController extends Controller
 
         $associado = Associado::findOrFail($id);
 
+        // Só admin pode resetar a senha de outro admin
+        if ($associado->user && $associado->user->hasRole('admin') && !$user->hasRole('admin')) {
+            return redirect()->back()->with('error', 'Apenas administradores podem resetar a senha de um administrador.');
+        }
+
         $cpf = preg_replace('/\D/', '', $associado->cpf);
 
         if ($associado->user) {

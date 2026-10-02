@@ -78,10 +78,15 @@ class UsuariosController extends Controller
 
         $usuario = User::with('associado')->findOrFail($id);
 
-        if(!$usuario){
-            return redirect()->back()->with('error', 'Associado não encontrado.');
+        // Só admin pode resetar a senha de outro admin
+        if ($usuario->hasRole('admin') && !$user->hasRole('admin')) {
+            return redirect()->back()->with('error', 'Apenas administradores podem resetar a senha de um administrador.');
         }
-        
+
+        if (!$usuario->associado) {
+            return redirect()->back()->with('error', 'Este usuário não está vinculado a um associado.');
+        }
+
         $usuario->update([
             'password' => Hash::make($usuario->associado->cpf)
         ]);

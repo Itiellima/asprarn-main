@@ -27,4 +27,14 @@ class CpfHelper
 
         return true;
     }
+
+    /**
+     * Mascara o CPF para exibição pública: ***.456.789-**
+     */
+    public static function mascarar($cpf)
+    {
+        $cpf = str_pad(preg_replace('/[^0-9]/', '', (string) $cpf), 11, '0', STR_PAD_LEFT);
+
+        return '***.' . substr($cpf, 3, 3) . '.' . substr($cpf, 6, 3) . '-**';
+    }
 }

@@ -80,9 +80,12 @@ class PastaDocumentoController extends Controller
 
         $documentos = $pasta->files()
             ->when($search, function ($query, $search) {
-                $query->where('tipo_documento', 'like', "%{$search}%")
-                    ->orWhere('status', 'like', "%{$search}%")
-                    ->orWhere('observacao', 'like', "%{$search}%");
+                // Agrupado para os orWhere não escaparem do filtro da pasta
+                $query->where(function ($q) use ($search) {
+                    $q->where('tipo_documento', 'like', "%{$search}%")
+                        ->orWhere('status', 'like', "%{$search}%")
+                        ->orWhere('observacao', 'like', "%{$search}%");
+                });
             })
             ->paginate(10);
 
