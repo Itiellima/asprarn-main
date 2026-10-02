@@ -121,12 +121,18 @@ Além das variáveis padrão do Laravel, o sistema usa:
 
 ## Tarefas agendadas
 
+**Automações de WhatsApp** são disparadas pelo **n8n**, que chama periodicamente o endpoint:
+
+| Endpoint | Função |
+|---|---|
+| `GET/POST /api/automacoes/executar` | Verifica as automações ativas que estão no dia de execução e envia as mensagens |
+| `GET/POST /api/automacoes/test` | Simula a execução e retorna, em JSON, quem receberia cada mensagem |
+
+**Tarefas do Laravel** (definidas em `routes/console.php`, confira com `php artisan schedule:list`):
+
 | Comando | Frequência | Função |
 |---|---|---|
-| `app:executar-automacoes` | a cada minuto | Dispara as mensagens de WhatsApp das automações ativas |
 | `app:clean-empty-folders` | diário | Remove pastas vazias do disco `public` |
-
-As tarefas são definidas em `routes/console.php` (confira com `php artisan schedule:list`).
 
 Em produção, configure o cron do scheduler:
 

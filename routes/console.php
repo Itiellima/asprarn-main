@@ -11,5 +11,4 @@ Artisan::command('inspire', function () {
 // Remove diariamente as pastas vazias do disco public
 Schedule::command('app:clean-empty-folders')->daily();
 
-// Executa a automação de envio de mensagens via WhatsApp a cada minuto
-Schedule::command('app:executar-automacoes')->everyMinute();
+// As automações de WhatsApp são disparadas pelo n8n via /api/automacoes/executar
