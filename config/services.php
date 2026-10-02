@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'n8n' => [
+        // Mesma chave usada no header x-api-key nas chamadas entre Laravel e n8n
+        'token' => env('N8N_API_KEY'),
+    ],
+
 ];

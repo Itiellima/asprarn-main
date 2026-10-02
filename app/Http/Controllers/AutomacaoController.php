@@ -58,8 +58,7 @@ class AutomacaoController extends Controller
                 }),
             ];
 
-            $auto->ultima_execucao = $agora;
-            $auto->save();
+            // Simulação: não grava ultima_execucao para não bloquear o envio real do dia
         }
 
 

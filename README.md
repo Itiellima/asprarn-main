@@ -116,6 +116,7 @@ Além das variáveis padrão do Laravel, o sistema usa:
 |---|---|
 | `INSTAGRAM_ACCESS_TOKEN` | Token da Graph API para exibir o feed do Instagram |
 | `INSTAGRAM_USER_ID` | ID da conta do Instagram |
+| `N8N_API_KEY` | Chave compartilhada com o n8n no header `x-api-key`, usada nas chamadas do Laravel para o n8n e do n8n para a API de automações |
 | `FILESYSTEM_DISK`, `AWS_*` | Armazenamento de arquivos em S3 (opcional) |
 | `MAIL_*` | Envio de e-mails (verificação, recuperação de senha) |
 
@@ -126,7 +127,9 @@ Além das variáveis padrão do Laravel, o sistema usa:
 | Endpoint | Função |
 |---|---|
 | `GET/POST /api/automacoes/executar` | Verifica as automações ativas que estão no dia de execução e envia as mensagens |
-| `GET/POST /api/automacoes/test` | Simula a execução e retorna, em JSON, quem receberia cada mensagem |
+| `GET/POST /api/automacoes/test` | Simula a execução e retorna, em JSON, quem receberia cada mensagem (não grava `ultima_execucao`) |
+
+Os dois endpoints exigem o header `x-api-key` com o valor de `N8N_API_KEY`. Sem o token, ou com ele vazio no `.env`, a resposta é `401`.
 
 **Tarefas do Laravel** (definidas em `routes/console.php`, confira com `php artisan schedule:list`):
 

@@ -470,12 +470,7 @@ class AssociadoController extends Controller
 
     public function storePictureProfile(Request $request, $associadoId)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('associado|admin|moderador')) {
-            return redirect()->route('associado.index')
-                ->with('error', 'Acesso negado.');
-        }
+        $this->autorizarAcessoAoAssociado($associadoId);
 
         $associado = Associado::findOrFail($associadoId);
 
@@ -526,12 +521,7 @@ class AssociadoController extends Controller
 
     public function destroyPictureProfile($associadoId)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('associado|admin|moderador')) {
-            return redirect()->route('associado.index')
-                ->with('error', 'Acesso negado.');
-        }
+        $this->autorizarAcessoAoAssociado($associadoId);
 
         $picture = PictureProfile::where('associado_id', $associadoId)->first();
 
@@ -547,8 +537,9 @@ class AssociadoController extends Controller
 
                 // apaga o registro no banco
                 $picture->delete();
-                DB::commit();
             }
+
+            DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Erro ao deletar foto.');
@@ -559,12 +550,7 @@ class AssociadoController extends Controller
 
     public function showCarteirinha($id)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('associado|admin|moderador')) {
-            return redirect()->route('associado.index')
-                ->with('error', 'Acesso negado.');
-        }
+        $this->autorizarAcessoAoAssociado($id);
 
         $associado = Associado::with('membro.diretoria', 'membro.funcao')->findOrFail($id);
 
@@ -576,12 +562,7 @@ class AssociadoController extends Controller
 
     public function showVerticalCarteirinha($id)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('associado|admin|moderador')) {
-            return redirect()->route('associado.index')
-                ->with('error', 'Acesso negado.');
-        }
+        $this->autorizarAcessoAoAssociado($id);
 
         $associado = Associado::with('membro.diretoria', 'membro.funcao')->findOrFail($id);
 
@@ -593,11 +574,7 @@ class AssociadoController extends Controller
     public function associadoInfo($id)
     {
 
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('associado|admin|moderador')) {
-            return redirect()->route('associado.index')->with('error', 'Acesso negado.');
-        }
+        $this->autorizarAcessoAoAssociado($id);
 
         // Buscar UFs do IBGE
         // $ufs = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
@@ -668,5 +645,28 @@ class AssociadoController extends Controller
 
 
         return redirect()->back()->with('success', 'Senha resetada para o CPF do associado.');
+    }
+
+    /**
+     * Admin e moderador acessam qualquer associado;
+     * o associado acessa apenas o próprio cadastro.
+     */
+    private function autorizarAcessoAoAssociado($associadoId): void
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            abort(403, 'Acesso negado.');
+        }
+
+        if ($user->hasRole('admin|moderador')) {
+            return;
+        }
+
+        if ($user->hasRole('associado') && (string) $user->associado_id === (string) $associadoId) {
+            return;
+        }
+
+        abort(403, 'Acesso negado.');
     }
 }
