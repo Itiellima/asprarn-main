@@ -6,6 +6,8 @@ use App\Models\Associado;
 use App\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
@@ -69,6 +71,35 @@ class AcessoAssociadoTest extends TestCase
             ->delete("/associado/{$this->proprio->id}/picture-profile/destroy")
             ->assertRedirect()
             ->assertSessionHas('msg');
+    }
+
+    public function test_associado_envia_foto_de_celular_maior_que_2mb(): void
+    {
+        Storage::fake('public');
+
+        $foto = UploadedFile::fake()->image('IMG_0001.jpg', 3000, 4000)->size(4500);
+
+        $this->actingAs($this->usuarioAssociado())
+            ->post("/associado/{$this->proprio->id}/picture-profile/store", ['picture_profile' => $foto])
+            ->assertRedirect()
+            ->assertSessionHasNoErrors()
+            ->assertSessionHas('msg');
+
+        $path = $this->proprio->fresh()->pictureProfile->path;
+        Storage::disk('public')->assertExists($path);
+    }
+
+    public function test_foto_acima_de_10mb_e_recusada(): void
+    {
+        Storage::fake('public');
+
+        $foto = UploadedFile::fake()->image('enorme.jpg')->size(10241);
+
+        $this->actingAs($this->usuarioAssociado())
+            ->post("/associado/{$this->proprio->id}/picture-profile/store", ['picture_profile' => $foto])
+            ->assertSessionHasErrors(['picture_profile' => 'A foto não pode passar de 10MB.']);
+
+        $this->assertNull($this->proprio->fresh()->pictureProfile);
     }
 
     public function test_moderador_pode_remover_foto_de_qualquer_associado(): void

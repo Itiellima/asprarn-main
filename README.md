@@ -98,6 +98,19 @@ docker compose exec app php artisan tinker
 docker compose logs -f app
 ```
 
+## Deploy em produção (Easypanel)
+
+Produção roda como **App** no Easypanel, com build **Nixpacks** a partir deste repositório. Cada commit na `main` gera um novo build.
+
+- O `Dockerfile`, o `docker-compose.yml` e o `nginx/default.conf` **não são usados em produção**, só no ambiente Docker local.
+- O `.env` é configurado no Easypanel, fora do build, e se mantém entre os deploys.
+- Ao recriar o container, rodam automaticamente:
+  ```bash
+  php artisan config:clear && php artisan key:generate && php artisan storage:link && php artisan serve --host=0.0.0.0 --port=80
+  ```
+- As migrações **não** rodam sozinhas. Depois de um deploy com migração nova, rode `php artisan migrate --force` no console do serviço.
+- Limite de upload: vale o php.ini padrão do Nixpacks (2 MB por arquivo). As fotos de perfil são reduzidas no navegador antes do envio (`public/js/redimensionar-foto.js`), então ficam bem abaixo disso.
+
 ## Acesso inicial
 
 O seeder `RoleAndAdminSeeder` cria os perfis e um usuário administrador:

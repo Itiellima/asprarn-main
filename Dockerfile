@@ -32,6 +32,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install gd zip pdo pdo_mysql bcmath mbstring \
     && rm -rf /var/lib/apt/lists/*
 
+# Limites de upload do PHP (o padrão é 2MB por arquivo e 8MB por requisição)
+RUN printf "upload_max_filesize=10M\npost_max_size=20M\n" > /usr/local/etc/php/conf.d/uploads.ini
+
 
 # Instalação do Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

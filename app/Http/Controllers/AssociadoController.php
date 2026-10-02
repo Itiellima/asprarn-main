@@ -179,15 +179,15 @@ class AssociadoController extends Controller
             'nome'  => 'required',
             'cpf'   => 'required|unique:associados,cpf|digits:11',
             'email' => 'required|unique:users,email',
-            'picture_profile' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'picture_profile' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
             'dt_inclusao' => 'nullable|date',
         ], [
             'cpf.unique'   => 'Já existe um associado cadastrado com esse CPF.',
             'cpf.digits'     => 'O CPF deve conter exatamente 11 dígitos numericos.',
             'email.unique' => 'Já existe um associado com esse e-mail.',
             'picture_profile.image' => 'O arquivo deve ser uma imagem.',
-            'picture_profile.mimes' => 'O arquivo deve ser do tipo: jpeg, png, jpg.',
-            'picture_profile.max' => 'O arquivo não pode exceder 2MB.',
+            'picture_profile.mimes' => 'A foto deve ser JPG, PNG ou WEBP.',
+            'picture_profile.max' => 'A foto não pode passar de 10MB.',
             'dt_inclusao.date' => 'A data de inclusão deve ser uma data válida.',
         ]);
 
@@ -475,7 +475,13 @@ class AssociadoController extends Controller
         $associado = Associado::findOrFail($associadoId);
 
         $request->validate([
-            'picture_profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'picture_profile' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
+        ], [
+            'picture_profile.required' => 'Selecione uma foto.',
+            'picture_profile.uploaded' => 'Não foi possível enviar a foto. Tente uma imagem menor.',
+            'picture_profile.image' => 'O arquivo deve ser uma imagem.',
+            'picture_profile.mimes' => 'A foto deve ser JPG, PNG ou WEBP.',
+            'picture_profile.max' => 'A foto não pode passar de 10MB.',
         ]);
 
         DB::beginTransaction();

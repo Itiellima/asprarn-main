@@ -433,7 +433,7 @@
                             <div class="container row border-bottom border-primary mt-3 m-1">
                                 <h2>Foto perfil 3x4</h2>
                                 <label for="formGroup" class="form-label">Foto de perfil:</label>
-                                <input type="file" class="form-control mt-3" id="img" name="picture_profile">
+                                <input type="file" class="form-control mt-3" id="img" name="picture_profile" accept="image/*" data-redimensionar-foto>
                                 <div id="preview-container" class="mt-3"></div>
                             </div>
                         @endif
@@ -530,6 +530,8 @@
                 });
             });
         </script>
+
+        <script src="{{ asset('js/redimensionar-foto.js') }}"></script>
 
         <script src="{{ asset('js/form-edit.js') }}"></script>
 

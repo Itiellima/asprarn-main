@@ -105,3 +105,62 @@
         </div>
     </div>
 </div>
+
+{{-- Modal de envio da foto --}}
+<div class="modal fade" id="pictureModal" tabindex="-1" aria-labelledby="pictureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="{{ route('associado.picture-profile.store', $associado->id) }}" method="POST"
+                  enctype="multipart/form-data">
+                @csrf
+
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="pictureModalLabel">
+                        <i class="bi bi-camera"></i> {{ $associado->pictureProfile ? 'Editar foto' : 'Adicionar foto' }}
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p class="mb-2">Tire uma foto ou escolha uma da galeria.</p>
+                    <small class="text-muted d-block mb-3">
+                        Use uma foto de rosto, de frente, com fundo claro (estilo 3x4).
+                    </small>
+
+                    <input type="file"
+                           class="form-control @error('picture_profile') is-invalid @enderror"
+                           name="picture_profile"
+                           accept="image/*"
+                           data-redimensionar-foto
+                           required>
+
+                    @error('picture_profile')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@once
+    @push('scripts')
+        <script src="{{ asset('js/redimensionar-foto.js') }}"></script>
+    @endpush
+@endonce
+
+@error('picture_profile')
+    @push('scripts')
+        <script>
+            // Reabre o modal para o associado ver o erro da foto
+            document.addEventListener('DOMContentLoaded', function () {
+                bootstrap.Modal.getOrCreateInstance(document.getElementById('pictureModal')).show();
+            });
+        </script>
+    @endpush
+@enderror
