@@ -3,71 +3,126 @@
 @section('diretoria-content')
     <div class="container py-4">
 
-        <div class="text-center mb-5">
-            <h2>Membros</h2>
-            <p class="text-muted">
-                Conheça os membros da diretoria da ASPRA-RN
-            </p>
-            <a href="{{ route('diretoria.membros.create') }}" class="btn btn-sm btn-warning">Novo membro</a>
+        {{-- Cabeçalho --}}
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+            <div>
+                <h2 class="mb-1">Membros</h2>
+                <p class="text-muted mb-0">
+                    Conheça e gerencie os membros da diretoria da ASPRA-RN.
+                </p>
+            </div>
+
+            <a href="{{ route('diretoria.membros.create') }}" class="btn btn-warning">
+                <i class="bi bi-person-plus me-1"></i>
+                Novo membro
+            </a>
         </div>
 
+        {{-- Lista de membros --}}
         <div class="row g-4">
 
-            @foreach ($membros as $membro)
-                <div class="col-md-6 col-lg-4">
+            @forelse ($membros as $membro)
+                <div class="col-sm-6 col-lg-4">
 
-                    <div class="card shadow-sm h-100 border-0 grow">
+                    <div class="card h-100 border-0 shadow-sm">
 
-                        <div class="card-header bg-primary text-white text-center">
-                            <h5 class="mb-0">
+                        {{-- Diretoria --}}
+                        <div class="card-header bg-primary text-white text-center py-3">
+                            <h6 class="mb-0 fw-semibold">
                                 {{ $membro->diretoria->nome ?? 'Sem diretoria' }}
-                            </h5>
+                            </h6>
                         </div>
 
-                        <div class="card-body text-center">
+                        {{-- Conteúdo --}}
+                        <div class="card-body text-center p-4">
 
+                            {{-- Foto --}}
                             @if ($membro->associado->pictureProfile?->path)
                                 <img src="{{ asset('storage/' . $membro->associado->pictureProfile->path) }}"
-                                    style="width:120px;height:120px;object-fit:cover;" alt="Diretor"
-                                    class="rounded-circle border mb-3">
+                                    alt="Foto de {{ $membro->associado->nome }}"
+                                    class="rounded-circle border shadow-sm mb-3"
+                                    style="width: 120px; height: 120px; object-fit: cover;">
                             @else
-                                <img src="/img/Escudo-pm.png" class="rounded-circle border mb-3"
-                                    style="width:120px;height:120px;object-fit:cover;" alt="Diretor">
+                                <img src="{{ asset('img/Escudo-pm.png') }}" alt="Foto não disponível"
+                                    class="rounded-circle border shadow-sm mb-3"
+                                    style="width: 120px; height: 120px; object-fit: cover;">
                             @endif
 
-
-
-                            <h5>
+                            {{-- Nome --}}
+                            <h5 class="fw-semibold mb-2">
                                 {{ $membro->associado->nome }}
                             </h5>
 
-                            <span class="badge bg-secondary">
-                                {{ $membro->funcao->nome ?? 'Sem função' }}
-                            </span>
+                            {{-- Função --}}
+                            @if ($membro->funcao)
+                                <span class="badge bg-secondary px-3 py-2">
+                                    {{ $membro->funcao->nome }}
+                                </span>
+                            @else
+                                <span class="badge bg-light text-secondary border px-3 py-2">
+                                    Sem função
+                                </span>
+                            @endif
 
                         </div>
 
-                        <div class="card-footer text-center bg-white">
-                            <a href="{{ route('diretoria.membros.edit', $membro->id) }}"
-                                class="btn btn-outline-primary btn-sm">
-                                Editar
-                            </a>
-                            <form action="{{ route('diretoria.membros.destroy', $membro->id) }}" method="POST"
-                                style="display:inline;"
-                                onclick="return confirm('Deseja excluir esse membro? {{ $membro->associado->nome }}?')">
-                                @csrf
-                                @method('DELETE')
+                        {{-- Ações --}}
+                        <div class="card-footer bg-white border-0 px-4 pb-4 pt-0">
 
-                                <button type="submit" class="btn btn-outline-danger btn-sm">
-                                    Excluir
-                                </button>
-                            </form>
+                            <div class="d-flex gap-2">
+
+                                <a href="{{ route('diretoria.membros.edit', $membro->id) }}"
+                                    class="btn btn-outline-warning btn-sm flex-fill">
+                                    <i class="bi bi-pencil me-1"></i>
+                                    Editar
+                                </a>
+
+                                <form action="{{ route('diretoria.membros.destroy', $membro->id) }}" method="POST"
+                                    class="flex-fill">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit" class="btn btn-outline-danger btn-sm w-100"
+                                        onclick="return confirm('Deseja excluir o membro {{ $membro->associado->nome }} da diretoria?');">
+                                        <i class="bi bi-trash me-1"></i>
+                                        Excluir
+                                    </button>
+                                </form>
+
+                            </div>
+
                         </div>
 
                     </div>
 
                 </div>
-            @endforeach
+
+            @empty
+
+                {{-- Estado vazio --}}
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body text-center py-5">
+
+                            <i class="bi bi-people fs-1 text-muted"></i>
+
+                            <h5 class="mt-3">
+                                Nenhum membro cadastrado
+                            </h5>
+
+                            <p class="text-muted mb-3">
+                                Ainda não existem membros cadastrados na diretoria.
+                            </p>
+
+                            <a href="{{ route('diretoria.membros.create') }}" class="btn btn-warning">
+                                <i class="bi bi-person-plus me-1"></i>
+                                Cadastrar primeiro membro
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            @endforelse
 
         </div>
 
