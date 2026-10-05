@@ -162,6 +162,24 @@ Regras:
 
 **Importação de CSV** (separador `;`): colunas `nome`, `cpf`, `matricula`, `valor`, `mes_referencia` (aceita variações como "Mês de Referência"). Pode ter uma linha de título antes do cabeçalho. Arquivos salvos pelo Excel em ANSI são convertidos para UTF-8, e o CPF que perdeu o zero à esquerda é corrigido. Linhas inválidas viram falhas no relatório, sem cancelar o lote.
 
+## Armazenamento de arquivos
+
+| O quê | Onde | Acesso |
+|---|---|---|
+| Documentos dos associados (pastas de documentos) | Disco `documentos`: bucket privado no **SeaweedFS** (API S3) | Só pelo Laravel, para admin/moderador (`/associado/pasta/documentos/show/...`) |
+| Fotos de perfil, imagens de posts, banners, benefícios | Disco `public` (`storage/app/public`, volume do Easypanel) | Público, via `/storage/...` |
+
+O SeaweedFS roda no Easypanel **sem portas publicadas**: o Laravel o acessa pela rede interna (`DOCUMENTOS_ENDPOINT=http://<projeto>_seaweedfs-s3:8333`) e entrega o arquivo ao navegador depois de conferir a permissão. O bucket nunca fica exposto na internet.
+
+Para criar o bucket (uma vez), no console do serviço `seaweedfs-master`:
+
+```bash
+weed shell
+> s3.bucket.create -name documentos
+```
+
+Backup: os arquivos ficam no volume `volume-data` e o índice no `filer-data`. Faça backup dos dois juntos.
+
 ## Acesso inicial
 
 O seeder `RoleAndAdminSeeder` cria os perfis e um usuário administrador:
@@ -182,6 +200,7 @@ Além das variáveis padrão do Laravel, o sistema usa:
 | `INSTAGRAM_USER_ID` | ID da conta do Instagram |
 | `N8N_API_KEY` | Chave compartilhada com o n8n no header `x-api-key`, usada nas chamadas do Laravel para o n8n e do n8n para a API de automações |
 | `FILESYSTEM_DISK`, `AWS_*` | Armazenamento de arquivos em S3 (opcional) |
+| `DOCUMENTOS_ENDPOINT`, `DOCUMENTOS_BUCKET`, `DOCUMENTOS_KEY`, `DOCUMENTOS_SECRET` | Bucket privado (SeaweedFS, API S3) dos documentos dos associados |
 | `MAIL_*` | Envio de e-mails (verificação, recuperação de senha) |
 
 ## Tarefas agendadas

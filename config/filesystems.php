@@ -60,6 +60,21 @@ return [
             'report' => false,
         ],
 
+        // Documentos dos associados (RG, comprovantes...): bucket privado no SeaweedFS (API S3).
+        // Os arquivos nunca ficam públicos; o download passa pelo Laravel, que confere a permissão.
+        'documentos' => [
+            'driver' => 's3',
+            'key' => env('DOCUMENTOS_KEY'),
+            'secret' => env('DOCUMENTOS_SECRET'),
+            'region' => env('DOCUMENTOS_REGION', 'us-east-1'),
+            'bucket' => env('DOCUMENTOS_BUCKET', 'documentos'),
+            'endpoint' => env('DOCUMENTOS_ENDPOINT'),
+            'use_path_style_endpoint' => true,
+            'visibility' => 'private',
+            'throw' => true,
+            'report' => true,
+        ],
+
     ],
 
     /*
