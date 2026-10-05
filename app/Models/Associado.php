@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 
 class Associado extends Model
 {
@@ -97,16 +96,10 @@ class Associado extends Model
     protected static function booted()
     {
         static::deleting(function ($associado) {
-            if ($associado->documentos && $associado->documentos->count() > 0) {
-                foreach ($associado->documentos as $documento) {
-                    // Exclui o arquivo físico, se existir
-                    if ($documento->arquivo && Storage::disk('public')->exists($documento->arquivo)) {
-                        Storage::disk('public')->delete($documento->arquivo);
-                    }
-
-                    // Exclui o registro no banco
-                    $documento->delete();
-                }
+            // Apaga as pastas pelo Eloquent (e não só pelo cascade do banco)
+            // para os documentos também serem removidos do armazenamento
+            foreach ($associado->pastaDocumentos as $pasta) {
+                $pasta->delete();
             }
 
             // Exclui o usuário vinculado ao associado (se existir)

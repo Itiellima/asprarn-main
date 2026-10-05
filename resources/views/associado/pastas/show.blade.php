@@ -103,7 +103,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <form
-                                                action="{{ route('associado.documentos.update', [$associado->id, $file->id]) }}"
+                                                action="{{ route('associado.documentos.update', ['pastaId' => $pasta->id, 'fileId' => $file->id]) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('PATCH')

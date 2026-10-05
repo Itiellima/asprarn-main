@@ -103,7 +103,7 @@ Route::get('/associado/pasta/documentos/show/{pastaId}/{fileId}', [DocumentoAsso
 Route::delete('/associado/pasta/documentos/destroy/{pastaId}/{fileId}', [DocumentoAssociadoController::class, 'destroy'])->name('associado.pasta.documentos.destroy');
 
 //UPDATE
-Route::patch('/associado/{id}/documentos/{documento}', [DocumentoAssociadoController::class, 'updateDocumento'])->name('associado.documentos.update');
+Route::patch('/associado/pasta/documentos/update/{pastaId}/{fileId}', [DocumentoAssociadoController::class, 'update'])->name('associado.documentos.update');
 
 //////////////////////////////// ********* ASSOCIADO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 //VIEW TODOS OS ASSOCIADOS

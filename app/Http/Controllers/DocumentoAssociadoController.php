@@ -57,11 +57,14 @@ class DocumentoAssociadoController extends Controller
             'observacao' => 'nullable|string',
         ]);
 
+        // Confirma se a pasta existe
+        $pasta = PastaDocumento::findOrFail($pastaId);
+
+        $path = null;
+        $disco = File::discoPara(PastaDocumento::class);
+
         try {
             DB::beginTransaction();
-
-            // Confirma se a pasta existe
-            $pasta = PastaDocumento::findOrFail($pastaId);
 
             // Obtém o ID do associado da pasta
             $associadoId = $pasta->associado_id;
@@ -72,8 +75,8 @@ class DocumentoAssociadoController extends Controller
             // Obtém o nome original do arquivo
             $nomeOriginal = $arquivo->getClientOriginalName();
 
-            // Salva o arquivo e o caminho para armazenar o arquivo
-            $path = $request->file('arquivo')->store("documentos/{$associadoId}/{$pastaId}", 'public');
+            // Salva o arquivo no bucket privado de documentos
+            $path = $arquivo->store("documentos/{$associadoId}/{$pastaId}", $disco);
 
             // Cria o registro do arquivo na tabela files
             $pasta->files()->create([
@@ -88,7 +91,17 @@ class DocumentoAssociadoController extends Controller
             return redirect()->back()->with('success', 'Documento enviado com sucesso!');
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Erro ao enviar documentos' . $e->getMessage());
+
+            // Evita arquivo órfão no bucket se o registro não foi salvo
+            if ($path) {
+                try {
+                    Storage::disk($disco)->delete($path);
+                } catch (\Exception $erroAoLimpar) {
+                    Log::warning('Não foi possível remover o documento órfão ' . $path . ': ' . $erroAoLimpar->getMessage());
+                }
+            }
+
+            Log::error('Erro ao enviar documentos: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Ocorreu um erro ao enviar os arquivos, tente novamente');
         }
     }
@@ -108,11 +121,17 @@ class DocumentoAssociadoController extends Controller
             ->firstOrFail();
 
 
-        if ($file->path && Storage::disk('public')->exists($file->path)) {
-            return response()->file(Storage::disk('public')->path($file->path));
+        $disco = Storage::disk($file->disco());
+
+        if (!$file->path || !$disco->exists($file->path)) {
+            abort(404, 'Arquivo não encontrado.');
         }
 
-        abort(404, 'Arquivo não encontrado.');
+        // O arquivo é lido do bucket e entregue pelo Laravel (o bucket nunca fica público)
+        return $disco->response($file->path, $file->tipo_documento ?: basename($file->path), [
+            'Cache-Control' => 'private, no-store',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
     }
 
     // Excluir documento
@@ -129,12 +148,7 @@ class DocumentoAssociadoController extends Controller
             ->where('fileable_id', $pastaId)
             ->findOrFail($fileId);
 
-        // Deleta o arquivo do storage se existir
-        if ($file->path && Storage::disk('public')->exists($file->path)) {
-            Storage::disk('public')->delete($file->path);
-        }
-
-        // Deleta o registro do arquivo
+        // Deleta o registro (o model File remove o arquivo do armazenamento)
         $file->delete();
 
         return redirect()->back()->with('success', 'Documento excluído com sucesso!');
