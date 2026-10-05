@@ -291,6 +291,9 @@ class AssociadoController extends Controller
 
             if ($authUser && $authUser->hasRole('admin|moderador')) {
                 return redirect(route('associado.show', $associado->id))->with('msg', 'Associado criado com sucesso');
+            } elseif (!$authUser) {
+                // Cadastro público: leva ao login explicando como é o primeiro acesso
+                return redirect()->route('login')->with('primeiro_acesso', $request->email);
             } else {
                 return redirect('/dashboard')->with('msg', 'Associado criado com sucesso!');
             }

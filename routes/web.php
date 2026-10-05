@@ -46,6 +46,12 @@ use App\Models\PerguntasFrequentes;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
+//////////////////////////////// ********* TROCA OBRIGATÓRIA DE SENHA ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Route::middleware(['auth'])->group(function () {
+    Route::get('/trocar-senha', [App\Http\Controllers\TrocarSenhaController::class, 'show'])->name('senha.trocar');
+    Route::post('/trocar-senha', [App\Http\Controllers\TrocarSenhaController::class, 'update'])->name('senha.trocar.salvar');
+});
+
 //////////////////////////////// ********* CRUD POSTS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Route::middleware(['auth'])->group(function () {
     Route::get('posts', [PostController::class, 'index'])->name('posts.index');

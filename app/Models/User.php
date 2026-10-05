@@ -71,12 +71,28 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'trocar_senha' => 'boolean',
         ];
     }
 
     public function associado()
     {
         return $this->belongsTo(Associado::class);
+    }
+
+    /**
+     * Indica se a senha informada é o CPF do associado (a senha padrão),
+     * com ou sem pontuação.
+     */
+    public function senhaEhCpf(?string $senha): bool
+    {
+        $cpf = preg_replace('/\D/', '', (string) $this->associado?->cpf);
+
+        if ($cpf === '' || $senha === null) {
+            return false;
+        }
+
+        return preg_replace('/[.\-\s]/', '', $senha) === $cpf;
     }
 
     public function posts()

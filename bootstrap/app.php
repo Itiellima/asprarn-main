@@ -21,6 +21,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
         ]);
+
+        // Obriga a trocar a senha padrão (CPF) antes de usar o sistema
+        $middleware->web(append: [
+            \App\Http\Middleware\ExigirTrocaDeSenha::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

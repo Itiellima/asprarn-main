@@ -12,12 +12,24 @@
             </div>
         @endsession
 
+        @session('primeiro_acesso')
+            <div class="mb-4 p-4 rounded-md bg-blue-50 border border-blue-200 text-sm text-blue-900" role="alert">
+                <p class="font-semibold mb-1">Cadastro realizado com sucesso!</p>
+                <p>Para o seu primeiro acesso, use:</p>
+                <ul class="list-disc ms-5 mt-1">
+                    <li><strong>E-mail:</strong> o e-mail cadastrado ({{ $value }})</li>
+                    <li><strong>Senha:</strong> o seu CPF, somente números</li>
+                </ul>
+                <p class="mt-2">No primeiro acesso, você será solicitado a criar uma nova senha.</p>
+            </div>
+        @endsession
+
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
             <div>
                 <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', session('primeiro_acesso'))" required autofocus autocomplete="username" />
             </div>
 
             <div class="mt-4">
