@@ -20,9 +20,9 @@
                 <label for="tipo" class="form-label">Tipo</label>
                 <select class="form-select" name="tipo" id="tipo">
                     <option value="">Selecione o tipo</option>
-                    <option value="{{ old('tipo', $categoria->tipo ?? '') }}" {{ $categoria->tipo === 'receita' ? 'selected' : '' }}>Receita</option>
-                    <option value="{{ old('tipo', $categoria->tipo ?? '') }}" {{ $categoria->tipo === 'despesa' ? 'selected' : '' }}>Despesa</option>
-                    <option value="{{ old('tipo', $categoria->tipo ?? '') }}" {{ $categoria->tipo === 'transferencia' ? 'selected' : '' }}>Transferência</option>
+                    <option value="receita" @selected(old('tipo', $categoria->tipo ?? '') === 'receita')>Receita</option>
+                    <option value="despesa" @selected(old('tipo', $categoria->tipo ?? '') === 'despesa')>Despesa</option>
+                    <option value="transferencia" @selected(old('tipo', $categoria->tipo ?? '') === 'transferencia')>Transferência</option>
                 </select>
             </div>
         </div>

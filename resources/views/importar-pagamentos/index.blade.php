@@ -112,11 +112,11 @@
                 <tbody>
                     @foreach ($dadosCsv as $linha)
                         <tr>
-                            <td>{{ $linha['nome'] }}</td>
-                            <td>{{ $linha['cpf'] }}</td>
-                            <td>{{ $linha['matricula'] }}</td>
-                            <td>{{ $linha['valor'] }}</td>
-                            <td>{{ $linha['mes_referencia'] }}</td>
+                            <td>{{ $linha['nome'] ?? '—' }}</td>
+                            <td>{{ $linha['cpf'] ?? '—' }}</td>
+                            <td>{{ $linha['matricula'] ?? '—' }}</td>
+                            <td>{{ $linha['valor'] ?? '—' }}</td>
+                            <td>{{ $linha['mes_referencia'] ?? '—' }}</td>
                         </tr>
                     @endforeach
                 </tbody>

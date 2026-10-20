@@ -30,11 +30,10 @@ use App\Http\Controllers\ComoNosEncontrouController;
 use App\Http\Controllers\Financeiro\FinanceiroController;
 use App\Http\Controllers\Financeiro\CategoriaController;
 use App\Http\Controllers\Financeiro\ContasBancariasController;
-use App\Http\Controllers\Financeiro\Contas_a_PagarController;
+use App\Http\Controllers\Financeiro\ContasController;
 use App\Http\Controllers\Diretoria\DiretoriaController;
 use App\Http\Controllers\Diretoria\FuncaoController;
 use App\Http\Controllers\Diretoria\MembroController;
-use App\Http\Controllers\Financeiro\Contas_a_receberController;
 use App\Http\Controllers\Financeiro\ExtratoController;
 use App\Http\Controllers\Financeiro\LancamentosController;
 use App\Http\Controllers\PerguntasFrequentesController;
@@ -302,14 +301,23 @@ Route::middleware(['auth', 'role:admin|financeiro'])->group(function () {
     Route::put('/financeiro/contas-bancarias/update/{id}', [ContasBancariasController::class, 'update'])->name('financeiro.contas_bancarias.update');
     Route::delete('/financeiro/contas-bancarias/destroy/{id}', [ContasBancariasController::class, 'destroy'])->name('financeiro.contas_bancarias.destroy');
 
-    Route::resource('financeiro/contas-a-pagar', Contas_a_PagarController::class);
-    Route::put('/financeiro/contas-a-pagar/{id}/pagar', [Contas_a_PagarController::class, 'pagar'])->name('financeiro.contas-a-pagar.pagar');
-    Route::put('/financeiro/contas-a-pagar/{id}/cancelar-pagamento', [Contas_a_PagarController::class, 'cancelarPagamento'])->name('financeiro.contas-a-pagar.cancelar-pagamento');
+    // Contas a pagar (despesas) e a receber (receitas): mesmo controller, o tipo vem da rota
+    foreach (['contas-a-pagar' => 'despesa', 'contas-a-receber' => 'receita'] as $prefixo => $tipo) {
+        $acaoPagar = $tipo === 'despesa' ? 'pagar' : 'receber';
+        $acaoCancelar = $tipo === 'despesa' ? 'cancelar-pagamento' : 'cancelar-recebimento';
 
-    Route::resource('financeiro/contas-a-receber', Contas_a_receberController::class);
-    Route::put('/financeiro/contas-a-receber/{id}/receber', [Contas_a_receberController::class, 'receber'])->name('financeiro.contas-a-receber.receber');
-    Route::put('/financeiro/contas-a-receber/{id}/cancelar-recebimento', [Contas_a_receberController::class, 'cancelarRecebimento'])->name('financeiro.contas-a-receber.cancelar-recebimento');
-    
+        Route::prefix("financeiro/{$prefixo}")->group(function () use ($prefixo, $tipo, $acaoPagar, $acaoCancelar) {
+            Route::get('/', [ContasController::class, 'index'])->defaults('tipo', $tipo)->name("{$prefixo}.index");
+            Route::get('/create', [ContasController::class, 'create'])->defaults('tipo', $tipo)->name("{$prefixo}.create");
+            Route::post('/', [ContasController::class, 'store'])->defaults('tipo', $tipo)->name("{$prefixo}.store");
+            Route::get('/{id}/edit', [ContasController::class, 'edit'])->defaults('tipo', $tipo)->name("{$prefixo}.edit");
+            Route::put('/{id}', [ContasController::class, 'update'])->defaults('tipo', $tipo)->name("{$prefixo}.update");
+            Route::delete('/{id}', [ContasController::class, 'destroy'])->defaults('tipo', $tipo)->name("{$prefixo}.destroy");
+            Route::put("/{id}/{$acaoPagar}", [ContasController::class, 'pagar'])->defaults('tipo', $tipo)->name("financeiro.{$prefixo}.{$acaoPagar}");
+            Route::put("/{id}/{$acaoCancelar}", [ContasController::class, 'cancelar'])->defaults('tipo', $tipo)->name("financeiro.{$prefixo}.{$acaoCancelar}");
+        });
+    }
+
     Route::resource('financeiro/lancamentos', LancamentosController::class);
     Route::put('/financeiro/lancamentos/{id}/pagar', [LancamentosController::class, 'pagar'])->name('financeiro.lancamentos.pagar');
     Route::put('/financeiro/lancamentos/{id}/cancelar-recebimento', [LancamentosController::class, 'cancelarRecebimento'])->name('financeiro.lancamentos.cancelar-recebimento');

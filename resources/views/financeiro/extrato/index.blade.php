@@ -28,13 +28,13 @@
                 <div class="col-md-3">
                     <label class="form-label">Período Inicial</label>
 
-                    <input type="date" name="inicio" class="form-control" value="{{ request('inicio') }}">
+                    <input type="date" name="inicio" class="form-control" value="{{ request('inicio', $inicio->format('Y-m-d')) }}">
                 </div>
 
                 <div class="col-md-3">
                     <label class="form-label">Período Final</label>
 
-                    <input type="date" name="fim" class="form-control" value="{{ request('fim') }}">
+                    <input type="date" name="fim" class="form-control" value="{{ request('fim', $fim->format('Y-m-d')) }}">
                 </div>
 
                 <div class="col-md-2 d-flex align-items-end">
@@ -65,11 +65,17 @@
 
                 <tbody>
 
+                    <tr class="table-light">
+                        <td>{{ $inicio->format('d/m/Y') }}</td>
+                        <td colspan="4"><strong>Saldo anterior</strong></td>
+                        <td class="text-end"><strong>R$ {{ number_format($saldoAnterior, 2, ',', '.') }}</strong></td>
+                    </tr>
+
                     @forelse($movimentacoes as $movimento)
                         <tr>
 
                             <td>
-                                {{ $movimento->data_lancamento->format('d/m/Y') ? $movimento->data_lancamento->format('d/m/Y') : '' }}
+                                {{ $movimento->data_pagamento?->format('d/m/Y') }}
                             </td>
 
                             <td>
@@ -77,7 +83,7 @@
                             </td>
 
                             <td>
-                                {{ $movimento->categoria?->nome ? $movimento->categoria?->nome : 'Nenhuma' }}
+                                {{ $movimento->categoria?->nome ?? ($movimento->categoria_nome ?? 'Nenhuma') }}
                             </td>
 
                             <td>
@@ -104,9 +110,14 @@
                                     <span class="text-success">
                                         + R$ {{ number_format($movimento->valor, 2, ',', '.') }}
                                     </span>
-                                @else
+                                @elseif ($movimento->tipo == 'despesa')
                                     <span class="text-danger">
                                         - R$ {{ number_format($movimento->valor, 2, ',', '.') }}
+                                    </span>
+                                @else
+                                    {{-- Transferência não altera o saldo total --}}
+                                    <span class="text-muted">
+                                        R$ {{ number_format($movimento->valor, 2, ',', '.') }}
                                     </span>
                                 @endif
 
@@ -130,6 +141,12 @@
 
                         </tr>
                     @endforelse
+
+                    <tr class="table-light">
+                        <td>{{ $fim->format('d/m/Y') }}</td>
+                        <td colspan="4"><strong>Saldo final do período</strong></td>
+                        <td class="text-end"><strong>R$ {{ number_format($saldoFinal, 2, ',', '.') }}</strong></td>
+                    </tr>
 
                 </tbody>
 

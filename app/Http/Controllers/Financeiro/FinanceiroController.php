@@ -3,58 +3,30 @@
 namespace App\Http\Controllers\Financeiro;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\FinanceiroCategoria;
-use App\Models\FinanceiroContasAPagar;
-use App\Models\FinanceiroContasAReceber;
 use App\Models\FinanceiroLancamento;
+use App\Services\Financeiro\LancamentoService;
 use Carbon\Carbon;
 
 class FinanceiroController extends Controller
 {
-    public function index()
+    public function index(LancamentoService $lancamentos)
     {
-        $inicioMes = Carbon::now()->startOfMonth();
-        $fimMes = Carbon::now()->endOfMonth();
+        // Saldo realizado: só o que já foi pago/recebido
+        $saldoAtual = $lancamentos->saldo();
 
-        // Saldo atual
-        $saldoAtual = FinanceiroLancamento::all()->reduce(function ($saldo, $lancamento) {
+        // Receitas e despesas pagas no mês (pela data de pagamento)
+        $totaisMes = $lancamentos->totaisDoPeriodo(Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth());
+        $receitasMes = $totaisMes['receitas'];
+        $despesasMes = $totaisMes['despesas'];
 
-            return match ($lancamento->tipo) {
-                'receita' => $saldo + $lancamento->valor,
-                'despesa' => $saldo - $lancamento->valor,
-                default => $saldo,
-            };
-        }, 0);
-
-        // Receitas do mês
-        $receitasMes = FinanceiroLancamento::where('tipo', 'receita')
-            ->whereBetween('data_lancamento', [$inicioMes, $fimMes])
-            ->sum('valor');
-
-        // Despesas do mês
-        $despesasMes = FinanceiroLancamento::where('tipo', 'despesa')
-            ->whereBetween('data_lancamento', [$inicioMes, $fimMes])
-            ->sum('valor');
-
-        // Contas a pagar pendentes
-        $contasPagar = FinanceiroContasAPagar::where('situacao', 'pendente')
-            ->orderBy('data_vencimento')
-            ->limit(10)
-            ->get();
-
-        // Contas a receber pendentes
-        $contasReceber = FinanceiroContasAReceber::where('situacao', 'pendente')
-            ->orderBy('data_vencimento')
-            ->limit(10)
-            ->get();
+        // Próximas contas a pagar e a receber (lançamentos pendentes)
+        $contasPagar = $this->pendentes('despesa');
+        $contasReceber = $this->pendentes('receita');
 
         // Últimos lançamentos
-        $ultimosLancamentos = FinanceiroLancamento::with([
-            'categoria',
-            'conta'
-        ])
-            ->latest('data_lancamento')
+        $ultimosLancamentos = FinanceiroLancamento::with(['categoria', 'conta'])
+            ->orderByDesc('data_lancamento')
+            ->orderByDesc('id')
             ->limit(10)
             ->get();
 
@@ -69,5 +41,15 @@ class FinanceiroController extends Controller
                 'ultimosLancamentos'
             )
         );
+    }
+
+    private function pendentes(string $tipo)
+    {
+        return FinanceiroLancamento::pendentes()
+            ->where('tipo', $tipo)
+            ->orderByRaw('data_vencimento IS NULL')
+            ->orderBy('data_vencimento')
+            ->limit(10)
+            ->get();
     }
 }
