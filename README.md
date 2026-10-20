@@ -111,6 +111,27 @@ Produção roda como **App** no Easypanel, com build **Nixpacks** a partir deste
 - As migrações **não** rodam sozinhas. Depois de um deploy com migração nova, rode `php artisan migrate --force` no console do serviço.
 - Limite de upload: vale o php.ini padrão do Nixpacks (2 MB por arquivo). As fotos de perfil são reduzidas no navegador antes do envio (`public/js/redimensionar-foto.js`), então ficam bem abaixo disso.
 
+## Financeiro
+
+Tudo fica numa tabela só, `financeiro_lancamentos`. As regras estão em `app/Services/Financeiro/LancamentoService.php`.
+
+| Tela | O que mostra |
+|---|---|
+| Lançamentos | Todos os lançamentos (receita, despesa, transferência) |
+| Contas a pagar / a receber | Despesas / receitas, filtradas por situação (pendentes por padrão). Mesmo controller (`ContasController`), o tipo vem da rota |
+| Painel | Saldo atual, receitas e despesas pagas no mês, próximas contas pendentes |
+| Extrato | Movimentações pagas no período (mês atual por padrão), em ordem cronológica, com saldo anterior e saldo acumulado |
+
+Regras:
+
+- **Saldo** = receitas pagas − despesas pagas, pela **data de pagamento**. Pendentes e cancelados não entram; transferências não alteram o saldo total.
+- **Pagar / receber** marca o lançamento como `pago` com a data; desmarcar volta para `pendente`. **Cancelado** sai do saldo e não pode mais ser pago nem editado.
+- **Pagamentos de associados** (mensalidade/anuidade) geram e mantêm sozinhos a receita correspondente (`origem = pagamento`): criar, editar ou excluir o pagamento atualiza o financeiro. Essa receita não é editada pelo financeiro, só pela tela de pagamentos.
+- Um associado tem no máximo **um pagamento de cada tipo por mês de referência** (índice único).
+- Valores aceitam o formato brasileiro (`1.234,56`) e o mês de referência aceita `mm/aaaa` ou `aaaa-mm` (`DinheiroHelper`, `MesReferenciaHelper`).
+
+**Importação de CSV** (separador `;`): colunas `nome`, `cpf`, `matricula`, `valor`, `mes_referencia` (aceita variações como "Mês de Referência"). Pode ter uma linha de título antes do cabeçalho. Arquivos salvos pelo Excel em ANSI são convertidos para UTF-8, e o CPF que perdeu o zero à esquerda é corrigido. Linhas inválidas viram falhas no relatório, sem cancelar o lote.
+
 ## Acesso inicial
 
 O seeder `RoleAndAdminSeeder` cria os perfis e um usuário administrador:

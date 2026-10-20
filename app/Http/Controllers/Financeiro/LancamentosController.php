@@ -6,17 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Models\FinanceiroCategoria;
 use App\Models\FinanceiroContaBancaria;
 use App\Models\FinanceiroLancamento;
+use App\Services\Financeiro\LancamentoService;
+use DomainException;
 use Illuminate\Http\Request;
 
 class LancamentosController extends Controller
 {
+    public function __construct(private LancamentoService $lancamentos)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $contas = FinanceiroLancamento::with(['categoria', 'conta'])
-            ->orderBy('data_lancamento', 'desc')
+            ->orderByDesc('data_lancamento')
+            ->orderByDesc('id')
             ->paginate(10);
 
         return view('financeiro.lancamentos.index', compact('contas'));
@@ -27,17 +34,7 @@ class LancamentosController extends Controller
      */
     public function create()
     {
-        $categorias = FinanceiroCategoria::orderBy('nome', 'asc')->get();
-
-        $contasBancarias = FinanceiroContaBancaria::orderBy('nome', 'asc')->get();
-
-        $conta = new  FinanceiroLancamento();
-
-        return view('financeiro.lancamentos.create', compact(
-            'categorias',
-            'contasBancarias',
-            'conta'
-        ));
+        return view('financeiro.lancamentos.create', $this->dadosDoFormulario(new FinanceiroLancamento()));
     }
 
     /**
@@ -45,36 +42,7 @@ class LancamentosController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $dados = $request->validate([
-            'tipo'             => 'required|in:despesa,receita,transferencia',
-            'valor'            => 'required|numeric|min:0',
-            'data_lancamento'  => 'required|date',
-            'data_vencimento'  => 'nullable|date',
-            'repeticao'        => 'required|in:diaria,semanal,quinzenal,mensal,anual,unica',
-            'categoria_id'     => 'nullable|exists:financeiro_categorias,id',
-            'conta_id'         => 'nullable|exists:financeiro_contas_bancarias,id',
-            'descricao'        => 'nullable|string|max:255',
-            'observacao'       => 'nullable|string',
-        ]);
-
-        // Salva o nome da categoria para manter histórico
-        if (!empty($dados['categoria_id'])) {
-
-            $categoria = FinanceiroCategoria::select('id')->find($dados['categoria_id']);
-
-            $dados['categoria'] = $categoria->nome;
-        }
-
-        // Salva uma descrição da conta para manter histórico
-        if (!empty($dados['conta_id'])) {
-
-            $conta = FinanceiroContaBancaria::select('id')->find($dados['conta_id']);
-
-            $dados['conta'] = $conta->nome;
-        }
-
-        FinanceiroLancamento::create($dados);
+        $this->lancamentos->criar($this->validar($request) + ['situacao' => 'pendente']);
 
         return redirect()
             ->route('lancamentos.index')
@@ -86,7 +54,7 @@ class LancamentosController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return redirect()->route('lancamentos.edit', $id);
     }
 
     /**
@@ -94,18 +62,7 @@ class LancamentosController extends Controller
      */
     public function edit(string $id)
     {
-        //
-        $conta = FinanceiroLancamento::findOrFail($id);
-
-        $categorias = FinanceiroCategoria::orderBy('nome', 'asc')->get();
-
-        $contasBancarias = FinanceiroContaBancaria::orderBy('nome', 'asc')->get();
-
-        return view('financeiro.lancamentos.create', compact(
-            'conta',
-            'categorias',
-            'contasBancarias'
-        ));
+        return view('financeiro.lancamentos.create', $this->dadosDoFormulario(FinanceiroLancamento::findOrFail($id)));
     }
 
     /**
@@ -113,37 +70,10 @@ class LancamentosController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-        $conta = FinanceiroLancamento::findOrFail($id);
+        $lancamento = FinanceiroLancamento::findOrFail($id);
 
-        $dados = $request->validate([
-            'tipo'             => 'required|in:despesa,receita,transferencia',
-            'valor'            => 'required|numeric|min:0',
-            'data_lancamento'  => 'required|date',
-            'data_vencimento'  => 'nullable|date',
-            'data_pagamento'   => 'nullable|date',
-            'repeticao'        => 'required|in:diaria,semanal,quinzenal,mensal,anual,unica',
-            'categoria_id'     => 'nullable|exists:financeiro_categorias,id',
-            'conta_id'         => 'nullable|exists:financeiro_contas_bancarias,id',
-            'descricao'        => 'nullable|string|max:255',
-            'observacao'       => 'nullable|string',
-        ]);
-
-        $categoria = FinanceiroCategoria::select('id')->find($dados['categoria_id']);
-
-        $dados['categoria_nome'] = $categoria?->nome;
-
-        try {
-            $conta->update($dados);
-        } catch (\Exception $e) {
-            return redirect()
-                ->back()
-                ->with('error', 'Erro ao atualizar o lançamento: ' . $e->getMessage());
-        }
-
-        return redirect()
-            ->route('lancamentos.index')
-            ->with('success', 'Lançamento atualizado com sucesso.');
+        return $this->executar(fn () => $this->lancamentos->atualizar($lancamento, $this->validar($request)),
+            'Lançamento atualizado com sucesso.');
     }
 
     /**
@@ -151,72 +81,74 @@ class LancamentosController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-        $conta = FinanceiroLancamento::findOrFail($id);
+        $lancamento = FinanceiroLancamento::findOrFail($id);
 
-        try {
-            $conta->delete();
-        } catch (\Exception $e) {
-            return redirect()
-                ->back()
-                ->with('error', 'Erro ao excluir o lançamento: ' . $e->getMessage());
-        }
-
-        return redirect()
-            ->route('lancamentos.index')
-            ->with('success', 'Lançamento excluído com sucesso.');
+        return $this->executar(fn () => $this->lancamentos->excluir($lancamento),
+            'Lançamento excluído com sucesso.');
     }
 
+    // Marca como pago (checkbox marcado) ou volta para pendente (desmarcado)
     public function pagar(Request $request, string $id)
     {
-        $conta = FinanceiroLancamento::findOrFail($id);
+        $lancamento = FinanceiroLancamento::findOrFail($id);
 
-        $request->validate([
-            'data_pagamento' => 'required|date',
+        if (!$request->boolean('situacao')) {
+            return $this->executar(fn () => $this->lancamentos->reabrir($lancamento),
+                'Lançamento voltou a ficar pendente.');
+        }
+
+        $request->validate(['data_pagamento' => 'required|date'], [
+            'data_pagamento.required' => 'Informe a data de pagamento.',
         ]);
 
-        $situacao = $request->boolean('situacao') ? 'pago' : 'pendente';
-
-        $conta->update([
-            'situacao' => $situacao,
-            'data_pagamento' => $situacao === 'pago' ? $request->data_pagamento : null,
-        ]);
-
-        return redirect()
-            ->route('lancamentos.index')
-            ->with('success', $situacao === 'pago' ? 'Lançamento marcado como pago com sucesso.' : 'Lançamento marcado como não pago com sucesso.');
-    }
-
-    public function cancelar(Request $request, string $id)
-    {
-        $conta = FinanceiroLancamento::findOrFail($id);
-
-        $request->validate([
-            'data_cancelamento' => 'required|date',
-        ]);
-
-        $situacao = 'cancelado';
-
-        $conta->update([
-            'situacao' => $situacao,
-            'data_cancelamento' => $situacao === 'cancelado' ? $request->data_cancelamento : null,
-        ]);
-
-        return redirect()
-            ->route('lancamentos.index')
-            ->with('success', $situacao === 'cancelado' ? 'Lançamento marcado como cancelado com sucesso.' : 'Lançamento marcado como não cancelado com sucesso.');
+        return $this->executar(fn () => $this->lancamentos->pagar($lancamento, $request->input('data_pagamento')),
+            'Lançamento marcado como pago.');
     }
 
     public function cancelarRecebimento(string $id)
     {
-        $conta = FinanceiroLancamento::findOrFail($id);
-        $conta->update([
-            'situacao' => 'cancelado',
-            'data_pagamento' => null,
+        $lancamento = FinanceiroLancamento::findOrFail($id);
+
+        return $this->executar(fn () => $this->lancamentos->cancelar($lancamento),
+            'Lançamento cancelado.');
+    }
+
+    private function validar(Request $request): array
+    {
+        $dados = $request->validate([
+            'tipo' => 'required|in:despesa,receita,transferencia',
+            'valor' => 'required|numeric|min:0.01',
+            'data_lancamento' => 'required|date',
+            'data_vencimento' => 'nullable|date',
+            'repeticao' => 'nullable|in:diaria,semanal,quinzenal,mensal,anual,unica',
+            'categoria_id' => 'nullable|exists:financeiro_categorias,id',
+            'conta_id' => 'nullable|exists:financeiro_contas_bancarias,id',
+            'descricao' => 'nullable|string|max:255',
+            'observacao' => 'nullable|string',
         ]);
 
-        return redirect()
-            ->route('lancamentos.index')
-            ->with('success', 'Recebimento cancelado com sucesso.');
+        $dados['repeticao'] = ($dados['repeticao'] ?? null) ?: 'unica';
+
+        return $dados;
+    }
+
+    private function dadosDoFormulario(FinanceiroLancamento $conta): array
+    {
+        return [
+            'conta' => $conta,
+            'categorias' => FinanceiroCategoria::orderBy('nome')->get(),
+            'contasBancarias' => FinanceiroContaBancaria::orderBy('nome')->get(),
+        ];
+    }
+
+    private function executar(callable $acao, string $mensagem)
+    {
+        try {
+            $acao();
+        } catch (DomainException $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('lancamentos.index')->with('success', $mensagem);
     }
 }

@@ -28,7 +28,7 @@ class CategoriaController extends Controller
 
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
-            'tipo' => 'required|string',
+            'tipo' => 'required|in:receita,despesa,transferencia',
             'descricao' => 'nullable|string',
         ]);
 
@@ -50,7 +50,7 @@ class CategoriaController extends Controller
 
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
-            'tipo' => 'required|string',
+            'tipo' => 'required|in:receita,despesa,transferencia',
             'descricao' => 'nullable|string',
         ]);
 
