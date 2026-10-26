@@ -16,7 +16,7 @@
             <div class="row justify-content-center">
                 @if ($post->files->isNotEmpty())
                     @foreach ($post->files as $file)
-                        <img src="{{ asset('storage/' . $file->path) }}" class="card-img-top"
+                        <img src="{{ $file->url }}" class="card-img-top"
                             style="height: 400px; width: auto; object-fit: cover;" alt="{{ $post->titulo }}">
                     @endforeach
                 @endif

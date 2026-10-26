@@ -60,15 +60,32 @@ return [
             'report' => false,
         ],
 
-        // Documentos dos associados (RG, comprovantes...): bucket privado no SeaweedFS (API S3).
-        // Os arquivos nunca ficam públicos; o download passa pelo Laravel, que confere a permissão.
+        // Arquivos no SeaweedFS (API S3), acessado só pela rede interna do Easypanel.
+        // Os dois buckets são privados: o navegador nunca fala com o SeaweedFS,
+        // o Laravel lê o arquivo e entrega.
+
+        // Documentos dos associados (RG, comprovantes...): só admin/moderador baixa.
         'documentos' => [
             'driver' => 's3',
-            'key' => env('DOCUMENTOS_KEY'),
-            'secret' => env('DOCUMENTOS_SECRET'),
-            'region' => env('DOCUMENTOS_REGION', 'us-east-1'),
-            'bucket' => env('DOCUMENTOS_BUCKET', 'documentos'),
-            'endpoint' => env('DOCUMENTOS_ENDPOINT'),
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+            'bucket' => env('AWS_BUCKET_DOCUMENTOS', 'documentos'),
+            'endpoint' => env('AWS_ENDPOINT'),
+            'use_path_style_endpoint' => true,
+            'visibility' => 'private',
+            'throw' => true,
+            'report' => true,
+        ],
+
+        // Fotos de perfil e imagens de posts, banners e benefícios: servidas em /midia/...
+        'midia' => [
+            'driver' => 's3',
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+            'bucket' => env('AWS_BUCKET_MIDIA', 'midia'),
+            'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => true,
             'visibility' => 'private',
             'throw' => true,

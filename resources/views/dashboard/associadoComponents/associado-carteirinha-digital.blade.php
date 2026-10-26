@@ -13,7 +13,7 @@
                 {{-- Foto --}}
                 <div class="col-md-4 text-center">
                     @if ($associado->pictureProfile?->path)
-                        <img src="{{ asset('storage/' . $associado->pictureProfile->path) }}"
+                        <img src="{{ $associado->pictureProfile->url }}"
                              alt="Foto de perfil"
                              class="rounded shadow"
                              style="height: 180px; max-width: 100%; object-fit: contain;">

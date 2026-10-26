@@ -69,7 +69,7 @@
             @foreach ($AllBanners as $banner)
                 <div class="card m-1 rounded-5 overflow-hidden p-0" style="width: 20rem;">
     
-                    <img src="{{ asset('storage/' . $banner->files->first()->path) }}" class="card-img-top"
+                    <img src="{{ $banner->files->first()?->url }}" class="card-img-top"
                         style="height: 200px; width: 100%; object-fit: cover;" alt="{{ $banner->titulo }}">
     
                     <div class="card-body" style="min-height: 100px">

@@ -95,6 +95,13 @@ docker compose exec app php artisan tinker
 docker compose logs -f app
 ```
 
+O compose também sobe um **SeaweedFS** local. Na primeira vez, crie os buckets:
+
+```bash
+docker compose exec seaweedfs sh -c 'echo "s3.bucket.create -name documentos" | weed shell'
+docker compose exec seaweedfs sh -c 'echo "s3.bucket.create -name midia" | weed shell'
+```
+
 ## Deploy em produção (Easypanel)
 
 Produção roda como **App** no Easypanel, com build pelo **Dockerfile** deste repositório. O deploy é **manual**: o push na `main` não dispara nada.
@@ -107,7 +114,7 @@ Produção roda como **App** no Easypanel, com build pelo **Dockerfile** deste r
 | PHP-FPM 8.4 | Roda o Laravel |
 | `queue:work` | Processa a fila `database` (boas-vindas, notificações) |
 
-O **MySQL** e os arquivos (volume e, no futuro, SeaweedFS) ficam em serviços separados. O agendador roda pelo **n8n**, que chama `/api/automacoes/executar`.
+O **MySQL** e os arquivos (**SeaweedFS**) ficam em serviços separados. O container não guarda nada que precise sobreviver a um deploy, então não precisa de volume. O agendador roda pelo **n8n**, que chama `/api/automacoes/executar`.
 
 A cada início do container, o `docker/entrypoint.sh`:
 
@@ -120,7 +127,6 @@ A cada início do container, o `docker/entrypoint.sh`:
 
 - **Build:** Dockerfile (caminho `Dockerfile`).
 - **Porta:** 80.
-- **Volume:** monte em `/app/storage/app`. É onde ficam fotos e documentos.
 - **Health check:** `/up`.
 
 ### Variáveis de ambiente
@@ -164,21 +170,31 @@ Regras:
 
 ## Armazenamento de arquivos
 
-| O quê | Onde | Acesso |
+Todos os arquivos ficam no **SeaweedFS** (API S3), em dois buckets privados:
+
+| Bucket (disco) | O quê | Acesso |
 |---|---|---|
-| Documentos dos associados (pastas de documentos) | Disco `documentos`: bucket privado no **SeaweedFS** (API S3) | Só pelo Laravel, para admin/moderador (`/associado/pasta/documentos/show/...`) |
-| Fotos de perfil, imagens de posts, banners, benefícios | Disco `public` (`storage/app/public`, volume do Easypanel) | Público, via `/storage/...` |
+| `documentos` | Documentos dos associados (pastas de documentos) | Só admin/moderador, em `/associado/pasta/documentos/show/...` |
+| `midia` | Fotos de perfil, imagens de posts, banners e benefícios | Público, em `/midia/img/...` e `/midia/picture_profiles/...` (`MidiaController`) |
 
-O SeaweedFS roda no Easypanel **sem portas publicadas**: o Laravel o acessa pela rede interna (`DOCUMENTOS_ENDPOINT=http://<projeto>_seaweedfs-s3:8333`) e entrega o arquivo ao navegador depois de conferir a permissão. O bucket nunca fica exposto na internet.
+O SeaweedFS roda no Easypanel **sem portas publicadas**. O navegador nunca fala com ele: o Laravel lê o arquivo pela rede interna (`AWS_ENDPOINT=http://<projeto>_seaweedfs-s3:8333`) e entrega. Por isso a URL de uma imagem vem de `$file->url` ou `$pictureProfile->url`, nunca de `asset('storage/...')`.
 
-Para criar o bucket (uma vez), no console do serviço `seaweedfs-master`:
+Para criar os buckets (uma vez), no console do serviço `seaweedfs-master`:
 
 ```bash
 weed shell
 > s3.bucket.create -name documentos
+> s3.bucket.create -name midia
 ```
 
-Backup: os arquivos ficam no volume `volume-data` e o índice no `filer-data`. Faça backup dos dois juntos.
+Registros de arquivos que não existem mais no armazenamento (por exemplo, depois de descartar arquivos antigos) são removidos com:
+
+```bash
+php artisan arquivos:limpar-orfaos --simular   # só lista
+php artisan arquivos:limpar-orfaos             # apaga os registros
+```
+
+Backup: os arquivos ficam no volume `volume-data` e o índice no `filer-data` do SeaweedFS. Faça backup dos dois juntos.
 
 ## Acesso inicial
 
@@ -199,8 +215,8 @@ Além das variáveis padrão do Laravel, o sistema usa:
 | `INSTAGRAM_ACCESS_TOKEN` | Token da Graph API para exibir o feed do Instagram |
 | `INSTAGRAM_USER_ID` | ID da conta do Instagram |
 | `N8N_API_KEY` | Chave compartilhada com o n8n no header `x-api-key`, usada nas chamadas do Laravel para o n8n e do n8n para a API de automações |
-| `FILESYSTEM_DISK`, `AWS_*` | Armazenamento de arquivos em S3 (opcional) |
-| `DOCUMENTOS_ENDPOINT`, `DOCUMENTOS_BUCKET`, `DOCUMENTOS_KEY`, `DOCUMENTOS_SECRET` | Bucket privado (SeaweedFS, API S3) dos documentos dos associados |
+| `AWS_ENDPOINT`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION` | Acesso ao SeaweedFS (API S3) |
+| `AWS_BUCKET_DOCUMENTOS`, `AWS_BUCKET_MIDIA` | Nome dos buckets (padrão `documentos` e `midia`) |
 | `MAIL_*` | Envio de e-mails (verificação, recuperação de senha) |
 
 ## Tarefas agendadas

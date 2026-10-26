@@ -22,8 +22,8 @@ class Banner extends Model
         static::deleting(function ($banner) {
             // Exclui o arquivo da relação polimórfica
             foreach ($banner->files as $file) {
-                if ($file->path && Storage::disk('public')->exists($file->path)) {
-                    Storage::disk('public')->delete($file->path);
+                if ($file->path && Storage::disk('midia')->exists($file->path)) {
+                    Storage::disk('midia')->delete($file->path);
                 }
                 $file->delete();
             }

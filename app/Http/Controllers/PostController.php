@@ -77,7 +77,7 @@ class PostController extends Controller
 
 
             foreach ($arquivos as $arquivo) {
-                $path = $arquivo->store('img', 'public');
+                $path = $arquivo->store('img', 'midia');
 
                 $post->files()->create([
                     'path' => $path,
@@ -129,8 +129,8 @@ class PostController extends Controller
             // Exclui arquivos se existirem outros
             if($arquivos){
                 foreach ($post->files as $file) {
-                    if (Storage::disk('public')->exists($file->path)) {
-                        Storage::disk('public')->delete($file->path);
+                    if (Storage::disk('midia')->exists($file->path)) {
+                        Storage::disk('midia')->delete($file->path);
                     }
                 }
     
@@ -142,7 +142,7 @@ class PostController extends Controller
             if ($arquivos) {
 
                 foreach ($arquivos as $arquivo) {
-                    $path = $arquivo->store('img', 'public');
+                    $path = $arquivo->store('img', 'midia');
 
                     $post->files()->create([
                         'path' => $path,

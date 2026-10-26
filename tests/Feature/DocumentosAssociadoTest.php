@@ -25,9 +25,6 @@ class DocumentosAssociadoTest extends TestCase
     {
         parent::setUp();
 
-        Storage::fake('documentos');
-        Storage::fake('public');
-
         $this->seed(RoleSeeder::class);
 
         $this->associado = Associado::forceCreate(['nome' => 'Fulano', 'cpf' => '11111111111']);
@@ -49,12 +46,12 @@ class DocumentosAssociadoTest extends TestCase
         return $this->pasta->files()->firstOrFail();
     }
 
-    public function test_documento_e_salvo_no_bucket_privado_e_nao_no_disco_publico(): void
+    public function test_documento_e_salvo_no_bucket_privado_e_nao_no_bucket_de_midia(): void
     {
         $file = $this->enviarDocumento();
 
         Storage::disk('documentos')->assertExists($file->path);
-        Storage::disk('public')->assertMissing($file->path);
+        Storage::disk('midia')->assertMissing($file->path);
         $this->assertStringStartsWith("documentos/{$this->associado->id}/{$this->pasta->id}/", $file->path);
         $this->assertSame('rg-fulano.pdf', $file->tipo_documento);
     }
@@ -157,9 +154,9 @@ class DocumentosAssociadoTest extends TestCase
         $this->assertSame(0, $this->pasta->files()->count());
     }
 
-    public function test_arquivos_de_posts_continuam_no_disco_publico(): void
+    public function test_arquivos_de_posts_ficam_no_bucket_de_midia(): void
     {
-        $this->assertSame('public', File::discoPara(Post::class));
+        $this->assertSame('midia', File::discoPara(Post::class));
         $this->assertSame('documentos', File::discoPara(PastaDocumento::class));
     }
 }

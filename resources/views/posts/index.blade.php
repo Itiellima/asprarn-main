@@ -43,7 +43,7 @@
                             <td>{{ $post->data->format('d/m/Y') }}</td>
                             <td>{{ $post->user->name }}</td>
                             <td>
-                                <img src="{{ asset('storage/' . $post->files->first()->path) }}" alt="imagem" width="80">
+                                <img src="{{ $post->files->first()?->url }}" alt="imagem" width="80">
                             </td>
                             <td class="row">
                                 <form action="{{ route('posts.destroy', $post->id) }}" method="POST"

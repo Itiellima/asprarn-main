@@ -18,7 +18,7 @@
             <div class="carousel-inner">
                 @foreach ($banners as $index => $banner)
                     <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                        <img class="d-block w-100" src="{{ asset('storage/' . $banner->files->first()->path) }}"
+                        <img class="d-block w-100" src="{{ $banner->files->first()?->url }}"
                             alt="Slide {{ $index + 1 }}" style="height: 400px; object-fit: contain;">
                     </div>
                 @endforeach

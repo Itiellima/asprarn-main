@@ -75,7 +75,7 @@ class AcessoAssociadoTest extends TestCase
 
     public function test_associado_envia_foto_de_celular_maior_que_2mb(): void
     {
-        Storage::fake('public');
+        Storage::fake('midia');
 
         $foto = UploadedFile::fake()->image('IMG_0001.jpg', 3000, 4000)->size(4500);
 
@@ -86,12 +86,12 @@ class AcessoAssociadoTest extends TestCase
             ->assertSessionHas('msg');
 
         $path = $this->proprio->fresh()->pictureProfile->path;
-        Storage::disk('public')->assertExists($path);
+        Storage::disk('midia')->assertExists($path);
     }
 
     public function test_foto_acima_de_10mb_e_recusada(): void
     {
-        Storage::fake('public');
+        Storage::fake('midia');
 
         $foto = UploadedFile::fake()->image('enorme.jpg')->size(10241);
 

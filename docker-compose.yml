@@ -1,5 +1,5 @@
-# Ambiente local com a mesma imagem de produção. Em produção o MySQL é um
-# serviço separado no Easypanel e este arquivo não é usado.
+# Ambiente local com a mesma imagem de produção. Em produção o MySQL e o
+# SeaweedFS são serviços separados no Easypanel e este arquivo não é usado.
 services:
   app:
     build: .
@@ -16,11 +16,27 @@ services:
       DB_USERNAME: laravel
       DB_PASSWORD: secret
       RUN_MIGRATIONS: "true"
-    volumes:
-      - app_storage:/app/storage/app
+      AWS_ENDPOINT: http://seaweedfs:8333
+      AWS_ACCESS_KEY_ID: local
+      AWS_SECRET_ACCESS_KEY: local
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_BUCKET_DOCUMENTOS: documentos
+      AWS_BUCKET_MIDIA: midia
     depends_on:
       db:
         condition: service_healthy
+      seaweedfs:
+        condition: service_started
+
+  # S3 local (sem autenticação). Criar os buckets uma vez:
+  #   docker compose exec seaweedfs sh -c 'echo "s3.bucket.create -name documentos" | weed shell'
+  #   docker compose exec seaweedfs sh -c 'echo "s3.bucket.create -name midia" | weed shell'
+  seaweedfs:
+    image: chrislusf/seaweedfs:3.80
+    restart: unless-stopped
+    command: server -s3 -dir=/data -volume.max=0
+    volumes:
+      - seaweed_data:/data
 
   db:
     image: mysql:8.0
@@ -40,5 +56,5 @@ services:
       retries: 20
 
 volumes:
-  app_storage:
   db_data:
+  seaweed_data:
