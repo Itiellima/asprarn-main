@@ -16,7 +16,7 @@ RUN npm run build
 # ===============================
 # Etapa 2: Backend PHP com Laravel
 # ===============================
-FROM php:8.4-fpm AS backend
+FROM php:8.2-fpm AS backend
 
 # Instalação de dependências do sistema e extensões PHP comuns para Laravel
 RUN apt-get update && apt-get install -y \
