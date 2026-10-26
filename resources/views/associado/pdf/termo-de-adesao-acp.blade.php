@@ -294,37 +294,37 @@
             <div class="linha">
                 <span class="campo-label">5) Endereço:</span>
                 <span class="campo" contenteditable="true" data-placeholder="rua, número, complemento"
-                    id="endereco">{{ $associado->endereco->logradouro ?? '' }}{{ $associado->endereco->nmr ? ', ' . $associado->endereco->nmr : '' }}</span>
+                    id="endereco">{{ $associado->endereco?->logradouro ?? '' }}{{ $associado->endereco?->nmr ? ', ' . $associado->endereco?->nmr : '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">5.1) Bairro:</span>
                 <span class="campo" contenteditable="true" data-placeholder="bairro"
-                    id="bairro">{{ $associado->endereco->bairro ?? '' }}</span>
+                    id="bairro">{{ $associado->endereco?->bairro ?? '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">5.2) CEP:</span>
                 <span class="campo" contenteditable="true" data-placeholder="00000-000"
-                    id="cep">{{ $associado->endereco->cep ?? '' }}</span>
+                    id="cep">{{ $associado->endereco?->cep ?? '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">5.3) Cidade/UF:</span>
                 <span class="campo" contenteditable="true" data-placeholder="cidade"
-                    id="cidade">{{ $associado->endereco->cidade ?? '' }}{{ $associado->endereco->uf ? ', ' . $associado->endereco->uf : '' }}</span>
+                    id="cidade">{{ $associado->endereco?->cidade ?? '' }}{{ $associado->endereco?->uf ? ', ' . $associado->endereco?->uf : '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">6) Email:</span>
                 <span class="campo" contenteditable="true" data-placeholder="email@exemplo.com"
-                    id="email">{{ $associado->contato->email ?? '' }}</span>
+                    id="email">{{ $associado->contato?->email ?? '' }}</span>
             </div>
 
             <div class="linha">
                 <span class="campo-label">7) Telefone:</span>
                 <span class="campo" contenteditable="true" data-placeholder="(84) 90000-0000"
-                    id="telefone">{{ $associado->contato->tel_celular ?? '' }}</span>
+                    id="telefone">{{ $associado->contato?->tel_celular ?? '' }}</span>
             </div>
 
             <div class="linha">

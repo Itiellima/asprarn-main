@@ -8,18 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class RequerimentoController extends Controller
 {
-    /* 
-    public function gerar($id)
-    {
-        $associado = Associado::findOrFail($id);
-
-        $pdf = Pdf::loadView('associado.pdf.requerimento', compact('associado'))
-                  ->setPaper('a4');
-
-        return $pdf->stream('requerimento_'.$associado->nome.'.pdf');
-    }
-        */
-
+    // Os documentos são páginas HTML impressas pelo navegador (resources/views/associado/pdf)
     public function show($id)
     {
 
