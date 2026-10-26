@@ -14,8 +14,8 @@ class InstagramPost extends Component
     // Método que faz a requisição à API do Instagram
     public function loadMedia()
     {
-        $token = env('INSTAGRAM_ACCESS_TOKEN');
-        $userId = env('INSTAGRAM_USER_ID');
+        $token = config('services.instagram.token');
+        $userId = config('services.instagram.user_id');
 
         // Proteção básica para garantir que as credenciais existem
         if (!$token || !$userId) {

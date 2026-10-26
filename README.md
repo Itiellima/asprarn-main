@@ -28,12 +28,12 @@ Sistema web da **Associação de Praças da Polícia Militar do Rio Grande do No
 | Backend | PHP 8.2+, Laravel 12, Livewire 3 |
 | Autenticação | Jetstream + Fortify (com 2FA), Sanctum |
 | Permissões | spatie/laravel-permission |
-| PDFs | barryvdh/laravel-dompdf |
+| Documentos | Páginas HTML impressas pelo navegador (`resources/views/associado/pdf`) |
 | Frontend | Blade, Vite 7, Tailwind CSS, Bootstrap Icons, TinyMCE |
 | Banco de dados | MySQL 8 |
 | Armazenamento | Disco local/public (suporte a S3 disponível) |
 | PWA | ladumor/laravel-pwa |
-| Infra | Docker (PHP-FPM + Nginx + MySQL) |
+| Infra | Docker: imagem única com Nginx + PHP-FPM 8.4 + worker da fila |
 
 ## Requisitos
 
@@ -78,38 +78,68 @@ composer run dev
 
 ## Executando com Docker
 
+O `docker-compose.yml` sobe a **mesma imagem de produção** e um MySQL, para testar localmente:
+
 ```bash
 docker compose up -d --build
 ```
 
-Acesse http://localhost:8080. O `entrypoint.sh` aguarda o MySQL, cria o `.env` se não existir, gera a `APP_KEY` e roda as migrações e seeds automaticamente.
-
-| Serviço | Container | Porta |
-|---|---|---|
-| Laravel (PHP-FPM) | `laravel_app` | 9000 (interna) |
-| Nginx | `laravel_nginx` | 8080 |
-| MySQL | `laravel_db` | 3306 |
+Acesse http://localhost:8080. O compose lê o seu `.env` (precisa ter `APP_KEY`) e sobrescreve só o banco. O MySQL fica exposto na porta **3307**, porque a 3306 costuma estar ocupada pelo XAMPP.
 
 Comandos úteis:
 
 ```bash
 docker compose exec app php artisan migrate
+docker compose exec app php artisan db:seed
 docker compose exec app php artisan tinker
 docker compose logs -f app
 ```
 
 ## Deploy em produção (Easypanel)
 
-Produção roda como **App** no Easypanel, com build **Nixpacks** a partir deste repositório. Cada commit na `main` gera um novo build.
+Produção roda como **App** no Easypanel, com build pelo **Dockerfile** deste repositório. O deploy é **manual**: o push na `main` não dispara nada.
 
-- O `Dockerfile`, o `docker-compose.yml` e o `nginx/default.conf` **não são usados em produção**, só no ambiente Docker local.
-- O `.env` é configurado no Easypanel, fora do build, e se mantém entre os deploys.
-- Ao recriar o container, rodam automaticamente:
-  ```bash
-  php artisan config:clear && php artisan key:generate && php artisan storage:link && php artisan serve --host=0.0.0.0 --port=80
-  ```
-- As migrações **não** rodam sozinhas. Depois de um deploy com migração nova, rode `php artisan migrate --force` no console do serviço.
-- Limite de upload: vale o php.ini padrão do Nixpacks (2 MB por arquivo). As fotos de perfil são reduzidas no navegador antes do envio (`public/js/redimensionar-foto.js`), então ficam bem abaixo disso.
+### O que roda no container
+
+| Processo | Função |
+|---|---|
+| Nginx | Recebe as requisições na porta 80 |
+| PHP-FPM 8.4 | Roda o Laravel |
+| `queue:work` | Processa a fila `database` (boas-vindas, notificações) |
+
+O **MySQL** e os arquivos (volume e, no futuro, SeaweedFS) ficam em serviços separados. O agendador roda pelo **n8n**, que chama `/api/automacoes/executar`.
+
+A cada início do container, o `docker/entrypoint.sh`:
+
+1. Confere se a `APP_KEY` existe (se não existir, o container não sobe).
+2. Cria as pastas do `storage` e roda `storage:link`.
+3. Roda as migrations, **somente** se `RUN_MIGRATIONS=true`. Seed nunca roda.
+4. Roda `php artisan optimize`, que gera o cache de config, rotas, eventos e views.
+
+### Configuração no Easypanel
+
+- **Build:** Dockerfile (caminho `Dockerfile`).
+- **Porta:** 80.
+- **Volume:** monte em `/app/storage/app`. É onde ficam fotos e documentos.
+- **Health check:** `/up`.
+
+### Variáveis de ambiente
+
+Ficam na aba **Environment** do app, nunca dentro da imagem (o `.dockerignore` bloqueia qualquer `.env`). Depois de alterar uma variável, basta **reiniciar** o app: o `optimize` do entrypoint lê os valores novos. Não precisa de novo build.
+
+Como a config fica em cache, o código só deve ler variáveis por `config(...)`, nunca por `env(...)` fora da pasta `config/`.
+
+| Variável | Observação |
+|---|---|
+| `APP_KEY` | Obrigatória e **fixa**. Se mudar, todos são deslogados e os dados criptografados ficam ilegíveis. |
+| `APP_ENV=production`, `APP_DEBUG=false` | |
+| `RUN_MIGRATIONS` | `true` roda `migrate --force` ao iniciar. Padrão: desligado. |
+| `LOG_STACK=single,stderr` | Recomendado: os erros aparecem também nos logs do Easypanel. |
+| `QUEUE_CONNECTION=database` | Processada pelo worker do container. |
+
+### Limites
+
+- Upload: 10 MB por arquivo e 20 MB por requisição (`docker/php.ini` e `docker/nginx.conf`). As fotos de perfil também são reduzidas no navegador antes do envio (`public/js/redimensionar-foto.js`).
 
 ## Financeiro
 
@@ -203,7 +233,7 @@ resources/views/        # Views Blade organizadas por módulo
 routes/
 ├── web.php
 └── api.php
-nginx/default.conf      # Configuração do Nginx usada no Docker
+docker/                 # Nginx, PHP, Supervisor e entrypoint da imagem Docker
 ```
 
 ## Contribuição

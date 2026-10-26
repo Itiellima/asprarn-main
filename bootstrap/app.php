@@ -22,6 +22,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => RoleOrPermissionMiddleware::class,
         ]);
 
+        // O container só recebe tráfego pelo proxy do Easypanel: confia nele para
+        // obter o IP real do usuário (limite de tentativas de login) e o https
+        $middleware->trustProxies(at: '*');
+
         // Obriga a trocar a senha padrão (CPF) antes de usar o sistema
         $middleware->web(append: [
             \App\Http\Middleware\ExigirTrocaDeSenha::class,

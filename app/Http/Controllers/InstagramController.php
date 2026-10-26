@@ -11,8 +11,8 @@ class InstagramController extends Controller
     //LEGADO RECEBIMENTO JSON DO PERFIL DO INSTAGRAM
     public function getMedia()
     {
-        $token = env('INSTAGRAM_ACCESS_TOKEN');
-        $userId = env('INSTAGRAM_USER_ID');
+        $token = config('services.instagram.token');
+        $userId = config('services.instagram.user_id');
 
         $url = "https://graph.instagram.com/{$userId}/media";
 
