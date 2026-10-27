@@ -23,7 +23,18 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Middlewares: a classe fica em app/Http/Middleware (php artisan make:middleware Nome)
+        // e só roda depois de registrada. Os do próprio Laravel (sessão, CSRF, cookies)
+        // já vêm registrados; aqui fica só o que o projeto acrescenta ou muda.
         //
+        //   Rodar em toda requisição         -> $middleware->append(Classe::class)
+        //   Rodar em toda rota web           -> $middleware->web(append: [Classe::class])
+        //   Rodar em algumas rotas (apelido) -> $middleware->alias([...]) aqui
+        //                                       + ->middleware('apelido') na rota
+        //   Rodar em algumas rotas (classe)  -> ->middleware(Classe::class) direto na rota,
+        //                                       sem registrar aqui (ex.: VerificarTokenN8n)
+        //
+        // O alias só dá um nome: o middleware roda apenas nas rotas que usam o apelido.
         $middleware->alias([
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
