@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 
 class PastaDocumento extends Model
 {
@@ -32,11 +31,8 @@ class PastaDocumento extends Model
     protected static function booted()
     {
         static::deleting(function ($pastaDocumento) {
-            // Apaga arquivos da relação polimórfica
+            // Apaga os arquivos da pasta (o model File remove o arquivo do disco certo)
             foreach ($pastaDocumento->files as $file) {
-                if ($file->path && Storage::disk('public')->exists($file->path)) {
-                    Storage::disk('public')->delete($file->path);
-                }
                 $file->delete();
             }
         });

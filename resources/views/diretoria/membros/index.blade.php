@@ -38,7 +38,7 @@
 
                             {{-- Foto --}}
                             @if ($membro->associado->pictureProfile?->path)
-                                <img src="{{ asset('storage/' . $membro->associado->pictureProfile->path) }}"
+                                <img src="{{ $membro->associado->pictureProfile->url }}"
                                     alt="Foto de {{ $membro->associado->nome }}"
                                     class="rounded-circle border shadow-sm mb-3"
                                     style="width: 120px; height: 120px; object-fit: cover;">

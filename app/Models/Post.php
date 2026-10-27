@@ -36,8 +36,8 @@ class Post extends Model
         static::deleting(function ($associado) {
             // Apaga arquivos da relação polimórfica
             foreach ($associado->files as $file) {
-                if ($file->path && Storage::disk('public')->exists($file->path)) {
-                    Storage::disk('public')->delete($file->path);
+                if ($file->path && Storage::disk('midia')->exists($file->path)) {
+                    Storage::disk('midia')->delete($file->path);
                 }
                 $file->delete();
             }

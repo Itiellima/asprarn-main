@@ -108,7 +108,7 @@ class User extends Authenticatable
         ], false));
 
         Http::withHeaders([
-            'x-api-key' => env('N8N_API_KEY'),
+            'x-api-key' => config('services.n8n.token'),
         ])->post('https://n8n.asprarn.com.br/webhook/e7d3cda2-bc0f-4b21-a46d-def676506122', [
                 'email'     => $this->email,
                 'nome'      => 'Recuperação de Senha',

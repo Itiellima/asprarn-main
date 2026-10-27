@@ -258,7 +258,7 @@ class AssociadoController extends Controller
             $user->syncRoles(['associado', 'user']);
 
             if ($request->hasFile('picture_profile')) {
-                $path = $request->file('picture_profile')->store('picture_profiles', 'public');
+                $path = $request->file('picture_profile')->store('picture_profiles', 'midia');
                 PictureProfile::create([
                     'associado_id' => $associado->id,
                     'path' => $path,
@@ -494,7 +494,7 @@ class AssociadoController extends Controller
         try {
             // 1️⃣ salva o arquivo
             $newPath = $request->file('picture_profile')
-                ->store('picture_profiles', 'public');
+                ->store('picture_profiles', 'midia');
 
             // 2️⃣ pega a antiga
             $oldPicture = PictureProfile::where('associado_id', $associado->id)->first();
@@ -507,8 +507,8 @@ class AssociadoController extends Controller
 
             // 4️⃣ apaga a antiga só se for diferente
             if ($oldPicture && $oldPicture->path !== $newPath) {
-                if (Storage::disk('public')->exists($oldPicture->path)) {
-                    Storage::disk('public')->delete($oldPicture->path);
+                if (Storage::disk('midia')->exists($oldPicture->path)) {
+                    Storage::disk('midia')->delete($oldPicture->path);
                 }
             }
 
@@ -520,8 +520,8 @@ class AssociadoController extends Controller
             DB::rollBack();
 
             // 🔥 evita arquivo órfão
-            if ($newPath && Storage::disk('public')->exists($newPath)) {
-                Storage::disk('public')->delete($newPath);
+            if ($newPath && Storage::disk('midia')->exists($newPath)) {
+                Storage::disk('midia')->delete($newPath);
             }
 
             return back()->with('error', 'Erro ao atualizar foto.');
@@ -540,8 +540,8 @@ class AssociadoController extends Controller
             if ($picture) {
 
                 // apaga o arquivo físico
-                if (Storage::disk('public')->exists($picture->path)) {
-                    Storage::disk('public')->delete($picture->path);
+                if (Storage::disk('midia')->exists($picture->path)) {
+                    Storage::disk('midia')->delete($picture->path);
                 }
 
                 // apaga o registro no banco

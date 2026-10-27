@@ -23,8 +23,8 @@ class Beneficio extends Model
         static::deleting(function ($beneficio) {
             // Apaga arquivos da relação polimórfica
             foreach ($beneficio->files as $file) {
-                if ($file->path && Storage::disk('public')->exists($file->path)) {
-                    Storage::disk('public')->delete($file->path);
+                if ($file->path && Storage::disk('midia')->exists($file->path)) {
+                    Storage::disk('midia')->delete($file->path);
                 }
                 $file->delete();
             }

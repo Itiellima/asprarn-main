@@ -25,7 +25,7 @@
                         <div class="container m-3 card grow col-md-11">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <img src="{{ asset('storage/' . $post->files->first()->path) }}" alt="{{ $post->titulo }}"
+                                    <img src="{{ $post->files->first()?->url }}" alt="{{ $post->titulo }}"
                                         style="height: 10rem; width: 10rem;" class="rounded">
                                 </div>
                                 <div class="col-md-8 mt-3">
@@ -72,7 +72,7 @@
                                             href="/posts/{{ $post->id }}">
 
                                             @if ($post->files->isNotEmpty())
-                                                <img src="{{ asset('storage/' . $post->files->first()->path) }}"
+                                                <img src="{{ $post->files->first()?->url }}"
                                                     alt="{{ $post->titulo }}" width="100" height="100">
                                             @endif
 

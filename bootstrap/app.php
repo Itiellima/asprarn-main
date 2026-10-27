@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\MidiaController;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
@@ -13,6 +15,12 @@ return Application::configure(basePath: dirname(__DIR__))
         api: __DIR__ . '/../routes/api.php',
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
+        then: function () {
+            // Fora do grupo "web": servir uma imagem não abre sessão nem passa pelo login
+            Route::get('/midia/{path}', [MidiaController::class, 'show'])
+                ->where('path', '(img|picture_profiles)/[A-Za-z0-9._-]+')
+                ->name('midia');
+        },
     )
     ->withMiddleware(function (Middleware $middleware): void {
         //
@@ -21,6 +29,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
         ]);
+
+        // O container só recebe tráfego pelo proxy do Easypanel: confia nele para
+        // obter o IP real do usuário (limite de tentativas de login) e o https
+        $middleware->trustProxies(at: '*');
 
         // Obriga a trocar a senha padrão (CPF) antes de usar o sistema
         $middleware->web(append: [

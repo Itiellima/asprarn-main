@@ -19,29 +19,38 @@ class File extends Model
         return $this->morphTo();
     }
 
-    // Facilitar a recuperação da URL pública:
+    /**
+     * Disco onde o arquivo está guardado: documentos de associados no bucket
+     * de documentos; imagens de posts, banners e benefícios no bucket de mídia.
+     */
+    public static function discoPara(string $fileableType): string
+    {
+        return $fileableType === PastaDocumento::class ? 'documentos' : 'midia';
+    }
+
+    public function disco(): string
+    {
+        return static::discoPara((string) $this->fileable_type);
+    }
+
+    // URL da imagem, servida pelo Laravel a partir do bucket de mídia
     public function getUrlAttribute()
     {
-        return asset('storage/' . $this->path);
+        return route('midia', ['path' => $this->path]);
     }
 
     protected static function booted()
     {
         static::deleting(function ($file) {
-            // Deleta o arquivo físico ao deletar o registro no banco
-            if ($file->path && Storage::disk('public')->exists($file->path)) {
-                Storage::disk('public')->delete($file->path);
+            if (!$file->path) {
+                return;
             }
 
-            // Pega o diretório do arquivo
-            $directory = dirname($file->path);
+            $disco = Storage::disk($file->disco());
 
-            // Se não houver mais arquivos nem subpastas → remove o diretório
-            if (
-                empty(Storage::disk('public')->files($directory)) &&
-                empty(Storage::disk('public')->directories($directory))
-            ) {
-                Storage::disk('public')->deleteDirectory($directory);
+            // Deleta o arquivo físico ao deletar o registro no banco
+            if ($disco->exists($file->path)) {
+                $disco->delete($file->path);
             }
         });
     }

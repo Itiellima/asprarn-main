@@ -47,7 +47,7 @@ class BannerController extends Controller
                 'descricao' => $request->descricao,
             ]);
 
-            $path = $arquivos->store('img', 'public');
+            $path = $arquivos->store('img', 'midia');
             $banner->files()->create([
                 'path' => $path,
                 'tipo_documento' => 'imagem',

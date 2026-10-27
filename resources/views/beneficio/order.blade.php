@@ -42,7 +42,7 @@
                                     <div class="carousel-inner" style="min-height: 200px;">
                                         @foreach ($beneficio->files as $index => $files)
                                             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                                <img src="{{ asset('storage/' . $files->path) }}" class="card-img-top mt-2"
+                                                <img src="{{ $files->url }}" class="card-img-top mt-2"
                                                     alt="{{ $files->path }}"
                                                     style="height: 200px; width: 100%; object-fit: contain;">
                                             </div>

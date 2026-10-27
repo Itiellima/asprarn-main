@@ -131,7 +131,7 @@
         </div>
 
         @if ($associado->pictureProfile?->path)
-            <img src="{{ asset('storage/' . $associado->pictureProfile->path) }}" class="foto">
+            <img src="{{ $associado->pictureProfile->url }}" class="foto">
         @else
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="foto" viewBox="0 0 16 16">
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />

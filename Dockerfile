@@ -1,66 +1,73 @@
+# Imagem de produção: nginx + PHP-FPM + worker da fila num container só.
+# Banco (MySQL) e arquivos (volume / SeaweedFS) ficam em serviços separados.
+
 # ===============================
-# Etapa 1: Construção do frontend com Node.js
+# Base: PHP com as extensões usadas pelo sistema
 # ===============================
-FROM node:18 AS frontend
+FROM php:8.4-fpm-bookworm AS base
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        nginx \
+        supervisor \
+        curl \
+        unzip \
+        libpng-dev \
+        libjpeg62-turbo-dev \
+        libfreetype6-dev \
+        libzip-dev \
+        libicu-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j"$(nproc)" gd zip intl bcmath pdo_mysql opcache pcntl \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
-# Copiar apenas arquivos necessários para instalar dependências
-COPY package.json package-lock.json ./
-RUN npm install
+# ===============================
+# Dependências PHP (sem as de desenvolvimento)
+# ===============================
+FROM base AS vendor
 
-# Copiar o restante do frontend e buildar
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist --no-interaction
+
+# ===============================
+# Frontend (Vite). Precisa do vendor porque o Tailwind lê as views do Jetstream.
+# ===============================
+FROM node:22-bookworm-slim AS frontend
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
 COPY . .
+COPY --from=vendor /app/vendor ./vendor
 RUN npm run build
 
 # ===============================
-# Etapa 2: Backend PHP com Laravel
+# Imagem final
 # ===============================
-FROM php:8.2-fpm AS backend
+FROM base
 
-# Instalação de dependências do sistema e extensões PHP comuns para Laravel
-RUN apt-get update && apt-get install -y \
-        libpng-dev \
-        libjpeg-dev \
-        libfreetype6-dev \
-        libzip-dev \
-        libonig-dev \
-        git \
-        unzip \
-        netcat-openbsd \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd zip pdo pdo_mysql bcmath mbstring \
-    && rm -rf /var/lib/apt/lists/*
+COPY docker/php.ini /usr/local/etc/php/conf.d/zz-app.ini
+COPY docker/php-fpm.conf /usr/local/etc/php-fpm.d/zz-app.conf
+COPY docker/nginx.conf /etc/nginx/sites-available/default
+COPY docker/supervisord.conf /etc/supervisor/conf.d/app.conf
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint
+RUN chmod +x /usr/local/bin/entrypoint
 
-# Limites de upload do PHP (o padrão é 2MB por arquivo e 8MB por requisição)
-RUN printf "upload_max_filesize=10M\npost_max_size=20M\n" > /usr/local/etc/php/conf.d/uploads.ini
-
-
-# Instalação do Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Definir diretório de trabalho do Laravel
-WORKDIR /var/www
-
-# Copiar o restante do backend
+COPY --from=vendor /app/vendor ./vendor
 COPY . .
+COPY --from=frontend /app/public/build ./public/build
 
-# Copiar apenas os arquivos do backend essenciais para instalar dependências
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader
+RUN composer dump-autoload --optimize --no-dev --no-interaction \
+    && chown -R www-data:www-data storage bootstrap/cache
 
+EXPOSE 80
 
-# Copiar os assets do frontend
-COPY --from=frontend /app/public /var/www/public
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+    CMD curl -fsS http://127.0.0.1/up || exit 1
 
-# Ajustar permissões para Laravel
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
-
-# Expor porta PHP-FPM
-EXPOSE 9000
-
-# Copiar entrypoint
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["entrypoint"]

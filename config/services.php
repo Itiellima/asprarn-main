@@ -40,4 +40,9 @@ return [
         'token' => env('N8N_API_KEY'),
     ],
 
+    'instagram' => [
+        'token' => env('INSTAGRAM_ACCESS_TOKEN'),
+        'user_id' => env('INSTAGRAM_USER_ID'),
+    ],
+
 ];

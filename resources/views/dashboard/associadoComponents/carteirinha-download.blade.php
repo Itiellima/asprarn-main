@@ -107,7 +107,7 @@
 
         <div class="topo">
             @if ($associado->pictureProfile?->path)
-                <img src="{{ asset('storage/' . $associado->pictureProfile->path) }}" alt="Foto de perfil"
+                <img src="{{ $associado->pictureProfile->url }}" alt="Foto de perfil"
                     class="foto">
             @else
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="foto" viewBox="0 0 16 16">

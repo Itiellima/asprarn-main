@@ -57,7 +57,7 @@ class BeneficioController extends Controller
             ]);
 
             foreach ($arquivos as $arquivo) {
-                $path = $arquivo->store('img', 'public');
+                $path = $arquivo->store('img', 'midia');
 
                 $beneficio->files()->create([
                     'path' => $path,
@@ -116,8 +116,8 @@ class BeneficioController extends Controller
 
             if ($request->hasFile('arquivos')) {
                 foreach ($beneficio->files as $file) {
-                    if (Storage::disk('public')->exists($file->path)) {
-                        Storage::disk('public')->delete($file->path);
+                    if (Storage::disk('midia')->exists($file->path)) {
+                        Storage::disk('midia')->delete($file->path);
                     }
                 }
                 $beneficio->files()->delete();
@@ -125,7 +125,7 @@ class BeneficioController extends Controller
 
             if ($request->hasFile('arquivos')) {
                 foreach ($request->file('arquivos') as $arquivo) {
-                    $path = $arquivo->store('img', 'public');
+                    $path = $arquivo->store('img', 'midia');
 
                     $beneficio->files()->create([
                         'path' => $path,
@@ -159,7 +159,7 @@ class BeneficioController extends Controller
         try {
 
             foreach ($beneficio->files as $file) {
-                Storage::disk('public')->delete($file->path);
+                Storage::disk('midia')->delete($file->path);
             }
 
             $beneficio->files()->delete();
