@@ -3,9 +3,6 @@
 namespace App\Listeners;
 
 use App\Events\NotificacaoCriada;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use App\Jobs\SalvarNotificacaoJob;
 use App\Models\Notificacao;
 
 class ProcessarNotificacao
