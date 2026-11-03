@@ -29,14 +29,6 @@ class AssociadoController extends Controller
     // view todos os associados
     public function index()
     {
-
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
-
         $search = request('search');
 
         $cidades = Associado::with('endereco')
@@ -97,12 +89,6 @@ class AssociadoController extends Controller
     // view detalhes informaçoes
     public function show($id)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('associado.index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $associado = Associado::with([
             'endereco',
             'contato',
@@ -164,7 +150,6 @@ class AssociadoController extends Controller
     // Rota salvar o associado no banco de dados
     public function store(Request $request)
     {
-
         // 1. Remove mascaras antes de validar
         $request->merge([
             'cpf' => preg_replace('/[^0-9]/', '', $request->cpf),
@@ -306,12 +291,6 @@ class AssociadoController extends Controller
     // view edição do associado
     public function edit($id)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('dashboard')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $associado = Associado::findOrFail($id);
 
         // Buscar UFs do IBGE
@@ -341,12 +320,6 @@ class AssociadoController extends Controller
     // Rota para atualizar o associado no banco de dados
     public function update(Request $request, $id)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('associado.index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $request->merge([
             'cpf' => preg_replace('/[^0-9]/', '', $request->cpf),
             'tel_celular' => preg_replace('/[^0-9]/', '', $request->tel_celular),
@@ -440,12 +413,6 @@ class AssociadoController extends Controller
     // Deletar associado
     public function destroy($id)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('associado.index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $associado = Associado::findOrFail($id);
 
         if ($associado->pagamentos()->exists()) {
@@ -582,7 +549,6 @@ class AssociadoController extends Controller
 
     public function associadoInfo($id)
     {
-
         $this->autorizarAcessoAoAssociado($id);
 
         // Buscar UFs do IBGE
@@ -614,7 +580,6 @@ class AssociadoController extends Controller
 
     public function validarCarteirinha($id)
     {
-
         $associado = Associado::findOrFail($id);
 
         $situacoes = Situacao::all();
@@ -625,11 +590,6 @@ class AssociadoController extends Controller
     public function resetPassword($id)
     {
         $user = Auth::user();
-
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('associado.index')
-                ->with('error', 'Acesso negado.');
-        }
 
         $associado = Associado::findOrFail($id);
 

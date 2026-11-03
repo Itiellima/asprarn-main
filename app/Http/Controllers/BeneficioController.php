@@ -6,14 +6,12 @@ use App\Models\Beneficio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
 
 
 class BeneficioController extends Controller
 {
     public function index()
     {
-
         $beneficios = Beneficio::orderBy('ordem', 'asc')->get();
 
         return view('beneficio.index', compact('beneficios'));
@@ -21,13 +19,6 @@ class BeneficioController extends Controller
 
     public function create()
     {
-
-        $user = Auth::user();
-
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect('beneficio')->with('error', 'Acesso negado. Você não tem acesso a essa funcionalidade.');
-        }
-
         $beneficio = new Beneficio();
 
         return view('beneficio.create', compact('beneficio'));
@@ -35,12 +26,6 @@ class BeneficioController extends Controller
 
     public function store(Request $request)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect('beneficio')->with('error', 'Acesso negado. Você não tem acesso a essa funcionalidade.');
-        }
-
         $request->validate([
             'nome' => 'required',
             'descricao' => 'required',
@@ -80,24 +65,11 @@ class BeneficioController extends Controller
 
     public function edit(Beneficio $beneficio)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect('beneficio')->with('error', 'Acesso negado. Você não tem acesso a essa funcionalidade.');
-        }
-
         return view('beneficio.edit', compact('beneficio'));
     }
 
     public function update(Request $request, $id)
     {
-
-        $user = Auth::user();
-
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect('beneficio')->with('error', 'Acesso negado. Você nãso tem acesso a essa funcionalidade.');
-        }
-
         $beneficio = Beneficio::findOrFail($id);
 
         $request->validate([
@@ -147,12 +119,6 @@ class BeneficioController extends Controller
 
     public function destroy($id)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect('beneficio')->with('error', 'Acesso negado. Voçê não tema acesso a essa funcionalidade.');
-        }
-
         $beneficio = Beneficio::findOrFail($id);
         
         DB::beginTransaction();
@@ -176,12 +142,6 @@ class BeneficioController extends Controller
 
     public function order()
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect('beneficio')->with('error', 'Acesso negado. Voçê não tema acesso a essa funcionalidade.');
-        }
-        
         $beneficios = Beneficio::orderBy('ordem', 'asc')->get();
 
         return view('beneficio.order', compact('beneficios'));
@@ -189,12 +149,6 @@ class BeneficioController extends Controller
 
     public function ordenar(Request $request)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect('beneficio')->with('error', 'Acesso negado. Você não tem acesso a essa funcionalidade.');
-        }
-
-
         $request->validate([
             'ordem'   => ['required', 'array'],
             'ordem.*' => ['integer', 'exists:beneficios,id'],

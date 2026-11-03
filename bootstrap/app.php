@@ -4,7 +4,9 @@ use App\Http\Controllers\MidiaController;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
@@ -51,5 +53,14 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // Usuário logado sem o perfil exigido pelo grupo de rotas (role:...): volta
+        // para o site com aviso, em vez de uma página 403
+        $exceptions->render(function (UnauthorizedException $e, Request $request) {
+            if ($request->expectsJson()) {
+                return null;
+            }
+
+            return redirect()->route('index')
+                ->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
+        });
     })->create();

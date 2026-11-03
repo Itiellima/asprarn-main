@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Http;
 use App\Models\Situacao;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 
 class AutomacaoController extends Controller
 {
@@ -303,14 +302,6 @@ class AutomacaoController extends Controller
 
     public function index()
     {
-
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
-
         $automacoes = Automacao::all();
         $associados = Associado::all();
         $situacoes = Situacao::all();
@@ -320,12 +311,6 @@ class AutomacaoController extends Controller
 
     public function create(Request $request)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $data = $request->validate([
             'nome' => 'required|string|max:255',
             'mensagem' => 'required|string',
@@ -347,12 +332,6 @@ class AutomacaoController extends Controller
 
     public function destroy($id)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $automacao = Automacao::findOrFail($id);
         $automacao->delete();
         return redirect()->route('automacoes.index')->with('success', 'Automação deletada com sucesso.');

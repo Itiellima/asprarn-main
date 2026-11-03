@@ -12,12 +12,6 @@ class PostController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $posts = Post::with('user')->latest()->paginate(10);
 
         return view('posts.index', compact('posts'));
@@ -25,13 +19,6 @@ class PostController extends Controller
 
     public function create()
     {
-
-        $user = Auth::user();
-
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $post = new Post();
 
         return view('posts.create', compact('post'));
@@ -39,7 +26,6 @@ class PostController extends Controller
 
     public function show($id)
     {
-
         $post = Post::findOrFail($id);
 
         return view('posts.show', compact('post'));
@@ -47,12 +33,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-
         $user = Auth::user();
-
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
 
         $arquivos = $request->file('arquivos'); // Deve ser um array de arquivos
 
@@ -98,11 +79,6 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $post = Post::findOrFail($id);
 
         $request->validate([
@@ -164,12 +140,6 @@ class PostController extends Controller
 
     public function destroy($id)
     {
-
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $post = Post::findOrFail($id);
         $post->delete();
 
@@ -178,11 +148,6 @@ class PostController extends Controller
 
     public function edit($id)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $post = Post::findOrFail($id);
 
         return view('posts.create', compact('post'));

@@ -5,18 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Associado;
 use App\Models\HistoricoSituacoes;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HistoricoSituacoesController extends Controller
 {
     public function storeHistorico(Request $request, $id) {
-
-        $user = Auth::user();
-
-        if(!$user || !$user->hasRole('admin|moderador')){
-            return redirect()->route('index')->with('error', 'Acesso não autorizado');
-        }
 
         if($request){
             $request->validate([
@@ -56,12 +49,6 @@ class HistoricoSituacoesController extends Controller
 
     public function destroyHistorico($associadoId, $historicoId){
 
-        $user = Auth::user();
-
-        if(!$user || !$user->hasRole('admin|moderador')){
-            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $historico = HistoricoSituacoes::where('associado_id', $associadoId)
             ->where('id', $historicoId)
             ->firstOrFail();
@@ -72,12 +59,6 @@ class HistoricoSituacoesController extends Controller
     }
 
     public function update(Request $request, $associadoId, $historicoId){
-
-        $user = Auth::user();
-
-        if(!$user || !$user->hasRole('admin|moderador')){
-            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
 
         if($request){
             $request->validate([

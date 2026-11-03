@@ -12,11 +12,6 @@ class EmpresaController extends Controller
     //
     public function index()
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $empresas = Empresa::all();
 
 
@@ -25,11 +20,6 @@ class EmpresaController extends Controller
 
     public function create()
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $empresa = new Empresa();
 
 
@@ -38,11 +28,6 @@ class EmpresaController extends Controller
 
     public function store(Request $request)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $request->merge([
             'cnpj' => preg_replace('/[^0-9]/', '', $request->cnpj),
             'telefone' => preg_replace('/[^0-9]/', '', $request->telefone),
@@ -77,11 +62,6 @@ class EmpresaController extends Controller
 
     public function show($id)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $empresa = Empresa::findOrFail($id);
 
         return view('empresas.show', compact('empresa'));
@@ -89,11 +69,6 @@ class EmpresaController extends Controller
 
     public function destroy($id)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $empresa = Empresa::findOrFail($id);
         $empresa->delete();
 
@@ -102,11 +77,6 @@ class EmpresaController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $empresa = Empresa::findOrFail($id);
 
         $request->merge([

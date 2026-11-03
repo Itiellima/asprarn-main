@@ -30,24 +30,12 @@ class PagamentosController extends Controller
 
     public function index()
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
-
         // Lógica para exibir a página de pagamentos
         return view('importar-pagamentos.index');
     }
 
     public function readArchive(Request $request)
     {
-
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         // Recebe o arquivo enviado pelo formulário
         $file = $request->file('arquivo');
 
@@ -115,10 +103,6 @@ class PagamentosController extends Controller
     public function processarPagamentos(Request $request)
     {
         $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $request->validate([
             'data_pagamento' => 'nullable|date',
             'observacao' => 'nullable|string|max:255',
@@ -214,11 +198,6 @@ class PagamentosController extends Controller
 
     public function show($associadoId)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $associado = Associado::findOrFail($associadoId);
 
         $pagamentos = $associado->pagamentos()
@@ -230,11 +209,6 @@ class PagamentosController extends Controller
 
     public function edit($pagamentoId)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $pagamento = Pagamento::findOrFail($pagamentoId);
 
         return view('pagamentos.edit', compact('pagamento'));
@@ -242,11 +216,6 @@ class PagamentosController extends Controller
 
     public function update(Request $request, $pagamentoId)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $pagamento = Pagamento::findOrFail($pagamentoId);
 
         $dados = $this->validarFormulario($request, $pagamento->associado_id, $pagamento->id);
@@ -258,11 +227,6 @@ class PagamentosController extends Controller
 
     public function create($associadoId)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $associado = Associado::findOrFail($associadoId);
 
         $pagamento = new Pagamento();
@@ -273,10 +237,6 @@ class PagamentosController extends Controller
     public function store(Request $request, $associadoId)
     {
         $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $associado = Associado::findOrFail($associadoId);
 
         $dados = $this->validarFormulario($request, $associado->id);
@@ -293,11 +253,6 @@ class PagamentosController extends Controller
 
     public function destroy($pagamentoId)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $pagamento = Pagamento::findOrFail($pagamentoId);
         $associadoId = $pagamento->associado_id;
 
@@ -308,11 +263,6 @@ class PagamentosController extends Controller
     }
 
     public function pagamentosIndex () {
-
-        $user = Auth::user();
-        if(!$user || !$user->hasRole(['admin', 'moderador'])){
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
 
         $search = request('search');
 

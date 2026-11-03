@@ -44,12 +44,6 @@ class DocumentoAssociadoController extends Controller
     // Criar documento na pasta
     public function store(Request $request, $pastaId)
     {
-        // verifica se o usuário está autenticado e tem a função necessária
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         // Validação dos dados do formulário
         $request->validate([
             'tipo_documento' => 'string|max:50',
@@ -109,11 +103,6 @@ class DocumentoAssociadoController extends Controller
     // Exibir documento
     public function show($pastaId, $fileId)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         // Verifica se o arquivo pertence à pasta
         $file = File::where('id', $fileId)
             ->where('fileable_type', PastaDocumento::class)
@@ -137,11 +126,6 @@ class DocumentoAssociadoController extends Controller
     // Excluir documento
     public function destroy($pastaId, $fileId)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         // Verifica se o arquivo pertence ao associado através da pasta
         $file = File::where('id', $fileId)
             ->where('fileable_type', PastaDocumento::class)
@@ -165,12 +149,6 @@ class DocumentoAssociadoController extends Controller
     // Atualizar status/observação
     public function update(Request $request, $pastaId, $fileId)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $request->validate([
             'status' => 'required|in:pendente,recebido,rejeitado',
             'observacao' => 'nullable|string',

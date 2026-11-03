@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AcaoJudicial;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Associado;
 
 class AcaoJudicialController extends Controller
@@ -19,13 +18,6 @@ class AcaoJudicialController extends Controller
 
     public function store(Request $request)
     {
-
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $request->validate([
             'nome' => 'required|string|max:255',
         ]);
@@ -40,12 +32,6 @@ class AcaoJudicialController extends Controller
 
     public function destroy($id)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $acao = AcaoJudicial::findOrFail($id);
         $acao->delete();
 
@@ -54,12 +40,6 @@ class AcaoJudicialController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $request->validate([
             'nome' => 'required|string|max:255',
         ]);
@@ -74,12 +54,6 @@ class AcaoJudicialController extends Controller
 
     public function updateAcoes(Request $request, $id)
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $request->validate([
             'acoes' => 'array',
             'acoes.*' => 'exists:acao_judicial,id',

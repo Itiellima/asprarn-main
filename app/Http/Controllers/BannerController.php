@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Banner;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class BannerController extends Controller
@@ -13,12 +12,6 @@ class BannerController extends Controller
 
     public function create()
     {
-
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $banner = new Banner();
 
         $AllBanners = Banner::all();
@@ -28,12 +21,6 @@ class BannerController extends Controller
 
     public function store(Request $request)
     {
-
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $request->validate([
             'titulo' => 'required|string',
             'arquivos' => 'required|file|mimes:jpg,jpeg,png|max:2048'
@@ -65,11 +52,6 @@ class BannerController extends Controller
 
     public function destroy($id)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $banner = Banner::findOrFail($id);
         $banner->delete();
 
