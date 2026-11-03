@@ -266,7 +266,13 @@ database/
 └── seeders/            # Perfis e usuário admin
 resources/views/        # Views Blade organizadas por módulo
 routes/
-├── web.php
+├── web.php             # Só inclui os arquivos de web/
+├── web/                # Um arquivo por nível de acesso; cada um protege todas as suas rotas
+│   ├── publico.php     #   sem login
+│   ├── associado.php   #   login, qualquer perfil
+│   ├── admin.php       #   admin ou moderador (e um bloco só de admin)
+│   ├── financeiro.php  #   admin ou financeiro
+│   └── diretoria.php   #   admin
 └── api.php
 docker/                 # Nginx, PHP, Supervisor e entrypoint da imagem Docker
 ```

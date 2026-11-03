@@ -4,18 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PrestadorDeServicoAutonomo;
-use Illuminate\Support\Facades\Auth;
 
 class PrestadorDeServicosController extends Controller
 {
     public function index()
     {
-
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $prestadores = PrestadorDeServicoAutonomo::all();
 
         return view('prestador-de-servicos-autonomos.index', compact('prestadores'));
@@ -23,11 +16,6 @@ class PrestadorDeServicosController extends Controller
 
     public function create()
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $prestador = new PrestadorDeServicoAutonomo();
 
         return view('prestador-de-servicos-autonomos.create', compact('prestador'));
@@ -35,11 +23,6 @@ class PrestadorDeServicosController extends Controller
 
     public function store(Request $request)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $request->validate([
             'nome' => 'required|string|max:255',
             'cpf' => 'required|string|max:14|unique:prestador_de_servicos_autonomos,cpf',
@@ -69,11 +52,6 @@ class PrestadorDeServicosController extends Controller
 
     public function edit($id)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $prestador = PrestadorDeServicoAutonomo::findOrFail($id);
 
         return view('prestador-de-servicos-autonomos.edit', compact('prestador'));
@@ -81,11 +59,6 @@ class PrestadorDeServicosController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $prestador = PrestadorDeServicoAutonomo::findOrFail($id);
 
         $request->validate([
@@ -116,11 +89,6 @@ class PrestadorDeServicosController extends Controller
 
     public function destroy($id)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $prestador = PrestadorDeServicoAutonomo::findOrFail($id);
         $prestador->delete();
 

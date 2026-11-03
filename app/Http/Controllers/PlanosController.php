@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Associado;
 use App\Models\Plano;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use Illuminate\Support\Facades\DB;
 
@@ -14,11 +13,6 @@ class PlanosController extends Controller
 
     public function index()
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])){
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $planos = Plano::all();
 
         return view('planos.index', compact('planos'));
@@ -26,11 +20,6 @@ class PlanosController extends Controller
 
     
     public function create(){
-
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])){
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
 
         $plano = new Plano();
 
@@ -40,11 +29,6 @@ class PlanosController extends Controller
 
     // Cria um novo plano
     public function store(Request $request){
-
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])){
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
 
         $request->validate([
             'nome' => 'required|string|max:255',
@@ -78,11 +62,6 @@ class PlanosController extends Controller
     }
 
     public function destroy($id){
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])){
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $plano = Plano::findOrFail($id);
         $plano->delete();
 
@@ -90,22 +69,12 @@ class PlanosController extends Controller
     }
 
     public function edit($id){
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])){
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $plano = Plano::findOrFail($id);
 
         return view('planos.create', compact('plano'));
     }
 
     public function update(Request $request, $id){
-
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])){
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
 
         $request->validate([
             'nome' => 'required|string|max:255',

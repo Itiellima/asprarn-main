@@ -5,18 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\PastaDocumento;
 use App\Models\Associado;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PastaDocumentoController extends Controller
 {
     public function index($associadoId)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $associado = Associado::findOrFail($associadoId);
 
         $pastas = $associado->pastaDocumentos()
@@ -34,11 +28,6 @@ class PastaDocumentoController extends Controller
 
     public function store(Request $request, $associadoId)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->route('index')->with('error', 'Acesso negado.');
-        }
-
         $associado = Associado::findOrFail($associadoId);
 
         $request->validate([
@@ -66,11 +55,6 @@ class PastaDocumentoController extends Controller
 
     public function show($associadoId, $pastaId)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $associado = Associado::findOrFail($associadoId);
         $pasta = $associado->pastaDocumentos()->with('files')->findOrFail($pastaId);
 
@@ -93,11 +77,6 @@ class PastaDocumentoController extends Controller
     }
 
     public function destroy($associadoId, $pastaId){
-        $user = Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'moderador'])){
-            return redirect()->route('index')->with('error', 'Acesso negado.');
-        }
-
         $associado = Associado::findOrFail($associadoId);
         $pasta = $associado->pastaDocumentos()->findOrFail($pastaId);
 

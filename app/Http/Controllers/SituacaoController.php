@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Associado;
@@ -13,12 +12,6 @@ class SituacaoController extends Controller
 
     // Para referencia
     public function storeSituacao(Request $request, $id) {
-
-        $user = Auth::user();
-
-        if(!$user || !$user->hasAnyRole(['admin', 'moderador'])){
-            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
 
         $validated = $request->validate([
             'ativo' => 'nullable|boolean',
@@ -47,11 +40,6 @@ class SituacaoController extends Controller
     // Criar nova situacao
     public function store(Request $request)
     {
-        $user = Auth::user();
-        if(!$user || !$user->hasAnyRole(['admin', 'moderador'])){
-            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $request->validate([
             'nome' => 'required|string|max:255',
         ]);
@@ -65,11 +53,6 @@ class SituacaoController extends Controller
 
     public function update(Request $request, $associadoId)
     {
-        $user = Auth::user();
-        if(!$user || !$user->hasAnyRole(['admin', 'moderador'])){
-            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         // Verifica se o associado existe
         $associado = Associado::findOrFail($associadoId);
 
@@ -82,11 +65,6 @@ class SituacaoController extends Controller
 
     public function destroy($id)
     {
-        $user = Auth::user();
-        if(!$user || !$user->hasAnyRole(['admin', 'moderador'])){
-            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $situacao = Situacao::findOrFail($id);
 
         $situacao->delete();
@@ -96,11 +74,6 @@ class SituacaoController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $user = Auth::user();
-        if(!$user || !$user->hasAnyRole(['admin', 'moderador'])){
-            return redirect()->back()->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $situacao = Situacao::findOrFail($id);
 
         $request->validate([

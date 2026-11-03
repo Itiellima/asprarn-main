@@ -62,7 +62,7 @@ class AcessoAssociadoTest extends TestCase
     public function test_visitante_nao_acessa_dados_de_associado(string $metodo, string $url): void
     {
         $this->{$metodo}(sprintf($url, $this->outro->id))
-            ->assertForbidden();
+            ->assertRedirect(route('login'));
     }
 
     public function test_associado_pode_remover_a_propria_foto(): void

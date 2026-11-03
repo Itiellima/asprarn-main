@@ -14,12 +14,6 @@ class UsuariosController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('admin')) {
-            return redirect()->route('dashboard')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $roles = Role::all();
 
 
@@ -39,12 +33,6 @@ class UsuariosController extends Controller
 
     public function updateRole(Request $request, $id)
     {
-        // Verifica se o usuário autenticado é admin
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin')) {
-            return redirect()->route('dashboard')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         // Valida a entrada
         $user = User::findOrFail($id);
         $roles = $request->input('roles', []);
@@ -57,12 +45,6 @@ class UsuariosController extends Controller
 
     public function destroy($id)
     {
-        // Verifica se o usuário autenticado é admin
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin')) {
-            return redirect()->route('dashboard')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $user = User::findOrFail($id);
         $user->delete();
 
@@ -72,10 +54,6 @@ class UsuariosController extends Controller
     public function resetPassword($id)
     {
         $user = Auth::user();
-        if(!$user || !$user->hasRole('admin|moderador')){
-            return redirect()->route('dashboard')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $usuario = User::with('associado')->findOrFail($id);
 
         // Só admin pode resetar a senha de outro admin

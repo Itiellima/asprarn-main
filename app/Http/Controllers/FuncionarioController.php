@@ -11,11 +11,6 @@ class FuncionarioController extends Controller
     //
     public function index()
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $funcionarios = Funcionario::all();
 
 
@@ -24,11 +19,6 @@ class FuncionarioController extends Controller
 
     public function create()
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $funcionario = new Funcionario();
 
 
@@ -37,11 +27,6 @@ class FuncionarioController extends Controller
 
     public function store(Request $request)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $request->merge([
             'cpf' => preg_replace('/[^0-9]/', '', $request->cpf),
             'telefone_1' => preg_replace('/[^0-9]/', '', $request->telefone_1),
@@ -81,11 +66,6 @@ class FuncionarioController extends Controller
 
     public function show($id)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $funcionario = Funcionario::findOrFail($id);
 
         return view('funcionarios.show', compact('funcionario'));
@@ -93,11 +73,6 @@ class FuncionarioController extends Controller
 
     public function destroy($id)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')){
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $funcionario = Funcionario::findOrFail($id);
         $funcionario->delete();
 
@@ -106,11 +81,6 @@ class FuncionarioController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = Auth::user();
-        if (!$user || !$user->hasRole('admin|moderador')) {
-            return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-        }
-
         $funcionario = Funcionario::findOrFail($id);
 
         $request->merge([
