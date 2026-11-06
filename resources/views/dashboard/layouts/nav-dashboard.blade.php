@@ -8,6 +8,7 @@
 </div>
 
 @auth
+    {{-- Cada botão aparece só para os perfis que as rotas dele aceitam (ver routes/web/) --}}
     <div class="row g-2 justify-content-center">
 
         <div class="col-12 col-sm-6 col-lg-3">
@@ -16,46 +17,37 @@
             </a>
         </div>
 
-        @hasanyrole('associado')
+        @if (auth()->user()->hasRole('associado') && auth()->user()->associado_id)
             <div class="col-12 col-sm-6 col-lg-3">
-                <a href="{{ route('associado.informacoes', $associado->id) }}" class="btn btn-primary w-100">
+                <a href="{{ route('associado.informacoes', auth()->user()->associado_id) }}" class="btn btn-primary w-100">
                     <i class="fa-solid fa-user me-1"></i> Meus Dados
                 </a>
             </div>
+        @endif
 
-            <div class="col-12 col-sm-6 col-lg-3">
-                <a href="{{ route('profile.show') }}" class="btn btn-primary w-100">
-                    <i class="fa-solid fa-id-card me-1"></i> Perfil
-                </a>
-            </div>
-        @endhasanyrole
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="{{ route('profile.show') }}" class="btn btn-primary w-100">
+                <i class="fa-solid fa-user-gear me-1"></i> Perfil
+            </a>
+        </div>
 
         @hasanyrole('admin|moderador')
-
             <div class="col-12 col-sm-6 col-lg-3">
                 <a href="{{ route('associado.index') }}" class="btn btn-primary w-100">
                     <i class="fa-solid fa-users me-1"></i> Associados
                 </a>
             </div>
+        @endhasanyrole
 
-            <div class="col-12 col-sm-6 col-lg-3">
-                <a href="{{ route('profile.show') }}" class="btn btn-primary w-100">
-                    <i class="fa-solid fa-user-gear me-1"></i> Perfil
-                </a>
-            </div>
-
-            <div class="col-12 col-sm-6 col-lg-3">
-                <a href="{{ route('planos.index') }}" class="btn btn-primary w-100">
-                    <i class="fa-solid fa-clipboard-list me-1"></i> Planos
-                </a>
-            </div>
-
+        @role('admin')
             <div class="col-12 col-sm-6 col-lg-3">
                 <a href="{{ route('diretoria.index') }}" class="btn btn-primary w-100">
                     <i class="fa-solid fa-building-columns me-1"></i> Diretorias
                 </a>
             </div>
+        @endrole
 
+        @hasanyrole('admin|financeiro')
             {{-- Financeiro --}}
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="dropdown">
@@ -67,10 +59,13 @@
                         <li><a href="{{ route('financeiro.index') }}" class="dropdown-item">Gestão Financeira</a></li>
                         <li><a href="{{ route('importar-pagamentos.index') }}" class="dropdown-item">Importar Pagamentos</a></li>
                         <li><a href="{{ route('pagamentos.index') }}" class="dropdown-item">Pagamentos</a></li>
+                        <li><a href="{{ route('planos.index') }}" class="dropdown-item">Planos</a></li>
                     </ul>
                 </div>
             </div>
+        @endhasanyrole
 
+        @hasanyrole('admin|moderador')
             {{-- Gestão --}}
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="dropdown">
@@ -96,7 +91,9 @@
                     <ul class="dropdown-menu w-100">
                         <li><a href="{{ route('sorteios.index') }}" class="dropdown-item">Sorteios</a></li>
                         <li><a href="{{ route('automacoes.index') }}" class="dropdown-item">Mensagens WhatsApp</a></li>
-                        <li><a href="/usuarios" class="dropdown-item">Controle de Acesso</a></li>
+                        @role('admin')
+                            <li><a href="{{ route('usuarios.index') }}" class="dropdown-item">Controle de Acesso</a></li>
+                        @endrole
                         <li><a href="{{ route('posts.index') }}" class="dropdown-item">Comunicação</a></li>
                         <li><a href="{{ route('banner.create') }}" class="dropdown-item">Banner</a></li>
                         <li><a href="{{ route('configuracoes.index') }}" class="dropdown-item">Configurações</a></li>
@@ -106,7 +103,6 @@
                     </ul>
                 </div>
             </div>
-
         @endhasanyrole
 
     </div>

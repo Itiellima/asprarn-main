@@ -150,6 +150,66 @@ class RotasProtegidasTest extends TestCase
         $this->actingAs($moderador)->get('/configuracoes')->assertOk();
     }
 
+    private function usuarioComPerfis(string ...$perfis): User
+    {
+        $this->seed(RoleSeeder::class);
+        $associado = Associado::forceCreate(['nome' => 'Fulano', 'cpf' => '11111111111']);
+        $usuario = User::factory()->create(['associado_id' => $associado->id]);
+        $usuario->assignRole($perfis);
+
+        return $usuario;
+    }
+
+    public static function telasDoFinanceiro(): array
+    {
+        return [
+            'gestão financeira' => ['/financeiro'],
+            'pagamentos' => ['/pagamentos/index'],
+            'importar pagamentos' => ['/importar-pagamentos'],
+            'planos' => ['/planos/index'],
+        ];
+    }
+
+    #[DataProvider('telasDoFinanceiro')]
+    public function test_financeiro_entra_nas_telas_financeiras(string $url): void
+    {
+        $this->actingAs($this->usuarioComPerfis('financeiro'))->get($url)->assertOk();
+    }
+
+    #[DataProvider('telasDoFinanceiro')]
+    public function test_moderador_nao_entra_nas_telas_financeiras(string $url): void
+    {
+        $this->actingAs($this->usuarioComPerfis('moderador'))->get($url)->assertRedirect(route('index'));
+    }
+
+    public function test_financeiro_nao_entra_no_administrativo(): void
+    {
+        $financeiro = $this->usuarioComPerfis('financeiro');
+
+        foreach (['/associado', '/configuracoes', '/usuarios', '/diretoria'] as $url) {
+            $this->actingAs($financeiro)->get($url)->assertRedirect(route('index'));
+        }
+    }
+
+    public function test_login_do_financeiro_vai_para_o_financeiro(): void
+    {
+        // Financeiro vem antes de associado na prioridade da tela inicial
+        $this->actingAs($this->usuarioComPerfis('financeiro', 'associado'))
+            ->get('/dashboard')
+            ->assertRedirect(route('financeiro.index'));
+    }
+
+    public function test_financeiro_que_e_associado_ve_os_proprios_dados_no_menu(): void
+    {
+        $usuario = $this->usuarioComPerfis('financeiro', 'associado');
+
+        $this->actingAs($usuario)->get('/financeiro')
+            ->assertOk()
+            ->assertSee('Meus Dados')
+            ->assertSee(route('associado.informacoes', $usuario->associado_id))
+            ->assertDontSee('href="' . route('associado.index') . '"', false);
+    }
+
     public function test_pedido_json_sem_perfil_recebe_403(): void
     {
         $this->seed(RoleSeeder::class);
