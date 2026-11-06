@@ -49,9 +49,11 @@
                     <i class="bi bi-folder"></i> Arquivos
                 </a>
 
-                <a href="{{ route('pagamentos.show', $associado->id) }}" class="btn btn-sm btn-primary">
-                    <i class="bi bi-cash-stack"></i> Pagamentos
-                </a>
+                @hasanyrole('admin|financeiro')
+                    <a href="{{ route('pagamentos.show', $associado->id) }}" class="btn btn-sm btn-primary">
+                        <i class="bi bi-cash-stack"></i> Pagamentos
+                    </a>
+                @endhasanyrole
             </div>
         </div>
     </div>

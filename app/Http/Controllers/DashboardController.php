@@ -23,8 +23,10 @@ class DashboardController extends Controller
         // Roles do usuário
         $userRoles = $user->roles->pluck('name')->toArray();
 
-        // Prioridade de roles
-        $priority = ['admin', 'moderador', 'associado'];
+        // Prioridade de roles: só escolhe a tela inicial, não muda o que cada um pode acessar.
+        // Financeiro vem antes de associado: quem trabalha no financeiro e também é associado
+        // entra direto no trabalho e chega aos próprios dados pelo menu.
+        $priority = ['admin', 'moderador', 'financeiro', 'associado'];
 
         // Pega a role com maior prioridade
         $role = collect($priority)->first(fn($r) => in_array($r, $userRoles));
@@ -35,6 +37,7 @@ class DashboardController extends Controller
 
         return match ($role) {
             'admin', 'moderador' => $this->adminDashboard($user),
+            'financeiro' => redirect()->route('financeiro.index'),
             'associado' => $this->associadoDashboard($user),
             default => abort(403, 'Acesso negado.'),
         };

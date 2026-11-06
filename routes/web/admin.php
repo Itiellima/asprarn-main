@@ -13,9 +13,7 @@ use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\HistoricoSituacoesController;
 use App\Http\Controllers\NotificacaoController;
 use App\Http\Controllers\OpmController;
-use App\Http\Controllers\PagamentosController;
 use App\Http\Controllers\PastaDocumentoController;
-use App\Http\Controllers\PlanosController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PrestadorDeServicosController;
 use App\Http\Controllers\RelatorioController;
@@ -35,9 +33,6 @@ Route::middleware(['auth', 'role:admin|moderador'])->group(function () {
     Route::put('/associado/update/{id}', [AssociadoController::class, 'update'])->name('associado.update');
     Route::delete('/associado/delete/{id}', [AssociadoController::class, 'destroy'])->name('associado.destroy');
     Route::post('/associado/resetpassword/{id}', [AssociadoController::class, 'resetPassword'])->name('associado.reset.password');
-
-    Route::get('/associado/financeiro/{associadoId}', [PlanosController::class, 'index'])->name('associado.financeiro.index');
-
     //////////////////////////////// ********* SITUACAO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     Route::post('/associado/situacao/{id}', [SituacaoController::class, 'storeSituacao'])->name('associado.situacao.store');
     Route::post('/situacao/store', [SituacaoController::class, 'store'])->name('situacao.store');
@@ -70,27 +65,6 @@ Route::middleware(['auth', 'role:admin|moderador'])->group(function () {
     Route::get('/pdf.termo-de-adesao-acp/{id}', [RequerimentoController::class, 'termoDeAdesaoAcp'])->name('associado.pdf.termo-de-adesao-acp');
     Route::get('/pdf.beneficiarios-procuracao/{id}', [RequerimentoController::class, 'beneficiariosProcuracao'])->name('associado.pdf.beneficiarios-procuracao');
     Route::get('/pdf.declaracao-associado-promocao/{id}', [RequerimentoController::class, 'declaracaoAssociadoPromocao'])->name('associado.pdf.declaracao-associado-promocao');
-
-    //////////////////////////////// ********* PAGAMENTOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    Route::get('/importar-pagamentos', [PagamentosController::class, 'index'])->name('importar-pagamentos.index');
-    Route::post('/importar-pagamentos/read-archive', [PagamentosController::class, 'readArchive'])->name('importar-pagamentos.readArchive');
-    Route::post('/importar-pagamentos/processar', [PagamentosController::class, 'processarPagamentos'])->name('importar-pagamentos.processar');
-
-    Route::get('/pagamentos/index', [PagamentosController::class, 'pagamentosIndex'])->name('pagamentos.index');
-    Route::get('/pagamentos/show/{associadoId}', [PagamentosController::class, 'show'])->name('pagamentos.show');
-    Route::get('/pagamentos/edit/{pagamentoId}', [PagamentosController::class, 'edit'])->name('pagamentos.edit');
-    Route::put('/pagamentos/update/{pagamentoId}', [PagamentosController::class, 'update'])->name('pagamentos.update');
-    Route::get('/pagamentos/create/{associadoId}', [PagamentosController::class, 'create'])->name('pagamentos.create');
-    Route::post('/pagamentos/store/{associadoId}', [PagamentosController::class, 'store'])->name('pagamentos.store');
-    Route::delete('/pagamentos/destroy/{pagamentoId}', [PagamentosController::class, 'destroy'])->name('pagamentos.destroy');
-
-    //////////////////////////////// ********* PLANOS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    Route::get('/planos/index', [PlanosController::class, 'index'])->name('planos.index');
-    Route::get('/planos/create', [PlanosController::class, 'create'])->name('planos.create');
-    Route::post('/planos/store', [PlanosController::class, 'store'])->name('planos.store');
-    Route::delete('/planos/destroy/{id}', [PlanosController::class, 'destroy'])->name('planos.destroy');
-    Route::get('/planos/edit/{id}', [PlanosController::class, 'edit'])->name('planos.edit');
-    Route::put('/planos/update/{id}', [PlanosController::class, 'update'])->name('planos.update');
 
     //////////////////////////////// ********* SITE: POSTS, BENEFÍCIOS E BANNERS ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     Route::get('posts', [PostController::class, 'index'])->name('posts.index');

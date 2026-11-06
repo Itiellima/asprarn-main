@@ -12,9 +12,11 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
+        // Lista única dos perfis: o RoleAndAdminSeeder e os testes usam este seeder
         Role::firstOrCreate(['name' => 'admin']);
         Role::firstOrCreate(['name' => 'moderador']);
         Role::firstOrCreate(['name' => 'associado']);
         Role::firstOrCreate(['name' => 'user']);
+        Role::firstOrCreate(['name' => 'financeiro']);
     }
 }
