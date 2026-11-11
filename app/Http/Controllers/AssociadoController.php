@@ -133,6 +133,13 @@ class AssociadoController extends Controller
                 $request->only(AssociadoRequest::CONTATO)
             );
 
+            // O e-mail da ficha é também o login: mantém os dois iguais (o perfil faz o caminho inverso)
+            $loginAlterado = false;
+            if ($associado->user && $request->filled('email') && $request->email !== $associado->user->email) {
+                $associado->user->forceFill(['email' => $request->email])->save();
+                $loginAlterado = true;
+            }
+
             $associado->dadosBancarios()->updateOrCreate(
                 ['associado_id' => $associado->id],
                 $request->only(AssociadoRequest::DADOS_BANCARIOS)
@@ -153,7 +160,12 @@ class AssociadoController extends Controller
             return redirect()->back()->with('error', 'Erro ao atualizar associado')->withInput();
         }
 
-        return redirect()->route('associado.show', $associado->id)->with('msg', 'Associado alterado com sucesso!');
+        $mensagem = 'Associado alterado com sucesso!';
+        if ($loginAlterado) {
+            $mensagem .= ' O e-mail de login também foi alterado.';
+        }
+
+        return redirect()->route('associado.show', $associado->id)->with('msg', $mensagem);
     }
 
     // Deletar associado

@@ -15,7 +15,7 @@ class StoreAssociadoRequest extends AssociadoRequest
 
         return $regras + [
             // O e-mail vira o login do associado
-            'email' => ['required', 'unique:users,email'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'picture_profile' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:10240'],
         ];
     }

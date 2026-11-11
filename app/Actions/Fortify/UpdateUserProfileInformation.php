@@ -27,7 +27,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->updateProfilePhoto($input['photo']);
         }
 
-        if ($input['email'] !== $user->email &&
+        $emailMudou = $input['email'] !== $user->email;
+
+        if ($emailMudou &&
             $user instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($user, $input);
         } else {
@@ -35,6 +37,15 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'name' => $input['name'],
                 'email' => $input['email'],
             ])->save();
+        }
+
+        // O login é também o e-mail da ficha do associado: mantém os dois iguais
+        // (a edição do associado no painel faz o caminho inverso)
+        if ($emailMudou && $user->associado) {
+            $user->associado->contato()->updateOrCreate(
+                ['associado_id' => $user->associado->id],
+                ['email' => $input['email']]
+            );
         }
     }
 
