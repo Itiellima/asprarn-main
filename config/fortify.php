@@ -144,7 +144,9 @@ return [
     */
 
     'features' => [
-        Features::registration(),
+        // Desligado: o cadastro é o formulário de associado (/register → Associado\CadastroController),
+        // que cria o associado e o login juntos. O do Fortify criaria um usuário solto, sem associado.
+        // Features::registration(),
         Features::resetPasswords(),
         // Features::emailVerification(),
         Features::updateProfileInformation(),

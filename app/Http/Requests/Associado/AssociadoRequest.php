@@ -67,6 +67,7 @@ abstract class AssociadoRequest extends FormRequest
             'cpf.unique' => 'Já existe um associado cadastrado com esse CPF.',
             'cpf.digits' => 'O CPF deve conter exatamente 11 dígitos numéricos.',
             'email.required' => 'Informe o e-mail.',
+            'email.email' => 'Informe um e-mail válido.',
             'email.unique' => 'Já existe um associado com esse e-mail.',
             'picture_profile.image' => 'O arquivo deve ser uma imagem.',
             'picture_profile.mimes' => 'A foto deve ser JPG, PNG ou WEBP.',

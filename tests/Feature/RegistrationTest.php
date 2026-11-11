@@ -2,52 +2,39 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Fortify\Features;
-use Laravel\Jetstream\Jetstream;
 use Tests\TestCase;
 
+// O cadastro do Fortify está desligado (config/fortify.php): o /register do projeto
+// é o formulário de associado, que cria o associado e o login juntos.
 class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_registration_screen_can_be_rendered(): void
+    public function test_cadastro_do_fortify_esta_desligado(): void
     {
-        if (! Features::enabled(Features::registration())) {
-            $this->markTestSkipped('Registration support is not enabled.');
-        }
-
-        $response = $this->get('/register');
-
-        $response->assertStatus(200);
+        $this->assertFalse(Features::enabled(Features::registration()));
     }
 
-    public function test_registration_screen_cannot_be_rendered_if_support_is_disabled(): void
+    public function test_register_abre_o_formulario_de_associado(): void
     {
-        if (Features::enabled(Features::registration())) {
-            $this->markTestSkipped('Registration support is enabled.');
-        }
-
-        $response = $this->get('/register');
-
-        $response->assertStatus(404);
+        $this->get('/register')
+            ->assertOk()
+            ->assertSee('Formulário de cadastro');
     }
 
-    public function test_new_users_can_register(): void
+    public function test_post_no_register_nao_cria_usuario_solto(): void
     {
-        if (! Features::enabled(Features::registration())) {
-            $this->markTestSkipped('Registration support is not enabled.');
-        }
-
-        $response = $this->post('/register', [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->post('/register', [
+            'name' => 'Usuário Solto',
+            'email' => 'solto@exemplo.com',
             'password' => 'password',
             'password_confirmation' => 'password',
-            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature(),
-        ]);
+        ])->assertMethodNotAllowed();
 
-        $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        $this->assertGuest();
+        $this->assertNull(User::where('email', 'solto@exemplo.com')->first());
     }
 }
