@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\AssociadoController;
+use App\Http\Controllers\Associado\CadastroController;
+use App\Http\Controllers\Associado\CarteirinhaController;
 use App\Http\Controllers\BeneficioController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\InstagramController;
@@ -26,11 +27,11 @@ Route::get('beneficio', [BeneficioController::class, 'index'])->name('beneficio.
 
 //////////////////////////////// ********* CADASTRO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 // O próprio associado se cadastra pelo site; o store também é usado pelo admin
-Route::get('/register', [AssociadoController::class, 'create'])->name('register.view');
-Route::get('/associado/create', [AssociadoController::class, 'create'])->name('associado.create');
-Route::post('/associado/store', [AssociadoController::class, 'store'])->name('associado.store');
-Route::get('/api/cidades/{uf}', [AssociadoController::class, 'cidades']);
+Route::get('/register', [CadastroController::class, 'create'])->name('register.view');
+Route::get('/associado/create', [CadastroController::class, 'create'])->name('associado.create');
+Route::post('/associado/store', [CadastroController::class, 'store'])->name('associado.store');
+Route::get('/api/cidades/{uf}', [CadastroController::class, 'cidades']);
 
 //////////////////////////////// ********* VERIFICAÇÃO DA CARTEIRINHA ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 // Endereço impresso no QR code das carteirinhas: nunca mudar
-Route::get('/carteira-associado-verificacao/{id}', [AssociadoController::class, 'validarCarteirinha'])->name('validar-carteirinha');
+Route::get('/carteira-associado-verificacao/{id}', [CarteirinhaController::class, 'validar'])->name('validar-carteirinha');

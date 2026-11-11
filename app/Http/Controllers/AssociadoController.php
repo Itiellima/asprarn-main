@@ -2,28 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Notificacao;
-use App\Events\NotificacaoCriada;
+use App\Http\Requests\Associado\AssociadoRequest;
+use App\Http\Requests\Associado\UpdateAssociadoRequest;
 use App\Models\AcaoJudicial;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\Associado;
-use App\Models\ComoNosEncontrou;
 use App\Models\Contato;
-use App\Models\Endereco;
 use App\Models\DadosBancarios;
+use App\Models\Endereco;
 use App\Models\Opm;
 use App\Models\Situacao;
-use App\Models\PictureProfile;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Services\IbgeService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use App\Events\AssociadoCriado;
-use App\Models\DiretoriaMembro;
 
+/**
+ * Associados no painel (admin/moderador): lista, ficha, edição, exclusão e reset de senha.
+ * Cadastro, carteirinha, foto e "Meus Dados" ficam em Controllers/Associado/.
+ */
 class AssociadoController extends Controller
 {
     // view todos os associados
@@ -75,7 +72,6 @@ class AssociadoController extends Controller
                 });
             })
 
-
             ->paginate(12)
             ->appends(request()->query()); // mantém filtros na paginação
 
@@ -109,291 +105,41 @@ class AssociadoController extends Controller
         return view('associado.show', compact('associado', 'contato', 'endereco', 'dadosBancarios', 'situacoes', 'acoes'));
     }
 
-    // view para criar um associado
-    public function create()
-    {
-        $associado = new Associado();
-
-        // Buscar UFs do IBGE
-        // $ufs = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-        //     ->json();
-
-        // $ufs = collect($ufs)->sortBy('nome')->values()->all();
-        try {
-            $response = Http::timeout(5)->get('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
-
-            if ($response->successful()) {
-                $ufs = collect($response->json())
-                    ->sortBy('nome')
-                    ->values()
-                    ->all();
-            } else {
-                $ufs = [];
-            }
-        } catch (\Exception $e) {
-            $ufs = [];
-        }
-
-        $opms = Opm::orderBy('nome')->get();
-
-        return view('associado.create', compact('associado', 'ufs', 'opms'));
-    }
-
-    // Rota para buscar cidades por UF via IBGE
-    public function cidades($uf)
-    {
-        $cidades = Http::get("https://servicodados.ibge.gov.br/api/v1/localidades/estados/{$uf}/municipios");
-
-        return $cidades; // sempre retorna ARRAY de cidades
-    }
-
-    // Rota salvar o associado no banco de dados
-    public function store(Request $request)
-    {
-        // 1. Remove mascaras antes de validar
-        $request->merge([
-            'cpf' => preg_replace('/[^0-9]/', '', $request->cpf),
-            'tel_celular' => preg_replace('/[^0-9]/', '', $request->tel_celular),
-            'tel_residencial' => preg_replace('/[^0-9]/', '', $request->tel_residencial),
-            'tel_trabalho' => preg_replace('/[^0-9]/', '', $request->tel_trabalho),
-        ]);
-
-
-        // 2. Validação
-        $request->validate([
-            'nome'  => 'required',
-            'cpf'   => 'required|unique:associados,cpf|digits:11',
-            'email' => 'required|unique:users,email',
-            'picture_profile' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
-            'dt_inclusao' => 'nullable|date',
-        ], [
-            'cpf.unique'   => 'Já existe um associado cadastrado com esse CPF.',
-            'cpf.digits'     => 'O CPF deve conter exatamente 11 dígitos numericos.',
-            'email.unique' => 'Já existe um associado com esse e-mail.',
-            'picture_profile.image' => 'O arquivo deve ser uma imagem.',
-            'picture_profile.mimes' => 'A foto deve ser JPG, PNG ou WEBP.',
-            'picture_profile.max' => 'A foto não pode passar de 10MB.',
-            'dt_inclusao.date' => 'A data de inclusão deve ser uma data válida.',
-        ]);
-
-        if (!\App\Helpers\CpfHelper::validar($request->cpf)) {
-            return redirect()->back()->with('error', 'CPF inválido.')->withInput();
-        }
-
-        DB::beginTransaction();
-        try {
-            // 3. Cria associado
-            $associado = Associado::create($request->only([
-                'nome',
-                'cpf',
-                'rg',
-                'org_expedidor',
-                'nome_pai',
-                'nome_mae',
-                'dt_nasc',
-                'estado_civil',
-                'grau_instrucao',
-                'graduacao',
-                'nome_guerra',
-                'nmr_praca',
-                'matricula',
-                'opm',
-                'dependentes',
-                'obs',
-                'dt_inclusao'
-            ]));
-
-            // 4. Cria endereço
-            Endereco::create($request->only([
-                'cep',
-                'logradouro',
-                'nmr',
-                'bairro',
-                'cidade',
-                'uf',
-                'complemento'
-            ]) + ['associado_id' => $associado->id]);
-
-            // 5. Cria contato
-            Contato::create($request->only([
-                'tel_celular',
-                'tel_residencial',
-                'tel_trabalho',
-                'email'
-            ]) + ['associado_id' => $associado->id]);
-
-            // 6. Cria dados bancários
-            DadosBancarios::create($request->only([
-                'codigo',
-                'agencia',
-                'banco',
-                'conta',
-                'operacao',
-                'tipo'
-            ]) + ['associado_id' => $associado->id]);
-
-            // 7. Cria usuário
-            $user = User::create([
-                'name'         => $associado->nome,
-                'email'        => $request->email,
-                'password'     => Hash::make($request->cpf),
-                'associado_id' => $associado->id,
-            ]);
-
-            $user->syncRoles(['associado', 'user']);
-
-            if ($request->hasFile('picture_profile')) {
-                $path = $request->file('picture_profile')->store('picture_profiles', 'midia');
-                PictureProfile::create([
-                    'associado_id' => $associado->id,
-                    'path' => $path,
-                ]);
-            }
-
-            ComoNosEncontrou::create([
-                'associado_id' => $associado->id,
-                'nome' => $request->input('nome'),
-                'descricao' => $request->input('como_nos_encontrou_descricao'),
-                'indicacao' => $request->input('como_nos_encontrou_indicacao'),
-            ]);
-
-
-            DB::commit();
-
-            $data = [
-                'titulo' => 'Novo asssociado cadastrado',
-                'mensagem' => 'Novo asssociado cadastrado com sucesso, ' . $associado->nome . ' - ' . $associado->cpf,
-                'associado_id' => $associado->id,
-            ];
-
-
-            event(new NotificacaoCriada($data));
-
-            event(new AssociadoCriado($associado));
-
-
-            $authUser = Auth::user();
-
-            if ($authUser && $authUser->hasRole('admin|moderador')) {
-                return redirect(route('associado.show', $associado->id))->with('msg', 'Associado criado com sucesso');
-            } elseif (!$authUser) {
-                // Cadastro público: leva ao login explicando como é o primeiro acesso
-                return redirect()->route('login')->with('primeiro_acesso', $request->email);
-            } else {
-                return redirect('/dashboard')->with('msg', 'Associado criado com sucesso!');
-            }
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()->back()->with('error', 'Erro ao criar associado: ' . $e->getMessage())->withInput();
-        }
-    }
-
-    // view edição do associado
-    public function edit($id)
+    // view edição do associado (mesmo formulário do cadastro)
+    public function edit($id, IbgeService $ibge)
     {
         $associado = Associado::findOrFail($id);
-
-        // Buscar UFs do IBGE
-        // $ufs = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-        //     ->json();
-
-        try {
-            $response = Http::timeout(5)->get('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
-
-            if ($response->successful()) {
-                $ufs = collect($response->json())
-                    ->sortBy('nome')
-                    ->values()
-                    ->all();
-            } else {
-                $ufs = [];
-            }
-        } catch (\Exception $e) {
-            $ufs = [];
-        }
-
+        $ufs = $ibge->estados();
         $opms = Opm::orderBy('nome')->get();
 
         return view('associado.create', compact('associado', 'ufs', 'opms'));
     }
 
-    // Rota para atualizar o associado no banco de dados
-    public function update(Request $request, $id)
+    public function update(UpdateAssociadoRequest $request, $id)
     {
-        $request->merge([
-            'cpf' => preg_replace('/[^0-9]/', '', $request->cpf),
-            'tel_celular' => preg_replace('/[^0-9]/', '', $request->tel_celular),
-            'tel_residencial' => preg_replace('/[^0-9]/', '', $request->tel_residencial),
-            'tel_trabalho' => preg_replace('/[^0-9]/', '', $request->tel_trabalho),
-        ]);
-
         $associado = Associado::with(['endereco', 'contato', 'dadosBancarios', 'comoNosEncontrou'])->findOrFail($id);
 
         DB::beginTransaction();
         try {
-            // Atualiza os dados da tabela principal
-            $associado->update($request->only([
-                'nome',
-                'cpf',
-                'rg',
-                'org_expedidor',
-                'nome_pai',
-                'nome_mae',
-                'dt_nasc',
-                'estado_civil',
-                'grau_instrucao',
-                'graduacao',
-                'nome_guerra',
-                'nmr_praca',
-                'matricula',
-                'opm',
-                'dependentes',
-                'obs',
-                'dt_inclusao'
-            ]));
+            $associado->update($request->only(AssociadoRequest::DADOS_PESSOAIS));
 
-            // Atualiza o endereço (assume que o relacionamento existe)
             $associado->endereco()->updateOrCreate(
                 ['associado_id' => $associado->id],
-                $request->only([
-                    'cep',
-                    'logradouro',
-                    'nmr',
-                    'bairro',
-                    'cidade',
-                    'uf',
-                    'complemento'
-                ])
+                $request->only(AssociadoRequest::ENDERECO)
             );
 
-            // Atualiza o contato
             $associado->contato()->updateOrCreate(
                 ['associado_id' => $associado->id],
-                $request->only([
-                    'tel_celular',
-                    'tel_residencial',
-                    'tel_trabalho',
-                    'email'
-                ])
+                $request->only(AssociadoRequest::CONTATO)
             );
 
-            // Atualiza os dados bancários
             $associado->dadosBancarios()->updateOrCreate(
                 ['associado_id' => $associado->id],
-                $request->only([
-                    'codigo',
-                    'agencia',
-                    'banco',
-                    'conta',
-                    'operacao',
-                    'tipo'
-                ])
+                $request->only(AssociadoRequest::DADOS_BANCARIOS)
             );
 
             $associado->comoNosEncontrou()->updateOrCreate(
-                [
-                    'associado_id' => $associado->id,
-                ],
+                ['associado_id' => $associado->id],
                 [
                     'nome' => $request->input('nome'),
                     'descricao' => $request->input('como_nos_encontrou_descricao'),
@@ -404,7 +150,7 @@ class AssociadoController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Erro ao atualizar associado');
+            return redirect()->back()->with('error', 'Erro ao atualizar associado')->withInput();
         }
 
         return redirect()->route('associado.show', $associado->id)->with('msg', 'Associado alterado com sucesso!');
@@ -438,155 +184,6 @@ class AssociadoController extends Controller
         return redirect('/associado')->with('msg', 'Associado deletado com sucesso!');
     }
 
-    public function storePictureProfile(Request $request, $associadoId)
-    {
-        $this->autorizarAcessoAoAssociado($associadoId);
-
-        $associado = Associado::findOrFail($associadoId);
-
-        $request->validate([
-            'picture_profile' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
-        ], [
-            'picture_profile.required' => 'Selecione uma foto.',
-            'picture_profile.uploaded' => 'Não foi possível enviar a foto. Tente uma imagem menor.',
-            'picture_profile.image' => 'O arquivo deve ser uma imagem.',
-            'picture_profile.mimes' => 'A foto deve ser JPG, PNG ou WEBP.',
-            'picture_profile.max' => 'A foto não pode passar de 10MB.',
-        ]);
-
-        DB::beginTransaction();
-
-        $newPath = null;
-
-        try {
-            // 1️⃣ salva o arquivo
-            $newPath = $request->file('picture_profile')
-                ->store('picture_profiles', 'midia');
-
-            // 2️⃣ pega a antiga
-            $oldPicture = PictureProfile::where('associado_id', $associado->id)->first();
-
-            // 3️⃣ cria ou atualiza
-            PictureProfile::updateOrCreate(
-                ['associado_id' => $associado->id],
-                ['path' => $newPath]
-            );
-
-            // 4️⃣ apaga a antiga só se for diferente
-            if ($oldPicture && $oldPicture->path !== $newPath) {
-                if (Storage::disk('midia')->exists($oldPicture->path)) {
-                    Storage::disk('midia')->delete($oldPicture->path);
-                }
-            }
-
-            DB::commit();
-
-            return back()->with('msg', 'Foto de perfil atualizada com sucesso!');
-        } catch (\Exception $e) {
-
-            DB::rollBack();
-
-            // 🔥 evita arquivo órfão
-            if ($newPath && Storage::disk('midia')->exists($newPath)) {
-                Storage::disk('midia')->delete($newPath);
-            }
-
-            return back()->with('error', 'Erro ao atualizar foto.');
-        }
-    }
-
-    public function destroyPictureProfile($associadoId)
-    {
-        $this->autorizarAcessoAoAssociado($associadoId);
-
-        $picture = PictureProfile::where('associado_id', $associadoId)->first();
-
-        DB::beginTransaction();
-        try {
-
-            if ($picture) {
-
-                // apaga o arquivo físico
-                if (Storage::disk('midia')->exists($picture->path)) {
-                    Storage::disk('midia')->delete($picture->path);
-                }
-
-                // apaga o registro no banco
-                $picture->delete();
-            }
-
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('error', 'Erro ao deletar foto.');
-        }
-
-        return back()->with('msg', 'Foto de perfil deletada com sucesso!');
-    }
-
-    public function showCarteirinha($id)
-    {
-        $this->autorizarAcessoAoAssociado($id);
-
-        $associado = Associado::with('membro.diretoria', 'membro.funcao')->findOrFail($id);
-
-        $membro = $associado->membro;
-
-
-        return view('dashboard.associadoComponents.carteirinha-download', compact('associado', 'membro'));
-    }
-
-    public function showVerticalCarteirinha($id)
-    {
-        $this->autorizarAcessoAoAssociado($id);
-
-        $associado = Associado::with('membro.diretoria', 'membro.funcao')->findOrFail($id);
-
-        $membro = $associado->membro;
-
-        return view('dashboard.associadoComponents.carteirinha-vertical', compact('associado', 'membro'));
-    }
-
-    public function associadoInfo($id)
-    {
-        $this->autorizarAcessoAoAssociado($id);
-
-        // Buscar UFs do IBGE
-        // $ufs = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-        //     ->json();
-
-        try {
-            $response = Http::timeout(5)->get('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
-
-            if ($response->successful()) {
-                $ufs = collect($response->json())
-                    ->sortBy('nome')
-                    ->values()
-                    ->all();
-            } else {
-                $ufs = [];
-            }
-        } catch (\Exception $e) {
-            $ufs = [];
-        }
-
-        $opms = Opm::orderBy('nome')->get();
-
-
-        $associado = Associado::findOrFail($id);
-
-        return view('dashboard.associadoComponents.associado-informacoes', compact('associado', 'ufs', 'opms'));
-    }
-
-    public function validarCarteirinha($id)
-    {
-        $associado = Associado::findOrFail($id);
-
-        $situacoes = Situacao::all();
-
-        return view('dashboard.associadoComponents.verificar', compact('associado', 'situacoes'));
-    }
-
     public function resetPassword($id)
     {
         $user = Auth::user();
@@ -601,11 +198,9 @@ class AssociadoController extends Controller
         $cpf = preg_replace('/\D/', '', $associado->cpf);
 
         if ($associado->user) {
-
             $associado->user->update([
                 'password' => Hash::make($cpf)
             ]);
-
         } else {
             $usuario = User::create([
                 'name' => $associado->nome,
@@ -617,30 +212,6 @@ class AssociadoController extends Controller
             $usuario->syncRoles(['associado', 'user']);
         }
 
-
         return redirect()->back()->with('success', 'Senha resetada para o CPF do associado.');
-    }
-
-    /**
-     * Admin e moderador acessam qualquer associado;
-     * o associado acessa apenas o próprio cadastro.
-     */
-    private function autorizarAcessoAoAssociado($associadoId): void
-    {
-        $user = Auth::user();
-
-        if (!$user) {
-            abort(403, 'Acesso negado.');
-        }
-
-        if ($user->hasRole('admin|moderador')) {
-            return;
-        }
-
-        if ($user->hasRole('associado') && (string) $user->associado_id === (string) $associadoId) {
-            return;
-        }
-
-        abort(403, 'Acesso negado.');
     }
 }
