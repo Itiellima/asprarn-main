@@ -40,7 +40,8 @@ class HistoricoSituacoesController extends Controller
 
         } catch (\Exception $e){
             DB::rollBack();
-            return redirect()->back()->with('error', 'Erro ao inserir um historico: ' . $e->getMessage());
+            report($e); // detalhe técnico vai para o log, não para a tela
+            return redirect()->back()->with('error', 'Erro ao inserir o histórico. Tente novamente.');
 
         }
         
@@ -91,7 +92,8 @@ class HistoricoSituacoesController extends Controller
 
         } catch (\Exception $e){
             DB::rollBack();
-            return redirect()->back()->with('error', 'Erro ao atualizar o historico: ' . $e->getMessage());
+            report($e); // detalhe técnico vai para o log, não para a tela
+            return redirect()->back()->with('error', 'Erro ao atualizar o histórico. Tente novamente.');
 
         }
     }

@@ -190,7 +190,8 @@ class AssociadoController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Erro ao deletar associado : ' . $e->getMessage());
+            report($e); // detalhe técnico vai para o log, não para a tela
+            return redirect()->back()->with('error', 'Erro ao deletar associado. Tente novamente.');
         }
 
         return redirect('/associado')->with('msg', 'Associado deletado com sucesso!');

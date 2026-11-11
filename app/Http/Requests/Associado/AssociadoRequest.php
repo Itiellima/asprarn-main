@@ -2,17 +2,16 @@
 
 namespace App\Http\Requests\Associado;
 
-use App\Helpers\CpfHelper;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\RequestComMascara;
+use App\Rules\CpfValido;
 
 /**
  * Base do cadastro e da edição do associado: limpa as máscaras e
  * concentra as regras e mensagens que valem para os dois.
  */
-abstract class AssociadoRequest extends FormRequest
+abstract class AssociadoRequest extends RequestComMascara
 {
-    /** Campos digitados com máscara no formulário: guardados só com números */
-    private const CAMPOS_COM_MASCARA = ['cpf', 'tel_celular', 'tel_residencial', 'tel_trabalho'];
+    protected array $camposComMascara = ['cpf', 'tel_celular', 'tel_residencial', 'tel_trabalho'];
 
     /** Colunas da tabela associados preenchidas pelo formulário */
     public const DADOS_PESSOAIS = [
@@ -27,36 +26,14 @@ abstract class AssociadoRequest extends FormRequest
 
     public const DADOS_BANCARIOS = ['codigo', 'agencia', 'banco', 'conta', 'operacao', 'tipo'];
 
-    protected function prepareForValidation(): void
-    {
-        $limpos = [];
-
-        foreach (self::CAMPOS_COM_MASCARA as $campo) {
-            if ($this->has($campo)) {
-                $limpos[$campo] = preg_replace('/\D/', '', (string) $this->input($campo));
-            }
-        }
-
-        $this->merge($limpos);
-    }
-
     /** Regras comuns; o CPF único fica em cada classe (no update ignora o próprio associado) */
     protected function regrasComuns(): array
     {
         return [
             'nome' => ['required', 'string', 'max:255'],
-            'cpf' => ['bail', 'required', 'digits:11', $this->cpfValido()],
+            'cpf' => ['bail', 'required', 'digits:11', new CpfValido()],
             'dt_inclusao' => ['nullable', 'date'],
         ];
-    }
-
-    private function cpfValido(): \Closure
-    {
-        return function (string $attribute, mixed $value, \Closure $fail) {
-            if (!CpfHelper::validar($value)) {
-                $fail('CPF inválido.');
-            }
-        };
     }
 
     public function messages(): array
