@@ -49,7 +49,8 @@ class PastaDocumentoController extends Controller
             return redirect()->back()->with('success', 'Pasta de documentos criada com sucesso.');
         } catch (\Exception $e){
             DB::rollBack();
-            return redirect()->back()->with('error', 'Erro ao criar a pasta de documentos: ' . $e->getMessage());
+            report($e); // detalhe técnico vai para o log, não para a tela
+            return redirect()->back()->with('error', 'Erro ao criar a pasta de documentos. Tente novamente.');
         }
     }
 

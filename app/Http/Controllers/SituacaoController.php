@@ -56,9 +56,15 @@ class SituacaoController extends Controller
         // Verifica se o associado existe
         $associado = Associado::findOrFail($associadoId);
 
-        $situacoes = $request->input('situacoes', []);
+        // Id inexistente viraria erro de chave estrangeira (500); aqui vira mensagem
+        $dados = $request->validate([
+            'situacoes' => ['nullable', 'array'],
+            'situacoes.*' => ['integer', 'exists:situacoes,id'],
+        ], [
+            'situacoes.*.exists' => 'Situação inválida.',
+        ]);
 
-        $associado->situacoes()->sync($situacoes);
+        $associado->situacoes()->sync($dados['situacoes'] ?? []);
 
         return redirect()->back()->with('success', 'Situação atualizada com sucesso!');
     }

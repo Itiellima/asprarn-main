@@ -101,7 +101,8 @@ class CadastroController extends Controller
             }
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Erro ao criar associado: ' . $e->getMessage())->withInput();
+            report($e); // detalhe técnico vai para o log, não para a tela
+            return redirect()->back()->with('error', 'Erro ao criar associado. Tente novamente.')->withInput();
         }
     }
 }

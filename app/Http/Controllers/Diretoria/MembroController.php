@@ -56,7 +56,8 @@ class MembroController extends Controller
                 'fim_mandato' => $validated['fim_mandato'] ?? null,
             ]);
         } catch (\Exception $e) {
-            return redirect()->route('diretoria.membros.index')->with('error', 'Erro ao cadastrar novo membro. ' . $e->getMessage());
+            report($e); // detalhe técnico vai para o log, não para a tela
+            return redirect()->route('diretoria.membros.index')->with('error', 'Erro ao salvar o membro. Tente novamente.');
         }
 
         return redirect()->route('diretoria.membros.index')->with('success', 'Novo membro criado com sucesso.');
@@ -105,7 +106,8 @@ class MembroController extends Controller
                 'fim_mandato' => $validated['fim_mandato'] ?? null,
             ]);
         } catch (\Exception $e) {
-            return redirect()->route('diretoria.membros.index')->with('error', 'Erro ao cadastrar novo membro. ' . $e->getMessage());
+            report($e); // detalhe técnico vai para o log, não para a tela
+            return redirect()->route('diretoria.membros.index')->with('error', 'Erro ao salvar o membro. Tente novamente.');
         }
 
         return redirect()->route('diretoria.membros.index')->with('success', 'Membro atualizado com sucesso.');

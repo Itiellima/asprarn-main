@@ -58,7 +58,8 @@ class BeneficioController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return redirect('beneficio')->with('error', 'Erro ao criar beneficio!' . $e->getMessage());
+            report($e); // detalhe técnico vai para o log, não para a tela
+            return redirect('beneficio')->with('error', 'Erro ao criar benefício. Tente novamente.');
         }
     }
 
@@ -111,7 +112,8 @@ class BeneficioController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return redirect('beneficio')->with('error', 'Erro ao atualizar beneficio!' . $e->getMessage());
+            report($e); // detalhe técnico vai para o log, não para a tela
+            return redirect('beneficio')->with('error', 'Erro ao atualizar benefício. Tente novamente.');
         }
 
         return redirect()->route('beneficio.index')->with('success', 'Beneficio atualizado com sucesso!');
