@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\AssociadoController;
+use App\Http\Controllers\Associado\CarteirinhaController;
+use App\Http\Controllers\Associado\FotoPerfilController;
+use App\Http\Controllers\Associado\InformacoesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TrocarSenhaController;
 use Illuminate\Support\Facades\Route;
 
-// Qualquer usuário logado. Rotas com {id} de associado conferem no controller
-// (autorizarAcessoAoAssociado) se o dado é do próprio associado ou se é admin/moderador.
+// Qualquer usuário logado. Rotas com {id} de associado conferem na AssociadoPolicy
+// (app/Policies) se o dado é do próprio associado ou se é admin/moderador.
 Route::middleware(['auth'])->group(function () {
 
     //////////////////////////////// ********* TROCA OBRIGATÓRIA DE SENHA ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -19,11 +21,11 @@ Route::middleware(['auth'])->group(function () {
     Route::view('/associado/financeiro', 'dashboard.associado-financeiro')->name('associado.financeiro');
 
     //////////////////////////////// ********* DADOS DO ASSOCIADO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    Route::get('/asssociado/informacoes/{id}', [AssociadoController::class, 'associadoInfo'])->name('associado.informacoes');
+    Route::get('/asssociado/informacoes/{id}', [InformacoesController::class, 'show'])->name('associado.informacoes');
 
-    Route::post('/associado/{associadoId}/picture-profile/store', [AssociadoController::class, 'storePictureProfile'])->name('associado.picture-profile.store');
-    Route::delete('/associado/{associadoId}/picture-profile/destroy', [AssociadoController::class, 'destroyPictureProfile'])->name('associado.picture-profile.destroy');
+    Route::post('/associado/{associadoId}/picture-profile/store', [FotoPerfilController::class, 'store'])->name('associado.picture-profile.store');
+    Route::delete('/associado/{associadoId}/picture-profile/destroy', [FotoPerfilController::class, 'destroy'])->name('associado.picture-profile.destroy');
 
-    Route::get('/carteira-associados/{id}', [AssociadoController::class, 'showCarteirinha'])->name('carteira-associados');
-    Route::get('/carteira-associados1/{id}', [AssociadoController::class, 'showVerticalCarteirinha'])->name('carteira-associados-vertical');
+    Route::get('/carteira-associados/{id}', [CarteirinhaController::class, 'horizontal'])->name('carteira-associados');
+    Route::get('/carteira-associados1/{id}', [CarteirinhaController::class, 'vertical'])->name('carteira-associados-vertical');
 });
