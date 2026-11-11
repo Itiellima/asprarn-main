@@ -34,7 +34,6 @@ Route::middleware(['auth', 'role:admin|moderador'])->group(function () {
     Route::delete('/associado/delete/{id}', [AssociadoController::class, 'destroy'])->name('associado.destroy');
     Route::post('/associado/resetpassword/{id}', [AssociadoController::class, 'resetPassword'])->name('associado.reset.password');
     //////////////////////////////// ********* SITUACAO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    Route::post('/associado/situacao/{id}', [SituacaoController::class, 'storeSituacao'])->name('associado.situacao.store');
     Route::post('/situacao/store', [SituacaoController::class, 'store'])->name('situacao.store');
     Route::post('/situacao/update/{associadoId}', [SituacaoController::class, 'update'])->name('situacao.update');
     Route::delete('/situacao/destroy/{id}', [SituacaoController::class, 'destroy'])->name('situacao.destroy');
