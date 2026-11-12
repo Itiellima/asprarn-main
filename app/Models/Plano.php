@@ -24,6 +24,7 @@ class Plano extends Model
 
     protected $casts = [
         'beneficios' => 'array',
+        'preco' => 'decimal:2',
     ];
 
     

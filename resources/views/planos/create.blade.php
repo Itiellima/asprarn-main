@@ -5,6 +5,12 @@
 @section('content')
     @include('dashboard.layouts.nav-dashboard')
 
+    @php
+        // Depois de um erro de validação, volta o que foi digitado; senão, o que está salvo
+        $beneficios = old('beneficios', $plano->beneficios ?? []) ?: [''];
+        $preco = old('preco', $plano->exists ? number_format($plano->preco, 2, ',', '.') : '');
+    @endphp
+
     <div class="container">
 
         <div class=" display-flex row justify-content align-center alert alert-light m-3 text-center">
@@ -14,7 +20,7 @@
                 </strong>
             </h1>
             <hr>
-            <h2>INSERIR NOVO PLANO</h2>
+            <h2>{{ $plano->exists ? 'EDITAR PLANO' : 'INSERIR NOVO PLANO' }}</h2>
         </div>
 
         <div class="container mb-3">
@@ -31,26 +37,16 @@
                         value="{{ old('nome', $plano->nome ?? '') }}">
                 </div>
 
-                @if ($plano->exists)
-                    @foreach ($plano->beneficios as $beneficio)
-                        <div id="add-container">
-                            <div class="mb-3 add">
-                                <label for="beneficios" class="form-label">Beneficio</label>
-                                <textarea class="form-control" name="beneficios[]" rows="3" required>{{ old('beneficios[]', $beneficio) }}</textarea>
-                                <button type="button" class="btn btn-sm btn-danger mt-1 remove-beneficios">Remover</button>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-secondary mb-3" id="add">+ Adicionar Beneficio</button>
-                    @endforeach
-                @else
-                    <div id="add-container">
+                <div id="add-container">
+                    @foreach ($beneficios as $beneficio)
                         <div class="mb-3 add">
-                            <label for="beneficios" class="form-label">Beneficio</label>
-                            <textarea class="form-control" id="beneficios" name="beneficios[]" rows="3" required></textarea>
+                            <label class="form-label">Benefício</label>
+                            <textarea class="form-control" name="beneficios[]" rows="3" required>{{ $beneficio }}</textarea>
+                            <button type="button" class="btn btn-sm btn-danger mt-1 remove-beneficios">Remover</button>
                         </div>
-                    </div>
-                    <button type="button" class="btn btn-secondary mb-3" id="add">+ Adicionar Beneficio</button>
-                @endif
+                    @endforeach
+                </div>
+                <button type="button" class="btn btn-secondary mb-3" id="add">+ Adicionar Benefício</button>
 
                 <div class="mb-3">
                     <label for="descricao" class="form-label">Descrição</label>
@@ -60,8 +56,8 @@
 
                 <div class="mb-3">
                     <label for="preco" class="form-label">Valor</label>
-                    <input type="text" class="form-control" id="preco" name="preco" required
-                        value="{{ old('preco', $plano->preco ?? '') }}">
+                    <input type="text" class="form-control" id="preco" name="preco" required inputmode="numeric"
+                        value="{{ $preco }}">
                 </div>
 
                 <button type="submit" class="btn btn-primary">
@@ -76,7 +72,10 @@
     <script>
         document.addEventListener('click', function(e) {
             if (e.target.classList.contains('remove-beneficios')) {
-                e.target.closest('.add').remove();
+                // Mantém pelo menos um campo de benefício na tela
+                if (document.querySelectorAll('#add-container .add').length > 1) {
+                    e.target.closest('.add').remove();
+                }
             }
         });
 

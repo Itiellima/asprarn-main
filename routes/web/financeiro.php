@@ -33,7 +33,6 @@ Route::middleware(['auth', 'role:admin|financeiro'])->group(function () {
     Route::delete('/planos/destroy/{id}', [PlanosController::class, 'destroy'])->name('planos.destroy');
     Route::get('/planos/edit/{id}', [PlanosController::class, 'edit'])->name('planos.edit');
     Route::put('/planos/update/{id}', [PlanosController::class, 'update'])->name('planos.update');
-    Route::get('/associado/financeiro/{associadoId}', [PlanosController::class, 'index'])->name('associado.financeiro.index');
 
     //////////////////////////////// ********* GESTÃO FINANCEIRA ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
