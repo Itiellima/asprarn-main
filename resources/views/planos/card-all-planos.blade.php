@@ -3,7 +3,7 @@
         <div class="alert alert-success" role="alert">
             <h4 class="alert-heading">{{ $plano->nome }}</h4>
             <p>
-                @foreach ($plano->beneficios as $beneficio)
+                @foreach ($plano->beneficios ?? [] as $beneficio)
                     {{ $beneficio }}
                     <br>
                 @endforeach

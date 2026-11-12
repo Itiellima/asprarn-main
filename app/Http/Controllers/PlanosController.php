@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Associado;
+use App\Http\Requests\PlanoRequest;
 use App\Models\Plano;
-use Illuminate\Http\Request;
-use Livewire\Attributes\Validate;
-use Illuminate\Support\Facades\DB;
 
 class PlanosController extends Controller
 {
-
     public function index()
     {
         $planos = Plano::all();
@@ -18,83 +14,51 @@ class PlanosController extends Controller
         return view('planos.index', compact('planos'));
     }
 
-    
-    public function create(){
-
+    public function create()
+    {
         $plano = new Plano();
 
         return view('planos.create', compact('plano'));
     }
 
-
-    // Cria um novo plano
-    public function store(Request $request){
-
-        $request->validate([
-            'nome' => 'required|string|max:255',
-            'beneficios.*' => 'required|string|max:500',
-            'descricao' => 'required|string|max:500',
-            'preco' => 'required|string|min:0'
-        ], [
-            'beneficios.*.max' => 'Cada item da descrição não pode exceder 500 caracteres.',
-            'descricao.max' => 'Descrição não pode exceder 500 caracteres.',
-        ]);
-        
-        $preco = str_replace(['.', ','], ['', '.'], $request->input('preco'));
-
-        DB::beginTransaction();
-        try{
-            $plano = Plano::create([
-                'nome' => $request->input('nome'),
-                'beneficios' => $request->input('beneficios'),
-                'descricao' => $request->input('descricao'),
-                'preco' => $preco,
-            ]);
-
-            DB::commit();
-        }
-        catch(\Exception $e){
-            DB::rollBack();
-            return redirect()->back()->withInput()->with('error', 'Erro ao criar o plano');
+    public function store(PlanoRequest $request)
+    {
+        try {
+            Plano::create($request->only(PlanoRequest::CAMPOS));
+        } catch (\Exception $e) {
+            report($e); // detalhe técnico vai para o log, não para a tela
+            return redirect()->back()->withInput()->with('error', 'Erro ao criar o plano. Tente novamente.');
         }
 
-        return redirect()->route('planos.index')->with('success', 'Plano associado com sucesso!');
+        return redirect()->route('planos.index')->with('success', 'Plano criado com sucesso!');
     }
 
-    public function destroy($id){
-        $plano = Plano::findOrFail($id);
-        $plano->delete();
-
-        return redirect()->route('planos.index')->with('success', 'Plano deletado com sucesso!');
-    }
-
-    public function edit($id){
+    public function edit($id)
+    {
         $plano = Plano::findOrFail($id);
 
         return view('planos.create', compact('plano'));
     }
 
-    public function update(Request $request, $id){
-
-        $request->validate([
-            'nome' => 'required|string|max:255',
-            'beneficios.*' => 'required|string|max:500',
-            'descricao' => 'required|string|max:500',
-            'preco' => 'required|numeric|min:0'
-        ], [
-            'beneficios.*.max' => 'Cada item da descrição não pode exceder 500 caracteres.',
-            'descricao.max' => 'Descrição não pode exceder 500 caracteres.',
-        ]);
-
-
+    public function update(PlanoRequest $request, $id)
+    {
         $plano = Plano::findOrFail($id);
-        $plano->update( $request->only([
-            'nome',
-            'beneficios',
-            'descricao',
-            'preco'
-        ]));
+
+        try {
+            $plano->update($request->only(PlanoRequest::CAMPOS));
+        } catch (\Exception $e) {
+            report($e);
+            return redirect()->back()->withInput()->with('error', 'Erro ao atualizar o plano. Tente novamente.');
+        }
 
         return redirect()->route('planos.index')->with('success', 'Plano atualizado com sucesso!');
+    }
+
+    public function destroy($id)
+    {
+        $plano = Plano::findOrFail($id);
+        $plano->delete();
+
+        return redirect()->route('planos.index')->with('success', 'Plano excluído com sucesso!');
     }
 }
