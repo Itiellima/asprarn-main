@@ -29,6 +29,21 @@ class CpfHelper
     }
 
     /**
+     * Formata o CPF para exibição ao próprio associado: 529.982.247-25.
+     * O banco guarda só os números; se não tiver 11 dígitos, devolve como está.
+     */
+    public static function formatar($cpf)
+    {
+        $numeros = preg_replace('/[^0-9]/', '', (string) $cpf);
+
+        if (strlen($numeros) !== 11) {
+            return $cpf;
+        }
+
+        return substr($numeros, 0, 3) . '.' . substr($numeros, 3, 3) . '.' . substr($numeros, 6, 3) . '-' . substr($numeros, 9, 2);
+    }
+
+    /**
      * Mascara o CPF para exibição pública: ***.456.789-**
      */
     public static function mascarar($cpf)

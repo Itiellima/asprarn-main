@@ -18,7 +18,6 @@ Route::middleware(['auth'])->group(function () {
     //////////////////////////////// ********* DASHBOARD ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('verified')->name('dashboard');
     Route::view('/profile', 'profile.show')->name('profile.view');
-    Route::view('/associado/financeiro', 'dashboard.associado-financeiro')->name('associado.financeiro');
 
     //////////////////////////////// ********* DADOS DO ASSOCIADO ********* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     Route::get('/asssociado/informacoes/{id}', [InformacoesController::class, 'show'])->name('associado.informacoes');

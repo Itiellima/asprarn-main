@@ -125,11 +125,11 @@
 
         <div class="dados">
             <div class="border rounded" style="width: 250px">
-                <strong>CPF:</strong> {{ $associado->cpf }}
+                <strong>CPF:</strong> {{ \App\Helpers\CpfHelper::formatar($associado->cpf) }}
             </div>
             <div class="border rounded" style="width: 250px">
                 <strong> Data de
-                    nascimento:</strong> {{ \Carbon\Carbon::parse($associado->dt_nasc)->format('d/m/Y') }}<br>
+                    nascimento:</strong> {{ $associado->dt_nasc?->format('d/m/Y') ?? 'Não informada' }}<br>
             </div>
             <div class="border rounded" style="width: 250px">
                 <strong>

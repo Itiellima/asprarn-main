@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Models\Associado;
 use Illuminate\Support\Facades\DB;
-use App\Models\Situacao;
 
 class DashboardController extends Controller
 {
