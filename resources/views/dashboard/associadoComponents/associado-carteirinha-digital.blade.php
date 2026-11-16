@@ -32,13 +32,13 @@
 
                     <div class="mb-2">
                         <small class="text-muted">CPF</small>
-                        <div>{{ $associado->cpf }}</div>
+                        <div>{{ \App\Helpers\CpfHelper::formatar($associado->cpf) }}</div>
                     </div>
 
                     <div class="mb-2">
                         <small class="text-muted">Data de nascimento</small>
                         <div>
-                            {{ \Carbon\Carbon::parse($associado->dt_nasc)->format('d/m/Y') }}
+                            {{ $associado->dt_nasc?->format('d/m/Y') ?? 'Não informada' }}
                         </div>
                     </div>
 
@@ -53,25 +53,28 @@
             {{-- Ações --}}
             <div class="d-flex flex-wrap gap-2 mt-3 pt-3 border-top">
 
-                <a class="btn btn-sm btn-primary"
-                   @if ($associado->pictureProfile)
-                       href="{{ route('carteira-associados', $associado->id) }}"
-                       target="_blank"
-                   @else
-                       onclick="alert('Faça o upload de uma foto para baixar a carteirinha')"
-                   @endif>
-                    <i class="bi bi-download"></i> Download
-                </a>
+                @if ($associado->pictureProfile)
+                    <a class="btn btn-sm btn-primary" target="_blank"
+                       href="{{ route('carteira-associados', $associado->id) }}">
+                        <i class="bi bi-download"></i> Download
+                    </a>
 
-                <a class="btn btn-sm btn-primary"
-                   @if ($associado->pictureProfile)
-                       href="{{ route('carteira-associados-vertical', $associado->id) }}"
-                       target="_blank"
-                   @else
-                       onclick="alert('Faça o upload de uma foto para visualizar a carteirinha')"
-                   @endif>
-                    <i class="bi bi-eye"></i> Visualizar
-                </a>
+                    <a class="btn btn-sm btn-primary" target="_blank"
+                       href="{{ route('carteira-associados-vertical', $associado->id) }}">
+                        <i class="bi bi-eye"></i> Visualizar
+                    </a>
+                @else
+                    {{-- Sem foto não há carteirinha: botão (não link) que só explica o motivo --}}
+                    <button type="button" class="btn btn-sm btn-primary"
+                            onclick="alert('Faça o upload de uma foto para baixar a carteirinha')">
+                        <i class="bi bi-download"></i> Download
+                    </button>
+
+                    <button type="button" class="btn btn-sm btn-primary"
+                            onclick="alert('Faça o upload de uma foto para visualizar a carteirinha')">
+                        <i class="bi bi-eye"></i> Visualizar
+                    </button>
+                @endif
 
                 <button type="button"
                         class="btn btn-sm btn-warning"

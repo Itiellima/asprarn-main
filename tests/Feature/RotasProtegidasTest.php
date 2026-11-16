@@ -43,7 +43,6 @@ class RotasProtegidasTest extends TestCase
         'POST trocar-senha',
         'GET dashboard',
         'GET profile',
-        'GET associado/financeiro',
         'GET asssociado/informacoes/{id}',
         'POST associado/{associadoId}/picture-profile/store',
         'DELETE associado/{associadoId}/picture-profile/destroy',

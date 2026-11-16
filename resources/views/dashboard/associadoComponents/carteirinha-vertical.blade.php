@@ -147,10 +147,10 @@
         </div>
 
         <div class="dados">
-            <strong>CPF:</strong> {{ $associado->cpf }} <br>
+            <strong>CPF:</strong> {{ \App\Helpers\CpfHelper::formatar($associado->cpf) }} <br>
 
             <strong>Nascimento:</strong>
-            {{ \Carbon\Carbon::parse($associado->dt_nasc)->format('d/m/Y') }} <br>
+            {{ $associado->dt_nasc?->format('d/m/Y') ?? 'Não informada' }} <br>
 
             <strong>Validade:</strong>
             {{ \Carbon\Carbon::parse($associado->validade)->addDays(30)->format('d/m/Y') }} <br>
