@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PastaDocumento;
 use App\Models\Associado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,11 +18,6 @@ class PastaDocumentoController extends Controller
 
 
         return view('associado.pastas.index', compact('associado', 'pastas'));
-    }
-
-    public function create()
-    {
-        //
     }
 
     public function store(Request $request, $associadoId)
@@ -57,9 +51,7 @@ class PastaDocumentoController extends Controller
     public function show($associadoId, $pastaId)
     {
         $associado = Associado::findOrFail($associadoId);
-        $pasta = $associado->pastaDocumentos()->with('files')->findOrFail($pastaId);
-
-        $arquivos = $pasta->files;
+        $pasta = $associado->pastaDocumentos()->findOrFail($pastaId);
 
         $search = request('search');
 
@@ -72,9 +64,10 @@ class PastaDocumentoController extends Controller
                         ->orWhere('observacao', 'like', "%{$search}%");
                 });
             })
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
-        return view('associado.pastas.show', compact('pasta', 'associado', 'documentos', 'search', 'arquivos'));
+        return view('associado.pastas.show', compact('pasta', 'associado', 'documentos', 'search'));
     }
 
     public function destroy($associadoId, $pastaId){
@@ -83,17 +76,15 @@ class PastaDocumentoController extends Controller
 
         DB::beginTransaction();
         try{
-            // Deletar todos os arquivos associados a pasta
-            foreach ($pasta->files as $file){
-                $file->delete();
-            }
-            // Deletar a pasta
+            // O model PastaDocumento apaga os registros dos arquivos, e o model File
+            // só apaga do bucket depois do commit (se der rollback, nada se perde)
             $pasta->delete();
             DB::commit();
-            return redirect()->back()->with('success', 'Pasta deletada com sucesso.');
+            return redirect()->back()->with('success', 'Pasta excluída com sucesso.');
         } catch (\Exception $e){
             DB::rollBack();
-            return redirect()->back()->with('error', 'Erro ao deletar a pasta');
+            report($e); // detalhe técnico vai para o log, não para a tela
+            return redirect()->back()->with('error', 'Erro ao excluir a pasta. Tente novamente.');
         }
     }
 

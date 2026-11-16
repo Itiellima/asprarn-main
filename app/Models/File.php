@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class File extends Model
@@ -47,11 +48,16 @@ class File extends Model
             }
 
             $disco = Storage::disk($file->disco());
+            $path = $file->path;
 
-            // Deleta o arquivo físico ao deletar o registro no banco
-            if ($disco->exists($file->path)) {
-                $disco->delete($file->path);
-            }
+            // Deleta o arquivo físico só depois que a exclusão no banco for confirmada:
+            // dentro de uma transação que dá rollback, o registro volta e o arquivo continua lá.
+            // Fora de transação, roda na hora.
+            DB::afterCommit(function () use ($disco, $path) {
+                if ($disco->exists($path)) {
+                    $disco->delete($path);
+                }
+            });
         });
     }
 }
