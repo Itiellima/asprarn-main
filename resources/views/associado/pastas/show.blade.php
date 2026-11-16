@@ -31,7 +31,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Enviar documento</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -41,10 +41,7 @@
                         <form action="{{ route('associado.pasta.documentos.store', ['pastaId' => $pasta->id]) }}"
                             method="POST" enctype="multipart/form-data">
                             @csrf
-                            {{-- <label>Tipo de Documento</label>
-                            <input type="text" class="form-control" name="tipo_documento" required> --}}
-
-                            <label>Arquivo: pdf, jpg, jpeg, png.</label>
+                            <label>Arquivo: PDF, JPG ou PNG, até 10 MB.</label>
                             <input class="form-control" type="file" name="arquivo" required>
 
                             <label>Observação</label>
@@ -64,19 +61,31 @@
     </div>
 
     <div class="container">
+        {{-- Busca por nome do arquivo, status ou observação --}}
+        <form method="GET" action="{{ route('associado.pasta.show', [$associado->id, $pasta->id]) }}" class="d-flex gap-2 mb-3">
+            <input type="text" name="search" class="form-control" placeholder="Buscar por arquivo, status ou observação"
+                value="{{ $search }}">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+            @if ($search)
+                <a href="{{ route('associado.pasta.show', [$associado->id, $pasta->id]) }}" class="btn btn-secondary">Limpar</a>
+            @endif
+        </form>
+
         <table class="table">
             <thead>
                 <tr>
                     <th>Arquivo</th>
                     <th>Status</th>
+                    <th>Observação</th>
                     <th>Ação</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($arquivos as $file)
+                @forelse ($documentos as $file)
                     <tr>
                         <td>{{ $file->tipo_documento }}</td>
-                        <td>{{ $file->status }}</td>
+                        <td>{{ ucfirst($file->status) }}</td>
+                        <td>{{ $file->observacao }}</td>
                         <td>
                             <a href="{{ route('associado.pasta.documentos.show', ['pastaId' => $pasta->id, 'fileId' => $file->id]) }}"
                                 class="btn btn-sm btn-primary" target="_blank">
@@ -96,7 +105,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h3 class="modal-title fs-5" id="modalLabel{{ $file->id }}">
-                                                Editar Documento de {{ $file->nome }}
+                                                Editar documento: {{ $file->tipo_documento }}
                                             </h3>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Fechar"></button>
@@ -146,11 +155,17 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
-
+                @empty
+                    <tr>
+                        <td colspan="4" class="text-muted">
+                            {{ $search ? 'Nenhum documento encontrado para essa busca.' : 'Nenhum documento nesta pasta.' }}
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
-
         </table>
+
+        {{ $documentos->links('pagination::bootstrap-5') }}
     </div>
 
 @endsection

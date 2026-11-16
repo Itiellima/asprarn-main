@@ -2,56 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Associado;
-use App\Models\File; // novo model polimórfico
+use App\Models\File;
 use App\Models\PastaDocumento;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
+/**
+ * Arquivos dentro das pastas de documentos do associado.
+ * Só a diretoria acessa: grupo de rotas role:admin|moderador (routes/web/admin.php).
+ */
 class DocumentoAssociadoController extends Controller
 {
-
-    // public function indexDocumento($id)
-    // {
-
-    //     $user = Auth::user();
-
-    //     if (!$user || !$user->hasAnyRole(['admin', 'moderador'])) {
-    //         return redirect()->route('index')->with('error', 'Acesso negado. Você não tem permissão para acessar esta página.');
-    //     }
-
-    //     $pasta = PastaDocumento::with([
-    //         'files',
-    //         'associado'
-    //     ])->findOrFail($id);
-
-    //     $search = request('search');
-
-    //     $documentos = $pasta->files()
-    //         ->when($search, function ($query, $search) {
-    //             $query->where('tipo_documento', 'like', "%{$search}%")
-    //                 ->orWhere('status', 'like', "%{$search}%")
-    //                 ->orWhere('observacao', 'like', "%{$search}%");
-    //         })
-    //         ->paginate(10);
-
-    //     return view('associado.documentos.index', compact('pasta', 'documentos', 'search'));
-    // }
-
-    // Criar documento na pasta
+    // Enviar documento para a pasta
     public function store(Request $request, $pastaId)
     {
-        // Validação dos dados do formulário
         $request->validate([
-            'tipo_documento' => 'string|max:50',
-            'arquivo' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
-            'observacao' => 'nullable|string',
+            // 10 MB: o mesmo limite da foto de perfil (docker/php.ini aceita até 10M por arquivo)
+            'arquivo' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240',
+            'observacao' => 'nullable|string|max:1000',
+        ], [
+            'arquivo.required' => 'Selecione um arquivo.',
+            'arquivo.mimes' => 'Envie um arquivo PDF, JPG ou PNG.',
+            'arquivo.max' => 'O arquivo não pode passar de 10 MB.',
+            'arquivo.uploaded' => 'Não foi possível enviar o arquivo. Tente um arquivo menor.',
         ]);
 
-        // Confirma se a pasta existe
         $pasta = PastaDocumento::findOrFail($pastaId);
 
         $path = null;
@@ -60,21 +37,14 @@ class DocumentoAssociadoController extends Controller
         try {
             DB::beginTransaction();
 
-            // Obtém o ID do associado da pasta
-            $associadoId = $pasta->associado_id;
-
-            // Obtém o arquivo enviado
             $arquivo = $request->file('arquivo');
 
-            // Obtém o nome original do arquivo
-            $nomeOriginal = $arquivo->getClientOriginalName();
-
             // Salva o arquivo no bucket privado de documentos
-            $path = $arquivo->store("documentos/{$associadoId}/{$pastaId}", $disco);
+            $path = $arquivo->store("documentos/{$pasta->associado_id}/{$pasta->id}", $disco);
 
-            // Cria o registro do arquivo na tabela files
+            // tipo_documento guarda o nome original do arquivo (usado no download)
             $pasta->files()->create([
-                'tipo_documento' => $nomeOriginal,
+                'tipo_documento' => $arquivo->getClientOriginalName(),
                 'path' => $path,
                 'status' => 'pendente',
                 'observacao' => $request->observacao,
@@ -95,8 +65,8 @@ class DocumentoAssociadoController extends Controller
                 }
             }
 
-            Log::error('Erro ao enviar documentos: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Ocorreu um erro ao enviar os arquivos, tente novamente');
+            report($e); // detalhe técnico vai para o log, não para a tela
+            return redirect()->back()->with('error', 'Ocorreu um erro ao enviar o arquivo. Tente novamente.');
         }
     }
 
@@ -108,7 +78,6 @@ class DocumentoAssociadoController extends Controller
             ->where('fileable_type', PastaDocumento::class)
             ->where('fileable_id', $pastaId)
             ->firstOrFail();
-
 
         $disco = Storage::disk($file->disco());
 
@@ -126,9 +95,7 @@ class DocumentoAssociadoController extends Controller
     // Excluir documento
     public function destroy($pastaId, $fileId)
     {
-        // Verifica se o arquivo pertence ao associado através da pasta
-        $file = File::where('id', $fileId)
-            ->where('fileable_type', PastaDocumento::class)
+        $file = File::where('fileable_type', PastaDocumento::class)
             ->where('fileable_id', $pastaId)
             ->findOrFail($fileId);
 
@@ -138,20 +105,12 @@ class DocumentoAssociadoController extends Controller
         return redirect()->back()->with('success', 'Documento excluído com sucesso!');
     }
 
-
-
-
-
-
-
-
-
     // Atualizar status/observação
     public function update(Request $request, $pastaId, $fileId)
     {
         $request->validate([
             'status' => 'required|in:pendente,recebido,rejeitado',
-            'observacao' => 'nullable|string',
+            'observacao' => 'nullable|string|max:1000',
         ]);
 
         $file = File::where('fileable_type', PastaDocumento::class)

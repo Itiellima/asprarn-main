@@ -154,6 +154,61 @@ class DocumentosAssociadoTest extends TestCase
         $this->assertSame(0, $this->pasta->files()->count());
     }
 
+    public function test_aceita_documento_de_ate_10_mb_e_recusa_maior(): void
+    {
+        // PDF escaneado passa fácil dos 2 MB do limite antigo
+        $this->actingAs($this->moderador)
+            ->post("/associado/pasta/documentos/store/{$this->pasta->id}", [
+                'arquivo' => UploadedFile::fake()->create('escaneado.pdf', 8000, 'application/pdf'),
+            ])
+            ->assertSessionHas('success');
+
+        $this->actingAs($this->moderador)
+            ->post("/associado/pasta/documentos/store/{$this->pasta->id}", [
+                'arquivo' => UploadedFile::fake()->create('grande.pdf', 11000, 'application/pdf'),
+            ])
+            ->assertSessionHasErrors(['arquivo' => 'O arquivo não pode passar de 10 MB.']);
+
+        $this->assertSame(1, $this->pasta->files()->count());
+    }
+
+    public function test_busca_na_pasta_filtra_os_documentos(): void
+    {
+        $this->pasta->files()->create(['path' => 'x/rg.pdf', 'tipo_documento' => 'rg-fulano.pdf', 'status' => 'recebido']);
+        $this->pasta->files()->create(['path' => 'x/cpf.pdf', 'tipo_documento' => 'cpf-fulano.pdf', 'status' => 'pendente']);
+
+        $url = "/associado/pasta/show/{$this->associado->id}/{$this->pasta->id}";
+
+        $this->actingAs($this->moderador)->get($url)
+            ->assertOk()
+            ->assertSee('rg-fulano.pdf')
+            ->assertSee('cpf-fulano.pdf');
+
+        // Antes a view listava tudo e ignorava a busca
+        $this->actingAs($this->moderador)->get($url . '?search=rg-')
+            ->assertOk()
+            ->assertSee('rg-fulano.pdf')
+            ->assertDontSee('cpf-fulano.pdf');
+    }
+
+    public function test_rollback_na_exclusao_mantem_o_arquivo_no_bucket(): void
+    {
+        $file = $this->enviarDocumento();
+
+        try {
+            \Illuminate\Support\Facades\DB::transaction(function () use ($file) {
+                $file->delete();
+                throw new \RuntimeException('falha depois de apagar o registro');
+            });
+        } catch (\RuntimeException) {
+            // esperado
+        }
+
+        // O registro voltou com o rollback, e o arquivo continua no bucket
+        $this->assertModelExists($file);
+        Storage::disk('documentos')->assertExists($file->path);
+    }
+
     public function test_arquivos_de_posts_ficam_no_bucket_de_midia(): void
     {
         $this->assertSame('midia', File::discoPara(Post::class));
