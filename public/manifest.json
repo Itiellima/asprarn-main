@@ -4,20 +4,36 @@
     "id": "/",
     "start_url": "/",
     "display": "fullscreen",
+    "lang": "pt-BR",
+    "dir": "ltr",
     "theme_color": "#0d6efd",
     "background_color": "#ffffff",
-    "description": "Aplicativo para gestão da ASPRA PM RN.",
-    "orientation": "portrait-primary",
+    "description": "Associação dos Praças da Polícia Militar do Rio Grande do Norte: notícias, carteirinha digital e área do associado.",
+    "categories": ["social", "news"],
     "icons": [
         {
             "src": "/icons/icon-192.png",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
         },
         {
             "src": "/icons/icon-512.png",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/icons/icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/icons/icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
         }
     ],
     "screenshots": [
@@ -25,7 +41,8 @@
             "src": "/icons/screenshot1.png",
             "sizes": "1080x1920",
             "type": "image/png",
-            "form_factor": "wide"
+            "form_factor": "narrow",
+            "label": "Página inicial da ASPRA PM RN"
         }
     ]
 }
