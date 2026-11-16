@@ -10,6 +10,18 @@
 
     <title>@yield('title')</title>
 
+    {{-- Descrição e prévia ao compartilhar o link (WhatsApp, Facebook...).
+         Cada página pode trocar com @section('meta_description'), @section('og_image') e @section('og_type') --}}
+    @php($descricaoPadrao = 'Associação dos Praças da Polícia Militar do Rio Grande do Norte (ASPRA PM/RN): notícias, convênios e benefícios para os associados.')
+    <meta name="description" content="@yield('meta_description', $descricaoPadrao)">
+    <meta property="og:site_name" content="ASPRA PM/RN">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:title" content="@yield('title', 'ASPRA PM/RN')">
+    <meta property="og:description" content="@yield('meta_description', $descricaoPadrao)">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="@yield('og_image', asset('img/Aspra.png'))">
+
     {{-- link bootstrap --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">

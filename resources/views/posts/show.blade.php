@@ -2,6 +2,16 @@
 
 @section('title', 'AspraRN - ' . $post->titulo)
 
+{{-- Prévia do link compartilhado: resumo do assunto (ou do texto, sem HTML) e a primeira imagem --}}
+@section('meta_description', \Illuminate\Support\Str::limit(
+    trim(preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags($post->assunto ?: $post->texto ?? ''), ENT_QUOTES, 'UTF-8'))),
+    160
+))
+@section('og_type', 'article')
+@if ($post->files->isNotEmpty())
+    @section('og_image', $post->files->first()->url)
+@endif
+
 @section('content')
     <div class="container body-offset">
 
