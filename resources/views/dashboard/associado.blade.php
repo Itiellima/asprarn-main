@@ -10,7 +10,11 @@
 
         @include('dashboard.associadoComponents.associado-carteirinha-digital')
 
+        @include('dashboard.associadoComponents.associado-situacao')
+
         @include('dashboard.associadoPagamentos.listarPagamentos')
+
+        @include('dashboard.associadoComponents.associado-acoes-judiciais')
 
     </div>
 @endsection

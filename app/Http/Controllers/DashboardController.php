@@ -86,7 +86,13 @@ class DashboardController extends Controller
             ->orderBy('data_pagamento', 'desc')
             ->paginate(10);
 
-        
-        return view('dashboard.associado', compact('user', 'associado', 'pagamentos'));
+        // Só os dados do próprio associado logado (não há id na URL para trocar)
+        $acoesJudiciais = $associado->acoesJudiciais()->orderByDesc('data_inicio')->get();
+        $situacoes = $associado->situacoes()->orderBy('nome')->get();
+        $historicoSituacoes = $associado->historicoSituacoes()->orderByDesc('data_inicio')->get();
+
+        return view('dashboard.associado', compact(
+            'user', 'associado', 'pagamentos', 'acoesJudiciais', 'situacoes', 'historicoSituacoes'
+        ));
     }
 }

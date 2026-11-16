@@ -3,8 +3,11 @@
 namespace Tests\Feature;
 
 use App\Helpers\CpfHelper;
+use App\Models\AcaoJudicial;
 use App\Models\Associado;
+use App\Models\HistoricoSituacoes;
 use App\Models\Pagamento;
+use App\Models\Situacao;
 use App\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -71,6 +74,63 @@ class PainelAssociadoTest extends TestCase
     public function test_tela_de_exemplo_de_pagamento_foi_removida(): void
     {
         $this->get('/associado/financeiro')->assertNotFound();
+    }
+
+    public function test_mostra_as_acoes_judiciais_do_associado(): void
+    {
+        $acao = AcaoJudicial::create([
+            'nome' => 'Ação do piso salarial',
+            'descricao' => 'Reajuste do piso de 2025',
+            'status' => 'Em andamento',
+            'data_inicio' => '2026-03-10',
+        ]);
+        $acao->associados()->attach($this->associado->id);
+
+        $this->get('/dashboard')
+            ->assertOk()
+            ->assertSee('Ação do piso salarial')
+            ->assertSee('Reajuste do piso de 2025')
+            ->assertSee('Em andamento')
+            ->assertSee('10/03/2026');
+    }
+
+    public function test_nao_mostra_acao_judicial_de_outro_associado(): void
+    {
+        $outro = Associado::forceCreate(['nome' => 'Outro', 'cpf' => '11144477735']);
+        $acao = AcaoJudicial::create(['nome' => 'Ação de outra pessoa']);
+        $acao->associados()->attach($outro->id);
+
+        $this->get('/dashboard')
+            ->assertOk()
+            ->assertDontSee('Ação de outra pessoa')
+            ->assertSee('Você não está incluído em nenhuma ação judicial.');
+    }
+
+    public function test_mostra_situacao_atual_e_historico_sem_a_observacao(): void
+    {
+        $situacao = Situacao::create(['nome' => 'Em dia']);
+        $this->associado->situacoes()->attach($situacao->id);
+
+        HistoricoSituacoes::create([
+            'associado_id' => $this->associado->id,
+            'situacao' => 'Licença médica',
+            'observacao' => 'Anotação interna da diretoria',
+            'data_inicio' => '2025-01-15',
+            'data_fim' => '2025-06-30',
+        ]);
+
+        $this->get('/dashboard')
+            ->assertOk()
+            ->assertSee('Em dia')
+            ->assertSee('Licença médica')
+            ->assertSee('15/01/2025')
+            ->assertSee('30/06/2025')
+            ->assertDontSee('Anotação interna da diretoria');
+    }
+
+    public function test_sem_situacao_mostra_aviso(): void
+    {
+        $this->get('/dashboard')->assertOk()->assertSee('Nenhuma situação registrada.');
     }
 
     public function test_formatar_cpf(): void
