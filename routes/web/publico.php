@@ -4,7 +4,6 @@ use App\Http\Controllers\Associado\CadastroController;
 use App\Http\Controllers\Associado\CarteirinhaController;
 use App\Http\Controllers\BeneficioController;
 use App\Http\Controllers\IndexController;
-use App\Http\Controllers\InstagramController;
 use App\Http\Controllers\PerguntasFrequentesController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\searchPostController;
@@ -19,7 +18,6 @@ Route::get('/search', [searchPostController::class, 'index'])->name('search');
 Route::view('/contatos', 'contato.index')->name('contato.index');
 Route::view('/Quem_Somos', 'quem-somos.index')->name('quem.somos');
 Route::get('/perguntasfrequentes/index', [PerguntasFrequentesController::class, 'index'])->name('perguntasfrequentes.index');
-Route::get('/api/instagram/media', [InstagramController::class, 'getMedia']);
 
 // Só números: "posts/create" fica no admin.php e não pode cair aqui
 Route::get('posts/{post}', [PostController::class, 'show'])->whereNumber('post')->name('posts.show');

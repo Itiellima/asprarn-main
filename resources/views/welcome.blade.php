@@ -21,12 +21,21 @@
                 <h2>NOTÍCIAS</h2>
                 <hr>
                 <div class="row justify-content-center">
-                    @foreach ($feedPosts as $post)
+                    @forelse ($feedPosts as $post)
+                        @php
+                            // Assunto termina sempre com pontuação, sem duplicar o ponto
+                            $assunto = trim((string) $post->assunto);
+                            if ($assunto !== '' && !preg_match('/[.!?…]$/u', $assunto)) {
+                                $assunto .= '.';
+                            }
+                        @endphp
                         <div class="container m-3 card grow col-md-11">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <img src="{{ $post->files->first()?->url }}" alt="{{ $post->titulo }}"
-                                        style="height: 10rem; width: 10rem;" class="rounded">
+                                    {{-- Post sem imagem mostra o logo, em vez do ícone de imagem quebrada --}}
+                                    <img src="{{ $post->files->first()?->url ?? asset('img/Aspra.png') }}"
+                                        alt="{{ $post->titulo }}" loading="lazy"
+                                        style="height: 10rem; width: 10rem; object-fit: cover;" class="rounded">
                                 </div>
                                 <div class="col-md-8 mt-3">
                                     <strong>
@@ -43,12 +52,22 @@
                                             </a>
                                         </p>
                                     </strong>
-                                    <p class="card-text">{{ $post->assunto }}.</p>
+                                    @if ($assunto !== '')
+                                        <p class="card-text">{{ $assunto }}</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <p class="text-muted">Nenhuma notícia publicada ainda.</p>
+                    @endforelse
                 </div>
+
+                @if ($feedPosts->isNotEmpty())
+                    <div class="text-center mb-4">
+                        <a href="{{ route('search') }}" class="btn btn-outline-primary">Ver todas as notícias</a>
+                    </div>
+                @endif
             </div>
 
             {{-- SIDEBAR --}}
@@ -64,21 +83,25 @@
                     <div>
                         @if ($recentPosts->isNotEmpty())
 
-                            <h4 class="fst-italic">Ultimos posts</h4>
+                            {{-- Do 7º ao 9º post: os 6 primeiros já estão em "Notícias" --}}
+                            <h4 class="fst-italic">Mais notícias</h4>
                             <ul class="list-unstyled">
                                 @foreach ($recentPosts as $post)
                                     <li>
                                         <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"
-                                            href="/posts/{{ $post->id }}">
+                                            href="{{ route('posts.show', $post->id) }}">
 
                                             @if ($post->files->isNotEmpty())
-                                                <img src="{{ $post->files->first()?->url }}"
-                                                    alt="{{ $post->titulo }}" width="100" height="100">
+                                                <img src="{{ $post->files->first()->url }}"
+                                                    alt="{{ $post->titulo }}" width="100" height="100" loading="lazy"
+                                                    style="object-fit: cover;">
                                             @endif
 
                                             <div class="col-lg-8">
-                                                <h6 class="mb-0">{{ $post->titulo }}</h6> <small
-                                                    class="text-body-secondary">{{ $post->data->format('d/m/Y') }}</small>
+                                                <h6 class="mb-0">{{ $post->titulo }}</h6>
+                                                @if ($post->data)
+                                                    <small class="text-body-secondary">{{ $post->data->format('d/m/Y') }}</small>
+                                                @endif
                                             </div>
                                         </a>
                                     </li>

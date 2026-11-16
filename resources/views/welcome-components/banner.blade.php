@@ -1,4 +1,5 @@
-@if ($banners)
+{{-- Coleção vazia é "verdadeira" no @if; sem isNotEmpty() o texto alternativo nunca aparecia --}}
+@if ($banners->isNotEmpty())
     <div style="background-color: ;">
 
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000"
@@ -19,7 +20,7 @@
                 @foreach ($banners as $index => $banner)
                     <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
                         <img class="d-block w-100" src="{{ $banner->files->first()?->url }}"
-                            alt="Slide {{ $index + 1 }}" style="height: 400px; object-fit: contain;">
+                            alt="{{ $banner->titulo ?: 'Banner ' . ($index + 1) }}" style="height: 400px; object-fit: contain;">
                     </div>
                 @endforeach
             </div>

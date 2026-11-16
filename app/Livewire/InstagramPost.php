@@ -2,64 +2,67 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Livewire\Component;
 
+/**
+ * Últimos posts do Instagram na página inicial.
+ * A resposta da API fica em cache: a página não chama o Instagram a cada visita
+ * e continua de pé se a API estiver lenta, fora do ar ou com o token vencido.
+ */
 class InstagramPost extends Component
 {
-    // Propriedade pública para armazenar os posts do Instagram.
-    // Inicializada como array vazio.
-    public array $instagram = [];
+    public const CHAVE_CACHE = 'instagram.midias';
 
-    // Método que faz a requisição à API do Instagram
-    public function loadMedia()
+    /** Busca na API; null quando falha (para não guardar a falha por 1 hora) */
+    private function buscarNaApi(): ?array
     {
         $token = config('services.instagram.token');
         $userId = config('services.instagram.user_id');
 
-        // Proteção básica para garantir que as credenciais existem
         if (!$token || !$userId) {
-            // Retorna um array vazio se as credenciais estiverem faltando
             return [];
         }
 
-        $url = "https://graph.instagram.com/{$userId}/media";
-
         try {
-            $response = Http::get($url, [
+            $response = Http::timeout(5)->get("https://graph.instagram.com/{$userId}/media", [
                 'fields' => 'id,caption,media_type,media_url,thumbnail_url,permalink',
                 'access_token' => $token,
             ]);
 
-            // Verifica se a requisição foi bem-sucedida
             if ($response->successful()) {
-                $instagramData = $response->json();
-
-                // Retorna apenas o array de posts da chave 'data'
-                return $instagramData['data'] ?? [];
-            } else {
-                // Loga o erro da API se a requisição falhar
-                logger()->error('Instagram API Request Failed', ['status' => $response->status(), 'body' => $response->body()]);
-                return [];
+                return $response->json('data') ?? [];
             }
+
+            logger()->error('Instagram API Request Failed', ['status' => $response->status(), 'body' => $response->body()]);
         } catch (\Exception $e) {
-            // Loga exceções de conexão ou outras falhas
             logger()->error('Error fetching Instagram media: ' . $e->getMessage());
-            return [];
         }
+
+        return null;
     }
 
-    // O método render é chamado sempre que o componente é atualizado.
+    private function midias(): array
+    {
+        $emCache = Cache::get(self::CHAVE_CACHE);
+
+        if ($emCache !== null) {
+            return $emCache;
+        }
+
+        $midias = $this->buscarNaApi();
+
+        // Sucesso fica 1 hora; falha fica só 5 minutos (tenta de novo logo, sem martelar a API)
+        Cache::put(self::CHAVE_CACHE, $midias ?? [], $midias === null ? now()->addMinutes(5) : now()->addHour());
+
+        return $midias ?? [];
+    }
+
     public function render()
     {
-        // Chama o método loadMedia para buscar os posts.
-        $this->instagram = $this->loadMedia();
-
-        // O método render não precisa de compact se a variável for uma propriedade pública ($this->posts)
-        // Mas se você quiser passar uma variável local, o correto é:
-        // return view('livewire.instagram-post', ['posts' => $this->posts]);
-
-        // Como $posts é uma propriedade pública, ela já está disponível no Blade.
-        return view('livewire.instagram-post');
+        // Passado direto para a view (e não como propriedade pública), para a lista
+        // não ir embutida no HTML como estado do Livewire
+        return view('livewire.instagram-post', ['instagram' => $this->midias()]);
     }
 }

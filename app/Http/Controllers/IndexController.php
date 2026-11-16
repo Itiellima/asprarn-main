@@ -2,31 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Post;
 use App\Models\Banner;
+use App\Models\Post;
 
 class IndexController extends Controller
 {
     public function index()
     {
+        // Uma consulta só para os 9 posts mais recentes, já com as imagens (evita uma consulta por post)
+        $posts = Post::with('files')->latest()->take(9)->get();
 
-        // 3 posts mais recentes
-        $recentPosts = Post::latest()->take(3)->get();
+        // 6 primeiros no feed de notícias; 7º ao 9º na lateral, sem repetir os do feed
+        $feedPosts = $posts->take(6);
+        $recentPosts = $posts->slice(6)->values();
 
-        // 6 posts mais recentes
-        $feedPosts = Post::latest()->take(6)->get();
+        // Banner sem imagem deixaria um slide em branco no carrossel
+        $banners = Banner::with('files')->latest()->get()
+            ->filter(fn ($banner) => $banner->files->isNotEmpty())
+            ->values();
 
-        // Todos os posts ordenados
-        $allPosts = Post::latest()->get();
-
-        // Post mais recente
-        $latestPost = Post::latest()->first();
-
-        // Banners
-        $banners = Banner::latest()->get();
-
-
-        return view('welcome', compact('latestPost', 'allPosts', 'recentPosts', 'banners', 'feedPosts'));
+        return view('welcome', compact('feedPosts', 'recentPosts', 'banners'));
     }
 }

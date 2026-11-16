@@ -27,7 +27,6 @@ class RotasProtegidasTest extends TestCase
         'GET contatos',
         'GET Quem_Somos',
         'GET perguntasfrequentes/index',
-        'GET api/instagram/media',
         'GET posts/{post}',
         'GET beneficio',
         'GET register',
